@@ -3,7 +3,8 @@
 #include <string.h>
 #include <stdint.h>
 
-struct CatchPokemon{
+struct CatchPokemon // Mensaje
+{
 	unsigned int largoNombre;
 	char* nombrePokemon;
 
@@ -11,9 +12,15 @@ struct CatchPokemon{
 	unsigned int posY;
 
 	unsigned int ID;
-}
+	// unsigned int corrID;
 
-void meterItemEn(char cosaAMeter, char* laLista, int* ultimoItem){
+	// (id && corrID) (id,corrid) ( && && && && & & & & ) (struct1 == struct2)
+
+	// AquienMeEnvie
+	// De quien recibi ACK
+};
+
+void meterItemEn(struct CatchPokemon cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
 
 	laLista[ *ultimoItem ] = cosaAMeter;
 
@@ -21,30 +28,31 @@ void meterItemEn(char cosaAMeter, char* laLista, int* ultimoItem){
 
 }
 
+// sacarItemDe(){}
+
 int main(){
 
-	char CATCH_POKEMON[20];
-
+	struct CatchPokemon CATCH_POKEMON[20];
 	int ultimoItemCATCH = 0;
 
-	int numeroEntero = 0;
+	struct CatchPokemon catchPrueba1 = { 7, "Pikachu" , 1 , 5 , 69};
+	struct CatchPokemon catchPrueba2 = { 12, "Algooooooooo" , 4 , 7 , 107};
+	struct CatchPokemon catchPrueba3 = { 2, "Cj" , 6 , 9 , 911};
 
-	meterItemEn('o', &CATCH_POKEMON, &ultimoItemCATCH);
-	meterItemEn('z', &CATCH_POKEMON, &ultimoItemCATCH);
-	meterItemEn('j', &CATCH_POKEMON, &ultimoItemCATCH);
+	meterItemEn(catchPrueba1 , &CATCH_POKEMON , &ultimoItemCATCH);
+	meterItemEn(catchPrueba2 , &CATCH_POKEMON , &ultimoItemCATCH);
+	meterItemEn(catchPrueba3 , &CATCH_POKEMON , &ultimoItemCATCH);
 
+	int i;
+	for (i = 0; i<3; i++){
 
-	printf("%c ", CATCH_POKEMON[0]);
-	printf("%c ", CATCH_POKEMON[1]);
-	printf("%c ", CATCH_POKEMON[2]);
+		printf("Largo nombre: %i\n", CATCH_POKEMON[i].largoNombre);
+		printf("Nombre: %s\n"      , CATCH_POKEMON[i].nombrePokemon);
+		printf("PosX: %i\n"        , CATCH_POKEMON[i].posX);
+		printf("PosY: %i\n"        , CATCH_POKEMON[i].posY);
+		printf("ID: %i\n"          , CATCH_POKEMON[i].ID);
 
-	printf("Numero: %i ", numeroEntero);
-	printf("Tamaño de esto: %i ", sizeof(numeroEntero) );
-
-	//printf("%i ", ultimoItemCATCH);
-
-
-	// La cola guarda mensajes
+	}
 
 	return 0;
 }

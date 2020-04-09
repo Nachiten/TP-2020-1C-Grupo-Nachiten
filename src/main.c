@@ -1,17 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
+#include <inttypes.h> // Para tener el uint32_t
 
 struct CatchPokemon // Mensaje
 {
-	unsigned int largoNombre;
+	uint32_t largoNombre;
 	char* nombrePokemon;
 
-	unsigned int posX;
-	unsigned int posY;
+	uint32_t posX;
+	uint32_t posY;
 
-	unsigned int ID;
+	uint32_t ID;
 	// unsigned int corrID;
 
 	// (id && corrID) (id,corrid) ( && && && && & & & & ) (struct1 == struct2)

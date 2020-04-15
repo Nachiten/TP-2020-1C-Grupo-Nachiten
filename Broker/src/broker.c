@@ -1,50 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <inttypes.h> // Para tener el uint32_t
-
-typedef struct Coords{
-	int x;
-	int y;
-}Coords;
-
-typedef struct CatchPokemon
-{
-	uint32_t largoNombre;
-	char* nombrePokemon;
-
-	Coords coords;
-
-	uint32_t ID;
-	uint32_t corrID;
-}Catch;
-
-typedef struct NewPokemon
-{
-	uint32_t largoNombre;
-	char* nombrePokemon;
-
-	Coords coords;
-
-	uint32_t cantPokemon;
-
-	uint32_t ID;
-	uint32_t corrID;
-}New;
-
-typedef struct LocalizedPokemon // INCOMPLETO
-{
-	uint32_t largoNombre;
-	char* nombrePokemon;
-
-	Coords coords;
-
-	uint32_t cantPosciciones;
-
-	uint32_t ID;
-	uint32_t corrID;
-}Localized;
-
+#include <funciones.h>
 
 void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
 
@@ -76,8 +30,8 @@ int main(){
 
 		printf("Largo nombre: %i\n", CATCH_POKEMON[i].largoNombre);
 		printf("Nombre: %s\n"      , CATCH_POKEMON[i].nombrePokemon);
-		printf("PosX: %i\n"        , CATCH_POKEMON[i].coords.x);
-		printf("PosY: %i\n"        , CATCH_POKEMON[i].coords.y);
+		printf("PosX: %i\n"        , CATCH_POKEMON[i].posPokemon.x);
+		printf("PosY: %i\n"        , CATCH_POKEMON[i].posPokemon.y);
 		printf("ID: %i\n"          , CATCH_POKEMON[i].ID);
 
 	}

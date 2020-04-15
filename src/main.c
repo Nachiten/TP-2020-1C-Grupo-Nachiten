@@ -3,24 +3,50 @@
 #include <string.h>
 #include <inttypes.h> // Para tener el uint32_t
 
-struct CatchPokemon // Mensaje
+typedef struct Coords{
+	int x;
+	int y;
+}Coords;
+
+typedef struct CatchPokemon
 {
 	uint32_t largoNombre;
 	char* nombrePokemon;
 
-	uint32_t posX;
-	uint32_t posY;
+	Coords coords;
 
 	uint32_t ID;
-	// unsigned int corrID;
+	uint32_t corrID;
+}Catch;
 
-	// (id && corrID) (id,corrid) ( && && && && & & & & ) (struct1 == struct2)
+typedef struct NewPokemon
+{
+	uint32_t largoNombre;
+	char* nombrePokemon;
 
-	// AquienMeEnvie
-	// De quien recibi ACK
-};
+	Coords coords;
 
-void meterItemEn(struct CatchPokemon cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
+	uint32_t cantPokemon;
+
+	uint32_t ID;
+	uint32_t corrID;
+}New;
+
+typedef struct LocalizedPokemon // INCOMPLETO
+{
+	uint32_t largoNombre;
+	char* nombrePokemon;
+
+	Coords coords;
+
+	uint32_t cantPosciciones;
+
+	uint32_t ID;
+	uint32_t corrID;
+}Localized;
+
+
+void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
 
 	laLista[ *ultimoItem ] = cosaAMeter;
 
@@ -28,16 +54,18 @@ void meterItemEn(struct CatchPokemon cosaAMeter, struct CatchPokemon* laLista, i
 
 }
 
-// sacarItemDe(){}
+// sacarItemDe(){
+
+//}
 
 int main(){
 
-	struct CatchPokemon CATCH_POKEMON[20];
+	Catch CATCH_POKEMON[20];
 	int ultimoItemCATCH = 0;
 
-	struct CatchPokemon catchPrueba1 = { 7, "Pikachu" , 1 , 5 , 69};
-	struct CatchPokemon catchPrueba2 = { 12, "Algooooooooo" , 4 , 7 , 107};
-	struct CatchPokemon catchPrueba3 = { 2, "Cj" , 6 , 9 , 911};
+	Catch catchPrueba1 = { 7, "Pikachu" , 1 , 5 , 69};
+	Catch catchPrueba2 = { 12, "Algooooooooo" , 4 , 7 , 107};
+	Catch catchPrueba3 = { 2, "Cj" , 6 , 9 , 911};
 
 	meterItemEn(catchPrueba1 , &CATCH_POKEMON , &ultimoItemCATCH);
 	meterItemEn(catchPrueba2 , &CATCH_POKEMON , &ultimoItemCATCH);
@@ -48,8 +76,8 @@ int main(){
 
 		printf("Largo nombre: %i\n", CATCH_POKEMON[i].largoNombre);
 		printf("Nombre: %s\n"      , CATCH_POKEMON[i].nombrePokemon);
-		printf("PosX: %i\n"        , CATCH_POKEMON[i].posX);
-		printf("PosY: %i\n"        , CATCH_POKEMON[i].posY);
+		printf("PosX: %i\n"        , CATCH_POKEMON[i].coords.x);
+		printf("PosY: %i\n"        , CATCH_POKEMON[i].coords.y);
 		printf("ID: %i\n"          , CATCH_POKEMON[i].ID);
 
 	}

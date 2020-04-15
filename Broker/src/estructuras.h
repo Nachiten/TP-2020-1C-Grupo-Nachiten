@@ -1,3 +1,6 @@
+#ifndef HEADER_FILE
+#define HEADER_FILE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -64,10 +67,15 @@ typedef struct CatchPokemon
 	uint32_t corrID;
 }Catch;
 
-typedef struct CatchPokemon
+typedef struct CaughtPokemon // por hacer
 {
-	uint32_t pudoAgarrar;
+	uint32_t largoNombre;
+	char* nombrePokemon;
+
+	uint32_t pudoAtrapar;
 
 	uint32_t ID;
 	uint32_t corrID;
-}Catch;
+}Caught;
+
+#endif

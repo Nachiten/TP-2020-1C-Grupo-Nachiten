@@ -27,6 +27,7 @@ void probarGet(){
 	CU_ASSERT_EQUAL(unGet.ID, 345);
 	CU_ASSERT_EQUAL(unGet.corrID, 1);
 }
+
 void probarFuncionmeterItemEn(){
 	Catch CATCH_POKEMON[20];
 
@@ -57,8 +58,9 @@ void probarFuncionmeterItemEn(){
 	CU_ASSERT_EQUAL(CATCH_POKEMON[2].posPokemon.x, 6);
 	CU_ASSERT_EQUAL(CATCH_POKEMON[2].posPokemon.y, 9);
 	CU_ASSERT_EQUAL(CATCH_POKEMON[2].ID, 911);
-}
 
+}
+/*
 int main(){
 
 	CU_initialize_registry();
@@ -74,4 +76,4 @@ int main(){
 	CU_cleanup_registry();
 
 	return CU_get_error();
-}
+}*/

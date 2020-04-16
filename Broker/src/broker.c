@@ -12,7 +12,8 @@ void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem
 
 //}
 
-/*int main(){
+/*
+int main(){
 
 	Catch CATCH_POKEMON[20];
 	int ultimoItemCATCH = 0;

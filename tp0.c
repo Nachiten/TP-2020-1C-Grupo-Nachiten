@@ -47,7 +47,7 @@ int main(void)
 	conexion = crear_conexion(ip, puerto);
 
 	//enviar mensaje
-	enviar_mensaje("Hola, puto el que lee", conexion);
+	enviar_mensaje("Hola mundo soy un mensaje tipo string :)", conexion);
 
 	//recibir mensaje
 	char* mensajeRecibido = recibir_mensaje(conexion);

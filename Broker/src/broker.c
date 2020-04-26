@@ -12,7 +12,6 @@ typedef struct Entrenador{
 
 
 // BROKER
-
 void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
 
 	laLista[ *ultimoItem ] = cosaAMeter;
@@ -48,7 +47,7 @@ void meterPrimerItem(Entrenador* aMeter, Entrenador* inicio, Entrenador* fin){
 
 int main(void) {
 
-
+	/*
 	// -- TEAM --
 	// Cola de entrenadores punteros
 	Entrenador* inicio;
@@ -72,7 +71,16 @@ int main(void) {
 	meterItemEnCola(&fin, &entr3);
 
 	//printf("Fin numero: %i\n", fin->listaPokemones[0]);
-	//printf("Inicio numero: %i\n", inicio->listaPokemones[0]);
+	//printf("Inicio numero: %i\n", inicio->listaPokemones[0]);*/
+
+	int i;
+
+	/*for (i = 0; i < 10;i++){
+		printf("Parte %i\n", i);
+
+		sleep(1);
+
+	}*/
 
 	return 0;
 }

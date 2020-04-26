@@ -1,0 +1,6 @@
+Buenas buenas... abris una terminal en esta carpeta y tiras los siguientes comandos:
+> cd cspec
+> make
+> sudo make install
+
+Listo :) ya tenes instalado el cspec para hacer testing. Un saludo.

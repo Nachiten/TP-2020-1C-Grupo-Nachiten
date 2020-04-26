@@ -11,11 +11,6 @@ typedef struct Coords{
 	uint32_t y;
 }Coords;
 
-typedef enum {
-		FALSE,
-		TRUE
-}bool;
-
 typedef struct NewPokemon
 {
 	uint32_t largoNombre;

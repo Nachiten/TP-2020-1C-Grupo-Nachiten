@@ -12,7 +12,7 @@ typedef struct Entrenador{
 
 
 // BROKER
-/*
+
 void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem){
 
 	laLista[ *ultimoItem ] = cosaAMeter;
@@ -20,9 +20,9 @@ void meterItemEn(Catch cosaAMeter, struct CatchPokemon* laLista, int* ultimoItem
 	*ultimoItem = *ultimoItem + 1;
 
 }
-*/
 
-//sacarItemDe(){ //TODO
+
+//sacarItemDe(){ //TODO Hacer esta funcion
 
 //}
 
@@ -71,13 +71,8 @@ int main(void) {
 	meterItemEnCola(&fin, &entr2);
 	meterItemEnCola(&fin, &entr3);
 
-	printf("Fin numero: %i\n", fin->listaPokemones[0]);
-	printf("Inicio numero: %i\n", inicio->listaPokemones[0]);
-
-	bool hola = FALSE;
-
-	printf("Sizeof del bool: %i", sizeof(bool));
-
+	//printf("Fin numero: %i\n", fin->listaPokemones[0]);
+	//printf("Inicio numero: %i\n", inicio->listaPokemones[0]);
 
 	return 0;
 }

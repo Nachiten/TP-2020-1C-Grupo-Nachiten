@@ -6,7 +6,7 @@
 int main(void) {
 
 	int i = 1;
-	printf("Probando broker %i", i);
+	printf("Probando Broker %i", i);
 
 	return 0;
 }

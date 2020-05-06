@@ -159,7 +159,7 @@ int distancia_a(int pos_x, int pos_y, int actual_x, int actual_y){
 }
 
 int valor_absoluto(int distancia){
-	if(distancia<1){distancia = distancia * (-1);}
+	if( distancia < 0 ) distancia *= -1;
 	return distancia;
 }
 

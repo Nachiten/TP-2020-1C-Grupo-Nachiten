@@ -13,19 +13,17 @@ int main(void) {
 	logger = iniciar_logger();
 	config = leer_config();
 
-	//log_info(logger, "Soy un log\n");
 	ip = config_get_string_value(config, "IP_BROKER");
-	//printf("Puerto: %s\n", ip);
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
-	//printf("Puerto: %s\n", puerto);
 	//conexion = crear_conexion(ip, puerto);
 	conexion = 0;
 
 	d_entrenador* entrenadores;
-	int cant_entrenadores, cant_objetivos, i, myId, objetivo;
+	int cant_entrenadores, cant_objetivos, i, myId, objetivo, flag_finalizacion;
 	objetivo = 0;
 	myId = 20;
 	i=0;
+	flag_finalizacion = 0;
 	char** objetivo_global;
 	char** objetivo_actual;
 	mensaje_server* mensaje_rec;
@@ -40,16 +38,18 @@ int main(void) {
 	printf("objetivo[1] entrenador1: %s\n", entrenadores[1].objetivo[1]);
 	printf("objetivo[2] entrenador0: %s\n", entrenadores[0].objetivo[2]);
 */
-	t_queue* colaMensajesTeam = queue_create();
+
 	objetivo_actual = malloc(cant_objetivos * sizeof(char*));
 	copiar_contenido(objetivo_actual, objetivo_global, cant_objetivos);
+	inicializar_cola_mensajes_team();
+
 
 	while(objetivo == 0){
 		if(i<2){
 			int id, idReal;
 			recibir_mensajes(conexion, i, &mensaje_rec, &id, &idReal);
 			if(filtrar_mensaje(idReal, myId, id, mensaje_rec, objetivo_actual, cant_objetivos) == 1){
-				queue_push(colaMensajesTeam, mensaje_rec);
+				agregar_a_cola(mensaje_rec);
 			}
 			liberarServidor(i);
 			i++;
@@ -57,9 +57,32 @@ int main(void) {
 		else{objetivo = 1;}
 	}
 
-	int size = queue_is_empty(colaMensajesTeam);
-	printf("size: %i\n", size);
+	mensaje_server mensaje;
+	d_entrenador* elegido;
+	int pos_elegido;
+	while(objetivo == 1){
+		if(primero_de_cola(&mensaje) != -1){
+			printf("Pokemon del mensaje: %s\n", mensaje.pokemon);
+			i = 0;
+			flag_finalizacion = 0;
+			while(flag_finalizacion == 0 && i<mensaje.cantidad_pos){
+				pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], &entrenadores, cant_entrenadores);
+				if(pos_elegido != -1){
+					printf("Entrenador disponible en posicion %i del vector entrenadores\n", pos_elegido);
+					flag_finalizacion = 1;
+				}
+			}
+		}
+		objetivo = 0;
+	}
+
+
+
+
 	liberarConfig();
+	eliminarColaMensajes();
+	//free(objetivo_actual);
+	terminar_programa(logger, config);
 
 	printf("Fin de Team\n");
 
@@ -93,5 +116,37 @@ void copiar_contenido(char** destino, char** origen, int tamano){
 	}
 }
 
+void terminar_programa(t_log* logger, t_config* config){
+	//Y por ultimo, para cerrar, hay que liberar lo que utilizamos (conexion, log y config) con las funciones de las commons y del TP mencionadas en el enunciado
+	if(config != NULL){config_destroy(config);}
+	if(logger != NULL){log_destroy(logger);}
+	//liberar_conexion(conexion);
+}
+
+int calcular_mas_cerca_de(int pos_x, int pos_y, d_entrenador** entrenadores, int cantidad){
+	int i, distancia, distancia_minimo, pos_a_enviar;
+	pos_a_enviar = -1;
+	distancia_minimo = 50; //maximo imposible, despues cambiar para que sea la distancia al primer entrenador del vector
+	for(i=0;i<cantidad;i++){
+		if((*entrenadores)[i].estado == 0 || (*entrenadores)[i].estado == 3){
+			distancia = distancia_a(pos_x, pos_y, (*entrenadores)[i].posicion[0], (*entrenadores)[i].posicion[0]);
+			if(distancia < distancia_minimo){
+				distancia_minimo = distancia;
+				pos_a_enviar = i;
+			}
+		}
+	}
+	return pos_a_enviar;
+}
+
+int distancia_a(int pos_x, int pos_y, int actual_x, int actual_y){
+	int distancia = valor_absoluto(actual_x - pos_x) + valor_absoluto(actual_y - pos_y);
+	return distancia;
+}
+
+int valor_absoluto(int distancia){
+	if(distancia<1){distancia = distancia * (-1);}
+	return distancia;
+}
 
 

@@ -22,7 +22,7 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 	printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 	for(i=0;i<cant_posiciones;i++){
-		temp2[i].estado = 1;
+		temp2[i].estado = 0;
 
 		temp2[i].posicion[0] = posicion_entrenador[i][0]-'0';
 		temp2[i].posicion[1] = posicion_entrenador[i][2]-'0';

@@ -1,4 +1,5 @@
-Buenas buenas... abris una terminal en esta carpeta y tiras los siguientes comandos:
+Buenas buenas... abris una terminal en la carpeta por defecto (home/utnso)
+> git clone https://github.com/mumuki/cspec.git
 > cd cspec
 > make
 > sudo make install

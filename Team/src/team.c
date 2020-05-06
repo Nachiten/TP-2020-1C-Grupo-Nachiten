@@ -14,7 +14,20 @@ int main(void) {
 	config = leer_config();
 
 	ip = config_get_string_value(config, "IP_BROKER");
+	if (ip == NULL){
+		log_error(logger, "No se ha podido leer la 'ip' de la config");
+		return 3;
+	} else {
+		log_info(logger, "Se leyo la ip del broker correctamente\n");
+	}
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
+	if (puerto == NULL){
+		log_error(logger, "No se ha podido leer el 'puerto' de la config");
+		return 3;
+	} else {
+		log_info(logger, "Se leyo el puerto del broker correctamente\n");
+	}
+
 	//conexion = crear_conexion(ip, puerto);
 	conexion = 0;
 
@@ -99,6 +112,7 @@ t_log* iniciar_logger(void)
 	return logger;
 }
 
+// Se usa funcion de las shared, no esta
 t_config* leer_config(void)
 {
 	t_config* config = config_create("./team.config");

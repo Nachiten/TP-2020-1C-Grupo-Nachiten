@@ -18,14 +18,14 @@ int main(void) {
 		log_error(logger, "No se ha podido leer la 'ip' de la config");
 		return 3;
 	} else {
-		log_info(logger, "Se leyo la ip del broker correctamente\n");
+		log_info(logger, "Se leyo la ip del broker correctamente");
 	}
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
 	if (puerto == NULL){
 		log_error(logger, "No se ha podido leer el 'puerto' de la config");
 		return 3;
 	} else {
-		log_info(logger, "Se leyo el puerto del broker correctamente\n");
+		log_info(logger, "Se leyo el puerto del broker correctamente");
 	}
 
 	//conexion = crear_conexion(ip, puerto);
@@ -104,7 +104,7 @@ int main(void) {
 
 t_log* iniciar_logger(void)
 {
-	t_log *logger = log_create("tp0.log", "TP0", 1, LOG_LEVEL_INFO);
+	t_log *logger = log_create("Team.log", "Team", 0, LOG_LEVEL_INFO);
 	if(logger == NULL){
 		printf("No pude crear el logger\n");
 		exit(1);

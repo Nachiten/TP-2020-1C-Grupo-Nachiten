@@ -54,9 +54,9 @@ int main(void) {
 
 	objetivo_actual = malloc(cant_objetivos * sizeof(char*));
 	copiar_contenido(objetivo_actual, objetivo_global, cant_objetivos);
-	inicializar_cola_mensajes_team();
+	inicializar_cola_mensajes_team();//cola que contiene los mensajes que llegan de otros modulos Broker/GameBoy
 
-
+	//en este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes harcodeados
 	while(objetivo == 0){
 		if(i<2){
 			int id, idReal;
@@ -69,20 +69,52 @@ int main(void) {
 		}
 		else{objetivo = 1;}
 	}
+	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y al recpecion de mensajes
 
 	mensaje_server mensaje;
-	d_entrenador* elegido;
+	d_entrenador* elegido;//entrenador elegido para capturar el pokemon del mensaje
 	int pos_elegido;
 	while(objetivo == 1){
-		if(primero_de_cola(&mensaje) != -1){
+		if(primero_de_cola(&mensaje) != -1){ //se extrae el primer mensaje de la colaMensajesTeam
 			printf("Pokemon del mensaje: %s\n", mensaje.pokemon);
 			i = 0;
 			flag_finalizacion = 0;
+			//el flag_finalizacion cambia a 1 cuando el mensaje caught otorga un resultado positivo a la captura del pokemon, en caso contrario
+			//itera hasta que se terminen las posiciones que informa el mensaje sobre dicho pokemon
 			while(flag_finalizacion == 0 && i<mensaje.cantidad_pos){
+				//el vector posiciones contiene todas los datos de las posiciones en un unico vector
+				//osea la pos0 y 1 del vector corresponden a la variable X e Y de la primera posicion informada
 				pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], &entrenadores, cant_entrenadores);
-				if(pos_elegido != -1){
+				if(pos_elegido != -1){	//en caso de que se encuentre algun entrenador disponible
 					printf("Entrenador disponible en posicion %i del vector entrenadores\n", pos_elegido);
-					flag_finalizacion = 1;
+					elegido = &entrenadores[pos_elegido];
+					asignar_target(elegido, mensaje.pokemon);
+					cambiar_estado_a(elegido, 1);//ready
+					//agregar_a_Ready(elegido);
+					//activar hilo entrenador;
+					if(soy_primero_en_ready() == 1){
+						cambiar_estado_a(elegido, 2);//exec
+						moverse_a(elegido, mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1]);
+						bloquear(elegido, EN_ESPERA);
+						//enviar mensaje catch
+						//recibir mensaje caught
+						if(recibir_respuesta_caught() == 1){
+							/*
+							agregar_captura(elegido);
+							if(esta_en_el_limite(elegido) == 1){
+								if(esta_terminado(elegido) == 1){
+									cambiar_estado_a(elegido, 4);//EXIT
+								}
+							}
+
+							else{bloquear(elegido, 1);}//ACTIVO
+							flag_finalizacion = 1;
+							*/
+						}
+						else{bloquear(elegido, 1);}
+						flag_finalizacion = 1;
+					}
+					i++;
 				}
 			}
 		}
@@ -162,5 +194,43 @@ int valor_absoluto(int distancia){
 	if( distancia < 0 ) distancia *= -1;
 	return distancia;
 }
+
+void asignar_target(d_entrenador* entrenador, char* pokemon){
+	entrenador->target = pokemon;
+}
+
+void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
+	entrenador->estado = nuevo_estado;
+}
+
+int soy_primero_en_ready(){return 1;}
+
+void moverse_a(d_entrenador* entrenador, int pos_x, int pos_y){
+	while(entrenador->posicion[0] != pos_x){
+		if((entrenador->posicion[0] - pos_x) > 0){
+			entrenador->posicion[0]-=1; //si estoy a la derecha (en x), decremento
+		}
+		else{entrenador->posicion[0]+=1;}//si estoy a la izquierda (en x), aumento
+		//delay X segundos por configuracion
+	}
+	while(entrenador->posicion[1] != pos_y){
+		if((entrenador->posicion[1] - pos_y) > 0){
+			entrenador->posicion[1]-=1;//si estoy arriba (en y), decremento
+		}
+		else{entrenador->posicion[1]+=1;}//si estoy abajo (en y), aumento
+		//delay X segundos por configuracion
+	}
+
+}
+
+void bloquear(d_entrenador* entrenador, int estado_bloqueado){
+	if(entrenador->estado != 3){ //distinto de BLOCKED
+		cambiar_estado_a(entrenador, 3);
+	}
+	entrenador->estado_block = estado_bloqueado;
+}
+
+int recibir_respuesta_caught(){return 1;}
+
 
 

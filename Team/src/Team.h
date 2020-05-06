@@ -26,6 +26,8 @@ typedef enum{
 typedef struct{
 	int posicion[2];
 	int estado;
+	char* target;
+	int estado_block;
 	char** objetivo;
 	char** pokemones_actuales;
 } d_entrenador;
@@ -48,5 +50,11 @@ void copiar_contenido(char**, char**, int);
 int calcular_mas_cerca_de(int, int, d_entrenador**, int);
 int distancia_a(int, int, int, int);
 int valor_absoluto(int);
+void asignar_target(d_entrenador*, char*);
+void cambiar_estado_a(d_entrenador*, int);
+int soy_primero_en_ready();
+void moverse_a(d_entrenador*, int, int);
+void bloquear(d_entrenador*, int);
+int recibir_respuesta_caught();
 
 #endif /* SRC_TEAM_H_ */

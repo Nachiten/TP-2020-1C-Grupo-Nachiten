@@ -42,23 +42,13 @@ int main(void) {
 	mensaje_server* mensaje_rec;
 
 	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos);
-/*
-	printf("posicion entrenador0: [%i, %i]\n", entrenadores[1].posicion[0], entrenadores[1].posicion[1]);
-	printf("pokemones_actuales[0] entrenador2: %s\n", entrenadores[2].pokemones_actuales[0]);
-	printf("pokemones_actuales[1] entrenador1: %s\n", entrenadores[1].pokemones_actuales[1]);
-	printf("pokemones_actuales[2] entrenador0: %s\n", entrenadores[0].pokemones_actuales[2]);
-	printf("objetivo[0] entrenador2: %s\n", entrenadores[2].objetivo[0]);
-	printf("objetivo[1] entrenador1: %s\n", entrenadores[1].objetivo[1]);
-	printf("objetivo[2] entrenador0: %s\n", entrenadores[0].objetivo[2]);
-*/
-
 	objetivo_actual = malloc(cant_objetivos * sizeof(char*));
 	copiar_contenido(objetivo_actual, objetivo_global, cant_objetivos);
 	inicializar_cola_mensajes_team();//cola que contiene los mensajes que llegan de otros modulos Broker/GameBoy
 
 	//en este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes harcodeados
 	while(objetivo == 0){
-		if(i<2){
+		if(i<5){
 			int id, idReal;
 			recibir_mensajes(conexion, i, &mensaje_rec, &id, &idReal);
 			if(filtrar_mensaje(idReal, myId, id, mensaje_rec, objetivo_actual, cant_objetivos) == 1){
@@ -69,11 +59,12 @@ int main(void) {
 		}
 		else{objetivo = 1;}
 	}
-	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y al recpecion de mensajes
+	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
 
 	mensaje_server mensaje;
 	d_entrenador* elegido;//entrenador elegido para capturar el pokemon del mensaje
 	int pos_elegido;
+
 	while(objetivo == 1){
 		if(primero_de_cola(&mensaje) != -1){ //se extrae el primer mensaje de la colaMensajesTeam
 			printf("Pokemon del mensaje: %s\n", mensaje.pokemon);
@@ -81,9 +72,10 @@ int main(void) {
 			flag_finalizacion = 0;
 			//el flag_finalizacion cambia a 1 cuando el mensaje caught otorga un resultado positivo a la captura del pokemon, en caso contrario
 			//itera hasta que se terminen las posiciones que informa el mensaje sobre dicho pokemon
+			//por ahora esta asi, deberia iterar hasta al maximo que pueda siempre y cuando necesites mas instancias del mismo pokemon
 			while(flag_finalizacion == 0 && i<mensaje.cantidad_pos){
 				//el vector posiciones contiene todas los datos de las posiciones en un unico vector
-				//osea la pos0 y 1 del vector corresponden a la variable X e Y de la primera posicion informada
+				//osea la pos 0 y 1 del vector corresponden a la variable X e Y de la primera posicion informada
 				pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], &entrenadores, cant_entrenadores);
 				if(pos_elegido != -1){	//en caso de que se encuentre algun entrenador disponible
 					printf("Entrenador disponible en posicion %i del vector entrenadores\n", pos_elegido);
@@ -95,21 +87,18 @@ int main(void) {
 					if(soy_primero_en_ready() == 1){
 						cambiar_estado_a(elegido, 2);//exec
 						moverse_a(elegido, mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1]);
-						bloquear(elegido, EN_ESPERA);
+						bloquear(elegido, EN_ESPERA);//se bloquea a la espera de una respuesta o un deadlock en el futuro
 						//enviar mensaje catch
 						//recibir mensaje caught
 						if(recibir_respuesta_caught() == 1){
-							/*
 							agregar_captura(elegido);
 							if(esta_en_el_limite(elegido) == 1){
 								if(esta_terminado(elegido) == 1){
 									cambiar_estado_a(elegido, 4);//EXIT
+									se_cumplio_objetivo(&objetivo, objetivo_global, &entrenadores, cant_entrenadores);
 								}
 							}
-
 							else{bloquear(elegido, 1);}//ACTIVO
-							flag_finalizacion = 1;
-							*/
 						}
 						else{bloquear(elegido, 1);}
 						flag_finalizacion = 1;
@@ -118,7 +107,9 @@ int main(void) {
 				}
 			}
 		}
-		objetivo = 0;
+		else{objetivo = 0;
+			printf("Terminacion forzada\n");
+		}
 	}
 
 
@@ -206,6 +197,7 @@ void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
 int soy_primero_en_ready(){return 1;}
 
 void moverse_a(d_entrenador* entrenador, int pos_x, int pos_y){
+	//Me muevo en x
 	while(entrenador->posicion[0] != pos_x){
 		if((entrenador->posicion[0] - pos_x) > 0){
 			entrenador->posicion[0]-=1; //si estoy a la derecha (en x), decremento
@@ -213,6 +205,7 @@ void moverse_a(d_entrenador* entrenador, int pos_x, int pos_y){
 		else{entrenador->posicion[0]+=1;}//si estoy a la izquierda (en x), aumento
 		//delay X segundos por configuracion
 	}
+	//Me muevo en y
 	while(entrenador->posicion[1] != pos_y){
 		if((entrenador->posicion[1] - pos_y) > 0){
 			entrenador->posicion[1]-=1;//si estoy arriba (en y), decremento
@@ -231,6 +224,82 @@ void bloquear(d_entrenador* entrenador, int estado_bloqueado){
 }
 
 int recibir_respuesta_caught(){return 1;}
+
+void agregar_captura(d_entrenador* entrenador){
+	int i = 0;
+	while(entrenador->pokemones_actuales[i] != NULL){i++;}//itero hasta encontrar un espacio vacio, se supone que cualquie entrenador en esta funcion NO debe estar completo
+	entrenador->pokemones_actuales[i] = entrenador->target;
+	entrenador->target = NULL;
+}
+
+int esta_en_el_limite(d_entrenador* entrenador){
+	int retorno = 0;
+	int cantidad_objetivos = cant_objetivos(entrenador);
+	if(cantidad_objetivos == cant_pokemones_actuales(entrenador, cantidad_objetivos)){
+		retorno = 1;
+	}
+	return retorno;
+}
+
+int cant_objetivos(d_entrenador* entrenador){
+	int i = 0;
+	while(entrenador->objetivo[i] != NULL){i++;}
+	return i;
+}
+
+int cant_pokemones_actuales(d_entrenador* entrenador, int cantidad_objetivos){
+	int i = 0;
+	while(i<cantidad_objetivos && entrenador->pokemones_actuales[i] != NULL){i++;}
+	return i;
+}
+
+int esta_terminado(d_entrenador* entrenador){
+	int i = 0;
+	int resultado = 0;
+	int cantidad = cant_objetivos(entrenador);
+	while(i<cantidad && se_encuentra_en_objetivo(entrenador->pokemones_actuales[i], entrenador->objetivo) == 1){i++;}
+	if(i == cantidad){resultado = 1;}
+	return resultado;
+}
+
+//podria probarse una alternativa que devuelva la cantidad de veces que se repite, podria ser util para la utilizacion de flag_finalizacion
+int se_encuentra_en_objetivo(char* pokemon, char** objetivo){
+	int i = 0;
+	int resultado = 0;
+	while(objetivo[i] != NULL && strcmp(objetivo[i], pokemon) != 0){i++;}
+	if(strcmp(objetivo[i], pokemon) == 0){
+		resultado = 1;
+	}
+	return resultado;
+}
+
+void se_cumplio_objetivo(int* objetivo, char** objetivo_global, d_entrenador** entrenadores, int tamano){
+	int i = 0;
+	//int respuesta = -1;
+	while(i<tamano && (*entrenadores)[i].estado == 4){i++;}//4 = exit
+	if(i == tamano){
+		*objetivo = 0;//se cambia el objetivo
+		//respuesta = 1;
+		printf("Terminacion correcta\n");
+	}
+	//return respuesta;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

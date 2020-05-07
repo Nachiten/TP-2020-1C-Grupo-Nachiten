@@ -22,7 +22,7 @@ void recibir_mensajes(int socket, int i, mensaje_server** destino, int* id, int*
 			mensajesLocalized->cantidad_pos = 2;
 			mensajesLocalized_sub1 = malloc(2 * mensajesLocalized->cantidad_pos * sizeof(int));
 			mensajesLocalized->posiciones = mensajesLocalized_sub1;
-			mensajesLocalized->posiciones[0] = 3; mensajesLocalized->posiciones[1] = 2;
+			mensajesLocalized->posiciones[0] = 1; mensajesLocalized->posiciones[1] = 1;
 			mensajesLocalized->posiciones[2] = 1; mensajesLocalized->posiciones[3] = 0;
 			*destino = mensajesLocalized;
 			//*id = LOCALIZED;
@@ -35,7 +35,7 @@ void recibir_mensajes(int socket, int i, mensaje_server** destino, int* id, int*
 			mensajesLocalized->cantidad_pos = 3;
 			mensajesLocalized_sub1 = malloc(2 * mensajesLocalized->cantidad_pos * sizeof(int));
 			mensajesLocalized->posiciones = mensajesLocalized_sub1;
-			mensajesLocalized->posiciones[0] = 2; mensajesLocalized->posiciones[1] = 3;
+			mensajesLocalized->posiciones[0] = 3; mensajesLocalized->posiciones[1] = 4;
 			mensajesLocalized->posiciones[2] = 2; mensajesLocalized->posiciones[3] = 2;
 			mensajesLocalized->posiciones[4] = 2; mensajesLocalized->posiciones[5] = 1;
 			*destino = mensajesLocalized;
@@ -46,10 +46,10 @@ void recibir_mensajes(int socket, int i, mensaje_server** destino, int* id, int*
 			aux_id = 20;
 			mensajesAppeared = malloc(sizeof(mensaje_server));
 			mensajesAppeared->pokemon = "Charmander";
-			mensajesAppeared->cantidad_pos = 1;
+			mensajesAppeared->cantidad_pos = 2;
 			mensajesAppeared_sub1 = malloc(2 * mensajesAppeared->cantidad_pos * sizeof(int));
 			mensajesAppeared->posiciones = mensajesAppeared_sub1;
-			mensajesAppeared->posiciones[0] = 2; mensajesAppeared->posiciones[1] = 3;
+			mensajesAppeared->posiciones[0] = 1; mensajesAppeared->posiciones[1] = 3;
 			mensajesAppeared->posiciones[2] = 3; mensajesAppeared->posiciones[3] = 4;
 			*destino = mensajesAppeared;
 			//*id = APPEARED;
@@ -62,7 +62,7 @@ void recibir_mensajes(int socket, int i, mensaje_server** destino, int* id, int*
 			mensajesAppeared->cantidad_pos = 1;
 			mensajesAppeared_sub1 = malloc(2 * mensajesAppeared->cantidad_pos * sizeof(int));
 			mensajesAppeared->posiciones = mensajesAppeared_sub1;
-			mensajesAppeared->posiciones[0] = 1; mensajesAppeared->posiciones[1] = 0;
+			mensajesAppeared->posiciones[0] = 0; mensajesAppeared->posiciones[1] = 2;
 			*destino = mensajesAppeared;
 			//*id = APPEARED;
 			*id = 0;
@@ -74,7 +74,7 @@ void recibir_mensajes(int socket, int i, mensaje_server** destino, int* id, int*
 			mensajesAppeared->cantidad_pos = 1;
 			mensajesAppeared_sub1 = malloc(2 * mensajesAppeared->cantidad_pos * sizeof(int));
 			mensajesAppeared->posiciones = mensajesAppeared_sub1;
-			mensajesAppeared->posiciones[0] = 0; mensajesAppeared->posiciones[1] = 1;
+			mensajesAppeared->posiciones[0] = 4; mensajesAppeared->posiciones[1] = 5;
 			*destino = mensajesAppeared;
 			//*id = APPEARED;
 			*id = 0;

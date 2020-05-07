@@ -56,5 +56,12 @@ int soy_primero_en_ready();
 void moverse_a(d_entrenador*, int, int);
 void bloquear(d_entrenador*, int);
 int recibir_respuesta_caught();
+void agregar_captura(d_entrenador*);
+int esta_en_el_limite(d_entrenador*);
+int cant_objetivos(d_entrenador*);
+int cant_pokemones_actuales(d_entrenador*, int);
+int esta_terminado(d_entrenador*);
+int se_encuentra_en_objetivo(char*, char**);
+void se_cumplio_objetivo(int*, char**, d_entrenador**, int);
 
 #endif /* SRC_TEAM_H_ */

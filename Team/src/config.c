@@ -11,7 +11,7 @@ char** temp1;
 d_entrenador* temp2;
 
 void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos){
-	int i, j, cont, cant_objetivos;
+	int i, j, cont, aux_cont, cant_objetivos;
 	cant_objetivos = 0;
 	char** vector;
 	char** posicion_entrenador = config_get_array_value(config, "POSICION_ENTRENADORES");
@@ -23,18 +23,11 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 	for(i=0;i<cant_posiciones;i++){
 		temp2[i].estado = 0;
+		temp2[i].estado_block = 1;
 		temp2[i].target = NULL;
 
 		temp2[i].posicion[0] = posicion_entrenador[i][0]-'0';
 		temp2[i].posicion[1] = posicion_entrenador[i][2]-'0';
-
-		vector = string_split(pokemones_actuales[i], "|");
-		cont = 0;
-		while(vector[cont] != NULL){cont++;}
-		temp2[i].pokemones_actuales = malloc(cont * sizeof(char*));
-		for(j=0;j<cont;j++){
-			temp2[i].pokemones_actuales[j] = vector[j];
-		}
 
 		vector = string_split(objetivo[i], "|");
 		cont = 0;
@@ -43,6 +36,17 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 		temp2[i].objetivo = malloc((cont+1) * sizeof(char*));
 		for(j=0;j<(cont+1);j++){
 			temp2[i].objetivo[j] = vector[j];
+		}
+
+		temp2[i].pokemones_actuales = malloc(cont * sizeof(char*));
+		vector = string_split(pokemones_actuales[i], "|");
+		aux_cont = 0;
+		while(vector[aux_cont] != NULL){aux_cont++;}
+		for(j=0;j<aux_cont;j++){
+			temp2[i].pokemones_actuales[j] = vector[j];
+		}
+		for(j=aux_cont;j<cont;j++){
+			temp2[i].pokemones_actuales[j] = NULL;
 		}
 	}
 	printf("La cantidad de objetivos es: %i\n", cant_objetivos);

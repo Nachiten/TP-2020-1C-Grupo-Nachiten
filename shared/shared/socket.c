@@ -7,14 +7,6 @@
 
 #include "socket.h"
 
-//mensaje de prueba----------------------------------------------------------------------------------------
-char* saludo()
-{
-	char mensaje[256] = "Hola soy un mensaje de prueba de los socket de la shared library\n.";
-	return mensaje;
-}
-//------------------------------------------------------------------------------------------------------------
-
 int establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
@@ -46,6 +38,7 @@ void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, int socket_clie
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
 	uint32_t size_serializado;
+
 
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);

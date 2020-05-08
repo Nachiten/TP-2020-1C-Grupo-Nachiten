@@ -35,7 +35,7 @@ int main(void) {
 	}
 
 	//Enviamos mensaje de prueba
-	mandar_mensaje(saludo(), TEST, socket);
+	mandar_mensaje("mensaje de prueba de mandar mensaje\n", TEST, socket);
 
 	uint32_t size;
 	//Para recibir mensajes (coming soon)

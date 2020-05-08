@@ -10,7 +10,7 @@
 #include "server.h"
 
 
-void iniciar_server(char ip, char puerto)
+void iniciar_server(char* ip, char* puerto)
 {
 	int socket_servidor;
 
@@ -20,9 +20,7 @@ void iniciar_server(char ip, char puerto)
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
-
     getaddrinfo(ip, puerto, &hints, &servinfo);
-
     for (p=servinfo; p != NULL; p = p->ai_next)
     {
         if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)

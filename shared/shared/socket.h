@@ -50,7 +50,7 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
-pthread_t thread;
+
 
 int establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUERTO y establece la conexion
 void cerrar_conexion(int socket); //se le da el socket y lo libera

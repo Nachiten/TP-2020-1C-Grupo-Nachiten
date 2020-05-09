@@ -11,6 +11,7 @@ int main(int cantArg, char* arg[]) {
 	char* mensaje_recibido;
 	int switcher = DEFAULT; //para usar el switch case.
 
+	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <------------------------------------------------------------------
 	if(cantArg < 2) //esto es por si ingresan menos argumentos de los necesarios.
 	{
 		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
@@ -18,9 +19,11 @@ int main(int cantArg, char* arg[]) {
 	}
 
 	//Dejo cargado un logger para loguear los eventos.
-	logger = cargarUnLog("Logs/Gameboy.log", "Gameboy");
+	//logger = cargarUnLog("Logs/Gameboy.log", "Gameboy");
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameBoy/Logs/Gameboy.log", "Gameboy");
 	//Cargo las configuraciones del .config
-	config = leerConfiguracion("../Configs/GameBoy.config");
+	//config = leerConfiguracion("../Configs/GameBoy.config");
+	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameBoy.config");
 
 	//NOTA: no usar arg[0] es el: "./GameBoy"
 	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
@@ -31,10 +34,7 @@ int main(int cantArg, char* arg[]) {
 				//aca trabajo con el 2do argumento que ingresa por terminal: arg[2]
 				if(strcmp(arg[2],"APPEARED_POKEMON") == 0)
 				{
-					puts("Hasta aca llego1");
-					//Este codigo rompe solo aca adentro, antes del switch ejecuta bien
 					IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
-					puts("Hasta aca llego2");
 					PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
 					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 					resultado_de_conexion(socket, logger, "TEAM");
@@ -66,6 +66,7 @@ int main(int cantArg, char* arg[]) {
 
 		case SUSCRIPTOR:
 				puts("Switch del suscriptor, falta implementar");
+				socket = establecer_conexion("127.0.0.1","99999");
 				break;
 
 		default:
@@ -81,7 +82,6 @@ int main(int cantArg, char* arg[]) {
 	//se supone que recibimos un mensaje diciendo que la conexion fue exitosa o algo asi
 	log_info(logger, mensaje_recibido);
 	*/
-
 
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);

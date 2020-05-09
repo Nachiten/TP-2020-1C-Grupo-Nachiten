@@ -15,6 +15,10 @@
 #include"shared/terminarPrograma.h"
 
 
+
+//logger = cargarUnLog("Logs/Gameboy.log", "Gameboy");
+//config = leerConfiguracion("../Configs/GameBoy.config");
+
 /*esto era para que reciba cosas por consola, esta mal, borrar?-------------------------------------------------------------
 	char* entrada1 = malloc(sizeof(char*)); //aca se guarda la primera orden que llega al gameboy
 	char* entrada2 = malloc(sizeof(char*)); //falta implementar

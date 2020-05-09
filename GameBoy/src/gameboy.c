@@ -19,10 +19,8 @@ int main(int cantArg, char* arg[]) {
 	}
 
 	//Dejo cargado un logger para loguear los eventos.
-	//logger = cargarUnLog("Logs/Gameboy.log", "Gameboy");
 	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameBoy/Logs/Gameboy.log", "Gameboy");
 	//Cargo las configuraciones del .config
-	//config = leerConfiguracion("../Configs/GameBoy.config");
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameBoy.config");
 
 	//NOTA: no usar arg[0] es el: "./GameBoy"

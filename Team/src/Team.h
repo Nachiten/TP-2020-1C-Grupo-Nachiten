@@ -39,7 +39,7 @@ typedef struct{
 } mensaje_server;
 
 //enum{APPEARED, LOCALIZED, CAUGHT};
-enum{EN_ESPERA, ACTIVO, EN_DEADLOCK};
+enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
 
 t_log* iniciar_logger(void);
 t_config* leer_config(void);
@@ -62,6 +62,12 @@ int cant_objetivos(d_entrenador*);
 int cant_pokemones_actuales(d_entrenador*, int);
 int esta_terminado(d_entrenador*);
 int se_encuentra_en_objetivo(char*, char**);
-void se_cumplio_objetivo(int*, char**, d_entrenador**, int);
+void se_cumplio_objetivo(int*, d_entrenador**, int);
+int se_encuentra_en_char(char*, char**, int);
+void eliminar_de_objetivo_actual(char*, char***, int);
+int cant_en_espera(d_entrenador*, int);
+int calcular_objetivos_reales(d_entrenador*, int);
+void actualizar_actuales(char**, char**, int, d_entrenador*, int);
+int calcular_objetivo_individual(d_entrenador*);
 
 #endif /* SRC_TEAM_H_ */

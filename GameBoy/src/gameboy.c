@@ -1,6 +1,6 @@
 #include "GameBoy.h"
 
-int main(void) {
+int main(int cantArg, char* arg[]) {
 
 	t_log* logger;
 	t_config* config;
@@ -9,30 +9,32 @@ int main(void) {
 	char* IP;
 	char* PUERTO;
 	char* mensaje_recibido;
-	char* entrada1 = malloc(sizeof(char*)); //aca se guarda la primera orden que llega al gameboy
-	char* entrada2 = malloc(sizeof(char*)); //falta implementar
 	int switcher = DEFAULT; //para usar el switch case.
+
+	if(cantArg < 2) //esto es por si ingresan menos argumentos de los necesarios.
+	{
+		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
+		return EXIT_FAILURE;
+	}
 
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog("Logs/Gameboy.log", "Gameboy");
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("../Configs/GameBoy.config");
 
-	//leo lo que llegue por consola/terminal.
-	scanf("%s %s", entrada1, entrada2);// EN DESARROLLO LAS ENTRADAS <------------------------------------------
-
-	switcher = valor_para_switch_case(entrada1); //segun la primera palabra que ingresa por consola, decide donde va a ir el switch case
+	//NOTA: no usar arg[0] es el: "./GameBoy"
+	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{
 		case TEAM:
-				puts(entrada2);
-				//aca trabajo con entrada2
-				if(strcmp(entrada2,"APPEARED_POKEMON") == 0)
+				//aca trabajo con el 2do argumento que ingresa por terminal: arg[2]
+				if(strcmp(arg[2],"APPEARED_POKEMON") == 0)
 				{
-					puts("Hasta aca llego");
+					puts("Hasta aca llego1");
 					//Este codigo rompe solo aca adentro, antes del switch ejecuta bien
 					IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
+					puts("Hasta aca llego2");
 					PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
 					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 					resultado_de_conexion(socket, logger, "TEAM");
@@ -40,6 +42,7 @@ int main(void) {
 				else
 				{
 					puts("Al módulo TEAM solo se le puede enviar el mensaje \"APPEARED_POKEMON\"");
+					socket = establecer_conexion("127.0.0.1","99999");
 				}
 				break;
 
@@ -82,8 +85,6 @@ int main(void) {
 
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);
-	free(entrada1);
-	free(entrada2);
 
 	return EXIT_SUCCESS;
 }

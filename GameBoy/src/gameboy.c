@@ -35,13 +35,16 @@ int main(void) {
 				IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
 				PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
 				socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
-				if(socket == -1)
+				resultado_de_conexion(socket, logger, "TEAM");
+
+				//aca trabajo con entrada2
+				if(strcmp(entrada2,"APPEARED_POKEMON") != 0)
 				{
-				log_warning(logger, "Conexión fallida con socket de TEAM");
+					puts("Al módulo TEAM solo se le puede enviar el mensaje \"APPEARED_POKEMON\"");
 				}
 				else
 				{
-				log_info(logger, "Conexión establecida con socket de TEAM");
+					puts("final feliz");
 				}
 				break;
 
@@ -49,14 +52,8 @@ int main(void) {
 				IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
 				PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
 				socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-				if(socket == -1)
-				{
-				log_warning(logger, "Conexión fallida con socket de BROKER");
-				}
-				else
-				{
-				log_info(logger, "Conexión establecida con socket de BROKER");
-				}
+				resultado_de_conexion(socket, logger, "BROKER");
+
 				//Enviamos mensaje de prueba
 				mandar_mensaje("mensaje de prueba de mandar mensaje\n", TEST, socket);
 				break;
@@ -66,14 +63,7 @@ int main(void) {
 				IP = config_get_string_value(config,"IP_GAMECARD"); //cargo la IP del Gamecard.
 				PUERTO = config_get_string_value(config,"PUERTO_GAMECARD"); //cargo el puerto del Gamecard.
 				socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
-				if(socket == -1)
-				{
-				log_warning(logger, "Conexión fallida con socket de GAMECARD");
-				}
-				else
-				{
-				log_info(logger, "Conexión establecida con socket de GAMECARD");
-				}
+				resultado_de_conexion(socket, logger, "GAMECARD");
 				break;
 
 		case SUSCRIPTOR:

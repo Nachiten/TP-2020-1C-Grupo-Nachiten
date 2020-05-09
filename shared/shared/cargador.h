@@ -22,7 +22,15 @@ typedef enum{
 	GAMECARD,
 	SUSCRIPTOR,
 	DEFAULT = -5
-}orden1;
+}input1;
+
+typedef enum{
+	CATCH_POKEMON,
+	CAUGHT_POKEMON,
+	GET_POKEMON,
+	APPEARED_POKEMON,
+	NEW_POKEMON,
+}input2;
 
 t_log* cargarUnLog(char*, char*); //tirarle la ruta del log y el nombre del log
 t_config* leerConfiguracion(char*); //tirarle la ruta del config

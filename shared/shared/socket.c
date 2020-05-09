@@ -29,6 +29,18 @@ int establecer_conexion(char* ip, char* puerto)
 	return socket_cliente;
 }
 
+void resultado_de_conexion(int socket, t_log* logger, char* modulo)
+{
+	if(socket == -1)
+	{
+	log_warning(logger, "Conexión fallida con socket de %s", modulo);
+	}
+	else
+	{
+	log_info(logger, "Conexión establecida con socket de %s", modulo);
+	}
+}
+
 void cerrar_conexion(int socket)
 {
 	close(socket);

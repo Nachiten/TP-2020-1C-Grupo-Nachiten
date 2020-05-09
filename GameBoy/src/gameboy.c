@@ -2,18 +2,13 @@
 
 int main(void) {
 
-	/*
-	int i = 1;
-	printf("Probando GameBoy %i", i);
-	*/
-
 	t_log* logger;
 	t_config* config;
 	int socket;
+	//NO TOCAR LOS MALLOC O EXPLOTA TODO
 	char* IP;
 	char* PUERTO;
 	char* mensaje_recibido;
-	//NO TOCAR LOS MALLOC O EXPLOTA TODO
 	char* entrada1 = malloc(sizeof(char*)); //aca se guarda la primera orden que llega al gameboy
 	char* entrada2 = malloc(sizeof(char*)); //falta implementar
 	int switcher = DEFAULT; //para usar el switch case.
@@ -23,7 +18,6 @@ int main(void) {
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("../Configs/GameBoy.config");
 
-
 	//leo lo que llegue por consola/terminal.
 	scanf("%s %s", entrada1, entrada2);// EN DESARROLLO LAS ENTRADAS <------------------------------------------
 
@@ -32,19 +26,20 @@ int main(void) {
 	switch(switcher)
 	{
 		case TEAM:
-				IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
-				PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
-				socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
-				resultado_de_conexion(socket, logger, "TEAM");
-
+				puts(entrada2);
 				//aca trabajo con entrada2
-				if(strcmp(entrada2,"APPEARED_POKEMON") != 0)
+				if(strcmp(entrada2,"APPEARED_POKEMON") == 0)
 				{
-					puts("Al módulo TEAM solo se le puede enviar el mensaje \"APPEARED_POKEMON\"");
+					puts("Hasta aca llego");
+					//Este codigo rompe solo aca adentro, antes del switch ejecuta bien
+					IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
+					PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
+					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
+					resultado_de_conexion(socket, logger, "TEAM");
 				}
 				else
 				{
-					puts("final feliz");
+					puts("Al módulo TEAM solo se le puede enviar el mensaje \"APPEARED_POKEMON\"");
 				}
 				break;
 

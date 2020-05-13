@@ -31,6 +31,4 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
-t_sub crear_sub(int socket);
-
 #endif /* SRC_BROKER_H_ */

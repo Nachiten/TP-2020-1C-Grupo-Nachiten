@@ -84,16 +84,11 @@ int main(void) {
 	//Arranco el Broker como servidor.
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
 
-	char* nombre = "TEST";
-	char* mensaje = "hola que tal\0";
-	t_cola test = crear_cola(nombre);
-	agregar_mensaje(mensaje,test);
-	t_list* lista = test.mensajes;
-	t_mensaje* prueba = list_get(lista,0);
-	printf("nombre sub: %s",prueba->mensaje);
+	printf("hola");
 
 	return EXIT_SUCCESS;
 }
+
 /*
 //prueba de agregar un sub a una lista
 	int a = 11111;

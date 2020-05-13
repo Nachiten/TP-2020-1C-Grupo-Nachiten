@@ -26,7 +26,7 @@ endif
 all: libshared.so
 
 dependents:
-	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Debug && $(MAKE) all
+	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Debug && $(MAKE) clean all
 
 # Tool invocations
 libshared.so: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Debug/libcommons.so

@@ -19,7 +19,7 @@
 #include<pthread.h>
 #include"socket.h"
 
-pthread_t thread;
+
 
 
 

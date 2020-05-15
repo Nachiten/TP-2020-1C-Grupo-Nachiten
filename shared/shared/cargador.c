@@ -16,5 +16,13 @@ t_log* cargarUnLog(char* ruta, char* nombreLog)
 //carga las configuraciones del archivo config que le pasamos.
 t_config* leerConfiguracion(char* ruta)
 {
-	return config_create(ruta);
+	t_config* unaConfig = config_create(ruta);
+
+	if (unaConfig == NULL) {
+		printf("No se ha podido leer la config en el path: %s", ruta);
+	} else {
+		printf("Se leyo correctamente la config en el path: %s", ruta);
+	}
+
+	return unaConfig;
 }

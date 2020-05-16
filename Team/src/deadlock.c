@@ -7,21 +7,36 @@
 
 #include "deadlock.h"
 
-int detectar_deadlock(d_entrenador* temporal, int cantidad, int* inicio, int* final, int* largo){
-	//int respuesta, i, j, k, cant_no_necesito, cant_quiero;
-	int respuesta = -1; *inicio = -1; *final = -1; *largo = -1;
-	/*
-	estructura_deadlock* vector_entrenadores =  malloc(cantidad * sizeof(estructura_deadlock*));
-
+void sacar_en_espera(deadlock_entrenador** temporal, d_entrenador* entrenadores, int cantidad){
+	int i, j, innecesarios, necesarios;
+	j = 0;
 	for(i=0;i<cantidad;i++){
-		cant_no_necesito = calcular_innecesarios(temporal[i]);
-		cant_quiero = calcular_objetivo_individual(temporal[i]);
-		vector_entrenadores[i].no_necesito = malloc();
-		vector_entrenadores[i].quiero = ;
-		vector_entrenadores[i].ubicacion = i;
+		if(entrenadores[i].estado == 3 && (entrenadores[i].estado_block == EN_ESPERA || entrenadores[i].estado_block == ACTIVO)){
+			(*temporal)[j].ubicacion = i;
+			calcular_innecesarios_y_necesarios(entrenadores[i], &innecesarios, &necesarios);
+			printf("entrenador %i: necesarios %i, innecesarios %i\n", i, necesarios, innecesarios);
+			j++;
+		}
 	}
-	*/
-
-
-	return respuesta;
 }
+
+calcular_innecesarios_y_necesarios(d_entrenador entrenador, int* innecesarios, int* necesarios){
+	int objetivos, actuales, i, cont;
+	objetivos = cant_objetivos(&entrenador);
+	actuales = cant_pokemones_actuales(&entrenador, objetivos);
+	cont = 0;
+	for(i=0;i<actuales;i++){
+		if(se_encuentra_en_char(entrenador.pokemones_actuales[i], entrenador.objetivo, objetivos) == 0){
+			cont++;
+		}
+	}
+	*innecesarios = cont;
+	cont=0;
+	for(i=0;i<objetivos;i++){
+		if(se_encuentra_en_char(entrenador.objetivo[i], entrenador.pokemones_actuales, actuales) == 0){
+			cont++;
+		}
+	}
+	*necesarios = cont;
+}
+

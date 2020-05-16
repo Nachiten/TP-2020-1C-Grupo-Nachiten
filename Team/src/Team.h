@@ -38,6 +38,12 @@ typedef struct{
 	int* posiciones;
 } mensaje_server;
 
+typedef struct{
+	int ubicacion;
+	char** no_necesito;
+	char** necesito;
+} deadlock_entrenador;
+
 //enum{APPEARED, LOCALIZED, CAUGHT};
 enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
 
@@ -69,5 +75,6 @@ int cant_en_espera(d_entrenador*, int);
 int calcular_objetivos_reales(d_entrenador*, int);
 void actualizar_actuales(char**, char**, int, d_entrenador*, int);
 int calcular_objetivo_individual(d_entrenador*);
+
 
 #endif /* SRC_TEAM_H_ */

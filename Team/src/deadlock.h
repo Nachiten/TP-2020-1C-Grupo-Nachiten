@@ -10,12 +10,8 @@
 
 #include "Team.h"
 
-typedef struct{
-	int ubicacion;
-	char** no_necesito;
-	char** quiero;
-} estructura_deadlock;
-
-int detectar_deadlock(d_entrenador*, int, int*, int*, int*);
+void sacar_en_espera(deadlock_entrenador**, d_entrenador*, int);
+void calcular_innecesarios_y_necesarios(d_entrenador, int*, int*);
+void tratar_deadlock(d_entrenador*, int);
 
 #endif /* SRC_DEADLOCK_H_ */

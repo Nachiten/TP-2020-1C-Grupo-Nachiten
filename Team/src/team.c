@@ -65,7 +65,7 @@ int main(void) {
 	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
 	mensaje_server mensaje;
 	d_entrenador* elegido;//entrenador elegido para capturar el pokemon del mensaje
-	int pos_elegido, temp1;
+	int pos_elegido, temp_cant;
 
 	while(objetivo == 1){
 		if(primero_de_cola(&mensaje) != -1){ //se extrae el primer mensaje de la colaMensajesTeam
@@ -114,8 +114,14 @@ int main(void) {
 					}
 				}
 			}
-			temp1 = cant_en_espera(entrenadores, cant_entrenadores);
-			printf("En espera: %i\n", temp1);
+			temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
+			printf("En espera: %i\n", temp_cant);
+			if( temp_cant > 1 && temp_cant >= cant_entrenadores/2){
+				deadlock_entrenador* temp_entrenadores = malloc(temp_cant * sizeof(deadlock_entrenador));
+				sacar_en_espera(&temp_entrenadores, entrenadores, cant_entrenadores);
+				//tratar_deadlock(temp_entrenadores, temp_cant);
+				free(temp_entrenadores);
+			}
 		}
 		else{objetivo = 0;
 			printf("Terminacion forzada\n");

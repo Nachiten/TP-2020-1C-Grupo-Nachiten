@@ -23,7 +23,7 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 	for(i=0;i<cant_posiciones;i++){
 		temp2[i].estado = 0;
-		temp2[i].estado_block = ACTIVO;
+		temp2[i].estado_block = 1;
 		temp2[i].target = NULL;
 
 		temp2[i].posicion[0] = posicion_entrenador[i][0]-'0';
@@ -49,7 +49,7 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 			temp2[i].pokemones_actuales[j] = NULL;
 		}
 	}
-	printf("La cantidad de objetivos global es: %i\n", cant_objetivos);
+	printf("La cantidad de objetivos es: %i\n", cant_objetivos);
 	temp1 = malloc((cant_objetivos+1) * sizeof(char*));
 	cont = 0;
 	for(i=0;i<cant_posiciones;i++){
@@ -57,8 +57,8 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 		//Sacar el 10 despues
 		while(temp2[i].objetivo[j] != NULL && j<10){
 			temp1[cont] = temp2[i].objetivo[j];
-			cont++;
 			j++;
+			cont++;
 		}
 	}
 	temp1[cont] = NULL;

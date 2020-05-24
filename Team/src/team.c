@@ -2,7 +2,8 @@
 
 int main(void) {
 
-	printf("Inicio de Team1\n");
+	printf("Inicio de Team\n");
+
 	int conexion;
 	char* ip;
 	char* puerto;
@@ -11,6 +12,7 @@ int main(void) {
 	t_config* config;
 	logger = iniciar_logger();
 	config = leer_config();
+
 	ip = config_get_string_value(config, "IP_BROKER");
 	if (ip == NULL){
 		log_error(logger, "No se ha podido leer la 'ip' de la config");
@@ -392,14 +394,3 @@ void actualizar_actuales(char** actual, char** global, int cantidad_objetivos, d
 	actual[k] = NULL;
 	//printf("k es %i\n", k);
 }
-
-
-
-
-
-
-
-
-
-
-

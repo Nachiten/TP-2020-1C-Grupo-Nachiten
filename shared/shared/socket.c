@@ -7,14 +7,6 @@
 
 #include "socket.h"
 
-//mensaje de prueba----------------------------------------------------------------------------------------
-char* saludo()
-{
-	char mensaje[256] = "Hola soy un mensaje de prueba de los socket de la shared library\n.";
-	return mensaje;
-}
-//------------------------------------------------------------------------------------------------------------
-
 int establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
@@ -35,6 +27,18 @@ int establecer_conexion(char* ip, char* puerto)
 	freeaddrinfo(server_info);
 
 	return socket_cliente;
+}
+
+void resultado_de_conexion(int socket, t_log* logger, char* modulo)
+{
+	if(socket == -1)
+	{
+	log_warning(logger, "Conexión fallida con socket de %s", modulo);
+	}
+	else
+	{
+	log_info(logger, "Conexión establecida con socket de %s", modulo);
+	}
 }
 
 void cerrar_conexion(int socket)
@@ -107,4 +111,3 @@ char* recibir_mensaje(int socket_cliente, int* size)
 	*/
 	return buffer;
 }
-

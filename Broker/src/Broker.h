@@ -8,15 +8,27 @@
 #ifndef SRC_BROKER_H_
 #define SRC_BROKER_H_
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<commons/log.h>
-#include<commons/string.h>
-#include<commons/config.h>
-#include<readline/readline.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/server.h"
+
+#define TEST_ID 1111 //hasta que se me ocurra una forma de crear los id
+
+typedef struct {
+	int sub;
+	int recibido;
+}t_sub;
+
+typedef struct {
+	int id;
+	char* mensaje; //es un string, no olvidar el \0 al final
+	t_list* subs; //lista de suscriptores
+}t_mensaje;
+
+typedef struct {
+	char* nombre; //a cambiar si encuentro algo mejor
+	t_list* mensajes; //lista de mensajes
+	t_list* subs; //lista de suscriptores
+}t_cola;
 
 #endif /* SRC_BROKER_H_ */

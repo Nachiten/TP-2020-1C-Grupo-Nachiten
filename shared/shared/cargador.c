@@ -16,13 +16,30 @@ t_log* cargarUnLog(char* ruta, char* nombreLog)
 //carga las configuraciones del archivo config que le pasamos.
 t_config* leerConfiguracion(char* ruta)
 {
-	t_config* unaConfig = config_create(ruta);
+	return config_create(ruta);
+}
 
-	if (unaConfig == NULL) {
-		printf("No se ha podido leer la config en el path: %s", ruta);
-	} else {
-		printf("Se leyo correctamente la config en el path: %s", ruta);
+//devuelve el valor para el switch case (modulo GAMEBOY)
+int valor_para_switch_case(char* input)
+{
+	int switcher;
+	if (strcmp(input,"TEAM") == 0)
+	{
+		switcher = TEAM;
 	}
 
-	return unaConfig;
+	if (strcmp(input,"BROKER") == 0)
+	{
+		switcher = BROKER;
+	}
+
+	if (strcmp(input,"GAMECARD") == 0)
+	{
+		switcher = GAMECARD;
+	}
+	if (strcmp(input,"SUSCRIPTOR") == 0)//mentira, es un placeholder, vamos a tener que tomar otra cosa por consola, en vez de "SUSCRIPTOR"
+	{
+		switcher = SUSCRIPTOR;
+	}
+	return switcher;
 }

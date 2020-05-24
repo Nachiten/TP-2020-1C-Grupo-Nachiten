@@ -53,13 +53,13 @@ typedef struct
 pthread_t thread;
 
 int establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUERTO y establece la conexion
+//dice el resultado de intentar conectarse a un modulo
+void resultado_de_conexion(int socket, t_log* logger, char* modulo); //enviarle el socket al que se intenta conectar, el logger y nombre del modulo al que intentamos conectar.
 void cerrar_conexion(int socket); //se le da el socket y lo libera
 void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje,  int socket_cliente); //se le da el mensaje, el tipo de mensaje que vamos a mandar y el socket que le dice donde mandarlo
 //se le da el paquete, el mensaje, que clase de mensaje es, y un int para que "anote" cuanto pesa el paquete despues de serializarlo. y deja listo para mandar
 void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado);
 char* recibir_mensaje(int socket_cliente, int* size); //recibe un mensaje
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
-
-
 
 #endif /* SHARED_SOCKET_H_ */

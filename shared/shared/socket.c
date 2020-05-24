@@ -7,7 +7,7 @@
 
 #include "socket.h"
 
-int establecer_conexion(char* ip, char* puerto)
+uint32_t establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
 	struct addrinfo *server_info;
@@ -19,7 +19,7 @@ int establecer_conexion(char* ip, char* puerto)
 
 	getaddrinfo(ip, puerto, &hints, &server_info);
 
-	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+	uint32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
 	printf("error");
@@ -29,7 +29,7 @@ int establecer_conexion(char* ip, char* puerto)
 	return socket_cliente;
 }
 
-void resultado_de_conexion(int socket, t_log* logger, char* modulo)
+void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo)
 {
 	if(socket == -1)
 	{
@@ -41,12 +41,12 @@ void resultado_de_conexion(int socket, t_log* logger, char* modulo)
 	}
 }
 
-void cerrar_conexion(int socket)
+void cerrar_conexion(uint32_t socket)
 {
 	close(socket);
 }
 
-void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, int socket_cliente)
+void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, uint32_t socket)
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
 	uint32_t size_serializado;
@@ -54,13 +54,43 @@ void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, int socket_clie
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
+	puts("antes del mensaje"); //de referencia para ver cuando crashea
 	//mando el mensaje
-	send(socket_cliente, paquete_serializado, size_serializado, 0);
+	send(socket, paquete_serializado, size_serializado, 0);
+	puts("despues del mensaje"); //de referencia para ver cuando crashea
 
 	//libero los malloc utilizados
 	eliminar_paquete(paquete_por_armar);
 	eliminar_paquete(paquete_serializado);
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+void mandar_Mensaje_Appeard(Appeared pokemon, codigo_operacion tipoMensaje, uint32_t socket)
+{
+	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete)); //el paquete que voy a mandar en el buffer, vacio
+	uint32_t size_serializado; //aca va a quedar el tamaño del paquete cuando este serializado
+
+	//meto todo lo que tiene que tener el paquete que voy a enviar para que serializar paquete lo arme y deje listo para enviar
+	void* paquete_serializado = serializar_paquete_appeared(paquete_por_armar, pokemon, tipoMensaje, &size_serializado);
+
+	puts("antes del mensaje"); //de referencia para ver cuando crashea
+	//mando el mensaje
+	send(socket, paquete_serializado, size_serializado, 0);
+	puts("despues del mensaje"); //de referencia para ver cuando crashea
+
+	//libero los malloc utilizados
+	eliminar_paquete(paquete_por_armar);
+	eliminar_paquete(paquete_serializado);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+void* serializar_paquete_appeared(t_paquete* paquete, Appeared pokemon, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+{
+	paquete->codigo_op = tipoMensaje;
+	paquete->buffer=malloc(sizeof(t_paquete));
+	paquete->buffer->size = sizeof(pokemon.nombrePokemon) + 1 + sizeof(pokemon.posPokemon.x) + sizeof(pokemon.posPokemon.y);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
 void eliminar_paquete(t_paquete* paquete)
 {
@@ -94,7 +124,7 @@ void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tip
 	return buffer_serializar; //devuelvo el mensaje listo para enviar
 }
 
-char* recibir_mensaje(int socket_cliente, int* size)
+char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
 	//esto por ahora queda asi porque todavia nos da igual el codigo de operacion, pero despues va a cambiar-------------------

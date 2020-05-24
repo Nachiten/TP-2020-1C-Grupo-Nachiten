@@ -20,9 +20,9 @@ t_config* leerConfiguracion(char* ruta)
 }
 
 //devuelve el valor para el switch case (modulo GAMEBOY)
-int valor_para_switch_case(char* input)
+uint32_t valor_para_switch_case(char* input)
 {
-	int switcher;
+	uint32_t switcher;
 	if (strcmp(input,"TEAM") == 0)
 	{
 		switcher = TEAM;

@@ -15,6 +15,9 @@ typedef enum{
 */
 //enum{NEW, READY, EXEC, BLOCKED, EXIT};
 
+//enum{APPEARED, LOCALIZED, CAUGHT};
+enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
+
 typedef struct{
 	int posicion[2];
 	int estado;
@@ -30,8 +33,14 @@ typedef struct{
 	int* posiciones;
 } mensaje_server;
 
-//enum{APPEARED, LOCALIZED, CAUGHT};
-t_config* leer_config(void);int, t_log*, t_config*);
+typedef struct{
+	int ubicacion;
+	char** no_necesito;
+	char** necesito;
+} deadlock_entrenador;
+
+t_log* iniciar_logger(void);
+t_config* leer_config(void);
 void terminar_programa(t_log*, t_config*);
 int calcular_elementos(char**);
 void copiar_contenido(char**, char**, int);
@@ -41,6 +50,5 @@ int valor_absoluto(int);
 void asignar_target(d_entrenador*, char*);
 void cambiar_estado_a(d_entrenador*, int);
 void moverse_a(d_entrenador*, int, int);
-vd bloquear(d_entrenador*, int);
-i recibir_respuesta_caught();
-vr en;nn
+void bloquear(d_entrenador*, int);
+int recibir_respuesta_caught();

@@ -46,7 +46,7 @@ void cerrar_conexion(uint32_t socket)
 	close(socket);
 }
 
-void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, uint32_t socket)
+void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, uint32_t socket)
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
 	uint32_t size_serializado;
@@ -64,31 +64,16 @@ void mandar_mensaje(char* mensaje, codigo_operacion tipoMensaje, uint32_t socket
 	eliminar_paquete(paquete_serializado);
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------
-void mandar_Mensaje_Appeard(Appeared pokemon, codigo_operacion tipoMensaje, uint32_t socket)
-{
-	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete)); //el paquete que voy a mandar en el buffer, vacio
-	uint32_t size_serializado; //aca va a quedar el tamaño del paquete cuando este serializado
-
-	//meto todo lo que tiene que tener el paquete que voy a enviar para que serializar paquete lo arme y deje listo para enviar
-	void* paquete_serializado = serializar_paquete_appeared(paquete_por_armar, pokemon, tipoMensaje, &size_serializado);
-
-	puts("antes del mensaje"); //de referencia para ver cuando crashea
-	//mando el mensaje
-	send(socket, paquete_serializado, size_serializado, 0);
-	puts("despues del mensaje"); //de referencia para ver cuando crashea
-
-	//libero los malloc utilizados
-	eliminar_paquete(paquete_por_armar);
-	eliminar_paquete(paquete_serializado);
-}
-//-----------------------------------------------------------------------------------------------------------------------------------------
-
-void* serializar_paquete_appeared(t_paquete* paquete, Appeared pokemon, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
 {
 	paquete->codigo_op = tipoMensaje;
+
+	switch(tipoMensaje){
+		case APPEARED:
+			break;
+	}
 	paquete->buffer=malloc(sizeof(t_paquete));
-	paquete->buffer->size = sizeof(pokemon.nombrePokemon) + 1 + sizeof(pokemon.posPokemon.x) + sizeof(pokemon.posPokemon.y);
+	paquete->buffer->size = sizeof((Appeared*)mensaje.nombrePokemon) + 1 + sizeof((Appeared*)mensaje.posPokemon.x) + sizeof((Appeared*)mensaje.posPokemon.y);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -98,7 +83,7 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+/*void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
 {
 	paquete->codigo_op = tipoMensaje;
 	paquete->buffer = malloc(sizeof(t_buffer));
@@ -122,7 +107,7 @@ void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tip
 
 	(*size_serializado) = size;
 	return buffer_serializar; //devuelvo el mensaje listo para enviar
-}
+} */
 
 char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size)
 {

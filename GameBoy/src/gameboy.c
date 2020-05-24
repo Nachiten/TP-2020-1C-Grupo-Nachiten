@@ -44,18 +44,14 @@ int main(int cantArg, char* arg[]) {
 						socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 						resultado_de_conexion(socket, logger, "TEAM");
 
-						Coords* cosaCoords;
 
-						cosaCoords->x = arg[4]; // pasar estos dos cositos por la funcion que los transforma a ints
-						cosaCoords->y = arg[5]; // se puede pasar a cosa->posPokemon->x = blablabla
+						Appeared* pokemonAppeared;
 
-						Appeared* cosa;
+						pokemonAppeared->nombrePokemon = arg[3];
+						pokemonAppeared->posPokemon.x = arg[4];// pasar estos dos cositos por la funcion que los transforma a ints
+						pokemonAppeared->posPokemon.y = arg[5];
 
-						cosa->nombrePokemon = arg[3];
-						cosa->posPokemon = cosaCoords;
-
-
-						mandar_mensaje("mensaje de prueba de mandar mensaje\n", APPEARED, socket);
+						mandar_mensaje(pokemonAppeared, APPEARED, socket);
 					}
 				}
 				else

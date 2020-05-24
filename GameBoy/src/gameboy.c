@@ -32,9 +32,9 @@ int main(int cantArg, char* arg[]) {
 				//aca trabajo con el 2do argumento que ingresa por terminal: arg[2]
 				if(strcmp(arg[2],"APPEARED_POKEMON") == 0)
 				{					
-					if(cantArg == 6)
+					if(cantArg != 6)
 					{
-						puts("la sintáxis correcta es: ./GameBoy TEAM APPEARED_POKEMON [POKEMON] [POSX] [POSY].");
+						puts("La sintáxis correcta es: ./GameBoy TEAM APPEARED_POKEMON [POKEMON] [POSX] [POSY]");
 						return EXIT_FAILURE;
 					}
 					else
@@ -44,13 +44,13 @@ int main(int cantArg, char* arg[]) {
 						socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 						resultado_de_conexion(socket, logger, "TEAM");
 
-
+						//Uso una estructura para guardar todos los datos del pokemon y mandarlo todo junto a la funcion mandar_mensaje
 						Appeared* pokemonAppeared;
-
 						pokemonAppeared->nombrePokemon = arg[3];
-						pokemonAppeared->posPokemon.x = arg[4];// pasar estos dos cositos por la funcion que los transforma a ints
-						pokemonAppeared->posPokemon.y = arg[5];
+						pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+						pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 
+						//mandamos el mensaje
 						mandar_mensaje(pokemonAppeared, APPEARED, socket);
 					}
 				}
@@ -68,7 +68,7 @@ int main(int cantArg, char* arg[]) {
 				resultado_de_conexion(socket, logger, "BROKER");
 
 				//Enviamos mensaje de prueba
-				mandar_mensaje("Mensaje de prueba\n", TEST, socket);
+				mandar_mensaje("1 2 3 probando...\n", TEST, socket);
 				break;
 
 		case GAMECARD:
@@ -94,7 +94,6 @@ int main(int cantArg, char* arg[]) {
 	uint32_t size;
 	//Para recibir mensajes (coming soon)
 	mensaje_recibido = recibir_mensaje(socket, size);
-	//se supone que recibimos un mensaje diciendo que la conexion fue exitosa o algo asi
 	log_info(logger, mensaje_recibido);
 	*/
 

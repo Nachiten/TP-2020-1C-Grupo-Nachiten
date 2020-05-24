@@ -8,7 +8,7 @@ int main(int cantArg, char* arg[]) {
 	//NO TOCAR LOS MALLOC O EXPLOTA TODO
 	char* IP;
 	char* PUERTO;
-	char* mensaje_recibido;
+	// char* mensaje_recibido;
 	int switcher = DEFAULT; //para usar el switch case.
 
 	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <------------------------------------------------------------------
@@ -36,6 +36,19 @@ int main(int cantArg, char* arg[]) {
 					PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
 					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 					resultado_de_conexion(socket, logger, "TEAM");
+
+					Coords* cosaCoords;
+
+					cosaCoords->x = arg[4];
+					cosaCoords->y = arg[5];
+
+					Appeared* cosa;
+
+					cosa->nombrePokemon = arg[3];
+					cosa->posPokemon = cosaCoords;
+
+
+					mandar_mensaje("mensaje de prueba de mandar mensaje\n", APPEARED, socket);
 				}
 				else
 				{

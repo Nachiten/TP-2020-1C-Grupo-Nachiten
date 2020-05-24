@@ -13,6 +13,7 @@
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
+#include"shared/estructuras.h"
 
 
 

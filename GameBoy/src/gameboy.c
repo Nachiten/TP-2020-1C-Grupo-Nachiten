@@ -4,12 +4,12 @@ int main(int cantArg, char* arg[]) {
 
 	t_log* logger;
 	t_config* config;
-	int socket;
+	uint32_t socket;
 	//NO TOCAR LOS MALLOC O EXPLOTA TODO
 	char* IP;
 	char* PUERTO;
-	// char* mensaje_recibido;
-	int switcher = DEFAULT; //para usar el switch case.
+	char* mensaje_recibido;
+	uint32_t switcher = DEFAULT; //para usar el switch case.
 
 	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <------------------------------------------------------------------
 	if(cantArg < 2) //esto es por si ingresan menos argumentos de los necesarios.
@@ -31,24 +31,32 @@ int main(int cantArg, char* arg[]) {
 		case TEAM:
 				//aca trabajo con el 2do argumento que ingresa por terminal: arg[2]
 				if(strcmp(arg[2],"APPEARED_POKEMON") == 0)
-				{
-					IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
-					PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
-					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
-					resultado_de_conexion(socket, logger, "TEAM");
+				{					
+					if(cantArg == 6)
+					{
+						puts("la sintáxis correcta es: ./GameBoy TEAM APPEARED_POKEMON [POKEMON] [POSX] [POSY].");
+						return EXIT_FAILURE;
+					}
+					else
+					{	
+						IP = config_get_string_value(config,"IP_TEAM"); //cargo la IP del Team.
+						PUERTO = config_get_string_value(config,"PUERTO_TEAM"); //cargo el puerto del Team.
+						socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
+						resultado_de_conexion(socket, logger, "TEAM");
 
-					Coords* cosaCoords;
+						Coords* cosaCoords;
 
-					cosaCoords->x = arg[4];
-					cosaCoords->y = arg[5];
+						cosaCoords->x = arg[4]; // pasar estos dos cositos por la funcion que los transforma a ints
+						cosaCoords->y = arg[5]; // se puede pasar a cosa->posPokemon->x = blablabla
 
-					Appeared* cosa;
+						Appeared* cosa;
 
-					cosa->nombrePokemon = arg[3];
-					cosa->posPokemon = cosaCoords;
+						cosa->nombrePokemon = arg[3];
+						cosa->posPokemon = cosaCoords;
 
 
-					mandar_mensaje("mensaje de prueba de mandar mensaje\n", APPEARED, socket);
+						mandar_mensaje("mensaje de prueba de mandar mensaje\n", APPEARED, socket);
+					}
 				}
 				else
 				{
@@ -64,7 +72,7 @@ int main(int cantArg, char* arg[]) {
 				resultado_de_conexion(socket, logger, "BROKER");
 
 				//Enviamos mensaje de prueba
-				mandar_mensaje("mensaje de prueba de mandar mensaje\n", TEST, socket);
+				mandar_mensaje("Mensaje de prueba\n", TEST, socket);
 				break;
 
 		case GAMECARD:

@@ -42,15 +42,14 @@ int main(void) {
 	mensaje_server* mensaje_rec;
 
 	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos_por_config);
-	//objetivo_actual = malloc(cant_objetivos * sizeof(char*));
-	//copiar_contenido(objetivo_actual, objetivo_global, cant_objetivos);
 	cant_objetivos = calcular_objetivos_reales(entrenadores, cant_entrenadores);
 	printf("La cantidad de objetivos reales es: %i\n", cant_objetivos);
 	objetivo_actual = malloc((cant_objetivos+1) * sizeof(char*));
 	actualizar_actuales(objetivo_actual, objetivo_global, cant_objetivos_por_config, entrenadores, cant_entrenadores);//saco los que ya tengo
 
 	inicializar_cola_mensajes_team();//cola que contiene los mensajes que llegan de otros modulos Broker/GameBoy
-	//en este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes harcodeados
+	// En este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes hardcodeados
+	// Este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
 	while(objetivo == 0){
 		if(i<5){
 			int id, idReal;
@@ -64,7 +63,7 @@ int main(void) {
 		else{objetivo = 1;}
 	}
 
-	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
+
 	mensaje_server mensaje;
 	d_entrenador* elegido;//entrenador elegido para capturar el pokemon del mensaje
 	int pos_elegido, temp_cant;

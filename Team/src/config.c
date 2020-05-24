@@ -10,11 +10,19 @@
 char** temp1;
 d_entrenador* temp2;
 
+/* Lee los datos de la config en los parametros pasados por referencia:
+PARAMS:
+@config : Archivo de config
+@entrenadores: lista de entrenadores
+@objetivo_global: Todos los pokemones objetivo
+@cant_entrenadores: Cantidad de entrenadores existentes
+@objetivos: Cantidad de objetivos
+*/
 void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos){
 	int i, j, cont, aux_cont, cant_objetivos;
 	cant_objetivos = 0;
 	char** vector;
-	char** posicion_entrenador = config_get_array_value(config, "POSICION_ENTRENADORES");
+	char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
 	char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
 	if((*posicion_entrenador) == NULL){printf("Soy un NULL\n");}

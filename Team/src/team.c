@@ -119,7 +119,11 @@ int main(void) {
 			if( temp_cant > 1 && temp_cant >= cant_entrenadores/2){
 				deadlock_entrenador* temp_entrenadores = malloc(temp_cant * sizeof(deadlock_entrenador));
 				sacar_en_espera(&temp_entrenadores, entrenadores, cant_entrenadores);
-				//tratar_deadlock(temp_entrenadores, temp_cant);
+				printf("\n");
+				printf("Inicio proceso de deteccion de deadlock\n");
+				tratar_deadlock(temp_entrenadores, temp_cant, entrenadores);
+				actualizar_estado(entrenadores, cant_entrenadores, temp_entrenadores, temp_cant, &objetivo);
+				liberar_temporal_comp(temp_entrenadores, temp_cant);
 				free(temp_entrenadores);
 			}
 		}

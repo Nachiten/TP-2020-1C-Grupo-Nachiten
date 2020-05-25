@@ -64,33 +64,48 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, uint32_t socket
 	eliminar_paquete(paquete_serializado);
 }
 
-//---------------------------VERSION SERIALIZAR CON SWITCH CASE (LINEAS 80 - )-----------------------------------------------------------
+//---------------------------VERSION SERIALIZAR CON SWITCH CASE (LINEAS 80 - 149)-----------------------------------------------------------
 void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
 {
+	uint32_t size_ya_armado = 0;
 	paquete->codigo_op = tipoMensaje;
 	paquete->buffer = malloc(sizeof(t_buffer));
 
 	void* buffer_serializar;//aca se va a guardar todo el choclo ya armado
 
 
-	switch(tipoMensaje){
+	switch(tipoMensaje){//TERMINAR EL SWITCH SI DECIDIMOS USAR ESTO
 		case 1:
-				buffer_serializar = serializar_paquete_appeared(paquete, mensaje, *size_serializado);
+				size_ya_armado = serializar_paquete_appeared(paquete, mensaje);
 			break;
 
 		case 404:
-				buffer_serializar = serializar_paquete_prueba(paquete, mensaje, *size_serializado);
+				size_ya_armado = serializar_paquete_prueba(paquete, mensaje);
 			break;
 	}
 
-	/* NOTA: hay codigo que se repite, eso habria que traerlo para aca pero estoy quemado, es, a partir de que se guardo todo en el buffer
-	 * del paquete, es decir cuando empiezo a meter todo a "buffer_serializar".
-	*/
-	return buffer_serializar; //devuelvo el mensaje armado para que lo envien
+	//ahora me preparo para meter todo en el buffer "posta", el choclo que va a enviar mandar_mensaje
+	buffer_serializar = malloc(size_ya_armado);
+	uint32_t desplazamiento = 0;
+
+	//meto en el buffer el tipo de mensaje que voy a mandar
+	memcpy(buffer_serializar  + desplazamiento, &(paquete->codigo_op), sizeof(paquete->codigo_op));
+	desplazamiento += sizeof(paquete->codigo_op);
+
+	//meto en el buffer el tamaño de todo lo que meti en el buffer del paquete que voy a mandar
+	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
+	desplazamiento += sizeof(paquete->buffer->size);
+
+	//por ultimo meto en el buffer todo lo que meti en el buffer del paquete
+	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+
+	(*size_serializado) = size_ya_armado;
+	return buffer_serializar; //devuelvo el mensaje listo para enviar
 }
 
-void* serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon, uint32_t *size_serializado)
+uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 {
+	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 	//meto nombre de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
@@ -108,49 +123,27 @@ void* serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon, uint32_
 	paquete->buffer->size = sizeof(pokemon->largoNombre) + 1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y);
 
 	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el si
-	uint32_t size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
-	//ahora me preparo para meter todo en el buffer "posta", el choclo que va a enviar mandar_mensaje
-	void* buffer_serializar = malloc(size);
-	desplazamiento = 0; //reciclo variable
-
-	//meto en el buffer el tipo de mensaje que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->codigo_op), sizeof(paquete->codigo_op));
-	desplazamiento += sizeof(paquete->codigo_op);
-
-	//meto en el buffer el tamaño de todo lo que meti en el buffer del paquete que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
-	desplazamiento += sizeof(paquete->buffer->size);
-
-	//por ultimo meto en el buffer todo lo que meti en el buffer del paquete
-	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-
-	(*size_serializado) = size;
-	return buffer_serializar; //devuelvo el mensaje listo para enviar
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
 }
 
-void* serializar_paquete_prueba (t_paquete* paquete, char* mensaje, uint32_t *size_serializado)
+uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 {
-	paquete->buffer->stream = mensaje;
+	uint32_t size = 0;
+	//siguiente linea es version vieja, esta mal?
+	//paquete->buffer->stream = mensaje;
+
+	//(version nueva) meto el mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream, &mensaje, sizeof(mensaje));
+
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = strlen(mensaje)+1;
-	uint32_t size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
-	void* buffer_serializar = malloc(size);
-	uint32_t desplazamiento = 0;
-
-	//meto en el buffer el tipo de mensaje que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->codigo_op), sizeof(paquete->codigo_op));
-	desplazamiento += sizeof(paquete->codigo_op);
-
-	//meto en el buffer el tamaño de todo lo que meti en el buffer del paquete que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
-	desplazamiento += sizeof(paquete->buffer->size);
-
-	//por ultimo meto en el buffer todo lo que meti en el buffer del paquete
-	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-
-	(*size_serializado) = size;
-	return buffer_serializar; //devuelvo el mensaje listo para enviar
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------

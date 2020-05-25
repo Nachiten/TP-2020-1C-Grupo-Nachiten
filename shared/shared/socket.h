@@ -64,7 +64,7 @@ char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size); //recibe un mens
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
 
 //serializar en prueba
-void* serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon, uint32_t *size_serializado);
-void* serializar_paquete_prueba(t_paquete* paquete, char* mensaje, uint32_t *size_serializado);
+uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon);
+uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje);
 
 #endif /* SHARED_SOCKET_H_ */

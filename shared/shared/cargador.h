@@ -35,12 +35,6 @@ typedef enum{
 
 t_log* cargarUnLog(char*, char*); //tirarle la ruta del log y el nombre del log
 t_config* leerConfiguracion(char*); //tirarle la ruta del config
-<<<<<<< HEAD
-int valor_para_switch_case(char* input); //tirarle el primer input del modulo GAMEBOY.
-=======
 uint32_t valor_para_switch_case(char* input); //tirarle el primer input del modulo GAMEBOY.
->>>>>>> mensajes
-
-
 
 #endif /* SHARED_CARGADOR_H_ */

@@ -29,11 +29,7 @@ uint32_t establecer_conexion(char* ip, char* puerto)
 	return socket_cliente;
 }
 
-<<<<<<< HEAD
-void resultado_de_conexion(int socket, t_log* logger, char* modulo)
-=======
 void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo)
->>>>>>> mensajes
 {
 	if(socket == -1)
 	{
@@ -45,11 +41,7 @@ void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo)
 	}
 }
 
-<<<<<<< HEAD
-void cerrar_conexion(int socket)
-=======
 void cerrar_conexion(uint32_t socket)
->>>>>>> mensajes
 {
 	close(socket);
 }

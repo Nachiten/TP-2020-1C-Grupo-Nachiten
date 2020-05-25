@@ -20,15 +20,9 @@ t_config* leerConfiguracion(char* ruta)
 }
 
 //devuelve el valor para el switch case (modulo GAMEBOY)
-<<<<<<< HEAD
-int valor_para_switch_case(char* input)
-{
-	int switcher;
-=======
 uint32_t valor_para_switch_case(char* input)
 {
 	uint32_t switcher;
->>>>>>> mensajes
 	if (strcmp(input,"TEAM") == 0)
 	{
 		switcher = TEAM;
@@ -49,8 +43,6 @@ uint32_t valor_para_switch_case(char* input)
 	}
 	return switcher;
 }
-<<<<<<< HEAD
-=======
 //---------------------------------------------------------------------------------------------------------------------
 int elevar_a(int a, int b) //no deberia (debatible) estar aca, pero paja de crear un archivo nuevo ahora solo para esta cosa
 {
@@ -89,4 +81,3 @@ int cambia_a_int(char* enString)
 
 	return enNumero;
 }
->>>>>>> mensajes

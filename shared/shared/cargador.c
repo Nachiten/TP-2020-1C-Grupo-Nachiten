@@ -20,9 +20,15 @@ t_config* leerConfiguracion(char* ruta)
 }
 
 //devuelve el valor para el switch case (modulo GAMEBOY)
+<<<<<<< HEAD
 int valor_para_switch_case(char* input)
 {
 	int switcher;
+=======
+uint32_t valor_para_switch_case(char* input)
+{
+	uint32_t switcher;
+>>>>>>> mensajes
 	if (strcmp(input,"TEAM") == 0)
 	{
 		switcher = TEAM;
@@ -43,3 +49,44 @@ int valor_para_switch_case(char* input)
 	}
 	return switcher;
 }
+<<<<<<< HEAD
+=======
+//---------------------------------------------------------------------------------------------------------------------
+int elevar_a(int a, int b) //no deberia (debatible) estar aca, pero paja de crear un archivo nuevo ahora solo para esta cosa
+{
+	int resultado = a;
+	int iterador = b;
+
+	if(b == 0)
+	{
+		resultado = 1;
+		return resultado;
+	}
+	else
+		{
+		while(iterador > 1)
+		{
+			resultado = resultado*a;
+			iterador--;
+		}
+	}
+	return resultado;
+}
+
+int cambia_a_int(char* enString)
+{
+	int enNumero = 0;
+	int longitud = 4;//harcodeado por ahora, poner strlen
+	int iterador = longitud-1;
+	int elevado = 0;
+
+	while(iterador >=0)
+	{
+		elevado = elevar_a(10, ((longitud - 1) - iterador));
+		enNumero = enNumero + ((enString[iterador] - 48) * elevado);
+		iterador--;
+	}
+
+	return enNumero;
+}
+>>>>>>> mensajes

@@ -27,13 +27,13 @@ endif
 all: libcommons.so
 
 dependents:
-	-cd /home/utnso/workspace/commons/Release && $(MAKE) all
+	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Release && $(MAKE) all
 
 # Tool invocations
-libcommons.so: $(OBJS) $(USER_OBJS) /home/utnso/workspace/commons/Release/libcommons.so
+libcommons.so: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Release/libcommons.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/commons/Release" -shared -o "libcommons.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Release" -shared -o "libcommons.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -43,6 +43,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-/home/utnso/workspace/commons/Release/libcommons.so:
+/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons/Release/libcommons.so:
 
 -include ../makefile.targets

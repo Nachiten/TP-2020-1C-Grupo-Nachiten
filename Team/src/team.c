@@ -10,8 +10,9 @@ int main(void) {
 
 	t_log* logger;
 	t_config* config;
-	logger = iniciar_logger();
 	config = leer_config();
+
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Team/Logs/Team.log", "TEAM");
 
 	ip = config_get_string_value(config, "IP_BROKER");
 	if (ip == NULL){

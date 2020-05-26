@@ -44,10 +44,10 @@ uint32_t valor_para_switch_case(char* input)
 	return switcher;
 }
 //---------------------------------------------------------------------------------------------------------------------
-int elevar_a(int a, int b) //no deberia (debatible) estar aca, pero paja de crear un archivo nuevo ahora solo para esta cosa
+uint32_t elevar_a(uint32_t a, uint32_t b) //no deberia (debatible) estar aca, pero paja de crear un archivo nuevo ahora solo para esta cosa
 {
-	int resultado = a;
-	int iterador = b;
+	uint32_t resultado = a;
+	uint32_t iterador = b;
 
 	if(b == 0)
 	{
@@ -65,12 +65,12 @@ int elevar_a(int a, int b) //no deberia (debatible) estar aca, pero paja de crea
 	return resultado;
 }
 
-int cambia_a_int(char* enString)
+uint32_t cambia_a_int(char* enString)
 {
-	int enNumero = 0;
-	int longitud = 4;//harcodeado por ahora, poner strlen
-	int iterador = longitud-1;
-	int elevado = 0;
+	uint32_t enNumero = 0;
+	uint32_t longitud = strlen(enString);
+	int iterador = longitud-1; //NO TOCAR EL PUTO INT O EXPLOTA TODO!! NO CAMBIAR A UINT32_T
+	uint32_t elevado = 0;
 
 	while(iterador >=0)
 	{

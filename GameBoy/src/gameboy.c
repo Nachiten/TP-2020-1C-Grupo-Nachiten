@@ -5,7 +5,7 @@ int main(int cantArg, char* arg[]) {
 	t_log* logger;
 	t_config* config;
 	uint32_t socket;
-	//NO TOCAR LOS MALLOC O EXPLOTA TODO
+	//NO TOCAR LOS MALLOC O EXPLOTA
 	char* IP;
 	char* PUERTO;
 	char* mensaje_recibido;

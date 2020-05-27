@@ -19,10 +19,6 @@
 #include<pthread.h>
 #include"socket.h"
 
-
-
-
-
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.
 void iniciar_server(char* ip, char* puerto); //sacar IP y PUERTO de los archivos de config.
 //Esta funcion recibe el socket que preparó iniciar_server y se queda escuchando a la espera de que lleguen mensajes

@@ -29,7 +29,7 @@ typedef struct NewPokemon
 
 	uint32_t cantPokemon;
 
-	uint32_t ID;
+	uint32_t ID; // ver si hay que sacar esto porque no se usaria
 	uint32_t corrID;
 }New;
 

@@ -10,8 +10,9 @@ int main(void) {
 
 	t_log* logger;
 	t_config* config;
-	logger = iniciar_logger();
 	config = leer_config();
+
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Team/Logs/Team.log", "TEAM");
 
 	ip = config_get_string_value(config, "IP_BROKER");
 	if (ip == NULL){
@@ -32,7 +33,7 @@ int main(void) {
 	conexion = 0;
 
 	d_entrenador* entrenadores;
-	int cant_entrenadores, cant_objetivos, i, myId, objetivo, flag_finalizacion;
+	int cant_entrenadores, cant_objetivos, i, myId, objetivo, flag_finalizacion, cant_objetivos_por_config;
 	objetivo = 0;
 	myId = 20;
 	i=0;
@@ -41,12 +42,15 @@ int main(void) {
 	char** objetivo_actual;
 	mensaje_server* mensaje_rec;
 
-	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos);
-	objetivo_actual = malloc(cant_objetivos * sizeof(char*));
-	copiar_contenido(objetivo_actual, objetivo_global, cant_objetivos);
-	inicializar_cola_mensajes_team();//cola que contiene los mensajes que llegan de otros modulos Broker/GameBoy
+	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos_por_config);
+	cant_objetivos = calcular_objetivos_reales(entrenadores, cant_entrenadores);
+	printf("La cantidad de objetivos reales es: %i\n", cant_objetivos);
+	objetivo_actual = malloc((cant_objetivos+1) * sizeof(char*));
+	actualizar_actuales(objetivo_actual, objetivo_global, cant_objetivos_por_config, entrenadores, cant_entrenadores);//saco los que ya tengo
 
-	//en este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes harcodeados
+	inicializar_cola_mensajes_team();//cola que contiene los mensajes que llegan de otros modulos Broker/GameBoy
+	// En este bucle lleno la cola con los mensajes recibidos si es que me sirven. PD: por ahora mensajes hardcodeados
+	// Este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
 	while(objetivo == 0){
 		if(i<5){
 			int id, idReal;
@@ -59,21 +63,20 @@ int main(void) {
 		}
 		else{objetivo = 1;}
 	}
-	//este bucle se va a borrar cuando se implemente la verdadera conexion con el Broker y la recepcion de mensajes
+
 
 	mensaje_server mensaje;
 	d_entrenador* elegido;//entrenador elegido para capturar el pokemon del mensaje
-	int pos_elegido;
+	int pos_elegido, temp_cant;
 
 	while(objetivo == 1){
 		if(primero_de_cola(&mensaje) != -1){ //se extrae el primer mensaje de la colaMensajesTeam
 			printf("Pokemon del mensaje: %s\n", mensaje.pokemon);
 			i = 0;
-			flag_finalizacion = 0;
-			//el flag_finalizacion cambia a 1 cuando el mensaje caught otorga un resultado positivo a la captura del pokemon, en caso contrario
-			//itera hasta que se terminen las posiciones que informa el mensaje sobre dicho pokemon
-			//por ahora esta asi, deberia iterar hasta al maximo que pueda siempre y cuando necesites mas instancias del mismo pokemon
-			while(flag_finalizacion == 0 && i<mensaje.cantidad_pos){
+			flag_finalizacion = se_encuentra_en_char(mensaje.pokemon, objetivo_actual, cant_objetivos);
+			//el flag_finalizacion decrementa cualquiera sea el mensaje caught
+			//itera hasta al maximo de cantidad de posiciones que pueda siempre y cuando necesites mas instancias del mismo pokemon
+			while(flag_finalizacion != 0 && i<mensaje.cantidad_pos){
 				//el vector posiciones contiene todas los datos de las posiciones en un unico vector
 				//osea la pos 0 y 1 del vector corresponden a la variable X e Y de la primera posicion informada
 				pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], &entrenadores, cant_entrenadores);
@@ -85,26 +88,45 @@ int main(void) {
 					//agregar_a_Ready(elegido);
 					//activar hilo entrenador;
 					if(soy_primero_en_ready() == 1){
-						cambiar_estado_a(elegido, 2);//exec
+						cambiar_estado_a(elegido, 2);//EXEC
 						moverse_a(elegido, mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1]);
-						bloquear(elegido, EN_ESPERA);//se bloquea a la espera de una respuesta o un deadlock en el futuro
+						bloquear(elegido, ESPERA_CAUGHT);
 						//enviar mensaje catch
 						//recibir mensaje caught
 						if(recibir_respuesta_caught() == 1){
+							eliminar_de_objetivo_actual(elegido->target, &objetivo_actual, cant_objetivos);
 							agregar_captura(elegido);
 							if(esta_en_el_limite(elegido) == 1){
-								if(esta_terminado(elegido) == 1){
+								printf("esta en el limite\n");
+								if(esta_terminado(elegido) == 1){printf("Termino\n");
 									cambiar_estado_a(elegido, 4);//EXIT
-									se_cumplio_objetivo(&objetivo, objetivo_global, &entrenadores, cant_entrenadores);
+									se_cumplio_objetivo(&objetivo, &entrenadores, cant_entrenadores);
+								}
+								else{printf("Pero no termino\n");
+									bloquear(elegido, EN_ESPERA);
 								}
 							}
-							else{bloquear(elegido, 1);}//ACTIVO
+							else{bloquear(elegido, ACTIVO);}//ACTIVO
 						}
-						else{bloquear(elegido, 1);}
-						flag_finalizacion = 1;
+						else{
+							bloquear(elegido, ACTIVO);
+						}
+						flag_finalizacion -= 1;
+						i++;
 					}
-					i++;
 				}
+			}
+			temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
+			printf("En espera: %i\n", temp_cant);
+			if( temp_cant > 1 && temp_cant >= cant_entrenadores/2){
+				deadlock_entrenador* temp_entrenadores = malloc(temp_cant * sizeof(deadlock_entrenador));
+				sacar_en_espera(&temp_entrenadores, entrenadores, cant_entrenadores);
+				printf("\n");
+				printf("Inicio proceso de deteccion de deadlock\n");
+				tratar_deadlock(temp_entrenadores, temp_cant, entrenadores);
+				actualizar_estado(entrenadores, cant_entrenadores, temp_entrenadores, temp_cant, &objetivo);
+				liberar_temporal_comp(temp_entrenadores, temp_cant);
+				free(temp_entrenadores);
 			}
 		}
 		else{objetivo = 0;
@@ -116,8 +138,8 @@ int main(void) {
 
 
 	liberarConfig();
-	eliminarColaMensajes();
-	//free(objetivo_actual);
+//	eliminarColaMensajes();
+	free(objetivo_actual);
 	terminar_programa(logger, config);
 
 	printf("Fin de Team\n");
@@ -163,11 +185,11 @@ void terminar_programa(t_log* logger, t_config* config){
 int calcular_mas_cerca_de(int pos_x, int pos_y, d_entrenador** entrenadores, int cantidad){
 	int i, distancia, distancia_minimo, pos_a_enviar;
 	pos_a_enviar = -1;
-	distancia_minimo = 50; //maximo imposible, despues cambiar para que sea la distancia al primer entrenador del vector
+	distancia_minimo = -1;
 	for(i=0;i<cantidad;i++){
-		if((*entrenadores)[i].estado == 0 || (*entrenadores)[i].estado == 3){
-			distancia = distancia_a(pos_x, pos_y, (*entrenadores)[i].posicion[0], (*entrenadores)[i].posicion[0]);
-			if(distancia < distancia_minimo){
+		if((*entrenadores)[i].estado == 0 || ((*entrenadores)[i].estado == 3 && (*entrenadores)[i].estado_block == ACTIVO)){
+			distancia = distancia_a(pos_x, pos_y, (*entrenadores)[i].posicion[0], (*entrenadores)[i].posicion[1]);
+			if(distancia < distancia_minimo || distancia_minimo == -1){
 				distancia_minimo = distancia;
 				pos_a_enviar = i;
 			}
@@ -234,10 +256,7 @@ void agregar_captura(d_entrenador* entrenador){
 
 int esta_en_el_limite(d_entrenador* entrenador){
 	int retorno = 0;
-	int cantidad_objetivos = cant_objetivos(entrenador);
-	if(cantidad_objetivos == cant_pokemones_actuales(entrenador, cantidad_objetivos)){
-		retorno = 1;
-	}
+	if(calcular_objetivo_individual(entrenador) == 0){retorno = 1;}
 	return retorno;
 }
 
@@ -257,23 +276,25 @@ int esta_terminado(d_entrenador* entrenador){
 	int i = 0;
 	int resultado = 0;
 	int cantidad = cant_objetivos(entrenador);
-	while(i<cantidad && se_encuentra_en_objetivo(entrenador->pokemones_actuales[i], entrenador->objetivo) == 1){i++;}
+	int actuales = cant_pokemones_actuales(entrenador, cantidad);
+	//while(i<cantidad && se_encuentra_en_objetivo(entrenador->pokemones_actuales[i], entrenador->objetivo) == 1){i++;}
+	while(i<cantidad && se_encuentra_en_char(entrenador->objetivo[i], entrenador->objetivo, cantidad) == se_encuentra_en_char(entrenador->objetivo[i], entrenador->pokemones_actuales, actuales)){i++;}
 	if(i == cantidad){resultado = 1;}
 	return resultado;
 }
 
-//podria probarse una alternativa que devuelva la cantidad de veces que se repite, podria ser util para la utilizacion de flag_finalizacion
+//alternativa se_encuentra_en_char implementada, mantener un tiempo por si llega a ser util pero despues eliminar esta funcion
 int se_encuentra_en_objetivo(char* pokemon, char** objetivo){
 	int i = 0;
 	int resultado = 0;
 	while(objetivo[i] != NULL && strcmp(objetivo[i], pokemon) != 0){i++;}
-	if(strcmp(objetivo[i], pokemon) == 0){
+	if(objetivo[i] != NULL){
 		resultado = 1;
 	}
 	return resultado;
 }
 
-void se_cumplio_objetivo(int* objetivo, char** objetivo_global, d_entrenador** entrenadores, int tamano){
+void se_cumplio_objetivo(int* objetivo, d_entrenador** entrenadores, int tamano){
 	int i = 0;
 	//int respuesta = -1;
 	while(i<tamano && (*entrenadores)[i].estado == 4){i++;}//4 = exit
@@ -285,21 +306,91 @@ void se_cumplio_objetivo(int* objetivo, char** objetivo_global, d_entrenador** e
 	//return respuesta;
 }
 
+int se_encuentra_en_char(char* pokemon, char** vector, int tamano){
+	int i = 0;
+	int resultado = 0;
+	while(i<tamano){
+		if(vector[i] != NULL && strcmp(vector[i], pokemon) == 0){
+				resultado++;
+		}
+		i++;
+	}
+	return resultado;
+}
 
+void eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
+	int i = 0;
+	int corte = 0;
+	while(i<tamano && corte == 0){
+		if((*objetivo)[i] != NULL && strcmp((*objetivo)[i], pokemon) == 0){
+			(*objetivo)[i] = NULL;
+			corte = 1;
+		}
+		i++;
+	}
+	if(corte == 0){printf("Error pokemon no se ecuentra en objetivo_actual\n");}//cambiar por el logger despues
+}
 
+int cant_en_espera(d_entrenador* entrenadores, int cantidad){
+	int cont, i;
+	cont = 0;
+	for(i=0;i<cantidad;i++){
+		if(entrenadores[i].estado == 3 && (entrenadores[i].estado_block == EN_ESPERA || entrenadores[i].estado_block == ACTIVO)){
+			cont++;
+		}
+	}
+	return cont;
+}
 
+int calcular_objetivos_reales(d_entrenador* entrenadores, int cantidad){
+	int i, cont;
+	cont = 0;
+	for(i=0;i<cantidad;i++){
+		cont = cont + calcular_objetivo_individual(&entrenadores[i]);
+	}
+	return cont;
+}
 
+int calcular_objetivo_individual(d_entrenador* entrenador){
+	int respuesta;
+	int objetivo = cant_objetivos(entrenador);
+	int actuales = cant_pokemones_actuales(entrenador, objetivo);
+	respuesta = objetivo - actuales;
+	return respuesta;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+void actualizar_actuales(char** actual, char** global, int cantidad_objetivos, d_entrenador* entrenadores, int cantidad){
+	int i, j, k, p, temp1, temp2, objetivos, diferencia;
+	k = 0;
+	for(i=0;i<cantidad_objetivos;i++){
+		temp1 = 0;
+		for(j=0;j<cantidad;j++){
+			objetivos = cant_objetivos(&entrenadores[j]);
+			temp1 = temp1 + se_encuentra_en_char(global[i], entrenadores[j].pokemones_actuales, objetivos);
+		}
+		if(temp1 == 0){
+			actual[k] = global[i];
+			k++;
+		}
+		else{
+			p = 0;
+			while(p != k && strcmp(actual[p], global[i]) != 0){
+				p++;
+			}
+			if(p == k){
+				temp2 = se_encuentra_en_char(global[i], global, cantidad_objetivos);
+				if(temp2 > temp1){
+					diferencia = temp2 - temp1;
+					while(diferencia != 0){
+						actual[k] = global[i];
+						k++;
+						diferencia-=1;
+					}
+				}
+				else{if(temp2 < temp1){printf("Inconsistencia en config sobre los pokemones");}}
+			}
+		}
+	}
+	actual[k] = NULL;
+	//printf("k es %i\n", k);
+}

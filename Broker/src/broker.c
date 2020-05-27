@@ -18,18 +18,18 @@ t_sub crear_sub(int socket){
 	return nuevo;
 }
 
-t_mensaje crear_mensaje(int id,char* mensaje){
+t_mensaje crear_mensaje(int id,void* mensaje){
 	t_mensaje nuevo;
 	nuevo.id = id;
-	nuevo.mensaje = malloc(sizeof(char));
+	nuevo.id_correlativo = 0;// a cambiar despues
+	nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
 	return nuevo;
 }
 
-t_cola crear_cola(char* nombre){
+t_cola crear_cola(void){
 	t_cola nuevo;
-	nuevo.nombre = nombre;
 	nuevo.mensajes = list_create();
 	nuevo.subs = list_create();
 	return nuevo;
@@ -49,9 +49,9 @@ void suscribir(t_sub* sub,t_cola cola){
 }
 
 //crea un mensaje de un string y lo agrega a una cola YA CREADA, el mensaje ya tiene los suscriptores que tenga esa cola
-void agregar_mensaje(char* mensaje, t_cola cola){
+void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola){
 	t_mensaje* new = malloc(sizeof(t_mensaje));
-	*new = crear_mensaje(TEST_ID,mensaje);
+	*new = crear_mensaje(TEST_ID,mensaje); // cambiar id
 	new->subs = cola.subs;
 	list_add(cola.mensajes,new);
 }
@@ -64,6 +64,95 @@ void agregar_sub(int socket, t_cola cola){
 	suscribir(new,cola);
 }
 
+//Todo esto es para que arranque el server y se quede escuchando mensajes.
+
+void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codigo_operacion tipoMensaje)
+{
+	char* mensaje; //esto es para almacenar el mensaje
+	memcpy(mensaje, mensaje_recibido,size);//lo almaceno para ya devolverlo como char*
+
+	mandar_mensaje(mensaje, tipoMensaje, socket_cliente);
+}
+
+void process_request(int cod_op, int socket_cliente) {
+	int size;
+	void* mensaje;
+		switch (cod_op) {
+		case APPEARED:
+			mensaje = recibir_mensaje(socket_cliente, &size); // aca queda el mensaje sin el cod_op ni el size
+			// poner funcion que desarme el paquete del resto del mensaje
+
+			agregar_mensaje(mensaje, cod_op, colaAppeared);
+			free(mensaje);
+			break;
+		case TEST:
+			mensaje = recibir_mensaje(socket_cliente, &size); // aca queda el mensaje sin el cod_op ni el size
+			devolver_mensaje(mensaje, size, socket_cliente, TEST);
+			free(mensaje);
+			break;
+		case DESCONEXION:
+			pthread_exit(NULL);
+		case ERROR:
+			pthread_exit(NULL);
+		}
+}
+
+void serve_client(int* socket)
+{
+	codigo_operacion cod_op;
+	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+		cod_op = -1;
+	process_request(cod_op, *socket);
+}
+
+void esperar_cliente(int socket_servidor)
+{
+	struct sockaddr_in dir_cliente;
+
+	int tam_direccion = sizeof(struct sockaddr_in);
+
+	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+
+	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
+	pthread_detach(thread);
+}
+
+void iniciar_server(char* ip, char* puerto)
+{
+	int socket_servidor;
+
+    struct addrinfo hints, *servinfo, *p;
+
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+    getaddrinfo(ip, puerto, &hints, &servinfo);
+    for (p=servinfo; p != NULL; p = p->ai_next)
+    {
+        if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
+            continue;
+
+        if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
+            close(socket_servidor);
+            continue;
+        }
+        break;
+    }
+
+	listen(socket_servidor, SOMAXCONN);
+
+    freeaddrinfo(servinfo);
+
+    while(1)
+    	esperar_cliente(socket_servidor);
+}
+
+
+
+
+
+// *************************************************
 int main(void) {
 
 	t_log* logger;
@@ -84,10 +173,11 @@ int main(void) {
 	//Arranco el Broker como servidor.
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
 
-	printf("hola");
-
 	return EXIT_SUCCESS;
 }
+// *************************************************
+
+
 
 /*
 //prueba de agregar un sub a una lista

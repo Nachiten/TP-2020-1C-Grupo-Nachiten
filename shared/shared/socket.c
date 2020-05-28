@@ -64,7 +64,6 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, uint32_t socket
 	eliminar_paquete(paquete_serializado);
 }
 
-//---------------------------VERSION SERIALIZAR CON SWITCH CASE (LINEAS 80 - 149)-----------------------------------------------------------
 void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
 {
 	uint32_t size_ya_armado = 0;
@@ -145,8 +144,6 @@ uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------
 
 void eliminar_paquete(t_paquete* paquete)
 {

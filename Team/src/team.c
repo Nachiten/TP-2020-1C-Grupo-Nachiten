@@ -10,9 +10,27 @@ int main(void) {
 
 	t_log* logger;
 	t_config* config;
-	config = leer_config();
 
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Team/Logs/Team.log", "TEAM");
+	//Cargo las configuraciones del .config
+	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team.config");
+
+	if (config == NULL){
+		printf("No se pudo leer la config\n");
+	} else {
+		printf("La config fue leida correctamente\n");
+	}
+
+	// Leer path del log
+	char* pathLogs = config_get_string_value(config,"LOG_FILE");
+
+	if (pathLogs == NULL){
+		printf("No se pudo leer el path del log de la config\n");
+	} else {
+		printf("El path del log fue leido correctamente\n");
+	}
+
+	//Dejo cargado un logger para loguear los eventos.
+	logger = cargarUnLog(pathLogs, "broker");
 
 	ip = config_get_string_value(config, "IP_BROKER");
 	if (ip == NULL){

@@ -73,7 +73,7 @@ uint32_t cambia_a_int(char* enString)
 
 void bytesRecibidos (int cantidad) //si, tiene que ser un int, o sino rompe, no cambiar
 {
-	printf("Recibí %d bytes sin crashear (Todavía).",cantidad);
+	printf("Recibí %d bytes sin crashear (Todavía).\n",cantidad);
 }
 
 

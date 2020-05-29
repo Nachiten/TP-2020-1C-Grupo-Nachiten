@@ -70,13 +70,28 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 
 	void* buffer_serializar;//aca se va a guardar todo el choclo ya armado
 
+	//TERMINAR EL SWITCH - ATENCION!! PARECE QUE HAY MAS TIPOS DE MENSAJE, VER A MEDIDA QUE LO VAYAMOS ARMANDO
+	switch(tipoMensaje){
+		case NEW:
+			break;
 
-	switch(tipoMensaje){//TERMINAR EL SWITCH SI DECIDIMOS USAR ESTO
-		case 1:
+		case APPEARED:
 				size_ya_armado = serializar_paquete_appeared(paquete, mensaje);
 			break;
 
-		case 404:
+		case GET:
+			break;
+
+		case LOCALIZED:
+			break;
+
+		case CATCH:
+			break;
+
+		case CAUGHT:
+			break;
+
+		case TEST:
 				size_ya_armado = serializar_paquete_prueba(paquete, mensaje);
 			break;
 	}
@@ -149,22 +164,72 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-char* recibir_mensaje(int socket_cliente, uint32_t* size)
+void* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
+	void* estructuraConDatos; //aca almaceno los datos del mensaje
 
 	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de todo lo que sigue en el buffer
 
-	char* buffer = malloc(size);
-	bytesRecibidos(recv(socket_cliente, &buffer, sizeof(buffer), MSG_WAITALL)); //guarda el resto del mensaje
+	void* infoDelMensaje = malloc(size); //preparo un lugar con el tamaño de lo que queda del mensaje
+	bytesRecibidos(recv(socket_cliente, &infoDelMensaje, sizeof(infoDelMensaje), MSG_WAITALL)); //guarda el resto del mensaje
 
-	return buffer;
+	estructuraConDatos = desserializar_mensaje(infoDelMensaje, codigo, size);
+
+	free(infoDelMensaje);
+	return estructuraConDatos;
 }
 
-void* desserializar_mensaje (t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
 {
+	void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
 
-	return 0;
+	switch(tipoMensaje)
+	{
+	case NEW:
+			break;
+
+		case APPEARED:
+			datosDeMensaje = malloc(sizeof(Appeared));
+			desserializar_appeared(restoDelMensaje, &datosDeMensaje, size);
+			break;
+
+		case GET:
+			break;
+
+		case LOCALIZED:
+			break;
+
+		case CATCH:
+			break;
+
+		case CAUGHT:
+			break;
+
+		case TEST:
+			datosDeMensaje = malloc(sizeof(char*));
+			datosDeMensaje;
+			break;
+	}
+
+	return datosDeMensaje;
+}
+
+void desserializar_appeared(void* restoDelMensaje, Appeared *estructura, uint32_t* size)
+{
+	uint32_t desplazamiento = 0;
+
+	//saco el nombre del pokemon
+	memcpy(estructura->nombrePokemon, (&restoDelMensaje + desplazamiento), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//saco la coordenada X
+	memcpy(estructura->posPokemon.x, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+
+	//saco la coordenada Y
+	memcpy(estructura->posPokemon.y, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
 }

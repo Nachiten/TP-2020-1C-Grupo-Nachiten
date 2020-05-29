@@ -25,13 +25,15 @@
 
 typedef enum
 {
-	NEW,
+	NEW = 1,
 	APPEARED,
 	GET,
 	LOCALIZED,
 	CATCH,
 	CAUGHT,
-	TEST = 404
+	TEST = 404,
+	ERROR = -1,
+	DESCONEXION = 0
 }codigo_operacion;
 
 typedef struct
@@ -53,13 +55,27 @@ uint32_t establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUER
 void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo); //enviarle el socket al que se intenta conectar, el logger y nombre del modulo al que intentamos conectar.
 void cerrar_conexion(uint32_t socket); //se le da el socket y lo libera
 void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje,  uint32_t socket_cliente); //se le da el mensaje, el tipo de mensaje que vamos a mandar y el socket que le dice donde mandarlo
-//se le da el paquete, el mensaje, que clase de mensaje es, y un int para que "anote" cuanto pesa el paquete despues de serializarlo. y deja listo para mandar
-void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado);
-char* recibir_mensaje(int socket_cliente, uint32_t* size); //recibe un mensaje
+void* recibir_mensaje(int socket_cliente, uint32_t* size); //recibe un mensaje
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
 
-//serializar en prueba
-uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon);
-uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje);
+
+//FUNCIONES SERIALIZAR
+
+//se le da el paquete, el "algo" que vamos a mandar, tipo de mensaje y un size para que "anote" cuanto pesa el paquete despues de serializarlo.
+void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado);//prepara paquete y deja listo para mandar
+
+//estas funciones las necesita serializar_paquete para saber que empaquetar
+
+uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon); //serializa un mensaje appeared para TEAM
+uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //serializa mensaje de prueba
+
+//FUNCIONES DESSERIALIZAR
+
+//esto convierte lo que queda del mensaje en una estructura con los datos acomodados y bien piola
+void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t size);
+
+//estas funciones las necesita desserializar_paquete para saber como manejar la info que le llega
+
+void desserializar_appeared(void* restoDelMensaje, Appeared *estructura, uint32_t* size);
 
 #endif /* SHARED_SOCKET_H_ */

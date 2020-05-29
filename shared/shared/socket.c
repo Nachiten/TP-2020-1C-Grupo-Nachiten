@@ -54,10 +54,8 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, uint32_t socket
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
-	puts("antes del mensaje"); //de referencia para ver cuando crashea
 	//mando el mensaje
 	send(socket, paquete_serializado, size_serializado, 0);
-	puts("despues del mensaje"); //de referencia para ver cuando crashea
 
 	//libero los malloc utilizados
 	eliminar_paquete(paquete_por_armar);
@@ -151,48 +149,22 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-/* ESTE ES EL ORIGINAL
-void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
-{
-	paquete->codigo_op = tipoMensaje;
-	paquete->buffer = malloc(sizeof(t_buffer));
-	paquete->buffer->stream = mensaje;
-	paquete->buffer->size = strlen(mensaje)+1;
-
-	uint32_t size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
-	void* buffer_serializar = malloc(size);
-	uint32_t desplazamiento = 0;
-
-	//meto en el buffer el tipo de mensaje que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->codigo_op), sizeof(paquete->codigo_op));
-	desplazamiento += sizeof(paquete->codigo_op);
-
-	//meto en el buffer el tamaño del mensaje que voy a mandar
-	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
-	desplazamiento += sizeof(paquete->buffer->size);
-
-	//por ultimo meto en el buffer el mensaje en si
-	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-
-	(*size_serializado) = size;
-	return buffer_serializar; //devuelvo el mensaje listo para enviar
-}
-*/
-
-char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size)
+char* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
-	//esto por ahora queda asi porque todavia nos da igual el codigo de operacion, pero despues va a cambiar-------------------
-	recv(socket_cliente, &codigo, sizeof(codigo), 0);
-	//ignorar esa linea por ahora ---------------------------------------------------------------------------------------------
-	recv(socket_cliente, &size, sizeof(size), MSG_WAITALL);
-	char* buffer = malloc(size);
-	recv(socket_cliente, &size, sizeof(size), MSG_WAITALL);
 
-	/*if(buffer[size-1] != '\0')
-	{
-		printf("ERROR! mensaje no reconocido.");
-	}
-	*/
+	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
+
+	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de todo lo que sigue en el buffer
+
+	char* buffer = malloc(size);
+	bytesRecibidos(recv(socket_cliente, &buffer, sizeof(buffer), MSG_WAITALL)); //guarda el resto del mensaje
+
 	return buffer;
+}
+
+void* desserializar_mensaje (t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+{
+
+	return 0;
 }

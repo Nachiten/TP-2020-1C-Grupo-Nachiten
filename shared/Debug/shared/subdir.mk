@@ -7,26 +7,29 @@ C_SRCS += \
 ../shared/cargador.c \
 ../shared/server.c \
 ../shared/socket.c \
-../shared/terminarPrograma.c 
+../shared/terminarPrograma.c \
+../shared/utilidades.c 
 
 OBJS += \
 ./shared/cargador.o \
 ./shared/server.o \
 ./shared/socket.o \
-./shared/terminarPrograma.o 
+./shared/terminarPrograma.o \
+./shared/utilidades.o 
 
 C_DEPS += \
 ./shared/cargador.d \
 ./shared/server.d \
 ./shared/socket.d \
-./shared/terminarPrograma.d 
+./shared/terminarPrograma.d \
+./shared/utilidades.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 shared/%.o: ../shared/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
-	gcc -I"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/commons" -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	gcc -I"/home/utnso/workspace/commons" -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

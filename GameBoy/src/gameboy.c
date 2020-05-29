@@ -5,23 +5,26 @@ int main(int cantArg, char* arg[]) {
 	t_log* logger;
 	t_config* config;
 	uint32_t socket;
-	//NO TOCAR LOS MALLOC O EXPLOTA
+	//NO TOCAR LOS MALLOC O EXPLOTA - (viejo, ignorar)
 	char* IP;
 	char* PUERTO;
-	char* mensaje_recibido;
+	char* LOG_PATH;
+	char* mensaje_recibido; //no implementado todavia
 	uint32_t switcher = DEFAULT; //para usar el switch case.
 
-	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <------------------------------------------------------------------
+	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <--------------------
 	if(cantArg < 2) //esto es por si ingresan menos argumentos de los necesarios.
 	{
 		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
 		return EXIT_FAILURE;
 	}
 
-	//Dejo cargado un logger para loguear los eventos.
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameBoy/Logs/Gameboy.log", "Gameboy");
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameBoy.config");
+	LOG_PATH = config_get_string_value(config,"LOG_FILE_PATH"); //cargo el path del archivo log
+	//Dejo cargado un logger para loguear los eventos.
+	logger = cargarUnLog(LOG_PATH, "Gameboy");
+
 
 	//NOTA: no usar arg[0] es el: "./GameBoy"
 	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
@@ -90,7 +93,7 @@ int main(int cantArg, char* arg[]) {
 				break;
 	}
 
-	/*
+	/* antiguo, posiblemente obsoleto, revisar antes querer usar
 	uint32_t size;
 	//Para recibir mensajes (coming soon)
 	mensaje_recibido = recibir_mensaje(socket, size);

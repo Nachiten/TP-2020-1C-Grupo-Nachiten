@@ -21,12 +21,7 @@
 #include<netdb.h>
 #include<string.h>
 #include"estructuras.h"
-
-/* ESTO CREO QUE NO HACE FALTA, SOLO ESTABA POR EL SERVER
-#include<pthread.h>
-*/
-
-char* saludo(); //volar a la mierda
+#include"utilidades.h"
 
 typedef enum
 {
@@ -60,7 +55,7 @@ void cerrar_conexion(uint32_t socket); //se le da el socket y lo libera
 void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje,  uint32_t socket_cliente); //se le da el mensaje, el tipo de mensaje que vamos a mandar y el socket que le dice donde mandarlo
 //se le da el paquete, el mensaje, que clase de mensaje es, y un int para que "anote" cuanto pesa el paquete despues de serializarlo. y deja listo para mandar
 void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado);
-char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size); //recibe un mensaje
+char* recibir_mensaje(int socket_cliente, uint32_t* size); //recibe un mensaje
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
 
 //serializar en prueba

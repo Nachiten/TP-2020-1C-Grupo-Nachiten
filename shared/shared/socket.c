@@ -119,9 +119,10 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 {
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
-	//meto nombre de pokemon en el buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
-	desplazamiento += sizeof(pokemon->largoNombre);
+
+	//meto nombre del pokemon en buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
+	desplazamiento += sizeof(pokemon->nombrePokemon);
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -132,7 +133,7 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 	desplazamiento += sizeof(pokemon->posPokemon.y);
 
 	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->largoNombre) + 1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y);
+	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y);
 
 	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el si
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
@@ -164,36 +165,45 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void* recibir_mensaje(int socket_cliente, uint32_t* size)
+void recibir_mensaje(void* estructura, int socket_cliente, uint32_t* size)
+//void* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
-	void* estructuraConDatos; //aca almaceno los datos del mensaje
+	//void* estructuraConDatos; //aca almaceno los datos del mensaje
 
 	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de todo lo que sigue en el buffer
 
+	//variable = desserializar
+
+	/*
 	void* infoDelMensaje = malloc(size); //preparo un lugar con el tamaño de lo que queda del mensaje
 	bytesRecibidos(recv(socket_cliente, &infoDelMensaje, sizeof(infoDelMensaje), MSG_WAITALL)); //guarda el resto del mensaje
+	*/
 
-	estructuraConDatos = desserializar_mensaje(infoDelMensaje, codigo, size);
+	//estructuraConDatos =
+	desserializar_mensaje(&estructura, codigo, size, socket_cliente);
+	//estructuraConDatos = desserializar_mensaje(infoDelMensaje, codigo, size);
 
-	free(infoDelMensaje);
-	return estructuraConDatos;
+	//free(infoDelMensaje);
+	//return estructuraConDatos;
 }
-
-void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t* size, int socket_cliente)
+//void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
 {
 	void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
 
 	switch(tipoMensaje)
 	{
-	case NEW:
+		case NEW:
 			break;
 
 		case APPEARED:
-			datosDeMensaje = malloc(sizeof(Appeared));
-			desserializar_appeared(restoDelMensaje, &datosDeMensaje, size);
+			estructura = malloc (sizeof(Appeared));
+			//datosDeMensaje = malloc(sizeof(Appeared));
+			//desserializar_appeared(restoDelMensaje, &datosDeMensaje, size);
+			desserializar_appeared(&estructura, size, socket_cliente);
 			break;
 
 		case GET:
@@ -214,13 +224,27 @@ void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje
 			break;
 	}
 
-	return datosDeMensaje;
+	//return datosDeMensaje;
 }
 
-void desserializar_appeared(void* restoDelMensaje, Appeared *estructura, uint32_t* size)
+//void desserializar_appeared(void* restoDelMensaje, Appeared* estructura, uint32_t* size)
+void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cliente)
 {
-	uint32_t desplazamiento = 0;
+	//uint32_t desplazamiento = 0;
 
+	estructura->nombrePokemon = malloc(sizeof(char*));
+
+	//saco el tamaño del nombre del pokemon
+	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+
+	//saco pos X
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x), MSG_WAITALL));
+
+	//saco pos Y
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y), MSG_WAITALL));
+
+
+	/*
 	//saco el nombre del pokemon
 	memcpy(estructura->nombrePokemon, (&restoDelMensaje + desplazamiento), sizeof(estructura->nombrePokemon));
 	desplazamiento += sizeof(estructura->nombrePokemon);
@@ -232,4 +256,5 @@ void desserializar_appeared(void* restoDelMensaje, Appeared *estructura, uint32_
 	//saco la coordenada Y
 	memcpy(estructura->posPokemon.y, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
+	*/
 }

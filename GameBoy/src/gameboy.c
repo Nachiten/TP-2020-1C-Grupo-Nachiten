@@ -70,7 +70,8 @@ int main(int cantArg, char* arg[]) {
 				break;
 
 		case BROKER:
-				if(strcmp(arg[2],"NEW_POKEMON") == 0) //IF DE TODAS LAS POSIBILIDADES, faltan: \"APPEARED_POKEMON\" \"CATCH_POKEMON\",	\"CUGHT_POKEMON\" o \"GET_POKEMON\"");
+				//si el 2do argumento es uno de los aceptados, empieza a trabajar, sino, sale automaticamente del switch
+				if(((strcmp(arg[2],"NEW_POKEMON") == 0)) || ((strcmp(arg[2],"APPEARED_POKEMON") == 0)) || ((strcmp(arg[2],"CATCH_POKEMON") == 0)) || ((strcmp(arg[2],"CAUGHT_POKEMON") == 0)) || ((strcmp(arg[2],"GET_POKEMON") == 0)))
 				{
 					IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
 					PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
@@ -100,6 +101,59 @@ int main(int cantArg, char* arg[]) {
 
 							//libero la estructura que acabo de crear
 							libero_estructura_New(nuevoPokemon);
+						}
+					}
+
+					if(strcmp(arg[2],"APPEARED_POKEMON") == 0)
+					{
+						if(cantArg != 7)
+						{
+							puts("La sintáxis correcta es: ./GameBoy BROKER APPEARED_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE_CORRELATIVO]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+							Appeared* pokemonAppeared = malloc(sizeof(Appeared));
+							pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
+
+							pokemonAppeared->nombrePokemon = arg[3];
+							pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+							pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+							pokemonAppeared->corrID = cambia_a_int(arg[6]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonAppeared, APPEARED, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_appeared(pokemonAppeared);
+						}
+					}
+
+					if(strcmp(arg[2],"CATCH_POKEMON") == 0)
+					{
+						if(cantArg != 6)
+						{
+							puts("La sintáxis correcta es: ./GameBoy BROKER CATCH_POKEMON [POKEMON] [POSX] [POSY]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+							Catch* pokemonCatch = malloc(sizeof(Catch));
+							pokemonCatch->nombrePokemon = malloc(sizeof(char*));
+
+							pokemonCatch->nombrePokemon = arg[3];
+							pokemonCatch->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+							pokemonCatch->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonCatch, CATCH, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_Catch(pokemonCatch);
 						}
 					}
 				}

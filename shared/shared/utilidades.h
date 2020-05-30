@@ -53,5 +53,7 @@ void bytesRecibidos (int32_t cantidad); //si, tiene que ser un int, o sino rompe
 void libero_estructura_appeared(Appeared* estructura);
 //libera el espacio reservado para usar una estructura New
 void libero_estructura_New(New* estructura);
+//libera el espacio reservado para usar una estructura Catch
+void libero_estructura_Catch(Catch* estructura);
 
 #endif /* SHARED_UTILIDADES_H_ */

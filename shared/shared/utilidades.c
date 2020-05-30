@@ -87,7 +87,11 @@ void libero_estructura_New(New* estructura)
 	free(estructura);
 }
 
-
+void libero_estructura_Catch(Catch* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
 
 
 

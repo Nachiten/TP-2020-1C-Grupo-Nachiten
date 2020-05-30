@@ -55,5 +55,9 @@ void libero_estructura_appeared(Appeared* estructura);
 void libero_estructura_New(New* estructura);
 //libera el espacio reservado para usar una estructura Catch
 void libero_estructura_Catch(Catch* estructura);
+//libera el espacio reservado para usar una estructura Caught
+void libero_estructura_Caught(Caught* estructura);
+//libera el espacio reservado para usar una estructura Get
+void libero_estructura_Get(Get* estructura);
 
 #endif /* SHARED_UTILIDADES_H_ */

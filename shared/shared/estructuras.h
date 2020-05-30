@@ -81,7 +81,7 @@ typedef struct CaughtPokemon // por hacer
 	uint32_t largoNombre;
 	char* nombrePokemon;
 
-	uint32_t pudoAtrapar; // BOOLEANO
+	int32_t pudoAtrapar; // BOOLEANO
 
 	uint32_t ID;
 	uint32_t corrID;

@@ -156,6 +156,55 @@ int main(int cantArg, char* arg[]) {
 							libero_estructura_Catch(pokemonCatch);
 						}
 					}
+
+					if(strcmp(arg[2],"CAUGHT_POKEMON") == 0)
+					{
+						if(cantArg != 5)
+						{
+							puts("La sintáxis correcta es: ./GameBoy BROKER CAUGHT_POKEMON [ID_MENSAJE_CORRELATIVO] [OK/FAIL]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar todos los datos del intento de caught y mandarlo junto a la funcion mandar_mensaje
+							Caught* pokemonCaught = malloc(sizeof(Caught));
+							pokemonCaught->nombrePokemon = malloc(sizeof(char*)); //wtf?
+
+							pokemonCaught->corrID = cambia_a_int(arg[3]); //cambiamos el string a int
+							pokemonCaught->pudoAtrapar = cambia_a_int(arg[4]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonCaught, CAUGHT, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_Caught(pokemonCaught);
+						}
+					}
+
+					if(strcmp(arg[2],"GET_POKEMON") == 0)
+					{
+						if(cantArg != 4)
+						{
+							puts("La sintáxis correcta es: ./GameBoy BROKER GET_POKEMON [POKEMON]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar el nombre del pokemon y mandarlo a la funcion mandar_mensaje
+							Get* pokemonGet = malloc(sizeof(Get));
+							pokemonGet->nombrePokemon = malloc(sizeof(char*));
+
+							pokemonGet->nombrePokemon = arg[3];
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonGet, GET, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_Get(pokemonGet);
+						}
+					}
 				}
 				else
 				{
@@ -186,7 +235,7 @@ int main(int cantArg, char* arg[]) {
 				break;
 	}
 
-	/* antiguo, posiblemente obsoleto, revisar antes querer usar
+	/* antiguo, posiblemente obsoleto, revisar antes de querer usar
 	uint32_t size;
 	//Para recibir mensajes (coming soon)
 	mensaje_recibido = recibir_mensaje(socket, size);

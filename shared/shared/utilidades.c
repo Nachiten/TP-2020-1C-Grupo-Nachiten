@@ -93,6 +93,18 @@ void libero_estructura_Catch(Catch* estructura)
 	free(estructura);
 }
 
+void libero_estructura_Caught(Caught* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_Get(Get* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
 
 
 /*este codigo es para que reciba cosas por consola, al final no se implemento

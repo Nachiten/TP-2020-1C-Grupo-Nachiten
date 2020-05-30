@@ -47,6 +47,11 @@ uint32_t cambia_a_int(char* enString);
 //-----------------------------------------------------------------------------
 
 //muestra por pantalla los bytes recibidos de RECV
-void bytesRecibidos (int cantidad); //si, tiene que ser un int, o sino rompe, no cambiar
+void bytesRecibidos (int32_t cantidad); //si, tiene que ser un int, o sino rompe, no cambiar
+
+//libera el espacio reservado para usar una estructura Appeared
+void libero_estructura_appeared(Appeared* estructura);
+//libera el espacio reservado para usar una estructura New
+void libero_estructura_New(New* estructura);
 
 #endif /* SHARED_UTILIDADES_H_ */

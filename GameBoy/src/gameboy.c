@@ -48,13 +48,18 @@ int main(int cantArg, char* arg[]) {
 						resultado_de_conexion(socket, logger, "TEAM");
 
 						//Uso una estructura para guardar todos los datos del pokemon y mandarlo todo junto a la funcion mandar_mensaje
-						Appeared* pokemonAppeared;
+						Appeared* pokemonAppeared = malloc(sizeof(Appeared));
+						pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
+
 						pokemonAppeared->nombrePokemon = arg[3];
 						pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 						pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 
 						//mandamos el mensaje
 						mandar_mensaje(pokemonAppeared, APPEARED, socket);
+
+						//libero la estructura que acabo de crear
+						libero_estructura_appeared(pokemonAppeared);
 					}
 				}
 				else
@@ -64,14 +69,45 @@ int main(int cantArg, char* arg[]) {
 				}
 				break;
 
-		case BROKER://Por ahora solo sirve como test de envio de mensajes
-				IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-				PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-				socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-				resultado_de_conexion(socket, logger, "BROKER");
+		case BROKER:
+				if(strcmp(arg[2],"NEW_POKEMON") == 0) //IF DE TODAS LAS POSIBILIDADES, faltan: \"APPEARED_POKEMON\" \"CATCH_POKEMON\",	\"CUGHT_POKEMON\" o \"GET_POKEMON\"");
+				{
+					IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+					PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+					socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+					resultado_de_conexion(socket, logger, "BROKER");
 
-				//Enviamos mensaje de prueba
-				mandar_mensaje("1 2 3 probando...\n", TEST, socket);
+					if(strcmp(arg[2],"NEW_POKEMON") == 0)
+					{
+						if(cantArg != 7)
+						{
+							puts("La sintáxis correcta es: ./GameBoy BROKER NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD]");
+							return EXIT_FAILURE;
+						}
+						else
+						{
+							//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+							New* nuevoPokemon = malloc(sizeof(New));
+							nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
+
+							nuevoPokemon->nombrePokemon = arg[3];
+							nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+							nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+							nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(nuevoPokemon, NEW, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_New(nuevoPokemon);
+						}
+					}
+				}
+				else
+				{
+					puts("Al módulo BROKER solo se le pueden enviar los siguientes tipos de mensaje: \"APPEARED_POKEMON\", \"NEW_POKEMON\",	\"CATCH_POKEMON\",	\"CUGHT_POKEMON\" o \"GET_POKEMON\"");
+					socket = establecer_conexion("127.0.0.1","99999");
+				}
 				break;
 
 		case GAMECARD:
@@ -80,9 +116,12 @@ int main(int cantArg, char* arg[]) {
 				PUERTO = config_get_string_value(config,"PUERTO_GAMECARD"); //cargo el puerto del Gamecard.
 				socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 				resultado_de_conexion(socket, logger, "GAMECARD");
+
+				//Enviamos mensaje de prueba
+				mandar_mensaje("1 2 3 probando...\n", TEST, socket);
 				break;
 
-		case SUSCRIPTOR:
+		case SUSCRIPTOR://Por ahora solo sirve como test de envio de mensajes
 				puts("Switch del suscriptor, falta implementar");
 				socket = establecer_conexion("127.0.0.1","99999");
 				break;

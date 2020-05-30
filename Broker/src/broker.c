@@ -11,9 +11,59 @@ typedef struct Entrenador{
 
 }Entrenador;
 
+
+
+// *************************************************
+int main(void) {
+
+	t_config* config;
+	int socket;
+	char* IP_BROKER;
+	char* PUERTO_BROKER;
+
+	colaNew.tipoCola = NEW;
+	colaAppeared.tipoCola = APPEARED;
+	colaGet.tipoCola = GET;
+	colaLocalized.tipoCola = LOCALIZED;
+	colaCatch.tipoCola = CATCH;
+	colaCaught.tipoCola = CAUGHT;
+
+	//Cargo las configuraciones del .config
+	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
+
+	if (config == NULL){
+		printf("No se pudo leer la config\n");
+	} else {
+		printf("La config fue leida correctamente\n");
+	}
+
+	// Leer path del log
+	char* pathLogs = config_get_string_value(config,"LOG_FILE");
+
+	if (pathLogs == NULL){
+		printf("No se pudo leer el path del log de la config\n");
+	} else {
+		printf("El path del log fue leido correctamente\n");
+	}
+
+	//Dejo cargado un logger para loguear los eventos.
+	//logger = cargarUnLog(pathLogs, "broker");
+
+	IP_BROKER = config_get_string_value(config,"IP_BROKER");
+	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
+
+	//Arranco el Broker como servidor.
+	iniciar_server(IP_BROKER, PUERTO_BROKER);
+
+	return EXIT_SUCCESS;
+}
+// *************************************************
+
+
+
 t_sub crear_sub(int socket){
 	t_sub nuevo;
-	nuevo.sub = socket;
+	nuevo.socket = socket;
 	nuevo.recibido = 0;
 	return nuevo;
 }
@@ -64,6 +114,26 @@ void agregar_sub(int socket, t_cola cola){
 	suscribir(new,cola);
 }
 
+//manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
+void mandar_mensaje_broker(t_cola cola){
+	int n1 = 0, n2 = 0;
+	if(cola.mensajes != NULL){
+		while(cola.mensajes->head != NULL){ //avanza hasta el final de la cola de mensajes
+			t_mensaje* mensaje = list_get(cola.mensajes,n1); // busca el n1 elemento de la lista mensajes
+			while(mensaje->subs->head != NULL){ //avanza hasta el final de la cola de subs
+				t_sub* sub = list_get(mensaje->subs,n2); // busca el n2 elemento de la lista subs
+				if(sub->recibido != 1){
+					mandar_mensaje(mensaje->mensaje,cola.tipoCola,sub->socket);
+				}
+				n2 += 1;
+				mensaje->subs->head = mensaje->subs->head->next;
+			}
+			n1 += 1;
+			cola.mensajes->head = cola.mensajes->head->next;
+		}
+	}
+}
+
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
 
 void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codigo_operacion tipoMensaje)
@@ -73,7 +143,12 @@ void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codi
 
 	mandar_mensaje(mensaje, tipoMensaje, socket_cliente);
 }
-
+// agregar logs al process_request
+/*
+t_log* logger;
+logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/broker.log","BROKER");
+log_info(logger, "");
+*/
 void process_request(int cod_op, int socket_cliente) {
 	int size;
 	void* mensaje;
@@ -147,37 +222,6 @@ void iniciar_server(char* ip, char* puerto)
     while(1)
     	esperar_cliente(socket_servidor);
 }
-
-
-
-
-
-// *************************************************
-int main(void) {
-
-	t_log* logger;
-	t_config* config;
-	int socket;
-	char* IP_BROKER;
-	char* PUERTO_BROKER;
-
-	//Dejo cargado un logger para loguear los eventos.
-	logger = cargarUnLog("Logs/broker.log", "broker");
-
-	//Cargo las configuraciones del .config
-	config = leerConfiguracion("../Configs/Broker.config");
-
-	IP_BROKER = config_get_string_value(config,"IP_BROKER");
-	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
-
-	//Arranco el Broker como servidor.
-	iniciar_server(IP_BROKER, PUERTO_BROKER);
-
-	return EXIT_SUCCESS;
-}
-// *************************************************
-
-
 
 /*
 //prueba de agregar un sub a una lista

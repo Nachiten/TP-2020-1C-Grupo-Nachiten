@@ -54,6 +54,7 @@ int main(int cantArg, char* arg[]) {
 						pokemonAppeared->nombrePokemon = arg[3];
 						pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 						pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+						pokemonAppeared->corrID = 0; //serializar NECESITA una ID CORRELATIVA para estandarizarlo
 
 						//mandamos el mensaje
 						mandar_mensaje(pokemonAppeared, APPEARED, socket);
@@ -95,6 +96,7 @@ int main(int cantArg, char* arg[]) {
 							nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 							nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 							nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
+							nuevoPokemon->ID = 0; //serializar NECESITA una ID para estandarizarlo
 
 							//mandamos el mensaje
 							mandar_mensaje(nuevoPokemon, NEW, socket);
@@ -148,6 +150,7 @@ int main(int cantArg, char* arg[]) {
 							pokemonCatch->nombrePokemon = arg[3];
 							pokemonCatch->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 							pokemonCatch->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+							pokemonCatch->ID = 0; //serializar NECESITA una ID para estandarizarlo
 
 							//mandamos el mensaje
 							mandar_mensaje(pokemonCatch, CATCH, socket);
@@ -197,6 +200,7 @@ int main(int cantArg, char* arg[]) {
 							pokemonGet->nombrePokemon = malloc(sizeof(char*));
 
 							pokemonGet->nombrePokemon = arg[3];
+							pokemonGet->ID = 0;//serializar NECESITA una ID para estandarizarlo
 
 							//mandamos el mensaje
 							mandar_mensaje(pokemonGet, GET, socket);
@@ -214,17 +218,102 @@ int main(int cantArg, char* arg[]) {
 				break;
 
 		case GAMECARD:
-				puts("Switch del gamecard, falta implementar");
-				IP = config_get_string_value(config,"IP_GAMECARD"); //cargo la IP del Gamecard.
-				PUERTO = config_get_string_value(config,"PUERTO_GAMECARD"); //cargo el puerto del Gamecard.
-				socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
-				resultado_de_conexion(socket, logger, "GAMECARD");
+				//si el 2do argumento es uno de los aceptados, empieza a trabajar, sino, sale automaticamente del switch
+				if(((strcmp(arg[2],"NEW_POKEMON") == 0)) || ((strcmp(arg[2],"CATCH_POKEMON") == 0)) || ((strcmp(arg[2],"GET_POKEMON") == 0)))
+				{
+					IP = config_get_string_value(config,"IP_GAMECARD"); //cargo la IP del Gamecard.
+					PUERTO = config_get_string_value(config,"PUERTO_GAMECARD"); //cargo el puerto del Gamecard.
+					socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
+					resultado_de_conexion(socket, logger, "GAMECARD");
 
-				//Enviamos mensaje de prueba
-				mandar_mensaje("1 2 3 probando...\n", TEST, socket);
+					if(strcmp(arg[2],"NEW_POKEMON") == 0)
+					{
+						if(cantArg != 8)
+						{
+							puts("La sintáxis correcta es: ./GameBoy GAMECARD NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD] [ID_MENSAJE]");
+							return EXIT_FAILURE;
+						}
+						else
+						{
+							//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+							New* nuevoPokemon = malloc(sizeof(New));
+							nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
+
+							nuevoPokemon->nombrePokemon = arg[3];
+							nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+							nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+							nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
+							nuevoPokemon->ID = cambia_a_int(arg[7]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(nuevoPokemon, NEW, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_New(nuevoPokemon);
+						}
+					}
+
+					if(strcmp(arg[2],"CATCH_POKEMON") == 0)
+					{
+						if(cantArg != 8)
+						{
+							puts("La sintáxis correcta es: ./GameBoy GAMECARD CATCH_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+							Catch* pokemonCatch = malloc(sizeof(Catch));
+							pokemonCatch->nombrePokemon = malloc(sizeof(char*));
+
+							pokemonCatch->nombrePokemon = arg[3];
+							pokemonCatch->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
+							pokemonCatch->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+							pokemonCatch->ID = cambia_a_int(arg[6]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonCatch, CATCH, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_Catch(pokemonCatch);
+						}
+					}
+
+					if(strcmp(arg[2],"GET_POKEMON") == 0)
+					{
+						if(cantArg != 5)
+						{
+							puts("La sintáxis correcta es: ./GameBoy GAMECARD GET_POKEMON [POKEMON] [ID_MENSAJE]");
+							return EXIT_FAILURE;
+						}
+
+						else
+						{
+							//Uso una estructura para guardar el nombre del pokemon y mandarlo a la funcion mandar_mensaje
+							Get* pokemonGet = malloc(sizeof(Get));
+							pokemonGet->nombrePokemon = malloc(sizeof(char*));
+
+							pokemonGet->nombrePokemon = arg[3];
+							pokemonGet->ID = cambia_a_int(arg[4]); //cambiamos el string a int
+
+							//mandamos el mensaje
+							mandar_mensaje(pokemonGet, GET, socket);
+
+							//libero la estructura que acabo de crear
+							libero_estructura_Get(pokemonGet);
+						}
+					}
+				}
+				else
+				{
+					puts("Al módulo GAMECARD solo se le pueden enviar los siguientes tipos de mensaje: \"NEW_POKEMON\",	\"CATCH_POKEMON\", o \"GET_POKEMON\"");
+					socket = establecer_conexion("127.0.0.1","99999");
+				}
+
 				break;
 
-		case SUSCRIPTOR://Por ahora solo sirve como test de envio de mensajes
+		case SUSCRIPTOR:
 				puts("Switch del suscriptor, falta implementar");
 				socket = establecer_conexion("127.0.0.1","99999");
 				break;
@@ -234,6 +323,12 @@ int main(int cantArg, char* arg[]) {
 				socket = establecer_conexion("127.0.0.1","99999");
 				break;
 	}
+
+	/* era para mandar mensaje de prueba, ya no esta implementado
+	//Enviamos mensaje de prueba
+	mandar_mensaje("1 2 3 probando...\n", TEST, socket);
+	*/
+
 
 	/* antiguo, posiblemente obsoleto, revisar antes de querer usar
 	uint32_t size;

@@ -69,6 +69,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon); //serializa un mensaje New
 uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon); //serializa un mensaje Appeared
 uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon); //serializar un mensaje Get
+uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon); //serializar un mensaje Catch
 uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //serializa mensaje de prueba
 
 //FUNCIONES DESSERIALIZAR

@@ -81,12 +81,14 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case GET:
+				size_ya_armado = serializar_paquete_get(paquete, mensaje);
 			break;
 
-		case LOCALIZED:
+		case LOCALIZED://esto no lo puedo hacer todavia porque no pertenece a Gameboy, no conozco formato del mensaje
 			break;
 
 		case CATCH:
+
 			break;
 
 		case CAUGHT:
@@ -193,6 +195,37 @@ uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon)
 
 	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->ID);
+
+	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
+uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)
+{
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto nombre del pokemon en buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
+	desplazamiento += sizeof(pokemon->nombrePokemon);
+
+	//meto coordenada X de pokemon en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
+	desplazamiento += sizeof(pokemon->posPokemon.x);
+
+	//meto coordenada Y de pokemon en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.y), sizeof(pokemon->posPokemon.y));
+	desplazamiento += sizeof(pokemon->posPokemon.y);
+
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
+	desplazamiento += sizeof(pokemon->ID);
+
+	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;

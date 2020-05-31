@@ -88,10 +88,11 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case CATCH:
-
+				size_ya_armado = serializar_paquete_catch(paquete, mensaje);
 			break;
 
 		case CAUGHT:
+				size_ya_armado = serializar_paquete_caught(paquete, mensaje);
 			break;
 
 		case TEST:
@@ -226,6 +227,29 @@ uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)
 
 	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID);
+
+	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
+uint32_t serializar_paquete_caught(t_paquete* paquete, Caught* pokemon)
+{
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
+	//meto el resultado del intento de atrapar al pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->pudoAtrapar), sizeof(pokemon->pudoAtrapar));
+	desplazamiento += sizeof(sizeof(pokemon->pudoAtrapar));
+
+	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(pokemon->corrID) + sizeof(pokemon->pudoAtrapar);
 
 	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;

@@ -49,6 +49,9 @@ void agregar_a_cola(mensaje_server* contenido){
 		cola_indices.fondo->next = nuevoMensaje;
 		cola_indices.fondo = nuevoMensaje;
 	}
+
+	free(nuevoMensaje);
+	free(nuevoVectorInt);
 }
 
 mensaje_server agarrar_primero(){

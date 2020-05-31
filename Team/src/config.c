@@ -21,11 +21,15 @@ PARAMS:
 void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos){
 	int i, j, cont, aux_cont, cant_objetivos;
 	cant_objetivos = 0;
+
+	// Implicitamente se esta haciendo 'malloc' de estas variables. Debe hacerse free al final luego de usarlas.
 	char** vector;
 	char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
 	char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
-	if((*posicion_entrenador) == NULL){printf("Soy un NULL\n");}
+
+	if((*posicion_entrenador) == NULL){printf("La posicion de los entrenadores es NULL\n");}
+
 	int cant_posiciones = calcular_elementos(posicion_entrenador);
 	printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
@@ -78,6 +82,11 @@ void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** o
 	*objetivo_global = temp1;
 	*objetivos = cant_objetivos;
 
+	// Liberando memoria
+	free(vector);
+	free(posicion_entrenador);
+	free(objetivo);
+	free(pokemones_actuales);
 }
 
 int calcular_elementos(char** puntero){

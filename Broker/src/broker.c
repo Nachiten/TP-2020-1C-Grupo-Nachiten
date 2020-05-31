@@ -21,12 +21,8 @@ int main(void) {
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
-	colaNew.tipoCola = NEW;
-	colaAppeared.tipoCola = APPEARED;
-	colaGet.tipoCola = GET;
-	colaLocalized.tipoCola = LOCALIZED;
-	colaCatch.tipoCola = CATCH;
-	colaCaught.tipoCola = CAUGHT;
+	inicializar_colas();
+	llenar_listaColas();
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -59,7 +55,77 @@ int main(void) {
 }
 // *************************************************
 
+void inicializar_colas(){
+	colaNew.tipoCola = NEW;
+	colaNew.mensajes = list_create();
+	colaNew.subs = list_create();
 
+	colaAppeared.tipoCola = APPEARED;
+	colaAppeared.mensajes = list_create();
+	colaAppeared.subs = list_create();
+
+	colaGet.tipoCola = GET;
+	colaGet.mensajes = list_create();
+	colaGet.subs = list_create();
+
+	colaLocalized.tipoCola = LOCALIZED;
+	colaLocalized.mensajes = list_create();
+	colaLocalized.subs = list_create();
+
+	colaCatch.tipoCola = CATCH;
+	colaCatch.mensajes = list_create();
+	colaCatch.subs = list_create();
+
+	colaCaught.tipoCola = CAUGHT;
+	colaCaught.mensajes = list_create();
+	colaCaught.subs = list_create();
+}
+
+// carga listaColas con todas las listas iniciales
+void llenar_listaColas(){
+	listaColas = malloc(sizeof(t_cola));
+	listaColas = list_create();
+
+	t_cola* aux = malloc(sizeof(t_cola));
+	t_cola* aux1 = malloc(sizeof(t_cola));
+	t_cola* aux2 = malloc(sizeof(t_cola));
+	t_cola* aux3 = malloc(sizeof(t_cola));
+	t_cola* aux4 = malloc(sizeof(t_cola));
+	t_cola* aux5 = malloc(sizeof(t_cola));
+
+	*aux = colaNew;
+	*aux1 = colaAppeared;
+	*aux2 = colaGet;
+	*aux3 = colaLocalized;
+	*aux4 = colaCatch;
+	*aux5 = colaCaught;
+
+	list_add(listaColas,aux);
+	list_add(listaColas,aux1);
+	list_add(listaColas,aux2);
+	list_add(listaColas,aux3);
+	list_add(listaColas,aux4);
+	list_add(listaColas,aux5);
+
+	free(aux);
+	free(aux1);
+	free(aux2);
+	free(aux3);
+	free(aux4);
+	free(aux5);
+}
+
+void loggear_propio(char* aLogear){
+	t_log* logger;
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/brokerPropio.log","BROKER");
+	log_info(logger, aLogear);
+}
+
+void loggear_obligatorio(char* aLogear){
+	t_log* logger;
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/broker.log","BROKER");
+	log_info(logger, aLogear);
+}
 
 t_sub crear_sub(int socket){
 	t_sub nuevo;
@@ -75,11 +141,13 @@ t_mensaje crear_mensaje(int id,void* mensaje){
 	nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
+	free(nuevo.mensaje);
 	return nuevo;
 }
 
-t_cola crear_cola(void){
+t_cola crear_cola(codigo_operacion codigo){
 	t_cola nuevo;
+	nuevo.tipoCola = codigo;
 	nuevo.mensajes = list_create();
 	nuevo.subs = list_create();
 	return nuevo;
@@ -87,13 +155,15 @@ t_cola crear_cola(void){
 
 //agrega el sub a todos los mensajes de la cola, si no hay mensajes no hace nada
 void suscribir(t_sub* sub,t_cola cola){
-	int contador = 0;
+	int n = 0;
 	if(cola.mensajes != NULL){
 		do {
-			t_mensaje* aux = list_get(cola.mensajes,contador);
+			t_mensaje* aux = malloc(sizeof(t_mensaje));
+			aux = list_get(cola.mensajes,n); // busca el n elemento de la lista mensajes
 			list_add(aux->subs,sub);
-			contador += 1;
+			n += 1;
 			cola.mensajes->head = cola.mensajes->head->next;
+			free(aux);
 		}while(cola.mensajes->head != NULL);
 	}
 }
@@ -104,6 +174,7 @@ void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola){
 	*new = crear_mensaje(TEST_ID,mensaje); // cambiar id
 	new->subs = cola.subs;
 	list_add(cola.mensajes,new);
+	free(new);
 }
 
 //agrega un suba una cola de mensajes y lo suscribe a los mensajes que tenga
@@ -112,6 +183,7 @@ void agregar_sub(int socket, t_cola cola){
 	*new = crear_sub(socket);
 	list_add(cola.subs,new);
 	suscribir(new,cola);
+	free(new);
 }
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
@@ -119,19 +191,126 @@ void mandar_mensaje_broker(t_cola cola){
 	int n1 = 0, n2 = 0;
 	if(cola.mensajes != NULL){
 		while(cola.mensajes->head != NULL){ //avanza hasta el final de la cola de mensajes
-			t_mensaje* mensaje = list_get(cola.mensajes,n1); // busca el n1 elemento de la lista mensajes
+			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+			mensaje = list_get(cola.mensajes,n1); // busca el n1 elemento de la lista mensajes
 			while(mensaje->subs->head != NULL){ //avanza hasta el final de la cola de subs
-				t_sub* sub = list_get(mensaje->subs,n2); // busca el n2 elemento de la lista subs
+				t_sub* sub = malloc(sizeof(t_sub));
+				sub = list_get(mensaje->subs,n2); // busca el n2 elemento de la lista subs
 				if(sub->recibido != 1){
 					mandar_mensaje(mensaje->mensaje,cola.tipoCola,sub->socket);
 				}
 				n2 += 1;
 				mensaje->subs->head = mensaje->subs->head->next;
+				free(sub);
 			}
 			n1 += 1;
 			cola.mensajes->head = cola.mensajes->head->next;
+			free(mensaje);
 		}
 	}
+}
+
+// te devuelve la posicion del mensaje con el id que le pasas, o un -4 en caso de no encontrar el sub en la cola
+int buscar_sub(int socket, t_mensaje* mensaje){
+	int n = 0;
+	while(mensaje->subs->head != NULL){
+			t_sub* sub = malloc(sizeof(t_sub));
+			sub = list_get(mensaje->subs,n); // busca el n elemento de la lista de subs
+			if(sub->socket == socket){
+				free(sub);
+				return n;
+			}
+			n += 1;
+			mensaje->subs->head = mensaje->subs->head->next;
+			free(sub);
+		}
+	return -4;
+}
+
+// te devuelve la posicion del mensaje con el id que le pasas, o un -2 en caso de no encontrar el mensaje en la cola
+int buscar_mensaje(int id_mensaje, t_cola* cola){
+	int n = 0;
+	while(cola->mensajes->head != NULL){
+		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+		mensaje = list_get(cola->mensajes,n); // busca el n elemento de la lista mensajes
+		if(mensaje->id == id_mensaje){
+			free(mensaje);
+			return n;
+		}
+		n += 1;
+		cola->mensajes->head = cola->mensajes->head->next;
+		free(mensaje);
+	}
+	return -2;
+}
+
+// te devuelve la posicion de la cola con el numero que le pasas, o un -3 en caso de no encontrarla
+int buscar_cola(codigo_operacion numeroCola){
+	int n = 0;
+	while(listaColas->head != NULL){
+		t_cola* cola = malloc(sizeof(t_cola));
+		cola = list_get(listaColas, n);// busca el n elemento de la lista de colas
+		if(cola->tipoCola == numeroCola){
+			free(cola);
+			return n;
+		}
+		n += 1;
+		listaColas->head = listaColas->head->next;
+		free(cola);
+	}
+	return -3;
+}
+
+//pone un 1 en recibido del sub
+void modificar_sub(int socket,t_cola* cola, int posicionMensaje){
+	t_sub* auxS = malloc(sizeof(t_sub));
+	t_mensaje* auxM = malloc(sizeof(t_mensaje));
+	int posicionSub;
+
+	auxM = list_get(cola->mensajes, posicionMensaje);
+	posicionSub = buscar_sub(socket, auxM);
+	auxS = list_get(auxM->subs,posicionSub);
+
+	if(posicionSub == -4){
+		char* aLogear = "no se pudo encontrar el sub";
+		loggear_propio(aLogear);
+	}
+	if(posicionSub != -4){
+		auxS->recibido = 1;
+	}
+	free(auxM);
+	free(auxS);
+}
+
+// altera el sub para confirmar
+int confirmacion_mensaje(int socket, confirmacionMensaje mensaje){
+	t_cola* auxC = malloc(sizeof(t_cola));
+	int n = mensaje.colaMensajes - 1;
+	int posicionMensaje;
+	int posicionCola = buscar_cola(n);
+	int error = 0;
+
+
+	if(posicionCola == -3){
+		char* aLogear = "no se pudo encontrar la cola";
+		error = 1;
+		loggear_propio(aLogear);
+	}
+	if(error != 0){
+		auxC = list_get(listaColas, posicionCola);
+		posicionMensaje = buscar_mensaje(mensaje.id_mensaje, auxC);
+
+		if(posicionMensaje == -2){
+			char* aLogear = "no se pudo encontrar el mensaje";
+			error = 1;
+			loggear_propio(aLogear);
+			free(auxC);
+			return -2;
+		}
+		modificar_sub(socket, &auxC, posicionMensaje);
+	}
+	free(auxC);
+	return -2;
 }
 
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
@@ -143,12 +322,7 @@ void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codi
 
 	mandar_mensaje(mensaje, tipoMensaje, socket_cliente);
 }
-// agregar logs al process_request
-/*
-t_log* logger;
-logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/broker.log","BROKER");
-log_info(logger, "");
-*/
+
 void process_request(int cod_op, int socket_cliente) {
 	int size;
 	void* mensaje;

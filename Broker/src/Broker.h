@@ -42,12 +42,20 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
+// pasar a estructuras.h
+typedef struct {
+	int id_mensaje;
+	codigo_operacion colaMensajes;
+}confirmacionMensaje;
+
 t_cola colaNew;
 t_cola colaAppeared;
 t_cola colaGet;
 t_cola colaLocalized;
 t_cola colaCatch;
 t_cola colaCaught;
+
+t_list* listaColas;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.
@@ -61,9 +69,13 @@ void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codi
 // ***********funciones de broker***********
 t_sub crear_sub(int socket);
 t_mensaje crear_mensaje(int id,void* mensaje);
-t_cola crear_cola(void);
+t_cola crear_cola(codigo_operacion codigo);
 void suscribir(t_sub* sub,t_cola cola);
 void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola);
 void agregar_sub(int socket, t_cola cola);
+int confirmacion_mensaje(int socket, confirmacionMensaje mensaje);
+void loggear_obligatorio(char* aLogear);
+void loggear_propio(char* aLogear);
+
 
 #endif /* SRC_BROKER_H_ */

@@ -313,6 +313,8 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 	switch(tipoMensaje)
 	{
 		case NEW:
+			estructura = malloc (sizeof(New));
+			desserializar_new(&estructura, size, socket_cliente);
 			break;
 
 		case APPEARED:
@@ -323,9 +325,11 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 			break;
 
 		case GET:
+			estructura = malloc (sizeof(Get));
+			desserializar_get(&estructura, size, socket_cliente);
 			break;
 
-		case LOCALIZED:
+		case LOCALIZED://esto no lo puedo hacer todavia porque no pertenece a Gameboy, no conozco formato del mensaje
 			break;
 
 		case CATCH:
@@ -343,6 +347,26 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 	//return datosDeMensaje;
 }
 
+void desserializar_new(New* estructura, uint32_t* size, int socket_cliente)
+{
+	estructura->nombrePokemon = malloc(sizeof(char*));
+
+	//saco el nombre del pokemon
+	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+
+	//saco pos X
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x), MSG_WAITALL));
+
+	//saco pos Y
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y), MSG_WAITALL));
+
+	//saco cantidad
+	bytesRecibidos(recv(socket_cliente, &(estructura->cantPokemon), sizeof(estructura->cantPokemon), MSG_WAITALL));
+
+	//saco ID del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
+}
+
 //void desserializar_appeared(void* restoDelMensaje, Appeared* estructura, uint32_t* size)
 void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cliente)
 {
@@ -350,7 +374,7 @@ void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cli
 
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
-	//saco el tamaño del nombre del pokemon
+	//saco el nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
 
 	//saco pos X
@@ -373,4 +397,15 @@ void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cli
 	memcpy(estructura->posPokemon.y, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
 	*/
+}
+
+void desserializar_get(Get* estructura, uint32_t* size, int socket_cliente)
+{
+	estructura->nombrePokemon = malloc(sizeof(char*));
+
+	//saco el nombre del pokemon
+	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+
+	//saco ID del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 }

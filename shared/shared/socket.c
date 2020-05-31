@@ -132,8 +132,12 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.y), sizeof(pokemon->posPokemon.y));
 	desplazamiento += sizeof(pokemon->posPokemon.y);
 
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
 	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y);
+	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el si
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;

@@ -12,8 +12,7 @@ int main(int cantArg, char* arg[]) {
 	char* mensaje_recibido; //no implementado todavia
 	uint32_t switcher = DEFAULT; //para usar el switch case.
 
-	//meter un 2 en el if para probar por terminal, un 0 para probar x eclipse <--------------------
-	if(cantArg < 2) //esto es por si ingresan menos argumentos de los necesarios.
+	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios.
 	{
 		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
 		return EXIT_FAILURE;

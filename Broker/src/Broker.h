@@ -67,6 +67,8 @@ void process_request(int cod_op, int cliente_fd);//esta cosa administra segun el
 void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codigo_operacion codigo_op);
 
 // ***********funciones de broker***********
+void inicializar_colas();
+void llenar_listaColas();
 t_sub crear_sub(int socket);
 t_mensaje crear_mensaje(int id,void* mensaje);
 t_cola crear_cola(codigo_operacion codigo);

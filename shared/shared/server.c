@@ -57,9 +57,10 @@ void esperar_cliente(int socket_servidor)
 
 void serve_client(int* socket)
 {
-	int cod_op;
-	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+	codigo_operacion cod_op;
+	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1) //cod_op recibe su valor al ejecutarse la condicion del if
 		cod_op = -1;
+
 	process_request(cod_op, *socket);
 }
 
@@ -72,9 +73,9 @@ void process_request(int cod_op, int cliente_fd) {
 			devolver_mensaje(msg, size, cliente_fd, TEST);
 			free(msg);
 			break;
-		case 0:
+		case 0: //por si se cierra la conexion
 			pthread_exit(NULL);
-		case -1:
+		case -1: //si es un error
 			pthread_exit(NULL);
 		}
 }

@@ -46,7 +46,7 @@ void cerrar_conexion(uint32_t socket)
 	close(socket);
 }
 
-void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, uint32_t socket)
+void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int socket)
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
 	uint32_t size_serializado;
@@ -75,11 +75,11 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 
 
 	switch(tipoMensaje){//TERMINAR EL SWITCH SI DECIDIMOS USAR ESTO
-		case 1:
+		case APPEARED:
 				size_ya_armado = serializar_paquete_appeared(paquete, mensaje);
 			break;
 
-		case 404:
+		case TEST:
 				size_ya_armado = serializar_paquete_prueba(paquete, mensaje);
 			break;
 	}
@@ -182,15 +182,16 @@ void* serializar_paquete(t_paquete* paquete, char* mensaje, codigo_operacion tip
 }
 */
 
-char* recibir_mensaje(uint32_t socket_cliente, uint32_t* size)
+char* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
-	//esto por ahora queda asi porque todavia nos da igual el codigo de operacion, pero despues va a cambiar-------------------
-	recv(socket_cliente, &codigo, sizeof(codigo), 0);
-	//ignorar esa linea por ahora ---------------------------------------------------------------------------------------------
-	recv(socket_cliente, &size, sizeof(size), MSG_WAITALL);
+
+	recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL); //saca el codigo de operacion
+
+	recv(socket_cliente, &size, sizeof(size), MSG_WAITALL); //saca el tamaño de todo lo que sigue en el buffer
+
 	char* buffer = malloc(size);
-	recv(socket_cliente, &size, sizeof(size), MSG_WAITALL);
+	recv(socket_cliente, &buffer, sizeof(buffer), MSG_WAITALL); //guarda el resto del mensaje
 
 	/*if(buffer[size-1] != '\0')
 	{

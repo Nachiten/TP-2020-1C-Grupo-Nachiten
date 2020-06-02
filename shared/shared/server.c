@@ -66,10 +66,11 @@ void serve_client(int* socket)
 
 void process_request(int cod_op, int cliente_fd) {
 	int size;
-	void* msg;
+	/*
 		switch (cod_op) {
 		case TEST:
-			msg = recibir_mensaje(cliente_fd, &size);
+			void* msg = malloc(sizeof(int));
+			//msg = recibir_mensaje(cliente_fd, &size);
 			devolver_mensaje(msg, size, cliente_fd, TEST);
 			free(msg);
 			break;
@@ -78,8 +79,10 @@ void process_request(int cod_op, int cliente_fd) {
 		case -1: //si es un error
 			pthread_exit(NULL);
 		}
+		*/
 }
 
+//BORRAR???
 void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codigo_operacion tipoMensaje)
 {
 	char* mensaje; //esto es para almacenar el mensaje

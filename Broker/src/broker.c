@@ -17,7 +17,7 @@ typedef struct Entrenador{
 int main(void) {
 
 	t_config* config;
-	int socket;
+	//int socket;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
@@ -127,14 +127,14 @@ void loggear_obligatorio(char* aLogear){
 	log_info(logger, aLogear);
 }
 
-t_sub crear_sub(int socket){
+t_sub crear_sub(int32_t socket){
 	t_sub nuevo;
 	nuevo.socket = socket;
 	nuevo.recibido = 0;
 	return nuevo;
 }
 
-t_mensaje crear_mensaje(int id,void* mensaje){
+t_mensaje crear_mensaje(int32_t id,void* mensaje){
 	t_mensaje nuevo;
 	nuevo.id = id;
 	nuevo.id_correlativo = 0;// a cambiar despues
@@ -155,7 +155,7 @@ t_cola crear_cola(codigo_operacion codigo){
 
 //agrega el sub a todos los mensajes de la cola, si no hay mensajes no hace nada
 void suscribir(t_sub* sub,t_cola cola){
-	int n = 0;
+	int32_t n = 0;
 	if(cola.mensajes != NULL){
 		do {
 			t_mensaje* aux = malloc(sizeof(t_mensaje));
@@ -178,7 +178,7 @@ void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola){
 }
 
 //agrega un suba una cola de mensajes y lo suscribe a los mensajes que tenga
-void agregar_sub(int socket, t_cola cola){
+void agregar_sub(int32_t socket, t_cola cola){
 	t_sub* new = malloc(sizeof(t_sub));
 	*new = crear_sub(socket);
 	list_add(cola.subs,new);
@@ -188,7 +188,7 @@ void agregar_sub(int socket, t_cola cola){
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensaje_broker(t_cola cola){
-	int n1 = 0, n2 = 0;
+	int32_t n1 = 0, n2 = 0;
 	if(cola.mensajes != NULL){
 		while(cola.mensajes->head != NULL){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
@@ -211,8 +211,8 @@ void mandar_mensaje_broker(t_cola cola){
 }
 
 // te devuelve la posicion del mensaje con el id que le pasas, o un -4 en caso de no encontrar el sub en la cola
-int buscar_sub(int socket, t_mensaje* mensaje){
-	int n = 0;
+int32_t buscar_sub(int32_t socket, t_mensaje* mensaje){
+	int32_t n = 0;
 	while(mensaje->subs->head != NULL){
 			t_sub* sub = malloc(sizeof(t_sub));
 			sub = list_get(mensaje->subs,n); // busca el n elemento de la lista de subs
@@ -228,8 +228,8 @@ int buscar_sub(int socket, t_mensaje* mensaje){
 }
 
 // te devuelve la posicion del mensaje con el id que le pasas, o un -2 en caso de no encontrar el mensaje en la cola
-int buscar_mensaje(int id_mensaje, t_cola* cola){
-	int n = 0;
+int32_t buscar_mensaje(int32_t id_mensaje, t_cola* cola){
+	int32_t n = 0;
 	while(cola->mensajes->head != NULL){
 		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,n); // busca el n elemento de la lista mensajes
@@ -245,8 +245,8 @@ int buscar_mensaje(int id_mensaje, t_cola* cola){
 }
 
 // te devuelve la posicion de la cola con el numero que le pasas, o un -3 en caso de no encontrarla
-int buscar_cola(codigo_operacion numeroCola){
-	int n = 0;
+int32_t buscar_cola(codigo_operacion numeroCola){
+	int32_t n = 0;
 	while(listaColas->head != NULL){
 		t_cola* cola = malloc(sizeof(t_cola));
 		cola = list_get(listaColas, n);// busca el n elemento de la lista de colas
@@ -262,10 +262,10 @@ int buscar_cola(codigo_operacion numeroCola){
 }
 
 //pone un 1 en recibido del sub
-void modificar_sub(int socket,t_cola* cola, int posicionMensaje){
+void modificar_sub(int32_t socket,t_cola* cola, int32_t posicionMensaje){
 	t_sub* auxS = malloc(sizeof(t_sub));
 	t_mensaje* auxM = malloc(sizeof(t_mensaje));
-	int posicionSub;
+	int32_t posicionSub;
 
 	auxM = list_get(cola->mensajes, posicionMensaje);
 	posicionSub = buscar_sub(socket, auxM);
@@ -283,12 +283,12 @@ void modificar_sub(int socket,t_cola* cola, int posicionMensaje){
 }
 
 // altera el sub para confirmar
-int confirmacion_mensaje(int socket, confirmacionMensaje mensaje){
+int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje){
 	t_cola* auxC = malloc(sizeof(t_cola));
-	int n = mensaje.colaMensajes - 1;
-	int posicionMensaje;
-	int posicionCola = buscar_cola(n);
-	int error = 0;
+	int32_t n = mensaje.colaMensajes - 1;
+	int32_t posicionMensaje;
+	int32_t posicionCola = buscar_cola(n);
+	int32_t error = 0;
 
 
 	if(posicionCola == -3){
@@ -315,16 +315,17 @@ int confirmacion_mensaje(int socket, confirmacionMensaje mensaje){
 
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
 
-void devolver_mensaje(void* mensaje_recibido, int size, int socket_cliente, codigo_operacion tipoMensaje)
+void devolver_mensaje(void* mensaje_recibido, int32_t size, int32_t socket_cliente, codigo_operacion tipoMensaje)
 {
-	char* mensaje; //esto es para almacenar el mensaje
+	char* mensaje = malloc(sizeof(char)); //esto es para almacenar el mensaje
 	memcpy(mensaje, mensaje_recibido,size);//lo almaceno para ya devolverlo como char*
 
 	mandar_mensaje(mensaje, tipoMensaje, socket_cliente);
+	free(mensaje);
 }
 
-void process_request(int cod_op, int socket_cliente) {
-	int size;
+void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
+	int32_t size;
 	void* mensaje;
 		switch (cod_op) {
 		case APPEARED:
@@ -346,7 +347,7 @@ void process_request(int cod_op, int socket_cliente) {
 		}
 }
 
-void serve_client(int* socket)
+void serve_client(int32_t* socket)
 {
 	codigo_operacion cod_op;
 	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
@@ -354,14 +355,14 @@ void serve_client(int* socket)
 	process_request(cod_op, *socket);
 }
 
-void esperar_cliente(int socket_servidor)
+void esperar_cliente(int32_t socket_servidor)
 {
 	struct sockaddr_in dir_cliente;
 
 	// Entero lindo para el socket (es un int)
 	socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
-	int socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 

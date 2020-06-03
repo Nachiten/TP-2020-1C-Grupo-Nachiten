@@ -14,7 +14,7 @@ typedef struct Entrenador{
 
 
 // *************************************************
-int main(void) {
+int32_t main(void) {
 
 	t_config* config;
 	//int socket;
@@ -313,9 +313,40 @@ int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje){
 	return -2;
 }
 
+// te devuelve el numero de cola al que se quiere suscribir el cliente
+int32_t a_suscribir(Suscripcion mensaje){
+	return mensaje.numeroCola;
+}
+// falta terminar, pero deberia funcionar para las pruebas de conexion
+void borrar_mensajes(t_cola cola){
+	int32_t n1 = 0, n2 = 0, n3 = 0;
+		if(cola.mensajes != NULL){
+			while(cola.mensajes->head != NULL){ //avanza hasta el final de la cola de mensajes
+				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+				mensaje = list_get(cola.mensajes,n1); // busca el n1 elemento de la lista mensajes
+				while(mensaje->subs->head != NULL){ //avanza hasta el final de la cola de subs
+					t_sub* sub = malloc(sizeof(t_sub));
+					sub = list_get(mensaje->subs,n2); // busca el n2 elemento de la lista subs
+					if(sub->recibido == 1){
+						n3 += 1;
+					}
+					n2 += 1;
+					mensaje->subs->head = mensaje->subs->head->next;
+					free(sub);
+				}
+				if(n2 == n3){
+
+				}
+				n1 += 1;
+				cola.mensajes->head = cola.mensajes->head->next;
+				free(mensaje);
+			}
+		}
+}
+
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
 
-void devolver_mensaje(void* mensaje_recibido, int32_t size, int32_t socket_cliente, codigo_operacion tipoMensaje)
+void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_cliente, codigo_operacion tipoMensaje)
 {
 	char* mensaje = malloc(sizeof(char)); //esto es para almacenar el mensaje
 	memcpy(mensaje, mensaje_recibido,size);//lo almaceno para ya devolverlo como char*
@@ -324,20 +355,74 @@ void devolver_mensaje(void* mensaje_recibido, int32_t size, int32_t socket_clien
 	free(mensaje);
 }
 
+/* dependiendo del codigo de operacion hace diferentes cosas
+ * si es el numero de las colas es que estas mandando un mensaje a esas colas y tiene que agregarse
+ * si es un tipo SUSCRIPCION te suscribe a la qcola que se desea
+ */
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
-	int32_t size;
+	uint32_t size;
 	void* mensaje;
 		switch (cod_op) {
+		case NEW:
+			mensaje = malloc(sizeof(New));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			agregar_mensaje(mensaje, cod_op, colaNew);
+			free(mensaje);
+			break;
 		case APPEARED:
-			mensaje = recibir_mensaje(socket_cliente, &size); // aca queda el mensaje sin el cod_op ni el size
-			// poner funcion que desarme el paquete del resto del mensaje
-
+			mensaje = malloc(sizeof(Appeared));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
 			agregar_mensaje(mensaje, cod_op, colaAppeared);
 			free(mensaje);
 			break;
-		case TEST:
-			mensaje = recibir_mensaje(socket_cliente, &size); // aca queda el mensaje sin el cod_op ni el size
-			devolver_mensaje(mensaje, size, socket_cliente, TEST);
+		case GET:
+			mensaje = malloc(sizeof(Get));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			agregar_mensaje(mensaje, cod_op, colaGet);
+			free(mensaje);
+			break;
+		case LOCALIZED:
+			mensaje = malloc(sizeof(Localized));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			agregar_mensaje(mensaje, cod_op, colaLocalized);
+			free(mensaje);
+			break;
+		case CATCH:
+			mensaje = malloc(sizeof(Catch));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			agregar_mensaje(mensaje, cod_op, colaCatch);
+			free(mensaje);
+			break;
+		case CAUGHT:
+			mensaje = malloc(sizeof(Caught));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			agregar_mensaje(mensaje, cod_op, colaCaught);
+			free(mensaje);
+			break;
+		case SUSCRIPCION:
+			mensaje = malloc(sizeof(Localized));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			int32_t numeroCola;
+			switch(numeroCola){
+			case NEW:
+				agregar_sub(socket, colaNew);
+				break;
+			case APPEARED:
+				agregar_sub(socket, colaAppeared);
+				break;
+			case GET:
+				agregar_sub(socket, colaGet);
+				break;
+			case LOCALIZED:
+				agregar_sub(socket, colaLocalized);
+				break;
+			case CATCH:
+				agregar_sub(socket, colaCatch);
+				break;
+			case CAUGHT:
+				agregar_sub(socket, colaCaught);
+				break;
+			}
 			free(mensaje);
 			break;
 		case DESCONEXION:

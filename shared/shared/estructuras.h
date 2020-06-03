@@ -14,7 +14,18 @@
 #include <netdb.h>
 #include <readline/readline.h>
 
+
 // Structs
+typedef struct {
+	int32_t id_mensaje;
+	int32_t colaMensajes;
+}confirmacionMensaje;
+
+// se tiene que mandar al broker para que sepa a que cola suscribir al cliente
+typedef struct{
+	int32_t numeroCola;
+}Suscripcion;
+
 typedef struct Coords{
 	uint32_t x;
 	uint32_t y;

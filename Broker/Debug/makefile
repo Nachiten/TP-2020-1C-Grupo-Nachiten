@@ -32,11 +32,7 @@ dependents:
 Broker: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug/libshared.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-<<<<<<< HEAD
 	gcc -L"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug" -o "Broker" $(OBJS) $(USER_OBJS) $(LIBS)
-=======
-	gcc -L"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug" -L"/home/utnso/workspace/commons/Debug" -o "Broker" $(OBJS) $(USER_OBJS) $(LIBS)
->>>>>>> Gameboy
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -42,12 +42,6 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
-// pasar a estructuras.h
-typedef struct {
-	int id_mensaje;
-	codigo_operacion colaMensajes;
-}confirmacionMensaje;
-
 t_cola colaNew;
 t_cola colaAppeared;
 t_cola colaGet;
@@ -64,7 +58,7 @@ void iniciar_server(char* ip, char* puerto); //sacar IP y PUERTO de los archivos
 void esperar_cliente(int32_t);
 void serve_client(int32_t *socket);//Está atento a si llega un mensaje o el socket falla?
 void process_request(codigo_operacion cod_op, int32_t cliente_fd);//esta cosa administra segun el tipo de mensaje que llegó, a quien llama para que lo abra.
-void devolver_mensaje(void* mensaje_recibido, int32_t size, int32_t socket_cliente, codigo_operacion codigo_op);
+void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_cliente, codigo_operacion codigo_op);
 
 // ***********funciones de broker***********
 void loggear_obligatorio(char* aLogear);
@@ -81,5 +75,6 @@ int32_t buscar_sub(int32_t socket, t_mensaje* mensaje);
 int32_t buscar_mensaje(int32_t id_mensaje, t_cola* cola);
 int32_t buscar_cola(codigo_operacion numeroCola);
 int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje);
+int32_t a_suscribir(Suscripcion mensaje);
 
 #endif /* SRC_BROKER_H_ */

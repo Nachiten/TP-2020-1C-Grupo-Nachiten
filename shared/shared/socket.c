@@ -7,7 +7,7 @@
 
 #include "socket.h"
 
-uint32_t establecer_conexion(char* ip, char* puerto)
+int32_t establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
 	struct addrinfo *server_info;
@@ -41,12 +41,12 @@ void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo)
 	}
 }
 
-void cerrar_conexion(uint32_t socket)
+void cerrar_conexion(int32_t socket)
 {
 	close(socket);
 }
 
-void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int socket)
+void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
 	uint32_t size_serializado;
@@ -281,7 +281,7 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, int socket_cliente, uint32_t* size)
+void recibir_mensaje(void* estructura, int32_t socket_cliente, uint32_t* size)
 //void* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
@@ -305,7 +305,7 @@ void recibir_mensaje(void* estructura, int socket_cliente, uint32_t* size)
 	//free(infoDelMensaje);
 	//return estructuraConDatos;
 }
-void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t* size, int socket_cliente)
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente)
 //void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
 {
 	void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
@@ -347,7 +347,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 	//return datosDeMensaje;
 }
 
-void desserializar_new(New* estructura, uint32_t* size, int socket_cliente)
+void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -368,7 +368,7 @@ void desserializar_new(New* estructura, uint32_t* size, int socket_cliente)
 }
 
 //void desserializar_appeared(void* restoDelMensaje, Appeared* estructura, uint32_t* size)
-void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cliente)
+void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket_cliente)
 {
 	//uint32_t desplazamiento = 0;
 
@@ -399,7 +399,7 @@ void desserializar_appeared(Appeared* estructura, uint32_t* size, int socket_cli
 	*/
 }
 
-void desserializar_get(Get* estructura, uint32_t* size, int socket_cliente)
+void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 

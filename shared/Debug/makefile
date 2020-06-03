@@ -25,22 +25,11 @@ endif
 # All Target
 all: libshared.so
 
-<<<<<<< HEAD
 # Tool invocations
 libshared.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
 	gcc -shared -o "libshared.so" $(OBJS) $(USER_OBJS) $(LIBS)
-=======
-dependents:
-	-cd /home/utnso/workspace/commons/Debug && $(MAKE) all
-
-# Tool invocations
-libshared.so: $(OBJS) $(USER_OBJS) /home/utnso/workspace/commons/Debug/libcommons.so
-	@echo 'Building target: $@'
-	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/commons/Debug" -shared -o "libshared.so" $(OBJS) $(USER_OBJS) $(LIBS)
->>>>>>> Gameboy
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -50,9 +39,5 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-<<<<<<< HEAD
-=======
-/home/utnso/workspace/commons/Debug/libcommons.so:
->>>>>>> Gameboy
 
 -include ../makefile.targets

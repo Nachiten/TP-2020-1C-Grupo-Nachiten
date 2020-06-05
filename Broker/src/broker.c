@@ -359,6 +359,8 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
  * si es el numero de las colas es que estas mandando un mensaje a esas colas y tiene que agregarse
  * si es un tipo SUSCRIPCION te suscribe a la qcola que se desea
  */
+
+//todo /agregar un desuscribir despues
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	uint32_t size;
 	void* mensaje;
@@ -400,9 +402,9 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			free(mensaje);
 			break;
 		case SUSCRIPCION:
-			mensaje = malloc(sizeof(Localized));
+			mensaje = malloc(sizeof(Suscripcion));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			int32_t numeroCola;
+			int32_t numeroCola = a_suscribir(mensaje);
 			switch(numeroCola){
 			case NEW:
 				agregar_sub(socket, colaNew);
@@ -485,46 +487,3 @@ void iniciar_server(char* ip, char* puerto)
     while(1)
     	esperar_cliente(socket_servidor);
 }
-
-/*
-//prueba de agregar un sub a una lista
-	int a = 11111;
-	char mensaje[] = "hola que tal\0";
-	t_sub* test = malloc(sizeof(t_sub));
-	*test= crear_sub(a);
-	t_list* subs = list_create();
-	list_add(subs,test);
-	t_sub* sub = list_get(subs,0);
-	printf("nombre sub: %i",sub->sub);
-
-//prueba para agregar un mensaje
-	int a = 11111;
-	char* mensaje = "hola que tal\0";
-	t_mensaje test = crear_mensaje(a,mensaje);
-	printf("nombre sub: %s",test.mensaje);
-
-//prueba de cola y agregar mensaje
-	char* nombre = "TEST";
-	char* mensaje = "hola que tal\0";
-	t_cola test = crear_cola(nombre);
-	agregar_mensaje(mensaje,test);
-	t_list* lista = test.mensajes;
-	t_mensaje* prueba = list_get(lista,0);
-	printf("nombre sub: %s",prueba->mensaje);
- */
-
-/*
-t_log* iniciar_logger(void)
-{
-	t_log *logger = log_create("Logs/broker.log", "Broker", 1, LOG_LEVEL_INFO);
-
-	if(logger == NULL){
-		printf("No pude crear el logger\n");
-		exit(1);
-	}
-
-	return logger;
-}
-*/
-
-

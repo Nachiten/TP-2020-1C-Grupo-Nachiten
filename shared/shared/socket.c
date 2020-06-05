@@ -19,7 +19,7 @@ int32_t establecer_conexion(char* ip, char* puerto)
 
 	getaddrinfo(ip, puerto, &hints, &server_info);
 
-	uint32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+	int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
 	printf("error");
@@ -29,7 +29,7 @@ int32_t establecer_conexion(char* ip, char* puerto)
 	return socket_cliente;
 }
 
-void resultado_de_conexion(uint32_t socket, t_log* logger, char* modulo)
+void resultado_de_conexion(int32_t socket, t_log* logger, char* modulo)
 {
 	if(socket == -1)
 	{

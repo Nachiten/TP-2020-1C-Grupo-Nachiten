@@ -282,29 +282,16 @@ void eliminar_paquete(t_paquete* paquete)
 }
 
 void recibir_mensaje(void* estructura, int32_t socket_cliente, uint32_t* size)
-//void* recibir_mensaje(int socket_cliente, uint32_t* size)
 {
 	codigo_operacion codigo;
-	//void* estructuraConDatos; //aca almaceno los datos del mensaje
 
 	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de todo lo que sigue en el buffer
 
-	//variable = desserializar
-
-	/*
-	void* infoDelMensaje = malloc(size); //preparo un lugar con el tamaño de lo que queda del mensaje
-	bytesRecibidos(recv(socket_cliente, &infoDelMensaje, sizeof(infoDelMensaje), MSG_WAITALL)); //guarda el resto del mensaje
-	*/
-
-	//estructuraConDatos =
 	desserializar_mensaje(&estructura, codigo, size, socket_cliente);
-	//estructuraConDatos = desserializar_mensaje(infoDelMensaje, codigo, size);
-
-	//free(infoDelMensaje);
-	//return estructuraConDatos;
 }
+
 void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente)
 //void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
 {

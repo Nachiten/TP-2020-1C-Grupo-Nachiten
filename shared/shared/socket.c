@@ -320,9 +320,11 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 			break;
 
 		case CATCH:
+			estructura = malloc (sizeof(Catch));
+			desserializar_catch(&estructura, size, socket_cliente);
 			break;
 
-		case CAUGHT:
+		case CAUGHT://falta
 			break;
 
 		case TEST:
@@ -392,6 +394,23 @@ void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente)
 
 	//saco el nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+
+	//saco ID del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
+}
+
+void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_cliente)
+{
+	estructura->nombrePokemon = malloc(sizeof(char*));
+
+	//saco el nombre del pokemon
+	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+
+	//saco pos X
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x), MSG_WAITALL));
+
+	//saco pos Y
+	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y), MSG_WAITALL));
 
 	//saco ID del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));

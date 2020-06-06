@@ -75,7 +75,7 @@ int32_t buscar_sub(int32_t socket, t_mensaje* mensaje);
 int32_t buscar_mensaje(int32_t id_mensaje, t_cola* cola);
 int32_t buscar_cola(codigo_operacion numeroCola);
 int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje);
-int32_t a_suscribir(Suscripcion mensaje);
+int32_t a_suscribir(Suscripcion* mensaje);
 void borrar_mensajes(t_cola cola);
 
 #endif /* SRC_BROKER_H_ */

@@ -86,6 +86,7 @@ void llenar_listaColas(){
 	listaColas = malloc(sizeof(t_cola));
 	listaColas = list_create();
 
+	/*
 	t_cola* aux = malloc(sizeof(t_cola));
 	t_cola* aux1 = malloc(sizeof(t_cola));
 	t_cola* aux2 = malloc(sizeof(t_cola));
@@ -100,19 +101,21 @@ void llenar_listaColas(){
 	*aux4 = colaCatch;
 	*aux5 = colaCaught;
 
-	list_add(listaColas,aux);
-	list_add(listaColas,aux1);
-	list_add(listaColas,aux2);
-	list_add(listaColas,aux3);
-	list_add(listaColas,aux4);
-	list_add(listaColas,aux5);
+	*/
 
-	free(aux);
-	free(aux1);
-	free(aux2);
-	free(aux3);
-	free(aux4);
-	free(aux5);
+	list_add(listaColas, &colaNew);
+	list_add(listaColas, &colaAppeared);
+	list_add(listaColas, &colaGet);
+	list_add(listaColas, &colaLocalized);
+	list_add(listaColas, &colaCatch);
+	list_add(listaColas, &colaCaught);
+
+//	free(aux);
+//	free(aux1);
+//	free(aux2);
+//	free(aux3);
+//	free(aux4);
+//	free(aux5);
 }
 
 void loggear_propio(char* aLogear){
@@ -314,8 +317,8 @@ int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje){
 }
 
 // te devuelve el numero de cola al que se quiere suscribir el cliente
-int32_t a_suscribir(Suscripcion mensaje){
-	return mensaje.numeroCola;
+int32_t a_suscribir(Suscripcion* mensaje){
+	return mensaje->numeroCola;
 }
 // falta terminar, pero deberia funcionar para las pruebas de conexion
 void borrar_mensajes(t_cola cola){
@@ -404,7 +407,9 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
+
 			int32_t numeroCola = a_suscribir(mensaje);
+
 			switch(numeroCola){
 			case NEW:
 				agregar_sub(socket, colaNew);

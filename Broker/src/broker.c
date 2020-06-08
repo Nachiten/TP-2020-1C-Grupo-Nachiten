@@ -137,10 +137,10 @@ t_sub crear_sub(int32_t socket){
 	return nuevo;
 }
 
-t_mensaje crear_mensaje(int32_t id,void* mensaje){
+t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje){
 	t_mensaje nuevo;
 	nuevo.id = id;
-	nuevo.id_correlativo = 0;// a cambiar despues
+	nuevo.id_correlativo = id_correlativo;
 	nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
@@ -171,13 +171,32 @@ void suscribir(t_sub* sub,t_cola cola){
 	}
 }
 
+// devuelve un -1 si encuentra un mensaje con el mismo id correlativo en esa cola
+int32_t buscar_en_cola(int32_t id_correlativo, t_cola cola){
+	int32_t n = 0;
+	while(cola.mensajes != NULL){
+		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+		mensaje = list_get(cola.mensajes,n);
+		if(mensaje->id_correlativo == id_correlativo){
+			free(mensaje);
+			return -1;
+		}
+		n += 1;
+		cola.mensajes->head = cola.mensajes->head->next;
+		free(mensaje);
+	}
+	return 1;
+}
+
 //crea un mensaje de un string y lo agrega a una cola YA CREADA, el mensaje ya tiene los suscriptores que tenga esa cola
 void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola){
-	t_mensaje* new = malloc(sizeof(t_mensaje));
-	*new = crear_mensaje(TEST_ID,mensaje); // cambiar id
-	new->subs = cola.subs;
-	list_add(cola.mensajes,new);
-	free(new);
+	//if(){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		*new = crear_mensaje(TEST_ID,TEST_ID,mensaje); // cambiar id
+		new->subs = cola.subs;
+		list_add(cola.mensajes,new);
+		free(new);
+	//}
 }
 
 //agrega un suba una cola de mensajes y lo suscribe a los mensajes que tenga
@@ -310,7 +329,8 @@ int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje){
 			free(auxC);
 			return -2;
 		}
-		modificar_sub(socket, &auxC, posicionMensaje);
+		modificar_sub(socket, auxC, posicionMensaje);
+		// encontrar una forma de hacer que auxc cambie los valores de la cola
 	}
 	free(auxC);
 	return -2;
@@ -338,7 +358,8 @@ void borrar_mensajes(t_cola cola){
 					free(sub);
 				}
 				if(n2 == n3){
-
+					// cuando este agregado memoria el mensaje eliminado deberia agregarse ahi
+					// como quedaria la posicion de la lista si yo elimino un mensaje, tendria que pasar a siguiente o ya lo seria automaticamente
 				}
 				n1 += 1;
 				cola.mensajes->head = cola.mensajes->head->next;
@@ -360,7 +381,7 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
 
 /* dependiendo del codigo de operacion hace diferentes cosas
  * si es el numero de las colas es que estas mandando un mensaje a esas colas y tiene que agregarse
- * si es un tipo SUSCRIPCION te suscribe a la qcola que se desea
+ * si es un tipo SUSCRIPCION te suscribe a la cola que se desea
  */
 
 //todo /agregar un desuscribir despues
@@ -412,25 +433,27 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			switch(numeroCola){
 			case NEW:
-				agregar_sub(socket, colaNew);
+				agregar_sub(socket_cliente, colaNew);
 				break;
 			case APPEARED:
-				agregar_sub(socket, colaAppeared);
+				agregar_sub(socket_cliente, colaAppeared);
 				break;
 			case GET:
-				agregar_sub(socket, colaGet);
+				agregar_sub(socket_cliente, colaGet);
 				break;
 			case LOCALIZED:
-				agregar_sub(socket, colaLocalized);
+				agregar_sub(socket_cliente, colaLocalized);
 				break;
 			case CATCH:
-				agregar_sub(socket, colaCatch);
+				agregar_sub(socket_cliente, colaCatch);
 				break;
 			case CAUGHT:
-				agregar_sub(socket, colaCaught);
+				agregar_sub(socket_cliente, colaCaught);
 				break;
 			}
 			free(mensaje);
+			break;
+		case TEST:
 			break;
 		case DESCONEXION:
 			pthread_exit(NULL);

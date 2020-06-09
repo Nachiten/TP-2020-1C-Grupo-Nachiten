@@ -33,7 +33,7 @@ int main(void) {
 
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "broker");
-
+	/*
 	ip = config_get_string_value(config, "IP_BROKER");
 	if (ip == NULL){
 		log_error(logger, "No se ha podido leer la 'ip' de la config");
@@ -48,7 +48,7 @@ int main(void) {
 	} else {
 		log_info(logger, "Se leyo el puerto del broker correctamente");
 	}
-
+*/
 	//conexion = crear_conexion(ip, puerto);
 	conexion = 0;
 
@@ -61,7 +61,10 @@ int main(void) {
 	char** objetivo_global;
 	mensaje_server* mensaje_rec;
 
-	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos, VACIO);
+	if(inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos, VACIO) == 1){
+		printf("config sin errores\n");
+	}
+	else{printf("config con errores\n");}
 
 	/*
 	cant_objetivos = calcular_objetivos_reales(entrenadores, cant_entrenadores);

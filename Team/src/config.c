@@ -18,48 +18,65 @@ PARAMS:
 @cant_entrenadores: Cantidad de entrenadores existentes
 @objetivos: Cantidad de objetivos
 */
-void inicializar_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos, char* vacio){
-	int i, j, cont, aux_cont, cant_objetivos, cant_posiciones;
+int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos, char* vacio){
+	int i, j, cont, aux_cont, cant_objetivos, cant_posiciones, respuesta;
 	cant_objetivos = 0;
+	respuesta = 1;
+	i=0;
 
 	// Implicitamente se esta haciendo 'malloc' de estas variables. Debe hacerse free al final luego de usarlas.
 	char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
 	char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
 	char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
 
-	if((*posicion_entrenador) == NULL){printf("La posicion de los entrenadores es NULL\n");}
+	cant_posiciones = validar_tamano_vectores_extraidos(posicion_entrenador, objetivo, pokemones_actuales);
 
-	cant_posiciones = calcular_elementos_null(posicion_entrenador);
-	printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
+	if(cant_posiciones > 0){
+		printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
 
-	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
+		temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 
-	for(i=0;i<cant_posiciones;i++){
-		temp2[i].estado = 0;
-		temp2[i].estado_block = 1;
-		temp2[i].target = NULL;
+		while(i<cant_posiciones && respuesta == 1){
+			temp2[i].estado = 0;
+			temp2[i].estado_block = 1;
+			temp2[i].target = NULL;
 
-		temp2[i].posicion[0] = posicion_entrenador[i][0]-'0';
-		temp2[i].posicion[1] = posicion_entrenador[i][2]-'0';
+			temp2[i].posicion[0] = posicion_entrenador[i][0]-'0';
+			temp2[i].posicion[1] = posicion_entrenador[i][2]-'0';
 
-		llenar_objetivos_y_actuales_de_entrenador(&(temp2[i]), objetivo[i], pokemones_actuales[i], vacio);
+			if(llenar_objetivos_y_actuales_de_entrenador(&(temp2[i]), objetivo[i], pokemones_actuales[i], vacio) == 0){
+				respuesta = -1;
+			}
 
+			i++;
+		}
+
+		if(respuesta == 1){
+			cant_objetivos = calcular_tamano_objetivo_global(temp2, cant_posiciones, vacio);
+			printf("La cantidad de objetivos es: %i\n", cant_objetivos);
+			temp1 = malloc((cant_objetivos+1) * sizeof(char*));
+			llenar_objetivo_global(temp2, cant_posiciones, &temp1, cant_objetivos, vacio);
+
+			*entrenadores = temp2;
+			*cant_entrenadores = cant_posiciones;
+			*objetivo_global = temp1;
+			*objetivos = cant_objetivos;
+		}
+		else{
+			printf("error en llenado de objetivos y actuales de entrenador %i\n", i-1);
+		}
 	}
-
-	cant_objetivos = calcular_tamano_objetivo_global(temp2, cant_posiciones, vacio);
-	printf("La cantidad de objetivos es: %i\n", cant_objetivos);
-	temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-	llenar_objetivo_global(temp2, cant_posiciones, &temp1, cant_objetivos, vacio);
-
-	*entrenadores = temp2;
-	*cant_entrenadores = cant_posiciones;
-	*objetivo_global = temp1;
-	*objetivos = cant_objetivos;
+	else{
+		printf("error en validacion de vectores extraidos\n");
+		respuesta = 0;
+	}
 
 	// Liberando memoria
 	free(posicion_entrenador);
 	free(objetivo);
 	free(pokemones_actuales);
+
+	return respuesta;
 }
 
 int calcular_elementos_null(char** vector){
@@ -68,9 +85,36 @@ int calcular_elementos_null(char** vector){
 	return i;
 }
 
-void llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* vector_objetivos, char* vector_pokemones, char* vacio){
-	int i, cont, aux_cont;
+int validar_tamano_vectores_extraidos(char** posicion_entrenador, char** objetivo, char** pokemones_actuales){
+	int cant_pokemones, cant_posiciones, cant_objetivos, respuesta;
+
+	cant_pokemones = calcular_elementos_null(pokemones_actuales);
+	cant_posiciones = calcular_elementos_null(posicion_entrenador);
+	cant_objetivos = calcular_elementos_null(objetivo);
+	respuesta = niguno_es_cero_y_son_todos_iguales(cant_pokemones, cant_posiciones, cant_objetivos);
+
+	return respuesta;
+}
+
+int niguno_es_cero_y_son_todos_iguales(int primerNumero, int segundoNumero, int tercerNumero){
+	int respuesta = primerNumero;
+
+	if(primerNumero != segundoNumero || primerNumero != tercerNumero){
+		respuesta = -1;
+	}
+	else{
+		if(primerNumero == 0){
+			respuesta = 0;
+		}
+	}
+
+	return respuesta;
+}
+
+int llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* vector_objetivos, char* vector_pokemones, char* vacio){
+	int i, cont, aux_cont, respuesta;
 	char** vector;
+	respuesta = 1;
 
 	vector = string_split(vector_objetivos, "|");
 	cont = calcular_elementos_null(vector);
@@ -79,16 +123,21 @@ void llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* v
 		entrenador->objetivo[i] = vector[i];
 	}
 
-	entrenador->pokemones_actuales = malloc((cont+1) * sizeof(char*));
 	vector = string_split(vector_pokemones, "|");
 	aux_cont = calcular_elementos_null(vector);
-	for(i=0;i<aux_cont;i++){
-		entrenador->pokemones_actuales[i] = vector[i];
+	if(aux_cont <= cont){
+		entrenador->pokemones_actuales = malloc((cont+1) * sizeof(char*));
+		for(i=0;i<aux_cont;i++){
+			entrenador->pokemones_actuales[i] = vector[i];
+		}
+		for(i=aux_cont;i<cont;i++){
+			entrenador->pokemones_actuales[i] = vacio;
+		}
+		entrenador->pokemones_actuales[i] = NULL;
 	}
-	for(i=aux_cont;i<cont;i++){
-		entrenador->pokemones_actuales[i] = vacio;
-	}
-	entrenador->pokemones_actuales[i] = NULL;
+	else{respuesta = 0;}
+
+	return respuesta;
 }
 
 int calcular_tamano_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, char* vacio){

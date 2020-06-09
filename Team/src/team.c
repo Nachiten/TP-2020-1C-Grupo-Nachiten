@@ -1,5 +1,7 @@
 #include "Team.h"
 
+char* VACIO = "celda_vacia";
+
 int main(void) {
 
 	printf("Inicio de Team\n");
@@ -51,16 +53,17 @@ int main(void) {
 	conexion = 0;
 
 	d_entrenador* entrenadores;
-	int cant_entrenadores, cant_objetivos, i, myId, objetivo, flag_finalizacion, cant_objetivos_por_config;
+	int cant_entrenadores, cant_objetivos, i, myId, objetivo, flag_finalizacion;
 	objetivo = 0;
 	myId = 20;
 	i=0;
 	flag_finalizacion = 0;
 	char** objetivo_global;
-	char** objetivo_actual;
 	mensaje_server* mensaje_rec;
 
-	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos_por_config);
+	inicializar_config(config, &entrenadores, &objetivo_global, &cant_entrenadores, &cant_objetivos, VACIO);
+
+	/*
 	cant_objetivos = calcular_objetivos_reales(entrenadores, cant_entrenadores);
 	printf("La cantidad de objetivos reales es: %i\n", cant_objetivos);
 	objetivo_actual = malloc((cant_objetivos+1) * sizeof(char*));
@@ -153,11 +156,11 @@ int main(void) {
 	}
 
 
-
+	*/
 
 	liberarConfig();
 //	eliminarColaMensajes();
-	free(objetivo_actual);
+//	free(objetivo_actual);
 	terminar_programa(logger, config);
 
 	printf("Fin de Team\n");

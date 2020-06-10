@@ -25,13 +25,13 @@
 #define TEST_ID 1111 //hasta que se me ocurra una forma de crear los id
 
 typedef struct {
-	int socket;
-	int recibido; // 0 si no se recibio, 1 si ya se recibio
+	int32_t socket;
+	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
 }t_sub;
 
 typedef struct {
-	int id;
-	int id_correlativo;
+	int32_t id;
+	int32_t id_correlativo;
 	void* mensaje;
 	t_list* subs; //lista de suscriptores
 }t_mensaje;
@@ -68,14 +68,11 @@ void llenar_listaColas();
 t_sub crear_sub(int32_t socket);
 t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje);
 t_cola crear_cola(codigo_operacion codigo);
-void suscribir(t_sub* sub,t_cola cola);
-void suscribir(t_sub* sub,t_cola cola);
-void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola cola);
-void agregar_sub(int32_t socket, t_cola cola);
-int32_t buscar_sub(int32_t socket, t_mensaje* mensaje);
-int32_t buscar_mensaje(int32_t id_mensaje, t_cola* cola);
-int32_t buscar_cola(codigo_operacion numeroCola);
-int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje);
+void suscribir(t_sub* sub,t_cola* cola);
+void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola* cola);
+void agregar_sub(int32_t socket, t_cola* cola);
+void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
+void confirmar_mensaje(int32_t socket, confirmacionMensaje mensaje);
 int32_t a_suscribir(Suscripcion* mensaje);
 void borrar_mensajes(t_cola cola);
 

@@ -55,7 +55,7 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
 	//mando el mensaje
-	send(socket, paquete_serializado, size_serializado, 0);
+	bytesEnviados(send(socket, paquete_serializado, size_serializado, 0));
 
 	//libero los malloc utilizados
 	eliminar_paquete(paquete_por_armar);
@@ -98,11 +98,19 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 		case TEST:
 				size_ya_armado = serializar_paquete_prueba(paquete, mensaje);
 			break;
+
+		case SUSCRIPCION:
+			size_ya_armado = serializar_paquete_suscripcion(paquete, mensaje);
+			break;
+
+		case DESSUSCRIPCION:
+			size_ya_armado = serializar_paquete_dessuscripcion(paquete, mensaje);
+			break;
+
 		case DESCONEXION:
 			break;
+
 		case ERROR:
-			break;
-		case SUSCRIPCION:
 			break;
 	}
 
@@ -275,6 +283,46 @@ uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = strlen(mensaje)+1;
+
+	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
+uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
+{
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto la COLA a la que suscribirse en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
+	desplazamiento += sizeof(cola->numeroCola);
+
+	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(cola->numeroCola);
+
+	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
+uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* cola)
+{
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto la COLA a de la que dessuscribirse en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
+	desplazamiento += sizeof(cola->numeroCola);
+
+	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(cola->numeroCola);
+
+	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -342,14 +390,25 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 
 		case TEST:
 			break;
-		case DESCONEXION:
+
+		case SUSCRIPCION:
+			estructura = malloc (sizeof(Suscripcion));
+			void desserializar_suscripcion(estructura, size, socket_cliente);
+			free(estructura);
 			break;
+
+		case DESSUSCRIPCION:
+			estructura = malloc (sizeof(Dessuscripcion));
+			void desserializar_dessuscripcion(estructura, size, socket_cliente);
+			free(estructura);
+			break;
+
+		case DESCONEXION://esto me parece que esta de mas, nunca deberían poder llegar hasta aca, tendría que romper antes
+			break;
+
 		case ERROR:
 			break;
-		case SUSCRIPCION:
-			break;
 	}
-
 	//return datosDeMensaje;
 }
 
@@ -440,4 +499,16 @@ void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cli
 
 	//saco el resultado del intento de atrapar al pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar), MSG_WAITALL));
+}
+
+void desserializar_suscripcion(Suscripcion* estructura, uint32_t* size, int32_t socket_cliente)
+{
+	//saco la COLA a la que suscribirse del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+}
+
+void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t* size, int32_t socket_cliente)
+{
+	//saco la COLA dela que dessuscribirse del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }

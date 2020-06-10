@@ -32,6 +32,7 @@ typedef enum
 	CATCH,
 	CAUGHT,
 	SUSCRIPCION,
+	DESSUSCRIPCION,
 	TEST = 404,
 	ERROR = -1,
 	DESCONEXION = 0
@@ -74,6 +75,8 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon); //s
 uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon); //serializar un mensaje Get
 uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon); //serializar un mensaje Catch
 uint32_t serializar_paquete_caught(t_paquete* paquete, Caught* pokemon); //serializar un mensaje Caught
+uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola); //serializar un mensaje suscribirse
+uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* cola); //serializar un mensaje dessuscribirse
 uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //serializa mensaje de prueba
 
 //FUNCIONES DESSERIALIZAR
@@ -94,6 +97,8 @@ void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket
 void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cliente);
+void desserializar_suscripcion(Suscripcion* estructura, uint32_t* size, int32_t socket_cliente);
+void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t* size, int32_t socket_cliente);
 
 
 #endif /* SHARED_SOCKET_H_ */

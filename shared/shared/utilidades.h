@@ -47,7 +47,9 @@ uint32_t cambia_a_int(char* enString);
 //-----------------------------------------------------------------------------
 
 //muestra por pantalla los bytes recibidos de RECV
-void bytesRecibidos (int32_t cantidad); //si, tiene que ser un int, o sino rompe, no cambiar
+void bytesRecibidos (int32_t cantidad);
+//muestra por pantalla los bytes enviados de SEND
+void bytesEnviados (int32_t cantidad);
 
 //libera el espacio reservado para usar una estructura Appeared
 void libero_estructura_appeared(Appeared* estructura);
@@ -59,5 +61,9 @@ void libero_estructura_Catch(Catch* estructura);
 void libero_estructura_Caught(Caught* estructura);
 //libera el espacio reservado para usar una estructura Get
 void libero_estructura_Get(Get* estructura);
+//libera el espacio reservado para usar una estructura Suscripcion
+void libero_estructura_Suscripcion(Suscripcion* estructura);
+//libera el espacio reservado para usar una estructura Suscripcion
+void libero_estructura_Dessuscripcion(Dessuscripcion* estructura);
 
 #endif /* SHARED_UTILIDADES_H_ */

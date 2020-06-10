@@ -26,6 +26,10 @@ typedef struct{
 	int32_t numeroCola;
 }Suscripcion;
 
+typedef struct{
+	int32_t numeroCola;
+}Dessuscripcion;
+
 typedef struct Coords{
 	uint32_t x;
 	uint32_t y;

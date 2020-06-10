@@ -70,9 +70,14 @@ uint32_t cambia_a_int(char* enString)
 	return enNumero;
 }
 
-void bytesRecibidos (int32_t cantidad) //si, tiene que ser un int, o sino rompe, no cambiar
+void bytesRecibidos (int32_t cantidad)
 {
 	printf("Recibí %d bytes sin crashear (Todavía).\n",cantidad);
+}
+
+void bytesEnviados (int32_t cantidad)
+{
+	printf("Envié %d bytes sin crashear (Todavía).\n",cantidad);
 }
 
 void libero_estructura_appeared(Appeared* estructura)
@@ -105,6 +110,15 @@ void libero_estructura_Get(Get* estructura)
 	free(estructura);
 }
 
+void libero_estructura_Suscripcion(Suscripcion* estructura)
+{
+	free(estructura);
+}
+
+void libero_estructura_Dessuscripcion(Dessuscripcion* estructura)
+{
+	free(estructura);
+}
 
 
 /*este codigo es para que reciba cosas por consola, al final no se implemento

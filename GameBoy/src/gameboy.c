@@ -313,8 +313,40 @@ int main(int cantArg, char* arg[]) {
 				break;
 
 		case SUSCRIPTOR:
-				puts("Switch del suscriptor, falta implementar");
-				socket = establecer_conexion("127.0.0.1","99999");
+				if(cantArg != 4)
+				{
+					puts("La sintáxis correcta es: ./GameBoy SUSCRIPTOR [COLA_DE_MENSAJES] [TIEMPO]");
+					return EXIT_FAILURE;
+				}
+				else
+				{
+					IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+					PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+					socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+					resultado_de_conexion(socket, logger, "BROKER");
+
+					//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
+					Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
+					Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
+					estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+					estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+
+					//mandamos el mensaje pidiendo suscribirse a la cola
+					mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
+					//logueamos la suscripcion a la cola de mensajes
+					log_info(logger, "Suscripto a la cola de mensajes: %i", arg[2]);
+
+					//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
+					sleep(cambia_a_int(arg[3]));
+
+					//mandamos el mensaje pidiendo dessuscribirse a la cola
+					mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+
+					//libero las estructuras que acabo de crear
+					libero_estructura_Suscripcion(estructuraSuscribirse);
+					libero_estructura_Dessuscripcion(estructuraDessuscribirse);
+				}
 				break;
 
 		default:

@@ -21,7 +21,7 @@ typedef struct {
 	int colaMensajes;
 }confirmacionMensaje;
 
-// se tiene que mandar al broker para que sepa a que cola suscribir al cliente
+// se tiene que mandar al broker para que sepa a que cola suscribir o desuscribir al cliente
 typedef struct{
 	int32_t numeroCola;
 }Suscripcion;

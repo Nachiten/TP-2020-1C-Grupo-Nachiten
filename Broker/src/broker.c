@@ -21,8 +21,8 @@ int32_t main(void) {
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
+	id_inicial = 0;
 	inicializar_colas();
-	//llenar_listaColas();
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -56,43 +56,33 @@ int32_t main(void) {
 // *************************************************
 
 void inicializar_colas(){
-	colaNew.tipoCola = NEW;
-	colaNew.mensajes = list_create();
-	colaNew.subs = list_create();
+	colaNew->tipoCola = NEW;
+	colaNew->mensajes = list_create();
+	colaNew->subs = list_create();
 
-	colaAppeared.tipoCola = APPEARED;
-	colaAppeared.mensajes = list_create();
-	colaAppeared.subs = list_create();
+	colaAppeared->tipoCola = APPEARED;
+	colaAppeared->mensajes = list_create();
+	colaAppeared->subs = list_create();
 
-	colaGet.tipoCola = GET;
-	colaGet.mensajes = list_create();
-	colaGet.subs = list_create();
+	colaGet->tipoCola = GET;
+	colaGet->mensajes = list_create();
+	colaGet->subs = list_create();
 
-	colaLocalized.tipoCola = LOCALIZED;
-	colaLocalized.mensajes = list_create();
-	colaLocalized.subs = list_create();
+	colaLocalized->tipoCola = LOCALIZED;
+	colaLocalized->mensajes = list_create();
+	colaLocalized->subs = list_create();
 
-	colaCatch.tipoCola = CATCH;
-	colaCatch.mensajes = list_create();
-	colaCatch.subs = list_create();
+	colaCatch->tipoCola = CATCH;
+	colaCatch->mensajes = list_create();
+	colaCatch->subs = list_create();
 
-	colaCaught.tipoCola = CAUGHT;
-	colaCaught.mensajes = list_create();
-	colaCaught.subs = list_create();
+	colaCaught->tipoCola = CAUGHT;
+	colaCaught->mensajes = list_create();
+	colaCaught->subs = list_create();
 }
 
-// carga listaColas con todas las listas iniciales
-void llenar_listaColas(){
-	listaColas = malloc(sizeof(t_cola));
-	listaColas = list_create();
-
-	list_add(listaColas, &colaNew);
-	list_add(listaColas, &colaAppeared);
-	list_add(listaColas, &colaGet);
-	list_add(listaColas, &colaLocalized);
-	list_add(listaColas, &colaCatch);
-	list_add(listaColas, &colaCaught);
-
+int32_t crear_id(){
+	return 1;
 }
 
 void loggear_propio(char* aLogear){
@@ -172,7 +162,6 @@ void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola* cola)
 	//}
 }
 
-//agrega un suba una cola de mensajes y lo suscribe a los mensajes que tenga
 void agregar_sub(int32_t socket, t_cola* cola){
 	t_sub* new = malloc(sizeof(t_sub));
 	*new = crear_sub(socket);
@@ -199,111 +188,9 @@ void mandar_mensaje_broker(t_cola cola){
 		}
 	}
 }
-/*
-// te devuelve la posicion del mensaje con el id que le pasas, o un -4 en caso de no encontrar el sub en la cola
-int32_t buscar_sub(int32_t socket, t_mensaje* mensaje){
-	int32_t n = 0;
-	while(mensaje->subs->head != NULL){
-			t_sub* sub = malloc(sizeof(t_sub));
-			sub = list_get(mensaje->subs,n); // busca el n elemento de la lista de subs
-			if(sub->socket == socket){
-				free(sub);
-				return n;
-			}
-			n += 1;
-			mensaje->subs->head = mensaje->subs->head->next;
-			free(sub);
-		}
-	return -4;
-}
 
-// te devuelve la posicion del mensaje con el id que le pasas, o un -2 en caso de no encontrar el mensaje en la cola
-int32_t buscar_mensaje(int32_t id_mensaje, t_cola* cola){
-	int32_t n = 0;
-	while(cola->mensajes->head != NULL){
-		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
-		mensaje = list_get(cola->mensajes,n); // busca el n elemento de la lista mensajes
-		if(mensaje->id == id_mensaje){
-			free(mensaje);
-			return n;
-		}
-		n += 1;
-		cola->mensajes->head = cola->mensajes->head->next;
-		free(mensaje);
-	}
-	return -2;
-}
-
-// te devuelve la posicion de la cola con el numero que le pasas, o un -3 en caso de no encontrarla
-int32_t buscar_cola(codigo_operacion numeroCola){
-	int32_t n = 0;
-	while(listaColas->head != NULL){
-		t_cola* cola = malloc(sizeof(t_cola));
-		cola = list_get(listaColas, n);// busca el n elemento de la lista de colas
-		if(cola->tipoCola == numeroCola){
-			free(cola);
-			return n;
-		}
-		n += 1;
-		listaColas->head = listaColas->head->next;
-		free(cola);
-	}
-	return -3;
-}
-
-//pone un 1 en recibido del sub
-void modificar_sub(int32_t socket,t_cola* cola, int32_t posicionMensaje){
-	t_sub* auxS = malloc(sizeof(t_sub));
-	t_mensaje* auxM = malloc(sizeof(t_mensaje));
-	int32_t posicionSub;
-
-	auxM = list_get(cola->mensajes, posicionMensaje);
-	posicionSub = buscar_sub(socket, auxM);
-	auxS = list_get(auxM->subs,posicionSub);
-
-	if(posicionSub == -4){
-		char* aLogear = "no se pudo encontrar el sub";
-		loggear_propio(aLogear);
-	}
-	if(posicionSub != -4){
-		auxS->recibido = 1;
-	}
-	free(auxM);
-	free(auxS);
-}
-
-// altera el sub para confirmar
-int32_t confirmacion_mensaje(int32_t socket, confirmacionMensaje mensaje){
-	t_cola* auxC = malloc(sizeof(t_cola));
-	int32_t n = mensaje.colaMensajes - 1;
-	int32_t posicionMensaje;
-	int32_t posicionCola = buscar_cola(n);
-	int32_t error = 0;
-
-
-	if(posicionCola == -3){
-		char* aLogear = "no se pudo encontrar la cola";
-		error = 1;
-		loggear_propio(aLogear);
-	}
-	if(error != 0){
-		auxC = list_get(listaColas, posicionCola);
-		posicionMensaje = buscar_mensaje(mensaje.id_mensaje, auxC);
-
-		if(posicionMensaje == -2){
-			char* aLogear = "no se pudo encontrar el mensaje";
-			error = 1;
-			loggear_propio(aLogear);
-			free(auxC);
-			return -2;
-		}
-		modificar_sub(socket, auxC, posicionMensaje);
-		// encontrar una forma de hacer que auxc cambie los valores de la cola
-	}
-	free(auxC);
-	return -2;
-}
-*/
+// avanza en la cola de mensajes hasta encontrar el mensaje con el id deseado, despues busca en la lista de
+// suscriptores de ese mensaje hasta encontrar el socket adecuado y pone en visto el mensaje
 void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 	for(int i = 0; i < cola->mensajes->elements_count; i++){
 
@@ -327,25 +214,26 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 	}
 }
 
-void confirmar_mensaje(int32_t socket, confirmacionMensaje mensaje){
-	switch(mensaje.colaMensajes){
+// usa modificar_cola para confirmar el mensaje deseado (confirmar_cola esta arriba)
+void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
+	switch(mensaje->colaMensajes){
 	case NEW:
-		modificar_cola(&colaNew,mensaje.id_mensaje,socket);
+		modificar_cola(colaNew,mensaje->id_mensaje,socket);
 		break;
 	case APPEARED:
-		modificar_cola(&colaAppeared,mensaje.id_mensaje,socket);
+		modificar_cola(colaAppeared,mensaje->id_mensaje,socket);
 		break;
 	case GET:
-		modificar_cola(&colaGet,mensaje.id_mensaje,socket);
+		modificar_cola(colaGet,mensaje->id_mensaje,socket);
 		break;
 	case LOCALIZED:
-		modificar_cola(&colaLocalized,mensaje.id_mensaje,socket);
+		modificar_cola(colaLocalized,mensaje->id_mensaje,socket);
 		break;
 	case CATCH:
-		modificar_cola(&colaCatch,mensaje.id_mensaje,socket);
+		modificar_cola(colaCatch,mensaje->id_mensaje,socket);
 		break;
 	case CAUGHT:
-		modificar_cola(&colaCaught,mensaje.id_mensaje,socket);
+		modificar_cola(colaCaught,mensaje->id_mensaje,socket);
 		break;
 	}
 }
@@ -354,9 +242,12 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje mensaje){
 int32_t a_suscribir(Suscripcion* mensaje){
 	return mensaje->numeroCola;
 }
+
 // falta terminar, pero deberia funcionar para las pruebas de conexion
+// a revisar cuando hay que borrar un mensaje
+/*
 void borrar_mensajes(t_cola cola){
-	int32_t n1 = 0, n2 = 0;
+	int32_t subsTotales = 0, yaRecibido = 0,n = 0, aBorrar[];
 		if(cola.mensajes != NULL){
 			for(int i = 0; i < cola.mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
@@ -365,18 +256,56 @@ void borrar_mensajes(t_cola cola){
 					t_sub* sub = malloc(sizeof(t_sub));
 					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
 					if(sub->recibido == 1){
-						n2++;
+						yaRecibido++;
 					}
-					n1 = j;
+					subsTotales++;
 					free(sub);
 				}
-				if(n1 == n2){
+				if(subsTotales == yaRecibido){
 					// cuando este agregado memoria el mensaje eliminado deberia agregarse ahi
-					// como quedaria la posicion de la lista si yo elimino un mensaje, tendria que pasar a siguiente o ya lo seria automaticamente
+					n++;
+					aBorrar[n] = i;
 				}
 				free(mensaje);
 			}
 		}
+}
+*/
+
+// primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
+// demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
+void desuscribir(int32_t socket, t_cola* cola){
+	int numeroSub = -1;
+	t_sub* aux = malloc(sizeof(t_sub));
+	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
+		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
+		for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
+			t_sub* sub = malloc(sizeof(t_sub));
+			sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
+			if(sub->socket == socket){
+				numeroSub = j;
+			}
+			free(sub);
+		}
+		if(numeroSub != -1){
+			aux = list_remove(mensaje->subs, numeroSub);
+			free(aux);
+		}
+		free(mensaje);
+	}
+	for(int j = 0; j < cola->subs->elements_count; j++ ){ //avanza hasta el final de la cola subs
+		t_sub* sub = malloc(sizeof(t_sub));
+		sub = list_get(cola->subs,j); // busca el j elemento de la lista subs
+		if(sub->socket == socket){
+			numeroSub = j;
+		}
+		free(sub);
+	}
+	if(numeroSub != -1){
+		aux = list_remove(cola->subs, numeroSub);
+		free(aux);
+	}
 }
 
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
@@ -398,71 +327,105 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
 //todo /agregar un desuscribir despues
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	uint32_t size;
+	int32_t numeroCola;
 	void* mensaje;
 		switch (cod_op) {
 		case NEW:
 			mensaje = malloc(sizeof(New));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaNew);
+			agregar_mensaje(mensaje, cod_op, colaNew);
 			free(mensaje);
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaAppeared);
+			agregar_mensaje(mensaje, cod_op, colaAppeared);
 			free(mensaje);
 			break;
 		case GET:
 			mensaje = malloc(sizeof(Get));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaGet);
+			agregar_mensaje(mensaje, cod_op, colaGet);
 			free(mensaje);
 			break;
 		case LOCALIZED:
 			mensaje = malloc(sizeof(Localized));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaLocalized);
+			agregar_mensaje(mensaje, cod_op, colaLocalized);
 			free(mensaje);
 			break;
 		case CATCH:
 			mensaje = malloc(sizeof(Catch));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaCatch);
+			agregar_mensaje(mensaje, cod_op, colaCatch);
 			free(mensaje);
 			break;
 		case CAUGHT:
 			mensaje = malloc(sizeof(Caught));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, &colaCaught);
+			agregar_mensaje(mensaje, cod_op, colaCaught);
 			free(mensaje);
 			break;
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
 
-			int32_t numeroCola = a_suscribir(mensaje);
+			numeroCola = a_suscribir(mensaje);
 
 			switch(numeroCola){
 			case NEW:
-				agregar_sub(socket_cliente, &colaNew);
+				agregar_sub(socket_cliente, colaNew);
 				break;
 			case APPEARED:
-				agregar_sub(socket_cliente, &colaAppeared);
+				agregar_sub(socket_cliente, colaAppeared);
 				break;
 			case GET:
-				agregar_sub(socket_cliente, &colaGet);
+				agregar_sub(socket_cliente, colaGet);
 				break;
 			case LOCALIZED:
-				agregar_sub(socket_cliente, &colaLocalized);
+				agregar_sub(socket_cliente, colaLocalized);
 				break;
 			case CATCH:
-				agregar_sub(socket_cliente, &colaCatch);
+				agregar_sub(socket_cliente, colaCatch);
 				break;
 			case CAUGHT:
-				agregar_sub(socket_cliente, &colaCaught);
+				agregar_sub(socket_cliente, colaCaught);
 				break;
 			}
 			free(mensaje);
+			break;
+		case DESSUSCRIPCION:
+			mensaje = malloc(sizeof(Suscripcion));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+
+			numeroCola = a_suscribir(mensaje);
+
+			switch(numeroCola){
+			case NEW:
+				desuscribir(socket_cliente, colaNew);
+				break;
+			case APPEARED:
+				desuscribir(socket_cliente, colaAppeared);
+				break;
+			case GET:
+				desuscribir(socket_cliente, colaGet);
+				break;
+			case LOCALIZED:
+				desuscribir(socket_cliente, colaLocalized);
+				break;
+			case CATCH:
+				desuscribir(socket_cliente, colaCatch);
+				break;
+			case CAUGHT:
+				desuscribir(socket_cliente, colaCaught);
+				break;
+			}
+			free(mensaje);
+			break;
+		case CONFIRMACION:
+			mensaje = malloc(sizeof(confirmacionMensaje));
+			recibir_mensaje(&mensaje, socket_cliente, &size);
+			confirmar_mensaje(socket_cliente, mensaje);
 			break;
 		case TEST:
 			break;

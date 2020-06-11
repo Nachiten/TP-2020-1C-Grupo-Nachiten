@@ -42,14 +42,14 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
-t_cola colaNew;
-t_cola colaAppeared;
-t_cola colaGet;
-t_cola colaLocalized;
-t_cola colaCatch;
-t_cola colaCaught;
+t_cola* colaNew;
+t_cola* colaAppeared;
+t_cola* colaGet;
+t_cola* colaLocalized;
+t_cola* colaCatch;
+t_cola* colaCaught;
 
-t_list* listaColas;
+int32_t id_inicial;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.
@@ -72,8 +72,9 @@ void suscribir(t_sub* sub,t_cola* cola);
 void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola* cola);
 void agregar_sub(int32_t socket, t_cola* cola);
 void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
-void confirmar_mensaje(int32_t socket, confirmacionMensaje mensaje);
+void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
 int32_t a_suscribir(Suscripcion* mensaje);
 void borrar_mensajes(t_cola cola);
+void desuscribir(int32_t socket, t_cola* cola);
 
 #endif /* SRC_BROKER_H_ */

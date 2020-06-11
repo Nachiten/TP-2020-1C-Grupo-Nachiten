@@ -82,7 +82,7 @@ void inicializar_colas(){
 }
 
 int32_t crear_id(){
-	return 1;
+	return id_inicial++;
 }
 
 void loggear_propio(char* aLogear){
@@ -115,14 +115,6 @@ t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje){
 	return nuevo;
 }
 
-t_cola crear_cola(codigo_operacion codigo){
-	t_cola nuevo;
-	nuevo.tipoCola = codigo;
-	nuevo.mensajes = list_create();
-	nuevo.subs = list_create();
-	return nuevo;
-}
-
 //agrega el sub a todos los mensajes de la cola, si no hay mensajes no hace nada
 void suscribir(t_sub* sub,t_cola* cola){
 	if(cola->mensajes != NULL){
@@ -136,11 +128,11 @@ void suscribir(t_sub* sub,t_cola* cola){
 }
 
 // devuelve un -1 si encuentra un mensaje con el mismo id correlativo en esa cola
-int32_t buscar_en_cola(int32_t id_correlativo, t_cola cola){
-	if(cola.mensajes != NULL){
-		for(int i = 0; i < cola.mensajes->elements_count; i++){
+int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
+	if(cola->mensajes != NULL){
+		for(int i = 0; i < cola->mensajes->elements_count; i++){
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
-			mensaje = list_get(cola.mensajes,i);
+			mensaje = list_get(cola->mensajes,i);
 			if(mensaje->id_correlativo == id_correlativo){
 				free(mensaje);
 				return -1;
@@ -151,15 +143,113 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola cola){
 	return 1;
 }
 
-//crea un mensaje de un string y lo agrega a una cola YA CREADA, el mensaje ya tiene los suscriptores que tenga esa cola
-void agregar_mensaje(void* mensaje, codigo_operacion tipo_mensaje, t_cola* cola){
-	//if(){
+// crea un mensaje con los datos que le pasan y lo agrega a la cola, el mensajes tiene los mismos suscriptores que la cola
+void agregar_mensaje_new(New* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
 		t_mensaje* new = malloc(sizeof(t_mensaje));
-		*new = crear_mensaje(TEST_ID,TEST_ID,mensaje); // cambiar id
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
 		new->subs = cola->subs;
 		list_add(cola->mensajes,new);
 		free(new);
-	//}
+	}
+}
+
+void agregar_mensaje_appeared(Appeared* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
+		new->subs = cola->subs;
+		list_add(cola->mensajes,new);
+		free(new);
+	}
+}
+
+void agregar_mensaje_get(Get* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
+		new->subs = cola->subs;
+		list_add(cola->mensajes,new);
+		free(new);
+	}
+}
+
+void agregar_mensaje_localized(Localized* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
+		new->subs = cola->subs;
+		list_add(cola->mensajes,new);
+		free(new);
+	}
+}
+
+void agregar_mensaje_catch(Catch* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
+		new->subs = cola->subs;
+		list_add(cola->mensajes,new);
+		free(new);
+	}
+}
+
+void agregar_mensaje_caught(Caught* mensaje, t_cola* cola){
+	if(buscar_en_cola(mensaje->corrID, cola) != -1){
+		t_mensaje* new = malloc(sizeof(t_mensaje));
+		int32_t id = crear_id(),idCorr;
+		if(mensaje->corrID == -2){
+			idCorr = id;
+		}else{
+			idCorr = mensaje->corrID;
+		}
+		mensaje->ID = id;
+		mensaje->corrID = idCorr;
+		*new = crear_mensaje(id,idCorr,mensaje);
+		new->subs = cola->subs;
+		list_add(cola->mensajes,new);
+		free(new);
+	}
 }
 
 void agregar_sub(int32_t socket, t_cola* cola){
@@ -243,8 +333,7 @@ int32_t a_suscribir(Suscripcion* mensaje){
 	return mensaje->numeroCola;
 }
 
-// falta terminar, pero deberia funcionar para las pruebas de conexion
-// a revisar cuando hay que borrar un mensaje
+// revisar cuando hay que borrar un mensaje
 /*
 void borrar_mensajes(t_cola cola){
 	int32_t subsTotales = 0, yaRecibido = 0,n = 0, aBorrar[];
@@ -333,37 +422,37 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case NEW:
 			mensaje = malloc(sizeof(New));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaNew);
+			agregar_mensaje_new(mensaje, colaNew);
 			free(mensaje);
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaAppeared);
+			agregar_mensaje_appeared(mensaje, colaAppeared);
 			free(mensaje);
 			break;
 		case GET:
 			mensaje = malloc(sizeof(Get));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaGet);
+			agregar_mensaje_get(mensaje, colaGet);
 			free(mensaje);
 			break;
 		case LOCALIZED:
 			mensaje = malloc(sizeof(Localized));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaLocalized);
+			agregar_mensaje_localized(mensaje, colaLocalized);
 			free(mensaje);
 			break;
 		case CATCH:
 			mensaje = malloc(sizeof(Catch));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaCatch);
+			agregar_mensaje_catch(mensaje, colaCatch);
 			free(mensaje);
 			break;
 		case CAUGHT:
 			mensaje = malloc(sizeof(Caught));
 			recibir_mensaje(&mensaje, socket_cliente, &size);
-			agregar_mensaje(mensaje, cod_op, colaCaught);
+			agregar_mensaje_caught(mensaje, colaCaught);
 			free(mensaje);
 			break;
 		case SUSCRIPCION:

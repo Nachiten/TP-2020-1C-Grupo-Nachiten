@@ -44,8 +44,8 @@ typedef struct NewPokemon
 
 	uint32_t cantPokemon;
 
-	uint32_t ID; // ver si hay que sacar esto porque no se usaria
-	uint32_t corrID;
+	uint32_t ID;
+	uint32_t corrID; //si no tienen ninguno pongan -2
 }New;
 
 typedef struct LocalizedPokemon // INCOMPLETO
@@ -57,7 +57,7 @@ typedef struct LocalizedPokemon // INCOMPLETO
 	Coords* posPokemones;
 
 	uint32_t ID;
-	uint32_t corrID;
+	uint32_t corrID;//si no tienen ninguno pongan -2
 }Localized;
 
 typedef struct GetPokemon
@@ -66,7 +66,7 @@ typedef struct GetPokemon
 	char* nombrePokemon;
 
 	uint32_t ID;
-	uint32_t corrID;
+	uint32_t corrID;//si no tienen ninguno pongan -2
 }Get;
 
 typedef struct AppearedPokemon
@@ -77,7 +77,7 @@ typedef struct AppearedPokemon
 	Coords posPokemon;
 
 	uint32_t ID;
-	uint32_t corrID;
+	uint32_t corrID;//si no tienen ninguno pongan -2
 }Appeared;
 
 typedef struct CatchPokemon
@@ -88,7 +88,7 @@ typedef struct CatchPokemon
 	Coords posPokemon;
 
 	uint32_t ID;
-	uint32_t corrID;
+	uint32_t corrID;//si no tienen ninguno pongan -2
 }Catch;
 
 typedef struct CaughtPokemon // por hacer
@@ -99,7 +99,7 @@ typedef struct CaughtPokemon // por hacer
 	int32_t pudoAtrapar; // BOOLEANO
 
 	uint32_t ID;
-	uint32_t corrID;
+	uint32_t corrID;//si no tienen ninguno pongan -2
 }Caught;
 
 // Firmas de Funciones

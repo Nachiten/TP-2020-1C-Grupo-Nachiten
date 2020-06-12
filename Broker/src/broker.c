@@ -18,7 +18,6 @@ int32_t main(void) {
 
 	t_config* config;
 	t_log* logger;
-	//int socket;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 

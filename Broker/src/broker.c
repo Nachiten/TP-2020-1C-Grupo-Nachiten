@@ -17,7 +17,7 @@ typedef struct Entrenador{
 int32_t main(void) {
 
 	t_config* config;
-	//int socket;
+	t_log* logger;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
@@ -43,7 +43,7 @@ int32_t main(void) {
 	}
 
 	//Dejo cargado un logger para loguear los eventos.
-	//logger = cargarUnLog(pathLogs, "broker");
+	logger = cargarUnLog(pathLogs, "broker");
 
 	IP_BROKER = config_get_string_value(config,"IP_BROKER");
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
@@ -56,26 +56,32 @@ int32_t main(void) {
 // *************************************************
 
 void inicializar_colas(){
+	colaNew = malloc(sizeof(t_cola));
 	colaNew->tipoCola = NEW;
 	colaNew->mensajes = list_create();
 	colaNew->subs = list_create();
 
+	colaAppeared = malloc(sizeof(t_cola));
 	colaAppeared->tipoCola = APPEARED;
 	colaAppeared->mensajes = list_create();
 	colaAppeared->subs = list_create();
 
+	colaGet = malloc(sizeof(t_cola));
 	colaGet->tipoCola = GET;
 	colaGet->mensajes = list_create();
 	colaGet->subs = list_create();
 
+	colaLocalized = malloc(sizeof(t_cola));
 	colaLocalized->tipoCola = LOCALIZED;
 	colaLocalized->mensajes = list_create();
 	colaLocalized->subs = list_create();
 
+	colaCatch = malloc(sizeof(t_cola));
 	colaCatch->tipoCola = CATCH;
 	colaCatch->mensajes = list_create();
 	colaCatch->subs = list_create();
 
+	colaCaught = malloc(sizeof(t_cola));
 	colaCaught->tipoCola = CAUGHT;
 	colaCaught->mensajes = list_create();
 	colaCaught->subs = list_create();

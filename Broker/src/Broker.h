@@ -10,6 +10,7 @@
 
 #include"shared/socket.h"
 #include"shared/cargador.h"
+#include"shared/memoria.h" //las funciones para manejar memoria
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/socket.h>

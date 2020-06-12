@@ -59,7 +59,7 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 
 	//libero los malloc utilizados
 	eliminar_paquete(paquete_por_armar);
-	eliminar_paquete(paquete_serializado);
+	free(paquete_serializado);
 }
 
 void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)

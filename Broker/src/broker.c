@@ -17,12 +17,13 @@ typedef struct Entrenador{
 int32_t main(void) {
 
 	t_config* config;
+	t_log* logger;
 	//int socket;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
 	id_inicial = 0;
-	inicializar_colas();
+	//inicializar_colas();
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -43,10 +44,37 @@ int32_t main(void) {
 	}
 
 	//Dejo cargado un logger para loguear los eventos.
-	//logger = cargarUnLog(pathLogs, "broker");
+	logger = cargarUnLog(pathLogs, "Broker");
 
 	IP_BROKER = config_get_string_value(config,"IP_BROKER");
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
+/*
+//desde aca tengo lo de memoria (ToDo)
+
+	//va para declaraciones
+	char* TAMANIO_MEM;
+	char* TAMANIO_MIN_PART;
+	char* ADMIN_MEMORIA;
+	char* ALGOR_REEMPLAZO;
+	char* ALGOR_ASIGN_PARTICION;
+	char* FRECUEN_COMPACT;
+
+	//aca cargo las los valores del config para manejar la memoria
+	cargar_config_memoria(config, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, ALGOR_REEMPLAZO, ALGOR_ASIGN_PARTICION, FRECUEN_COMPACT);
+
+	//preparo el espacio de memoria cache
+	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, para estar seguros, le asigne 10MB, pero hay que actualizarlo segun vayamos avanzando con esto
+	void* CACHE = malloc(cambia_a_int(TAMANIO_MEM));
+
+
+
+
+
+	//no olvidarse de hacer mierda la memoria reservada para CACHE
+	free(CACHE);
+//hasta aca lo que hice de memoria
+
+ */
 
 	//Arranco el Broker como servidor.
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
@@ -56,26 +84,32 @@ int32_t main(void) {
 // *************************************************
 
 void inicializar_colas(){
+	colaNew = malloc(sizeof(t_cola));
 	colaNew->tipoCola = NEW;
 	colaNew->mensajes = list_create();
 	colaNew->subs = list_create();
 
+	colaAppeared = malloc(sizeof(t_cola));
 	colaAppeared->tipoCola = APPEARED;
 	colaAppeared->mensajes = list_create();
 	colaAppeared->subs = list_create();
 
+	colaGet = malloc(sizeof(t_cola));
 	colaGet->tipoCola = GET;
 	colaGet->mensajes = list_create();
 	colaGet->subs = list_create();
 
+	colaLocalized = malloc(sizeof(t_cola));
 	colaLocalized->tipoCola = LOCALIZED;
 	colaLocalized->mensajes = list_create();
 	colaLocalized->subs = list_create();
 
+	colaCatch = malloc(sizeof(t_cola));
 	colaCatch->tipoCola = CATCH;
 	colaCatch->mensajes = list_create();
 	colaCatch->subs = list_create();
 
+	colaCaught = malloc(sizeof(t_cola));
 	colaCaught->tipoCola = CAUGHT;
 	colaCaught->mensajes = list_create();
 	colaCaught->subs = list_create();

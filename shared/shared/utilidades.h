@@ -66,4 +66,6 @@ void libero_estructura_Suscripcion(Suscripcion* estructura);
 //libera el espacio reservado para usar una estructura Suscripcion
 void libero_estructura_Dessuscripcion(Dessuscripcion* estructura);
 
+
+
 #endif /* SHARED_UTILIDADES_H_ */

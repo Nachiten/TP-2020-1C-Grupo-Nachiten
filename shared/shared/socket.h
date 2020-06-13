@@ -23,34 +23,35 @@
 #include"estructuras.h"
 #include"utilidades.h"
 
-typedef enum
-{
-	NEW = 1,
-	APPEARED,
-	GET,
-	LOCALIZED,
-	CATCH,
-	CAUGHT,
-	SUSCRIPCION,
-	DESSUSCRIPCION,
-	CONFIRMACION,
-	TEST = 404,
-	ERROR = -1,
-	DESCONEXION = 0
-}codigo_operacion;
-
-
-typedef struct
-{
-	uint32_t size;
-	void* stream;
-} t_buffer;
-
-typedef struct
-{
-	codigo_operacion codigo_op;
-	t_buffer* buffer;
-} t_paquete;
+//ahora estan funcionando desde estructuras.h eliminar eventualmente, si no causa errores
+//typedef enum
+//{
+//	NEW = 1,
+//	APPEARED,
+//	GET,
+//	LOCALIZED,
+//	CATCH,
+//	CAUGHT,
+//	SUSCRIPCION,
+//	DESSUSCRIPCION,
+//	CONFIRMACION,
+//	TEST = 404,
+//	ERROR = -1,
+//	DESCONEXION = 0
+//}codigo_operacion;
+//
+//
+//typedef struct
+//{
+//	uint32_t size;
+//	void* stream;
+//} t_buffer;
+//
+//typedef struct
+//{
+//	codigo_operacion codigo_op;
+//	t_buffer* buffer;
+//} t_paquete;
 
 pthread_t thread;
 

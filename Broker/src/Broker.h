@@ -17,32 +17,33 @@
 #include<unistd.h>
 #include<netdb.h>
 #include<commons/log.h>
-#include<commons/collections/list.h>
 #include<string.h>
 #include<pthread.h>
 #include"shared/estructuras.h"
 #include <inttypes.h> // Para tener el uint32_t
+//#include<commons/collections/list.h>
 
 #define TEST_ID 1111 //hasta que se me ocurra una forma de crear los id
 
-typedef struct {
-	int32_t socket;
-	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
-}t_sub;
 
-typedef struct {
-	int32_t id;
-	int32_t id_correlativo;
-	void* mensaje;
-	t_list* subs; //lista de suscriptores
-}t_mensaje;
-
-typedef struct {
-	codigo_operacion tipoCola;
-	t_list* mensajes; //lista de mensajes
-	t_list* subs; //lista de suscriptores
-}t_cola;
-
+//NICO ESTO NO LO BORRO POR SI QUERES HACER ALGUNA PRUEBA O ALGO, PERO AHORA TENES TODAS LAS ESTRUCTURAS EN estructuras.h
+//typedef struct {
+//	int32_t socket;
+//	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
+//}t_sub;
+//
+//typedef struct {
+//	int32_t id;
+//	int32_t id_correlativo;
+//	void* mensaje;
+//	t_list* subs; //lista de suscriptores
+//}t_mensaje;
+//
+//typedef struct {
+//	codigo_operacion tipoCola;
+//	t_list* mensajes; //lista de mensajes
+//	t_list* subs; //lista de suscriptores
+//}t_cola;
 
 t_cola* colaNew;
 t_cola* colaAppeared;

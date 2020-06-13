@@ -13,12 +13,42 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <readline/readline.h>
+#include<commons/collections/list.h>
 
+//estructuras que usa socket
+
+typedef enum
+{
+	NEW = 1,
+	APPEARED,
+	GET,
+	LOCALIZED,
+	CATCH,
+	CAUGHT,
+	SUSCRIPCION,
+	DESSUSCRIPCION,
+	CONFIRMACION,
+	TEST = 404,
+	ERROR = -1,
+	DESCONEXION = 0
+}codigo_operacion;
+
+
+typedef struct
+{
+	uint32_t size;
+	void* stream;
+} t_buffer;
+
+typedef struct
+{
+	codigo_operacion codigo_op;
+	t_buffer* buffer;
+} t_paquete;
 
 
 //estructuras del Broker
 
-/*
 typedef struct {
 	int32_t socket;
 	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
@@ -36,10 +66,10 @@ typedef struct {
 	t_list* mensajes; //lista de mensajes
 	t_list* subs; //lista de suscriptores
 }t_cola;
-*/
 
 
-// Structs
+
+// Structs para los tipos de mensaje
 typedef struct {
 	int32_t id_mensaje;
 	int colaMensajes;

@@ -57,7 +57,7 @@ uint32_t cambia_a_int(char* enString)
 {
 	uint32_t enNumero = 0;
 	uint32_t longitud = strlen(enString);
-	int iterador = longitud-1; //NO TOCAR EL PUTO INT O EXPLOTA TODO!! NO CAMBIAR A UINT32_T
+	int32_t iterador = longitud-1;
 	uint32_t elevado = 0;
 
 	while(iterador >=0)

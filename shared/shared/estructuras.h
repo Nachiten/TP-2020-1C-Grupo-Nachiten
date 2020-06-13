@@ -15,6 +15,30 @@
 #include <readline/readline.h>
 
 
+
+//estructuras del Broker
+
+/*
+typedef struct {
+	int32_t socket;
+	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
+}t_sub;
+
+typedef struct {
+	int32_t id;
+	int32_t id_correlativo;
+	void* mensaje;
+	t_list* subs; //lista de suscriptores
+}t_mensaje;
+
+typedef struct {
+	codigo_operacion tipoCola;
+	t_list* mensajes; //lista de mensajes
+	t_list* subs; //lista de suscriptores
+}t_cola;
+*/
+
+
 // Structs
 typedef struct {
 	int32_t id_mensaje;

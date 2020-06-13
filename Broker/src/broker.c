@@ -29,6 +29,7 @@ int32_t main(void) {
 
 	if (config == NULL){
 		printf("No se pudo leer la config\n");
+		return EXIT_FAILURE;
 	} else {
 		printf("La config fue leida correctamente\n");
 	}
@@ -38,6 +39,7 @@ int32_t main(void) {
 
 	if (pathLogs == NULL){
 		printf("No se pudo leer el path del log de la config\n");
+		return EXIT_FAILURE;
 	} else {
 		printf("El path del log fue leido correctamente\n");
 	}
@@ -47,7 +49,7 @@ int32_t main(void) {
 
 	IP_BROKER = config_get_string_value(config,"IP_BROKER");
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
-/*
+
 //desde aca tengo lo de memoria (ToDo)
 
 	//va para declaraciones
@@ -59,21 +61,26 @@ int32_t main(void) {
 	char* FRECUEN_COMPACT;
 
 	//aca cargo las los valores del config para manejar la memoria
-	cargar_config_memoria(config, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, ALGOR_REEMPLAZO, ALGOR_ASIGN_PARTICION, FRECUEN_COMPACT);
+	//esta funcion falla pero feo
+	//cargar_config_memoria(config, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, ALGOR_REEMPLAZO, ALGOR_ASIGN_PARTICION, FRECUEN_COMPACT);
+	TAMANIO_MEM = config_get_string_value(config,"TAMANO_MEMORIA");
+	TAMANIO_MIN_PART = config_get_string_value(config,"TAMANO_MINIMO_PARTICION");
+	ADMIN_MEMORIA = config_get_string_value(config,"ALGORITMO_MEMORIA");
+	ALGOR_REEMPLAZO = config_get_string_value(config,"ALGORITMO_REEMPLAZO");
+	ALGOR_ASIGN_PARTICION = config_get_string_value(config,"ALGORITMO_PARTICION_LIBRE");
+	FRECUEN_COMPACT = config_get_string_value(config,"FRECUENCIA_COMPACTACION");
 
 	//preparo el espacio de memoria cache
-	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, para estar seguros, le asigne 10MB, pero hay que actualizarlo segun vayamos avanzando con esto
-	void* CACHE = malloc(cambia_a_int(TAMANIO_MEM));
+	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, hay que actualizarlo segun vayamos avanzando con esto
+	void* CACHE = malloc(cambia_a_int(TAMANIO_MEM) * sizeof(char));
+	printf("el size del CACHE es:  %i\n", sizeof(CACHE)); //haga lo que haga solo me asigna 4 Bytes, por que?
+
+	//void agregar_mensaje_a_Cache(CACHE);
 
 
-
-
-
-	//no olvidarse de hacer mierda la memoria reservada para CACHE
+	//no olvidarse de reventar la memoria reservada para CACHE
 	free(CACHE);
-//hasta aca lo que hice de memoria
-
- */
+//hasta aca lo de memoria
 
 	//Arranco el Broker como servidor.
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
@@ -367,9 +374,10 @@ int32_t a_suscribir(Suscripcion* mensaje){
 }
 
 // revisar cuando hay que borrar un mensaje
-/*
+
 void borrar_mensajes(t_cola cola){
-	int32_t subsTotales = 0, yaRecibido = 0,n = 0, aBorrar[];
+	int32_t subsTotales = 0, yaRecibido = 0;
+	t_mensaje* borrado;
 		if(cola.mensajes != NULL){
 			for(int i = 0; i < cola.mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
@@ -385,14 +393,17 @@ void borrar_mensajes(t_cola cola){
 				}
 				if(subsTotales == yaRecibido){
 					// cuando este agregado memoria el mensaje eliminado deberia agregarse ahi
-					n++;
-					aBorrar[n] = i;
+					borrado = malloc(sizeof(t_mensaje));
+					borrado = list_remove(cola.mensajes, i);
+					//probar
+					//void agregar_mensaje_a_Cache(CACHE,borrado,cola);
+					free(mensaje);
 				}
 				free(mensaje);
 			}
 		}
 }
-*/
+
 
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola

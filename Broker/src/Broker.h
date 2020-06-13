@@ -43,6 +43,7 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
+
 t_cola* colaNew;
 t_cola* colaAppeared;
 t_cola* colaGet;

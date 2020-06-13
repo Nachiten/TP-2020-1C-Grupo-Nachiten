@@ -25,6 +25,48 @@ int main(void) {
 		log_info(logger, "Se leyo el puerto del broker correctamente");
 	}
 
+	char* pathPuntoMontaje = config_get_string_value(config, "PUNTO_MONTAJE_TALLGRASS");
+	// Como hago para crear mas de una carpeta con el mismo punto de montaje?
+
+	char* pathBlocks = strcat(pathPuntoMontaje, "/Blocks");
+
+	//int retornoFiles = mkdir(strcat(pathPuntoMontaje, "/Files"), 0777);
+	//printf("Path punto montaje: %s\n", strcat(pathPuntoMontaje, "/Files"));
+	int retornoBlocks = mkdir(pathBlocks, 0777);
+	printf("Path punto montaje 2: %s\n", strcat(pathPuntoMontaje, "/Blocks"));
+
+	//printf("RetornoFiles: %i", retornoFiles);
+	printf("RetornoBlocks: %i\n", retornoBlocks);
+
+	// Generando un archivo .bin en carpeta blocks
+	char* pathCompleto = strcat(pathBlocks, "/1.bin");
+
+	// Queriendo usar variable pathCompleto expĺota con segmentation fault :(
+	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/Blocks/1.bin", "w+" );
+	fclose(bloque);
+
+	/*
+	int i;
+	char numBloque = i + 48;
+	for(i = 1; i<= 8; i++){
+
+		char* pathConBarra = strcat(pathBlocks, "/");
+		char* pathConNumBloque = strcat(pathConBarra, "2");
+		char* pathConExtension = strcat(pathConNumBloque, ".bin");
+
+		FILE* bloque = fopen( pathConExtension, "w+" );
+
+		int retornoCerrarArchivo = fclose(bloque);
+		if ( retornoCerrarArchivo != 0){
+			printf("Hubo un problema al cerrar el archivo");
+		}
+
+		numBloque++;
+	}
+	*/
+
+
+	//printf("%i", retornoCrearDir);
 
 	return EXIT_SUCCESS;
 }

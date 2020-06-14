@@ -21,29 +21,15 @@
 #include<pthread.h>
 #include"shared/estructuras.h"
 #include <inttypes.h> // Para tener el uint32_t
+#include <semaphore.h> // para los semaforos
 //#include<commons/collections/list.h>
 
-#define TEST_ID 1111 //hasta que se me ocurra una forma de crear los id
-
-
-//NICO ESTO NO LO BORRO POR SI QUERES HACER ALGUNA PRUEBA O ALGO, PERO AHORA TENES TODAS LAS ESTRUCTURAS EN estructuras.h
-//typedef struct {
-//	int32_t socket;
-//	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
-//}t_sub;
-//
-//typedef struct {
-//	int32_t id;
-//	int32_t id_correlativo;
-//	void* mensaje;
-//	t_list* subs; //lista de suscriptores
-//}t_mensaje;
-//
-//typedef struct {
-//	codigo_operacion tipoCola;
-//	t_list* mensajes; //lista de mensajes
-//	t_list* subs; //lista de suscriptores
-//}t_cola;
+sem_t* semNew;
+sem_t* semAppeared;
+sem_t* semGet;
+sem_t* semLocalized;
+sem_t* semCatch;
+sem_t* semCaught;
 
 t_cola* colaNew;
 t_cola* colaAppeared;
@@ -71,17 +57,18 @@ void llenar_listaColas();
 t_sub crear_sub(int32_t socket);
 t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje);
 void suscribir(t_sub* sub,t_cola* cola);
-void agregar_mensaje_new(New* mensaje, t_cola* cola);
-void agregar_mensaje_appeared(Appeared* mensaje, t_cola* cola);
-void agregar_mensaje_get(Get* mensaje, t_cola* cola);
-void agregar_mensaje_localized(Localized* mensaje, t_cola* cola);
-void agregar_mensaje_catch(Catch* mensaje, t_cola* cola);
-void agregar_mensaje_caught(Caught* mensaje, t_cola* cola);
+void agregar_mensaje_new(New* mensaje);
+void agregar_mensaje_appeared(Appeared* mensaje);
+void agregar_mensaje_get(Get* mensaje);
+void agregar_mensaje_localized(Localized* mensaje);
+void agregar_mensaje_catch(Catch* mensaje);
+void agregar_mensaje_caught(Caught* mensaje);
 void agregar_sub(int32_t socket, t_cola* cola);
+void mandar_mensajes_broker(t_cola* cola);
 void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
 void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
 int32_t a_suscribir(Suscripcion* mensaje);
-void borrar_mensajes(t_cola cola);
+void borrar_mensajes(t_cola* cola);
 void desuscribir(int32_t socket, t_cola* cola);
 
 #endif /* SRC_BROKER_H_ */

@@ -15,4 +15,7 @@
 #include"shared/terminarPrograma.h"
 
 
+char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta);
+void crearBloquesEn(char* pathBloques, int cantidadBloques);
+
 #endif /* SRC_GAMECARD_H_ */

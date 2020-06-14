@@ -1,17 +1,17 @@
 #include "gamecard.h"
 
-char* crearCarpetaBlocks(char* pathPuntoMontaje){
-	char* carpetaBlocks = "/Blocks";
+char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
+	//char* carpetaBlocks = "/Blocks";
 
 	// Path de la carpeta {punto_montaje}/Blocks
-	char* pathBloques = malloc(strlen(pathPuntoMontaje) + strlen(carpetaBlocks) + 1);
+	char* pathBloques = malloc(strlen(pathPuntoMontaje) + strlen(nombreCarpeta) + 1);
 	// Hacer este malloc explota por sf | = malloc(strlen(pathPuntoMontaje + 1));
 
 	// Copiando el punto de montaje al path de los bloques
 	strcpy(pathBloques, pathPuntoMontaje);
 
 	// Agrego el path de la carpeta /Blocks
-	strcat(pathBloques, carpetaBlocks);
+	strcat(pathBloques, nombreCarpeta);
 
 	int retornoBlocks = mkdir(pathBloques, 0777);
 
@@ -23,40 +23,48 @@ char* crearCarpetaBlocks(char* pathPuntoMontaje){
 }
 
 void crearBloquesEn(char* pathBloques, int cantidadBloques){
-	int bloqueActual = 4; // Esto estaria dentro de un for
+	
+	int bloqueActual;
+	
+	for(bloqueActual = 1 ; bloqueActual <= cantidadBloques ; bloqueActual++ ){
+		
+		//int bloqueActual = 4; // Esto estaria dentro de un for
 
-	// Array de chars para meter el int convertido a array
-	char enteroEnLetras[5];
+		// Array de chars para meter el int convertido a array
+		char enteroEnLetras[5];
 
-	// Genero un array de chars que es el numero de bloque pasado a string
-	sprintf(enteroEnLetras, "%i", bloqueActual);
-	// IMPORTANTE: Como convertir entero a string
+		// Genero un array de chars que es el numero de bloque pasado a string
+		sprintf(enteroEnLetras, "%i", bloqueActual);
+		// IMPORTANTE: Como convertir entero a string
 
-	char* extension = ".bin";
+		char* extension = ".bin";
 
-	// 5 = longitud del numero + 1 por la /
-	char* nombreArchivo = malloc( 6 + strlen(extension) + 1 );
+		// 5 = longitud del numero + 1 por la /
+		char* nombreArchivo = malloc( 6 + strlen(extension) + 1 );
 
-	strcpy(nombreArchivo, "/");
-	strcat(nombreArchivo, &enteroEnLetras);
-	strcat(nombreArchivo, extension);
+		strcpy(nombreArchivo, "/");
+		strcat(nombreArchivo, &enteroEnLetras);
+		strcat(nombreArchivo, extension);
 
-	printf("Nombre archivo: %s\n", nombreArchivo);
+		printf("Nombre archivo: %s\n", nombreArchivo);
 
-	// Creo una copia del path de /Blocks para no modificarlo
-	char* pathBloque1 = malloc(strlen(pathBloques) + strlen(nombreArchivo) + 1);
+		// Creo una copia del path de /Blocks para no modificarlo
+		char* pathBloqueActual = malloc(strlen(pathBloques) + strlen(nombreArchivo) + 1);
 
-	// Le pego el path de /Blocks
-	strcpy(pathBloque1, pathBloques);
+		// Le pego el path de /Blocks
+		strcpy(pathBloqueActual, pathBloques);
 
-	// Le pego el valor hardcodeado 1.bin
-	strcat(pathBloque1, nombreArchivo);
+		// Le pego el valor hardcodeado 1.bin
+		strcat(pathBloqueActual, nombreArchivo);
 
-	printf("Path bloque 1: %s\n", pathBloque1);
+		printf("Path bloque 1: %s\n", pathBloqueActual);
 
-	// Queriendo usar variable pathCompleto expĺota con segmentation fault :(
-	FILE* bloque = fopen( pathBloque1 , "w+" );
-	fclose(bloque);
+		// Queriendo usar variable pathCompleto expĺota con segmentation fault :(
+		FILE* bloque = fopen( pathBloqueActual , "w+" );
+		fclose(bloque);
+	}
+	
+	
 }
 
 int main(void) {
@@ -87,9 +95,9 @@ int main(void) {
 	char* pathPuntoMontaje = config_get_string_value(config, "PUNTO_MONTAJE_TALLGRASS");
 
 	// Crear la carpeta /Blocks
-	char* pathBloques = crearCarpetaBlocks(pathPuntoMontaje);
+	char* pathBloques = crearCarpetaEn(pathPuntoMontaje, "/Blocks");
 
-	int cantidadBloques = 100; // Hardcodeado (//TODO debe leerse
+	int cantidadBloques = 2000; // Hardcodeado (//TODO debe leerse desde el archivo
 
 	// Creaar los bloques dentro de carpeta /Blocks
 	crearBloquesEn(pathBloques, cantidadBloques);
@@ -99,32 +107,32 @@ int main(void) {
 	char enteroEnLetras[5];
 
 
-		char* pathBloqueCompleto = malloc(35);
+	char* pathBloqueCompleto = malloc(35);
 
-		// Le pego el path de la carpeta /Blocks
-		strcpy(pathBloqueCompleto, pathBloques);
+	// Le pego el path de la carpeta /Blocks
+	strcpy(pathBloqueCompleto, pathBloques);
 
-		printf("%s", pathBloqueCompleto);
-		*/
+	printf("%s", pathBloqueCompleto);
+	*/
 
-		/*
-		// Le pego al path una / luego del nombre de carpeta
-		strcat(pathBloqueCompleto, "/");
+	/*
+	// Le pego al path una / luego del nombre de carpeta
+	strcat(pathBloqueCompleto, "/");
 
-		// Genero un array de chars que es el numero de bloque pasado a string
-		sprintf(enteroEnLetras, "%i", i);
-		// IMPORTANTE: Como convertir entero a string
+	// Genero un array de chars que es el numero de bloque pasado a string
+	sprintf(enteroEnLetras, "%i", i);
+	// IMPORTANTE: Como convertir entero a string
 
-		// Pego el numero al path del bloque
-		strcat(pathBloqueCompleto, enteroEnLetras);
+	// Pego el numero al path del bloque
+	strcat(pathBloqueCompleto, enteroEnLetras);
 
-		// Agrego la extension
-		strcat(pathBloqueCompleto, ".bin");
+	// Agrego la extension
+	strcat(pathBloqueCompleto, ".bin");
 
-		printf("Path total: %s\n", pathBloqueCompleto);
+	printf("Path total: %s\n", pathBloqueCompleto);
 
-		//TODO Abrir un archivo con este nombre "pathBloqueCompleto" y luego cerrarlo
-		*/
+	//TODO Abrir un archivo con este nombre "pathBloqueCompleto" y luego cerrarlo
+*/
 
 
 

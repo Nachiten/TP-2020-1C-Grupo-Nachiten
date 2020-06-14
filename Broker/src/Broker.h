@@ -40,6 +40,10 @@ t_cola* colaCaught;
 
 int32_t id_inicial;
 
+//Memoria del Broker
+void* CACHE;
+lista_particiones* hoja_de_particiones;
+
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.
 void iniciar_server(char* ip, char* puerto); //sacar IP y PUERTO de los archivos de config.

@@ -53,7 +53,7 @@ int main(int cantArg, char* arg[]) {
 						pokemonAppeared->nombrePokemon = arg[3];
 						pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 						pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
-						pokemonAppeared->corrID = 0; //serializar NECESITA una ID CORRELATIVA para estandarizarlo
+						pokemonAppeared->corrID = -2; //serializar NECESITA una ID CORRELATIVA para estandarizarlo
 
 						//mandamos el mensaje
 						mandar_mensaje(pokemonAppeared, APPEARED, socket);

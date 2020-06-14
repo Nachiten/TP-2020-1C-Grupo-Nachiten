@@ -15,7 +15,7 @@
 #include <readline/readline.h>
 #include<commons/collections/list.h>
 
-//estructuras que usa socket
+//estructuras que usa socket ------------------------------------------------------------------------------------
 
 typedef enum
 {
@@ -47,7 +47,7 @@ typedef struct
 } t_paquete;
 
 
-//estructuras del Broker
+//estructuras del Broker -----------------------------------------------------------------------------------------------
 
 typedef struct {
 	int32_t socket;
@@ -67,9 +67,24 @@ typedef struct {
 	t_list* subs; //lista de suscriptores
 }t_cola;
 
+// Structs para manejar memoria -----------------------------------------------------------------------------------------
+
+typedef struct {
+	uint32_t limiteSuperior;
+	uint32_t limiteInferior;
+	uint32_t estaLibre; //es un fucking booleano, meterle solo 0 o 1
+}particion;
+
+typedef struct {
+	particion laParticion;
+	uint32_t numero_de_particion;
+	struct lista_particiones* anter_particion;
+	struct lista_particiones* sig_particion;
+}lista_particiones;
 
 
-// Structs para los tipos de mensaje
+// Structs para los tipos de mensaje ------------------------------------------------------------------------------------
+
 typedef struct {
 	int32_t id_mensaje;
 	int colaMensajes;
@@ -98,8 +113,8 @@ typedef struct NewPokemon
 
 	uint32_t cantPokemon;
 
-	uint32_t ID;
-	uint32_t corrID; //si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID; //si no tienen ninguno pongan -2
 }New;
 
 typedef struct LocalizedPokemon // INCOMPLETO
@@ -110,8 +125,8 @@ typedef struct LocalizedPokemon // INCOMPLETO
 	uint32_t cantPosciciones;
 	Coords* posPokemones;
 
-	uint32_t ID;
-	uint32_t corrID;//si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
 }Localized;
 
 typedef struct GetPokemon
@@ -119,8 +134,8 @@ typedef struct GetPokemon
 	uint32_t largoNombre;
 	char* nombrePokemon;
 
-	uint32_t ID;
-	uint32_t corrID;//si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
 }Get;
 
 typedef struct AppearedPokemon
@@ -130,8 +145,8 @@ typedef struct AppearedPokemon
 
 	Coords posPokemon;
 
-	uint32_t ID;
-	uint32_t corrID;//si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
 }Appeared;
 
 typedef struct CatchPokemon
@@ -141,8 +156,8 @@ typedef struct CatchPokemon
 
 	Coords posPokemon;
 
-	uint32_t ID;
-	uint32_t corrID;//si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
 }Catch;
 
 typedef struct CaughtPokemon // por hacer
@@ -152,8 +167,8 @@ typedef struct CaughtPokemon // por hacer
 
 	int32_t pudoAtrapar; // BOOLEANO
 
-	uint32_t ID;
-	uint32_t corrID;//si no tienen ninguno pongan -2
+	int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
 }Caught;
 
 // Firmas de Funciones

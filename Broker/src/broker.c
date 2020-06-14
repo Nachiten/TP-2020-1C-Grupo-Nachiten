@@ -58,7 +58,7 @@ int32_t main(void) {
 	IP_BROKER = config_get_string_value(config,"IP_BROKER");
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
 
-//desde aca tengo lo de memoria (ToDo)
+//desde aca tengo lo de memoria (ToDo)**************************************************************************************************************
 
 	//va para declaraciones
 	char* TAMANIO_MEM;
@@ -80,15 +80,20 @@ int32_t main(void) {
 
 	//preparo el espacio de memoria cache
 	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, hay que actualizarlo segun vayamos avanzando con esto
-	void* CACHE = malloc(cambia_a_int(TAMANIO_MEM) * sizeof(char));
-	printf("el size del CACHE es:  %i\n", sizeof(CACHE)); //haga lo que haga solo me asigna 4 Bytes, por que?
+	CACHE = malloc(cambia_a_int(TAMANIO_MEM));
 
-	//void agregar_mensaje_a_Cache(CACHE);
+	//Preparo la lista de referencias a las particiones dentro de CACHE
+	inicializar_lista_particiones(hoja_de_particiones);
 
+
+
+
+	//borramos toda referencia a particiones dentro de CACHE
+	matar_lista_particiones(hoja_de_particiones);
 
 	//no olvidarse de reventar la memoria reservada para CACHE
 	free(CACHE);
-//hasta aca lo de memoria
+//hasta aca lo de memoria***************************************************************************************************************************
 
 	//Arranco el Broker como servidor.
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
@@ -428,7 +433,7 @@ void borrar_mensajes(t_cola* cola){
 					borrado = malloc(sizeof(t_mensaje));
 					borrado = list_remove(cola->mensajes, i);
 					//probar
-					//void agregar_mensaje_a_Cache(CACHE,borrado,cola);
+					agregar_mensaje_a_Cache(CACHE, borrado, cola->tipoCola);
 					free(mensaje);
 				}
 				free(mensaje);

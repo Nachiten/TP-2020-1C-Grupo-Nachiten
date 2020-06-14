@@ -10,12 +10,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <commons/bitarray.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
 
+char* crearCarpetaEn(char* ,char* );
+void crearBloquesEn(char* ,int );
+void leerConfig(int*, int* ,char** ,char** ,char** );
+t_bitarray* crearBitArray(char*, int);
 
-char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta);
-void crearBloquesEn(char* pathBloques, int cantidadBloques);
 
 #endif /* SRC_GAMECARD_H_ */

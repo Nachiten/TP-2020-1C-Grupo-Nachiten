@@ -2,19 +2,19 @@
 
 char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
 
-	// Path de la carpeta {punto_montaje}/Blocks
-	char* pathBloques = malloc(strlen(pathPuntoMontaje) + strlen(nombreCarpeta) + 1);
+	// Path de la carpeta {punto_montaje}/nombreCarpeta
+	char* pathCarpeta = malloc(strlen(pathPuntoMontaje) + strlen(nombreCarpeta) + 1);
 	// Hacer este malloc explota por sf | = malloc(strlen(pathPuntoMontaje + 1));
 
-	// Copiando el punto de montaje al path de los bloques
-	strcpy(pathBloques, pathPuntoMontaje);
+	// Copiando el punto de montaje al path de la carpeta
+	strcpy(pathCarpeta, pathPuntoMontaje);
 
-	// Agrego el path de la carpeta /Blocks
-	strcat(pathBloques, nombreCarpeta);
+	// Agrego el path de la carpeta /nombreCarpeta
+	strcat(pathCarpeta, nombreCarpeta);
 
-	int retornoBlocks = mkdir(pathBloques, 0777);
+	mkdir(pathCarpeta, 0777);
 
-	return pathBloques;
+	return pathCarpeta;
 }
 
 void crearBloquesEn(char* pathBloques, int cantidadBloques){
@@ -35,6 +35,7 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 		// 5 = longitud del numero + 1 por la /
 		char* nombreArchivo = malloc( 6 + strlen(extension) + 1 );
 
+		// El nombre de archivo es de la forma /{num}.bin | Ejemplo: /35.bin
 		strcpy(nombreArchivo, "/");
 		strcat(nombreArchivo, enteroEnLetras);
 		strcat(nombreArchivo, extension);
@@ -101,6 +102,20 @@ t_bitarray* crearBitArray(char* pathMetadata, int cantBloques){
 	return bitarray_create_with_mode(pathCompleto, cantBloques / 8, MSB_FIRST);
 }
 
+void leerMetadataBin(int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
+	t_config* metadataBin;
+
+	metadataBin = leerConfiguracion("/home/utnso/Escritorio/tall-grass/Metadata/Metadata.bin");
+
+	*BLOCKS = config_get_int_value(metadataBin, "BLOCKS");
+	*BLOCK_SIZE = config_get_int_value(metadataBin, "BLOCK_SIZE");
+	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
+
+	printf("%i", *BLOCKS);
+	printf("%i", *BLOCK_SIZE);
+	printf("%s", *MAGIC_NUMBER);
+}
+
 int main(void) {
 
 	int TIEM_REIN_CONEXION;
@@ -111,26 +126,33 @@ int main(void) {
 
 	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
 
-	//= config_get_string_value(config, "PUNTO_MONTAJE_TALLGRASS");
-
+	/* Inicializacion del logger... todavia no es necesitado
 	//t_log* logger;
 
 	//logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
+	*/
 	// Crear la carpeta /Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
+	// Crear la carpeta /Metadata [Si ya existe no hace nada]
 	char* pathMetadata = crearCarpetaEn(PUNTO_MONTAJE, "/Metadata");
 
-	int cantidadBloques = 200; // Hardcodeado (//TODO debe leerse desde el archivo
+
+	int BLOCKS;
+	int BLOCK_SIZE;
+	char* MAGIC_NUMBER;
+	// Funcion para leer metadata.bin
+	leerMetadataBin(&BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
 
 	// Creaar los bloques dentro de carpeta /Blocks
-	crearBloquesEn(pathBloques, cantidadBloques);
+	crearBloquesEn(pathBloques, BLOCKS);
 
-	t_bitarray* bitArrayBloques = crearBitArray(pathMetadata, cantidadBloques);
+	t_bitarray* bitArrayBloques = crearBitArray(pathMetadata, BLOCKS);
 
 	// Devuelve 200 = cantidadTotalBits
 	//int cantBits = bitarray_get_max_bit(bitArrayBloques);
 
+	/* Testing con bitarray
 	// Fija el bit a 1
 	bitarray_set_bit(bitArrayBloques, 4);
 
@@ -151,6 +173,7 @@ int main(void) {
 	printf("Despues del clean: \n");
 	printf("Bit 3: %i\n", bit3);
 	printf("Bit 4: %i\n", bit4);
+	*/
 
 	return EXIT_SUCCESS;
 }

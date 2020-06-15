@@ -20,6 +20,7 @@
 char* crearCarpetaEn(char* ,char* );
 void crearBloquesEn(char* ,int );
 void leerConfig(int*, int* ,char** ,char** ,char** );
+void leerMetadataBin(int* , int* , char** );
 t_bitarray* crearBitArray(char*, int);
 
 

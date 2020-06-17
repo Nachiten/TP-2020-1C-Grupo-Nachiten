@@ -102,18 +102,35 @@ t_bitarray* crearBitArray(char* pathMetadata, int cantBloques){
 	return bitarray_create_with_mode(pathCompleto, cantBloques / 8, MSB_FIRST);
 }
 
-void leerMetadataBin(int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
+void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
+
+	// Nombre del archivo metadata
+	char* archivoMetadata = "/Metadata.bin";
+
+	// Path de la carpeta {punto_montaje}/Metadata/Metadata.bin
+	char* pathMetadataBin = malloc(strlen(pathMetadata) + strlen(archivoMetadata) + 1);
+
+	// Le pego el path de metadata
+	strcpy(pathMetadataBin, pathMetadata);
+	// Le pego al final el path del archivo
+	strcat(pathMetadataBin, archivoMetadata);
+
+	// Leo el archivo
 	t_config* metadataBin;
+	metadataBin = leerConfiguracion(pathMetadataBin);
 
-	metadataBin = leerConfiguracion("/home/utnso/Escritorio/tall-grass/Metadata/Metadata.bin");
+	if (metadataBin == NULL){
+		printf("No se pudo leer el archivo Metadata/Metadata.bin");
+	}
 
+	// Obtengo los valores (pasados por referencia)
 	*BLOCKS = config_get_int_value(metadataBin, "BLOCKS");
 	*BLOCK_SIZE = config_get_int_value(metadataBin, "BLOCK_SIZE");
 	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
 
-	printf("%i", *BLOCKS);
-	printf("%i", *BLOCK_SIZE);
-	printf("%s", *MAGIC_NUMBER);
+	printf("%i\n", *BLOCKS);
+	printf("%i\n", *BLOCK_SIZE);
+	printf("%s\n", *MAGIC_NUMBER);
 }
 
 int main(void) {
@@ -126,23 +143,25 @@ int main(void) {
 
 	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
 
-	/* Inicializacion del logger... todavia no es necesitado
+	/* Inicializacion del logger... todavia no es necesario
 	//t_log* logger;
 
 	//logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	*/
+
 	// Crear la carpeta /Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
 	// Crear la carpeta /Metadata [Si ya existe no hace nada]
 	char* pathMetadata = crearCarpetaEn(PUNTO_MONTAJE, "/Metadata");
 
 
+	// Datos de metadata/metadata.bin
 	int BLOCKS;
 	int BLOCK_SIZE;
 	char* MAGIC_NUMBER;
 	// Funcion para leer metadata.bin
-	leerMetadataBin(&BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
+	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
 
 	// Creaar los bloques dentro de carpeta /Blocks
 	crearBloquesEn(pathBloques, BLOCKS);

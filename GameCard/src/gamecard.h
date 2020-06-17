@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
 #include <commons/bitarray.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"

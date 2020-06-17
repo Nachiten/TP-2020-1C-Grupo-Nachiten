@@ -1,5 +1,12 @@
 #include "gamecard.h"
 
+typedef struct PosicionPokemon{
+	int posX;
+	int posY;
+	int cantidad;
+}posPokemon;
+
+
 char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
 
 	// Path de la carpeta {punto_montaje}/nombreCarpeta
@@ -128,9 +135,81 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	*BLOCK_SIZE = config_get_int_value(metadataBin, "BLOCK_SIZE");
 	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
 
+	/*
 	printf("%i\n", *BLOCKS);
 	printf("%i\n", *BLOCK_SIZE);
 	printf("%s\n", *MAGIC_NUMBER);
+	*/
+}
+
+void leerUnPokemon(char* pathFiles, char* pokemon){
+	// + 2 por el \0 y la /
+	char* metadataBin = "/Metadata.bin";
+	char* pathPokemonMetadata = malloc(sizeof(pathFiles) + sizeof(pokemon) + sizeof(metadataBin) + 2);
+
+	strcpy(pathPokemonMetadata, pathFiles);
+	strcat(pathPokemonMetadata, "/");
+	// TODO se debe chequear antes de esto q la carpeta del pokemon existe | si no existe se crea
+	strcat(pathPokemonMetadata, pokemon);
+	// TODO idem punto anterior. Si el metadata no existe debe crearse
+	strcat(pathPokemonMetadata, metadataBin);
+
+	t_config* metadataPokemon;
+
+	metadataPokemon = leerConfiguracion(pathPokemonMetadata);
+
+	printf("%s\n", pathPokemonMetadata);
+
+	config_set_value(metadataPokemon, "OPEN" , "N");
+	//config_remove_key(metadataPokemon, "DIRECTORY");
+	int numeroSize = config_get_int_value(metadataPokemon, "SIZE");
+	// TODO : Hacer que se pueda leer y escribir los archivos metadata.bin de los pokemons
+
+	printf("%i\n", numeroSize);
+
+	// path: {puntoMontaje}/Files/Pikachu/Metadata.bin
+
+}
+
+void escribirBloquePrueba(){
+	// path = /home/utnso/Escritorio/tall-grass/24.bin
+
+	posPokemon posicionPokemon = {3,2,10};
+
+	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "a" );
+
+	//fwrite();
+
+	fclose(bloque);
+}
+
+void crearCarpetaPokemonSiNoExiste(char* pathFiles, char* pokemon){
+	char* pathCarpetaPokemon = malloc(sizeof(pathFiles) + sizeof(pokemon) + 2);
+
+	//TODO problema con estos concat
+	strcpy(pathCarpetaPokemon, pathFiles);
+	strcat(pathCarpetaPokemon, "/");
+	strcat(pathCarpetaPokemon, pokemon);
+
+	printf("%s\n", pathCarpetaPokemon);
+
+	DIR* dir = opendir(pathCarpetaPokemon);
+	if (dir) {
+		printf("El directorio existe");
+		return;
+	} else if (ENOENT == errno) {
+	    // El directorio no existe
+		printf("El directorio no existe");
+		mkdir(pathCarpetaPokemon, 0777);
+	} else {
+	    printf("Hubo un error inesperado al abrir una carpeta pokemon D:");
+	}
+
+}
+
+void crearCarpetaPokemon(char* pathFiles, char* pokemon){
+
+
 }
 
 int main(void) {
@@ -154,7 +233,8 @@ int main(void) {
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
 	// Crear la carpeta /Metadata [Si ya existe no hace nada]
 	char* pathMetadata = crearCarpetaEn(PUNTO_MONTAJE, "/Metadata");
-
+	// Crear la carpeta /Files
+	char* pathFiles = crearCarpetaEn(PUNTO_MONTAJE, "/Files");
 
 	// Datos de metadata/metadata.bin
 	int BLOCKS;
@@ -167,6 +247,12 @@ int main(void) {
 	crearBloquesEn(pathBloques, BLOCKS);
 
 	t_bitarray* bitArrayBloques = crearBitArray(pathMetadata, BLOCKS);
+
+
+	crearCarpetaPokemonSiNoExiste(pathFiles, "Bulbasaur");
+
+	// No funciona todavia
+	// leerUnPokemon(pathFiles, "Pikachu");
 
 	// Devuelve 200 = cantidadTotalBits
 	//int cantBits = bitarray_get_max_bit(bitArrayBloques);

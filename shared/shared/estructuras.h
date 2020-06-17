@@ -72,10 +72,12 @@ typedef struct {
 typedef struct {
 	uint32_t limiteSuperior;
 	uint32_t limiteInferior;
-	uint32_t estaLibre; //es un fucking booleano, meterle solo 0 o 1
+	uint32_t estaLibre; //es un fucking booleano, meterle solo 0(ocupada) o 1(libre)
 }particion;
 
-typedef struct {
+/*---->NO TOCAR!!!!<---- el "lista_particiones" al lado del "typedef struct", si se saca, aparece un error extraño donde la estructura
+no se reconoce a si misma cuando queremos sus campos anterior y siguiente apunten a otras instancias de la misma estructura */
+typedef struct lista_particiones{
 	particion laParticion;
 	uint32_t numero_de_particion;
 	struct lista_particiones* anter_particion;

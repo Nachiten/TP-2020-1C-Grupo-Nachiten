@@ -72,6 +72,7 @@ void mandar_mensajes_broker(t_cola* cola);
 void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
 void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
 int32_t a_suscribir(Suscripcion* mensaje);
+int32_t a_desuscribir(Dessuscripcion* mensaje);
 void borrar_mensajes(t_cola* cola);
 void desuscribir(int32_t socket, t_cola* cola);
 

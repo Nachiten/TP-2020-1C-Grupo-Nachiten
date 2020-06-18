@@ -52,6 +52,7 @@ typedef struct
 typedef struct {
 	int32_t socket;
 	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
+	int32_t suscripto; // 0 si no esta suscripto, 1 si esta suscripto
 }t_sub;
 
 typedef struct {

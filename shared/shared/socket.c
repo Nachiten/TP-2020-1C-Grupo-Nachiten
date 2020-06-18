@@ -393,13 +393,13 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 
 		case SUSCRIPCION:
 			estructura = malloc (sizeof(Suscripcion));
-			void desserializar_suscripcion(estructura, size, socket_cliente);
+			desserializar_suscripcion(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case DESSUSCRIPCION:
 			estructura = malloc (sizeof(Dessuscripcion));
-			void desserializar_dessuscripcion(estructura, size, socket_cliente);
+			desserializar_dessuscripcion(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 

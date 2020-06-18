@@ -335,9 +335,10 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, int32_t socket_cliente, uint32_t* size)
+void recibir_mensaje(void* estructura, int32_t socket_cliente)
 {
 	codigo_operacion codigo;
+	uint32_t size;
 
 	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 

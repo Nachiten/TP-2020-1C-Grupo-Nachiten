@@ -10,13 +10,12 @@ typedef struct Entrenador{
 	struct Entrenador* anterior;
 
 }Entrenador;
-/*
+
 void a (){
 	t_config* config;
 	char* IP_BROKER, PUERTO_BROKER;
 	int32_t conexion;
 	pthread_t thread;
-	uint32_t size;
 	void* mensaje;
 
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -26,12 +25,12 @@ void a (){
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
 
 	conexion = establecer_conexion(IP_BROKER, PUERTO_BROKER);
-
-	pthread_create(&thread,NULL,(void*)recibir_mensaje,&conexion);
+	//(&mensaje, conexion)
+	pthread_create(&thread,NULL, (void*)recibir_mensaje,&conexion);
 	pthread_detach(thread);
 
 }
-*/
+
 
 // *************************************************
 int32_t main(void) {
@@ -529,13 +528,12 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
 
 //todo /agregar un desuscribir despues
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
-	uint32_t size;
 	int32_t numeroCola;
 	void* mensaje;
 		switch (cod_op) {
 		case NEW:
 			mensaje = malloc(sizeof(New));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semNew);
 			agregar_mensaje_new(mensaje);
 			//sem_post(semNew);
@@ -543,7 +541,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semAppeared);
 			agregar_mensaje_appeared(mensaje);
 			//sem_post(semAppeared);
@@ -551,7 +549,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case GET:
 			mensaje = malloc(sizeof(Get));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semGet);
 			agregar_mensaje_get(mensaje);
 			//sem_post(semGet);
@@ -559,7 +557,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case LOCALIZED:
 			mensaje = malloc(sizeof(Localized));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semLocalized);
 			agregar_mensaje_localized(mensaje);
 			//sem_post(semLocalized);
@@ -567,7 +565,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CATCH:
 			mensaje = malloc(sizeof(Catch));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semCatch);
 			agregar_mensaje_catch(mensaje);
 			//sem_post(semCatch);
@@ -575,7 +573,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CAUGHT:
 			mensaje = malloc(sizeof(Caught));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			//sem_wait(semCaught);
 			agregar_mensaje_caught(mensaje);
 			//sem_post(semCaught);
@@ -583,7 +581,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 
 			numeroCola = a_suscribir(mensaje);
 
@@ -623,7 +621,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case DESSUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 
 			numeroCola = a_desuscribir(mensaje);
 
@@ -663,7 +661,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CONFIRMACION:
 			mensaje = malloc(sizeof(confirmacionMensaje));
-			recibir_mensaje(&mensaje, socket_cliente, &size);
+			recibir_mensaje(&mensaje, socket_cliente);
 			confirmar_mensaje(socket_cliente, mensaje);// los semaforos estan aca
 			break;
 		case TEST:

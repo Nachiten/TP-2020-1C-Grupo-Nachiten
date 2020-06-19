@@ -184,37 +184,38 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	switch(tipoMensaje)
 	{
 			case NEW:
-				estructura = malloc (sizeof(New));
+				//estructura = malloc (sizeof(New));
 				poner_NEW_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
 				break;
 
 			case APPEARED:
-				estructura = malloc (sizeof(Appeared));
+				//estructura = malloc (sizeof(Appeared));
 				poner_APPEARED_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
 				break;
 
 			case GET:
-				estructura = malloc (sizeof(Get));
+				//estructura = malloc (sizeof(Get));
 				poner_GET_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
 				break;
 
-			case LOCALIZED://esto no lo puedo hacer todavia porque no conozco formato del mensaje
-				estructura = malloc (sizeof(Localized));
+			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
+				/*estructura = malloc (sizeof(Localized));
 				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
+				*/
 				break;
 
 			case CATCH:
-				estructura = malloc (sizeof(Catch));
+				//estructura = malloc (sizeof(Catch));
 				poner_CATCH_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
 				break;
 
 			case CAUGHT:
-				estructura = malloc (sizeof(Caught));
+				//estructura = malloc (sizeof(Caught));
 				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura);
 				free(estructura);
 				break;
@@ -223,37 +224,177 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 				break;
 	}
 
-
 }
 
 void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto coordenada X del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+
+	//meto coordenada Y del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+
+	//meto cantidad del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->cantPokemon), sizeof(estructura->cantPokemon));
+	desplazamiento += sizeof(estructura->cantPokemon);
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto coordenada X del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+
+	//meto coordenada Y del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto la cantidad de lugares donde se encuentra el pokemon, en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
+	desplazamiento += sizeof(estructura->cantPosciciones);
+
+	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto coordenada X del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+
+	//meto coordenada Y del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura)
 {
+	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 
+	//meto nombre del pokemon en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon));
+	desplazamiento += sizeof(estructura->nombrePokemon);
+
+	//meto el resultado del intento de CATCH en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar));
+	desplazamiento += sizeof(estructura->pudoAtrapar);
+
+	//meto ID del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+
+	//meto ID Correlativa del mensaje en CACHE
+	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+
+	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
+}
+
+void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionSuperiorUltimoDato)
+{
+	if(limiteSuperiorDeParticion == posicionSuperiorUltimoDato)
+	{
+		puts("Información agregada correctamente en la partición.\n");
+	}
+	else
+	{
+		if(posicionSuperiorUltimoDato < limiteSuperiorDeParticion)
+		{
+			puts("Información agregada con fragmentación interna.\n");
+		}
+		else
+		{
+			puts("ATENCION! LA INFORMACIÓN SE SALIÓ DE LA PARTICION!!.\n");
+		}
+	}
 }
 
 void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje)
@@ -283,7 +424,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_partici
 	//ahora que tenemos la particion, metemos los datos
 	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje);
 
-
+//PASO 3: profit???
 
 }
 

@@ -42,6 +42,8 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura);
 void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura);
 
+void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionSuperiorUltimoDato); //para ver como quedó la información luego de meterla en la particion.
+
 
 
 

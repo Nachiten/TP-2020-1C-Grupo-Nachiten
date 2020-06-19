@@ -84,7 +84,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 				size_ya_armado = serializar_paquete_get(paquete, mensaje);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque no pertenece a Gameboy, no conozco formato del mensaje
+		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
 			break;
 
 		case CATCH:

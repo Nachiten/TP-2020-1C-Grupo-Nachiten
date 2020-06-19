@@ -94,10 +94,10 @@ int32_t main(void) {
 
 	// lo comente porque no andaba el codigo con lo de memoria
 //desde aca tengo lo de memoria (ToDo)**************************************************************************************************************
-/*
+
 	//va para declaraciones
-	char* TAMANIO_MEM;
-	char* TAMANIO_MIN_PART;
+	uint32_t TAMANIO_MEM;
+	uint32_t* TAMANIO_MIN_PART;
 	char* ADMIN_MEMORIA;
 	char* ALGOR_REEMPLAZO;
 	char* ALGOR_ASIGN_PARTICION;
@@ -106,8 +106,8 @@ int32_t main(void) {
 	//aca cargo las los valores del config para manejar la memoria
 	//esta funcion falla pero feo
 	//cargar_config_memoria(config, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, ALGOR_REEMPLAZO, ALGOR_ASIGN_PARTICION, FRECUEN_COMPACT);
-	TAMANIO_MEM = config_get_string_value(config,"TAMANO_MEMORIA");
-	TAMANIO_MIN_PART = config_get_string_value(config,"TAMANO_MINIMO_PARTICION");
+	TAMANIO_MEM = config_get_int_value(config,"TAMANO_MEMORIA");
+	TAMANIO_MIN_PART = config_get_int_value(config,"TAMANO_MINIMO_PARTICION");
 	ADMIN_MEMORIA = config_get_string_value(config,"ALGORITMO_MEMORIA");
 	ALGOR_REEMPLAZO = config_get_string_value(config,"ALGORITMO_REEMPLAZO");
 	ALGOR_ASIGN_PARTICION = config_get_string_value(config,"ALGORITMO_PARTICION_LIBRE");
@@ -120,14 +120,11 @@ int32_t main(void) {
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones);
 
-
-
-
 	//borramos toda referencia a particiones dentro de CACHE
 	matar_lista_particiones(hoja_de_particiones);
 
 	//no olvidarse de reventar la memoria reservada para CACHE
-	free(CACHE);*/
+	free(CACHE);
 //hasta aca lo de memoria***************************************************************************************************************************
 
 	//Arranco el Broker como servidor.
@@ -474,7 +471,7 @@ void borrar_mensajes(t_cola* cola){
 					borrado = malloc(sizeof(t_mensaje));
 					borrado = list_remove(cola->mensajes, i);
 					//probar
-					agregar_mensaje_a_Cache(CACHE, borrado, cola->tipoCola);
+					//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, borrado->mensaje, cola->tipoCola);
 					free(mensaje);
 				}
 				free(mensaje);

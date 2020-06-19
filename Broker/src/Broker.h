@@ -11,6 +11,7 @@
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/memoria.h" //las funciones para manejar memoria
+#include"shared/estructuras.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/socket.h>
@@ -19,7 +20,6 @@
 #include<commons/log.h>
 #include<string.h>
 #include<pthread.h>
-#include"shared/estructuras.h"
 #include <inttypes.h> // Para tener el uint32_t
 #include <semaphore.h> // para los semaforos
 //#include<commons/collections/list.h>
@@ -43,6 +43,9 @@ int32_t id_inicial;
 //Memoria del Broker
 void* CACHE;
 lista_particiones* hoja_de_particiones;
+char* TAMANIO_MEM;
+char* ALGOR_REEMPLAZO;
+char* ALGOR_ASIGN_PARTICION;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.

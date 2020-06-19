@@ -79,16 +79,6 @@ void matar_lista_particiones(lista_particiones* laLista)
 	free(particionABorrar);
 }
 
-void poner_en_particion(lista_particiones* laLista)
-{
-
-
-	//poner en lista de particiones
-	//devuelve los limites de la particion donde lo va a poner...
-
-	//poner posta en la particion
-}
-
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
 {
 	lista_particiones* auxiliar = malloc(sizeof(lista_particiones*)); //esto es necesario? me parece que no
@@ -189,8 +179,111 @@ uint32_t tenemosEspacio(lista_particiones* auxiliar, lista_particiones* particio
 	return resultado;
 }
 
-void agregar_mensaje_a_Cache(void* CACHE, t_mensaje* estructuraMensaje, codigo_operacion tipoMensaje)
+void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje)
 {
+	switch(tipoMensaje)
+	{
+			case NEW:
+				estructura = malloc (sizeof(New));
+				poner_NEW_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case APPEARED:
+				estructura = malloc (sizeof(Appeared));
+				poner_APPEARED_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case GET:
+				estructura = malloc (sizeof(Get));
+				poner_GET_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case LOCALIZED://esto no lo puedo hacer todavia porque no conozco formato del mensaje
+				estructura = malloc (sizeof(Localized));
+				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case CATCH:
+				estructura = malloc (sizeof(Catch));
+				poner_CATCH_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case CAUGHT:
+				estructura = malloc (sizeof(Caught));
+				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura);
+				free(estructura);
+				break;
+
+			case TEST://que se joda test
+				break;
+	}
+
+
+}
+
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura)
+{
+
+}
+
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura)
+{
+
+}
+
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura)
+{
+
+}
+
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura)
+{
+
+}
+
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura)
+{
+
+}
+
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura)
+{
+
+}
+
+void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje)
+{
+	lista_particiones* particionElegida;
+	uint32_t sizeDelMensaje = sizeof(estructuraMensaje);
+
+	//para poder meter el mensaje en Cache, primero hay que buscarle una particion
+	if(strcmp(algoritmoAsignacion,"FF") == 0)
+	{
+		particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, sizeDelMensaje);
+	}
+	else
+	{
+		if(strcmp(algoritmoAsignacion,"BF") == 0)
+		{
+			//ToDo
+			//particionElegida = seleccionar_particion_Best_Fit();
+			puts("Falta implementar");
+		}
+		else
+		{
+			puts("Alguien escribió mal el campo de ALGORITMO_PARTICION_LIBRE del archivo config.\n");
+		}
+	}
+
+	//ahora que tenemos la particion, metemos los datos
+	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje);
+
+
 
 }
 

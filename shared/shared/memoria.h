@@ -32,7 +32,16 @@ void matar_lista_particiones(lista_particiones* laLista); //usar cuando se quier
 uint32_t tenemosEspacio(lista_particiones* auxiliar, lista_particiones* particionElegida, uint32_t tamanioMemoria, uint32_t size);
 
 //para empezar a agregar cosas al CACHE
-void agregar_mensaje_a_Cache(void* CACHE, t_mensaje* estructuraMensaje, codigo_operacion tipoMensaje);
+void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje);
+
+void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje);//poner el mensaje en la particion elegida
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura);
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura);
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura);
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura);
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura);
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura);
+
 
 
 

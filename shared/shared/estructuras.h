@@ -14,6 +14,12 @@
 #include <netdb.h>
 #include <readline/readline.h>
 #include<commons/collections/list.h>
+//estructura para recibir mensajes ----------------------------------------------------------------------------------------
+
+typedef struct {
+	void* mensaje;
+	int32_t conexion;
+} Hilo;
 
 //estructuras que usa socket ------------------------------------------------------------------------------------
 

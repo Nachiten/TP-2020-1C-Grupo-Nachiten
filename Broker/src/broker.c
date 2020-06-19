@@ -11,12 +11,18 @@ typedef struct Entrenador{
 
 }Entrenador;
 
+// conexion de clientes -----------------------------------------------------------------
+void recibir_mensaje_cliente(Hilo* estructura){
+	recibir_mensaje(estructura->mensaje,estructura->conexion);
+}
+
 void a (){
 	t_config* config;
 	char* IP_BROKER, PUERTO_BROKER;
 	int32_t conexion;
-	pthread_t thread;
 	void* mensaje;
+	pthread_t thread;
+	Hilo estructura;
 
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
 
@@ -25,12 +31,14 @@ void a (){
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
 
 	conexion = establecer_conexion(IP_BROKER, PUERTO_BROKER);
-	//(&mensaje, conexion)
-	pthread_create(&thread,NULL, (void*)recibir_mensaje,&conexion);
-	pthread_detach(thread);
+	estructura.conexion = conexion;
 
+	pthread_create(&thread, NULL, (void*)recibir_mensaje_cliente, &estructura);
+	pthread_join(thread,NULL);
+
+	mensaje = estructura.mensaje;
 }
-
+//-----------------------------------------------------------------------------------
 
 // *************************************************
 int32_t main(void) {

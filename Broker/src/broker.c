@@ -13,7 +13,10 @@ typedef struct Entrenador{
 
 // conexion de clientes -----------------------------------------------------------------
 void recibir_mensaje_cliente(Hilo* estructura){
+	while(1){
 	recibir_mensaje(estructura->mensaje,estructura->conexion);
+	//guardar estructura en una variable global para que la levante otro hilo
+	}
 }
 
 void a (){
@@ -41,23 +44,16 @@ void a (){
 //-----------------------------------------------------------------------------------
 
 // *************************************************
-int32_t main(void) {
+int main(void) {
 
 	t_config* config;
 	t_log* logger;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
-	//inicializo los semaforos de las colas
-//	sem_init(semNew, 0, 1);
-//	sem_init(semAppeared, 0, 1);
-//	sem_init(semGet, 0, 1);
-//	sem_init(semLocalized, 0, 1);
-//	sem_init(semCatch, 0, 1);
-//	sem_init(semCaught, 0, 1);
-
 	id_inicial = 0;
 	inicializar_colas();
+	inicializar_semaforos();
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -102,7 +98,7 @@ int32_t main(void) {
 
 	// lo comente porque no andaba el codigo con lo de memoria
 //desde aca tengo lo de memoria (ToDo)**************************************************************************************************************
-
+/*
 	//va para declaraciones
 	uint32_t TAMANIO_MEM;
 	uint32_t* TAMANIO_MIN_PART;
@@ -132,7 +128,7 @@ int32_t main(void) {
 	matar_lista_particiones(hoja_de_particiones);
 
 	//no olvidarse de reventar la memoria reservada para CACHE
-	free(CACHE);
+	free(CACHE);*/
 //hasta aca lo de memoria***************************************************************************************************************************
 
 	//Arranco el Broker como servidor.
@@ -172,6 +168,22 @@ void inicializar_colas(){
 	colaCaught->tipoCola = CAUGHT;
 	colaCaught->mensajes = list_create();
 	colaCaught->subs = list_create();
+}
+
+void inicializar_semaforos(){
+	semNew = malloc(sizeof(sem_t));
+	semAppeared = malloc(sizeof(sem_t));
+	semGet = malloc(sizeof(sem_t));
+	semLocalized = malloc(sizeof(sem_t));
+	semCatch = malloc(sizeof(sem_t));
+	semCaught = malloc(sizeof(sem_t));
+
+	sem_init(semNew, 0, 1);
+	sem_init(semAppeared, 0, 1);
+	sem_init(semGet, 0, 1);
+	sem_init(semLocalized, 0, 1);
+	sem_init(semCatch, 0, 1);
+	sem_init(semCaught, 0, 1);
 }
 
 int32_t crear_id(){
@@ -414,34 +426,34 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 	switch(mensaje->colaMensajes){
 	case NEW:
-		//sem_wait(semNew);
+		sem_wait(semNew);
 		modificar_cola(colaNew,mensaje->id_mensaje,socket);
-		//sem_post(semNew);
+		sem_post(semNew);
 		break;
 	case APPEARED:
-		//sem_wait(semAppeared);
+		sem_wait(semAppeared);
 		modificar_cola(colaAppeared,mensaje->id_mensaje,socket);
-		//sem_post(semAppeared);
+		sem_post(semAppeared);
 		break;
 	case GET:
-		//sem_wait(semGet);
+		sem_wait(semGet);
 		modificar_cola(colaGet,mensaje->id_mensaje,socket);
-		//sem_post(semGet);
+		sem_post(semGet);
 		break;
 	case LOCALIZED:
-		//sem_wait(semLocalized);
+		sem_wait(semLocalized);
 		modificar_cola(colaLocalized,mensaje->id_mensaje,socket);
-		//sem_post(semLocalized);
+		sem_post(semLocalized);
 		break;
 	case CATCH:
-		//sem_wait(semCatch);
+		sem_wait(semCatch);
 		modificar_cola(colaCatch,mensaje->id_mensaje,socket);
-		//sem_post(semCatch);
+		sem_post(semCatch);
 		break;
 	case CAUGHT:
-		//sem_wait(semCaught);
+		sem_wait(semCaught);
 		modificar_cola(colaCaught,mensaje->id_mensaje,socket);
-		//sem_post(semCaught);
+		sem_post(semCaught);
 		break;
 	}
 }
@@ -539,49 +551,49 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case NEW:
 			mensaje = malloc(sizeof(New));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semNew);
+			sem_wait(semNew);
 			agregar_mensaje_new(mensaje);
-			//sem_post(semNew);
+			sem_post(semNew);
 			free(mensaje);
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semAppeared);
+			sem_wait(semAppeared);
 			agregar_mensaje_appeared(mensaje);
-			//sem_post(semAppeared);
+			sem_post(semAppeared);
 			free(mensaje);
 			break;
 		case GET:
 			mensaje = malloc(sizeof(Get));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semGet);
+			sem_wait(semGet);
 			agregar_mensaje_get(mensaje);
-			//sem_post(semGet);
+			sem_post(semGet);
 			free(mensaje);
 			break;
 		case LOCALIZED:
 			mensaje = malloc(sizeof(Localized));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semLocalized);
+			sem_wait(semLocalized);
 			agregar_mensaje_localized(mensaje);
-			//sem_post(semLocalized);
+			sem_post(semLocalized);
 			free(mensaje);
 			break;
 		case CATCH:
 			mensaje = malloc(sizeof(Catch));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semCatch);
+			sem_wait(semCatch);
 			agregar_mensaje_catch(mensaje);
-			//sem_post(semCatch);
+			sem_post(semCatch);
 			free(mensaje);
 			break;
 		case CAUGHT:
 			mensaje = malloc(sizeof(Caught));
 			recibir_mensaje(&mensaje, socket_cliente);
-			//sem_wait(semCaught);
+			sem_wait(semCaught);
 			agregar_mensaje_caught(mensaje);
-			//sem_post(semCaught);
+			sem_post(semCaught);
 			free(mensaje);
 			break;
 		case SUSCRIPCION:
@@ -592,34 +604,34 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			switch(numeroCola){
 			case NEW:
-				//sem_wait(semNew);
+				sem_wait(semNew);
 				agregar_sub(socket_cliente, colaNew);
-				//sem_post(semNew);
+				sem_post(semNew);
 				break;
 			case APPEARED:
-				//sem_wait(semAppeared);
+				sem_wait(semAppeared);
 				agregar_sub(socket_cliente, colaAppeared);
-				//sem_post(semAppeared);
+				sem_post(semAppeared);
 				break;
 			case GET:
-				//sem_wait(semGet);
+				sem_wait(semGet);
 				agregar_sub(socket_cliente, colaGet);
-				//sem_post(semGet);
+				sem_post(semGet);
 				break;
 			case LOCALIZED:
-				//sem_wait(semLocalized);
+				sem_wait(semLocalized);
 				agregar_sub(socket_cliente, colaLocalized);
-				//sem_post(semLocalized);
+				sem_post(semLocalized);
 				break;
 			case CATCH:
-				//sem_wait(semCatch);
+				sem_wait(semCatch);
 				agregar_sub(socket_cliente, colaCatch);
-				//sem_post(semCatch);
+				sem_post(semCatch);
 				break;
 			case CAUGHT:
-				//sem_wait(semCaught);
+				sem_wait(semCaught);
 				agregar_sub(socket_cliente, colaCaught);
-				//sem_post(semCaught);
+				sem_post(semCaught);
 				break;
 			}
 			free(mensaje);
@@ -632,34 +644,34 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			switch(numeroCola){
 			case NEW:
-				//sem_wait(semNew);
+				sem_wait(semNew);
 				desuscribir(socket_cliente, colaNew);
-				//sem_post(semNew);
+				sem_post(semNew);
 				break;
 			case APPEARED:
-				//sem_wait(semAppeared);
+				sem_wait(semAppeared);
 				desuscribir(socket_cliente, colaAppeared);
-				//sem_post(semAppeared);
+				sem_post(semAppeared);
 				break;
 			case GET:
-				//sem_wait(semGet);
+				sem_wait(semGet);
 				desuscribir(socket_cliente, colaGet);
-				//sem_post(semGet);
+				sem_post(semGet);
 				break;
 			case LOCALIZED:
-				//sem_wait(semLocalized);
+				sem_wait(semLocalized);
 				desuscribir(socket_cliente, colaLocalized);
-				//sem_post(semLocalized);
+				sem_post(semLocalized);
 				break;
 			case CATCH:
-				//sem_wait(semCatch);
+				sem_wait(semCatch);
 				desuscribir(socket_cliente, colaCatch);
-				//sem_post(semCatch);
+				sem_post(semCatch);
 				break;
 			case CAUGHT:
-				//sem_wait(semCaught);
+				sem_wait(semCaught);
 				desuscribir(socket_cliente, colaCaught);
-				//sem_post(semCaught);
+				sem_post(semCaught);
 				break;
 			}
 			free(mensaje);

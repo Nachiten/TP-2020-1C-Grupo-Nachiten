@@ -60,6 +60,7 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
 void loggear_obligatorio(char* aLogear);
 void loggear_propio(char* aLogear);
 void inicializar_colas();
+void inicializar_semaforos();
 void llenar_listaColas();
 t_sub crear_sub(int32_t socket);
 t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje);

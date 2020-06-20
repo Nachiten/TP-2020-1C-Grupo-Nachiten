@@ -335,7 +335,7 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, int32_t socket_cliente)
+void recibir_mensaje(void** estructura, int32_t socket_cliente)
 {
 	codigo_operacion codigo;
 	uint32_t size;
@@ -347,7 +347,7 @@ void recibir_mensaje(void* estructura, int32_t socket_cliente)
 	desserializar_mensaje(&estructura, codigo, size, socket_cliente);
 }
 
-void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente)
+void desserializar_mensaje (void** estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente)
 //void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
 {
 	//void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
@@ -356,7 +356,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 	{
 		case NEW:
 			estructura = malloc (sizeof(New));
-			desserializar_new(estructura, size, socket_cliente);
+			desserializar_new(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
@@ -364,13 +364,13 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 			estructura = malloc (sizeof(Appeared));
 			//datosDeMensaje = malloc(sizeof(Appeared));
 			//desserializar_appeared(restoDelMensaje, &datosDeMensaje, size);
-			desserializar_appeared(estructura, size, socket_cliente);
+			desserializar_appeared(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case GET:
 			estructura = malloc (sizeof(Get));
-			desserializar_get(estructura, size, socket_cliente);
+			desserializar_get(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
@@ -379,13 +379,13 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 
 		case CATCH:
 			estructura = malloc (sizeof(Catch));
-			desserializar_catch(estructura, size, socket_cliente);
+			desserializar_catch(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case CAUGHT:
 			estructura = malloc (sizeof(Caught));
-			desserializar_caught(estructura, size, socket_cliente);
+			desserializar_caught(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
@@ -394,13 +394,13 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 
 		case SUSCRIPCION:
 			estructura = malloc (sizeof(Suscripcion));
-			desserializar_suscripcion(estructura, size, socket_cliente);
+			desserializar_suscripcion(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case DESSUSCRIPCION:
 			estructura = malloc (sizeof(Dessuscripcion));
-			desserializar_dessuscripcion(estructura, size, socket_cliente);
+			desserializar_dessuscripcion(&estructura, size, socket_cliente);
 			free(estructura);
 			break;
 

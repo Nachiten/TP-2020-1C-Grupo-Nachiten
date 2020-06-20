@@ -47,7 +47,7 @@ void a (){
 int main(void) {
 
 	t_config* config;
-	t_log* logger;
+	//t_log* logger;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
@@ -74,7 +74,7 @@ int main(void) {
 	} else {
 		printf("El path del log fue leido correctamente\n");
 	}
-
+	printf("%s\n",pathLogs);
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "Broker");
 
@@ -460,6 +460,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 
 // te devuelve el numero de cola al que se quiere suscribir el cliente
 int32_t a_suscribir(Suscripcion* mensaje){
+	printf("%i",mensaje->numeroCola);
 	return mensaje->numeroCola;
 }
 
@@ -546,6 +547,7 @@ void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_clie
 //todo /agregar un desuscribir despues
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	int32_t numeroCola;
+	char* aLogear;
 	void* mensaje;
 		switch (cod_op) {
 		case NEW:
@@ -599,14 +601,18 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
 			recibir_mensaje(&mensaje, socket_cliente);
+			aLogear = "se suscribio a la cola";
+			log_info(logger, aLogear);
 
 			numeroCola = a_suscribir(mensaje);
-
+			//printf("%i",numeroCola);
 			switch(numeroCola){
 			case NEW:
 				sem_wait(semNew);
 				agregar_sub(socket_cliente, colaNew);
 				sem_post(semNew);
+				aLogear = "se suscribio a la cola new";
+				log_info(logger, aLogear);
 				break;
 			case APPEARED:
 				sem_wait(semAppeared);

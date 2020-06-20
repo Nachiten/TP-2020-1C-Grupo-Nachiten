@@ -43,24 +43,53 @@
 [INFO] 14:24:02:444 Gameboy/(8155:8155): Conexión establecida con socket de BROKER
 [INFO] 14:24:37:501 Gameboy/(8164:8164): Conexión establecida con socket de BROKER
 [INFO] 14:24:42:236 Gameboy/(8167:8167): Conexión establecida con socket de BROKER
-[INFO] 17:53:26:475 Gameboy/(4816:4816): Conexión establecida con socket de BROKER
-[INFO] 17:54:26:254 Gameboy/(4869:4869): Conexión establecida con socket de BROKER
-[INFO] 17:54:56:662 Gameboy/(4915:4915): Conexión establecida con socket de BROKER
-[INFO] 17:55:34:910 Gameboy/(4960:4960): Conexión establecida con socket de BROKER
-[INFO] 17:56:07:14 Gameboy/(4998:4998): Conexión establecida con socket de BROKER
-[INFO] 17:56:28:831 Gameboy/(5045:5045): Conexión establecida con socket de BROKER
-[INFO] 17:56:37:295 Gameboy/(5046:5046): Conexión establecida con socket de BROKER
-[INFO] 17:57:04:711 Gameboy/(5085:5085): Conexión establecida con socket de BROKER
-[INFO] 17:57:27:95 Gameboy/(5176:5176): Conexión establecida con socket de BROKER
-[INFO] 17:57:56:296 Gameboy/(5227:5227): Conexión establecida con socket de BROKER
-[INFO] 17:58:07:808 Gameboy/(5229:5229): Conexión establecida con socket de BROKER
-[INFO] 17:58:55:321 Gameboy/(5241:5241): Conexión establecida con socket de BROKER
-[INFO] 17:58:59:713 Gameboy/(5248:5248): Conexión establecida con socket de BROKER
-[INFO] 18:00:57:474 Gameboy/(5309:5309): Conexión establecida con socket de BROKER
-[INFO] 18:01:08:867 Gameboy/(5311:5311): Conexión establecida con socket de BROKER
-[INFO] 18:01:30:786 Gameboy/(5334:5334): Conexión establecida con socket de BROKER
-[INFO] 18:02:23:548 Gameboy/(5344:5344): Conexión establecida con socket de BROKER
-[INFO] 18:02:41:452 Gameboy/(5353:5353): Conexión establecida con socket de BROKER
-[INFO] 18:04:50:116 Gameboy/(5359:5359): Conexión establecida con socket de BROKER
-[INFO] 18:05:40:653 Gameboy/(5372:5372): Conexión establecida con socket de BROKER
-[INFO] 18:23:26:789 Gameboy/(5488:5488): Conexión establecida con socket de BROKER
+[INFO] 18:21:19:540 Gameboy/(32264:32264): Conexión establecida con socket de BROKER
+[INFO] 18:21:19:544 Gameboy/(32264:32264): Suscripto a la cola de mensajes: -1077670033
+[INFO] 18:23:32:463 Gameboy/(27440:27440): Conexión establecida con socket de BROKER
+[INFO] 18:23:32:474 Gameboy/(27440:27440): Suscripto a la cola de mensajes: -1081512081
+[INFO] 18:28:18:62 Gameboy/(26066:26066): Conexión establecida con socket de BROKER
+[INFO] 18:28:18:72 Gameboy/(26066:26066): Suscripto a la cola de mensajes: -1075237009
+[INFO] 18:29:10:137 Gameboy/(2166:2166): Conexión establecida con socket de BROKER
+[INFO] 18:29:10:139 Gameboy/(2166:2166): Suscripto a la cola de mensajes: -1081671825
+[INFO] 18:36:45:900 Gameboy/(7730:7730): Conexión establecida con socket de BROKER
+[INFO] 18:36:45:917 Gameboy/(7730:7730): Suscripto a la cola de mensajes: -1078911121
+[INFO] 18:37:00:134 Gameboy/(17560:17560): Conexión establecida con socket de BROKER
+[INFO] 18:37:00:143 Gameboy/(17560:17560): Suscripto a la cola de mensajes: -1080160401
+[INFO] 18:38:29:878 Gameboy/(27792:27792): Conexión establecida con socket de BROKER
+[INFO] 18:38:29:882 Gameboy/(27792:27792): Suscripto a la cola de mensajes: -1080021137
+[INFO] 18:38:50:206 Gameboy/(17839:17839): Conexión establecida con socket de BROKER
+[INFO] 18:38:50:208 Gameboy/(17839:17839): Suscripto a la cola de mensajes: -1078243472
+[INFO] 18:39:00:53 Gameboy/(20001:20001): Conexión establecida con socket de BROKER
+[INFO] 18:39:00:55 Gameboy/(20001:20001): Suscripto a la cola de mensajes: -1081520272
+[INFO] 18:39:25:546 Gameboy/(28874:28874): Conexión establecida con socket de BROKER
+[INFO] 18:39:25:553 Gameboy/(28874:28874): Suscripto a la cola de mensajes: -1078808720
+[INFO] 18:40:59:129 Gameboy/(23035:23035): Conexión establecida con socket de BROKER
+[INFO] 18:40:59:130 Gameboy/(23035:23035): Suscripto a la cola de mensajes: -1074806928
+[INFO] 18:42:42:759 Gameboy/(19921:19921): Conexión establecida con socket de BROKER
+[INFO] 18:42:42:768 Gameboy/(19921:19921): Suscripto a la cola de mensajes: -1076830352
+[INFO] 18:42:50:308 Gameboy/(20883:20883): Conexión establecida con socket de BROKER
+[INFO] 18:42:50:309 Gameboy/(20883:20883): Suscripto a la cola de mensajes: -1077231760
+[INFO] 18:44:19:744 Gameboy/(8344:8344): Conexión establecida con socket de BROKER
+[INFO] 18:44:19:749 Gameboy/(8344:8344): Suscripto a la cola de mensajes: -1075622032
+[INFO] 18:44:26:708 Gameboy/(9753:9753): Conexión establecida con socket de BROKER
+[INFO] 18:44:26:717 Gameboy/(9753:9753): Suscripto a la cola de mensajes: -1075335312
+[INFO] 18:49:34:108 Gameboy/(8491:8491): Conexión establecida con socket de BROKER
+[INFO] 18:49:34:122 Gameboy/(8491:8491): Suscripto a la cola de mensajes: -1074987152
+[INFO] 18:49:39:619 Gameboy/(6148:6148): Conexión establecida con socket de BROKER
+[INFO] 18:49:39:625 Gameboy/(6148:6148): Suscripto a la cola de mensajes: -1076248720
+[INFO] 18:50:47:877 Gameboy/(25690:25690): Conexión establecida con socket de BROKER
+[INFO] 18:50:47:890 Gameboy/(25690:25690): Suscripto a la cola de mensajes: -1079419024
+[INFO] 18:50:51:351 Gameboy/(6290:6290): Conexión establecida con socket de BROKER
+[INFO] 18:50:51:358 Gameboy/(6290:6290): Suscripto a la cola de mensajes: -1076723856
+[INFO] 18:57:50:323 Gameboy/(29209:29209): Conexión establecida con socket de BROKER
+[INFO] 18:57:50:337 Gameboy/(29209:29209): Suscripto a la cola de mensajes: -1078648976
+[INFO] 18:57:51:979 Gameboy/(30457:30457): Conexión establecida con socket de BROKER
+[INFO] 18:57:51:992 Gameboy/(30457:30457): Suscripto a la cola de mensajes: -1073852560
+[INFO] 19:04:30:378 Gameboy/(22055:22055): Conexión establecida con socket de BROKER
+[INFO] 19:04:30:379 Gameboy/(22055:22055): Suscripto a la cola de mensajes: -1076203664
+[INFO] 19:04:31:1 Gameboy/(14071:14071): Conexión establecida con socket de BROKER
+[INFO] 19:04:32:25 Gameboy/(14071:14071): Suscripto a la cola de mensajes: -1081778320
+[INFO] 19:07:48:521 Gameboy/(13977:13977): Conexión establecida con socket de BROKER
+[INFO] 19:07:48:522 Gameboy/(13977:13977): Suscripto a la cola de mensajes: -1081704592
+[INFO] 19:07:50:809 Gameboy/(17258:17258): Conexión establecida con socket de BROKER
+[INFO] 19:07:50:818 Gameboy/(17258:17258): Suscripto a la cola de mensajes: -1082003600

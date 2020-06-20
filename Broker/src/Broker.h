@@ -24,6 +24,8 @@
 #include <semaphore.h> // para los semaforos
 //#include<commons/collections/list.h>
 
+t_log* logger;
+
 sem_t* semNew;
 sem_t* semAppeared;
 sem_t* semGet;

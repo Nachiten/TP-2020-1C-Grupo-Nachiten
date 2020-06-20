@@ -296,8 +296,11 @@ int main(int cantArg, char* arg[]) {
 							pokemonGet->nombrePokemon = arg[3];
 							pokemonGet->ID = cambia_a_int(arg[4]); //cambiamos el string a int
 
+							puts("antes del mensaje");
 							//mandamos el mensaje
 							mandar_mensaje(pokemonGet, GET, socket);
+
+							puts("despues del mensaje");
 
 							//libero la estructura que acabo de crear
 							libero_estructura_Get(pokemonGet);
@@ -312,7 +315,7 @@ int main(int cantArg, char* arg[]) {
 
 				break;
 
-		case SUSCRIPTOR:
+		case SUSCRIPTOR://colas de mensajes de 1 a 6
 				if(cantArg != 4)
 				{
 					puts("La sintáxis correcta es: ./GameBoy SUSCRIPTOR [COLA_DE_MENSAJES] [TIEMPO]");

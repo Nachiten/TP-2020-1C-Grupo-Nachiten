@@ -26,13 +26,13 @@ endif
 all: GameBoy
 
 dependents:
-	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug && $(MAKE) clean all
+	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug && $(MAKE) all
 
 # Tool invocations
 GameBoy: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug/libshared.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug" -o "GameBoy" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug" -L"/home/utnso/workspace/commons/Debug" -o "GameBoy" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

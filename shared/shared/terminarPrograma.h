@@ -15,7 +15,7 @@
 #include"socket.h"
 
 //Usar para liberar recursos.
-void matarPrograma(t_log*, t_config*, int);
+void matarPrograma(t_log* logger, t_config* config, int32_t conexion);
 
 
 #endif /* SHARED_TERMINARPROGRAMA_H_ */

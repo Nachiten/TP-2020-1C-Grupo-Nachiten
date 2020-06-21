@@ -74,7 +74,7 @@ int main(void) {
 	} else {
 		printf("El path del log fue leido correctamente\n");
 	}
-	printf("%s\n",pathLogs);
+
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "Broker");
 

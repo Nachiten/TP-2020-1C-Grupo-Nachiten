@@ -14,6 +14,7 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<commons/collections/list.h>
+#include<commons/memory.h>//este
 #include<readline/readline.h>
 #include<signal.h>
 #include<unistd.h>

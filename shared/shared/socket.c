@@ -22,7 +22,10 @@ int32_t establecer_conexion(char* ip, char* puerto)
 	int32_t socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
 
 	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-	printf("error");
+	{
+		printf("Error al intentar conectarse.\n");
+		socket_cliente = -1;
+	}
 
 	freeaddrinfo(server_info);
 
@@ -49,10 +52,49 @@ void cerrar_conexion(int32_t socket)
 void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 {
 	t_paquete* paquete_por_armar = malloc (sizeof(t_paquete));
-	uint32_t size_serializado;
+	paquete_por_armar->buffer = malloc(sizeof(t_buffer));
+	uint32_t size_serializado = 0;
+
+	printf("Voy a mandar un mensaje del tipo %i\n", tipoMensaje);
 
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
+
+	/*		//PARA VERIFICAR SI ANDA
+	uint32_t desplazamiento = 0;
+	codigo_operacion* codigoQueCargue;
+	Suscripcion* estr = malloc(sizeof(Suscripcion));
+	puts("declare el malloc");
+	int32_t* size = NULL;
+
+	int32_t* mostrar1;
+	int32_t mostrar2;
+
+
+	memcpy(&codigoQueCargue, &paquete_serializado, sizeof(codigo_operacion));
+	desplazamiento += sizeof(codigo_operacion);
+
+	mostrar1 = codigoQueCargue;
+	printf("Lo primero que hay en el paquete serializado es esto: %i\n", *mostrar1);
+
+	size = (int32_t*) (paquete_serializado + desplazamiento);
+	desplazamiento += sizeof(size);
+
+
+	mostrar1 = size;
+	printf("Lo segundo que hay en el paquete serializado es esto: %i\n", *mostrar1);
+
+
+	memcpy(&(estr->numeroCola), (paquete_serializado + desplazamiento), sizeof(estr->numeroCola));
+	desplazamiento += sizeof(estr->numeroCola);
+
+	mostrar2 = estr->numeroCola;
+	printf("Lo tercero que hay en el paquete serializado es esto: %i\n", mostrar2);
+
+
+	free(estr);
+	*/
+
 
 	//mando el mensaje
 	bytesEnviados(send(socket, paquete_serializado, size_serializado, 0));
@@ -62,15 +104,13 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 	free(paquete_serializado);
 }
 
-void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t *size_serializado)
+void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tipoMensaje, uint32_t* size_serializado)
 {
 	uint32_t size_ya_armado = 0;
 	paquete->codigo_op = tipoMensaje;
-	paquete->buffer = malloc(sizeof(t_buffer));
 
-	void* buffer_serializar;//aca se va a guardar todo el choclo ya armado
+	void* buffer_serializar;//aca se va a guardar el choclo ya armado
 
-	//TERMINAR EL SWITCH - ATENCION!! PARECE QUE HAY MAS TIPOS DE MENSAJE, VER A MEDIDA QUE LO VAYAMOS ARMANDO
 	switch(tipoMensaje){
 		case NEW:
 				size_ya_armado = serializar_paquete_new(paquete, mensaje);
@@ -107,14 +147,17 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			size_ya_armado = serializar_paquete_dessuscripcion(paquete, mensaje);
 			break;
 
-		case DESCONEXION:
+		case DESCONEXION://Estos 3 están solo para que no sale el WARNING, no sirven para nada aca
 			break;
 
 		case ERROR:
 			break;
+
+		case CONFIRMACION:
+			break;
 	}
 
-	//ahora me preparo para meter todo en el buffer "posta", el choclo que va a enviar mandar_mensaje
+	//ahora me preparo para meter en el buffer "posta", el choclo que va a enviar mandar_mensaje
 	buffer_serializar = malloc(size_ya_armado);
 	uint32_t desplazamiento = 0;
 
@@ -122,12 +165,13 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 	memcpy(buffer_serializar  + desplazamiento, &(paquete->codigo_op), sizeof(paquete->codigo_op));
 	desplazamiento += sizeof(paquete->codigo_op);
 
-	//meto en el buffer el tamaño de todo lo que meti en el buffer del paquete que voy a mandar
+	//meto en el buffer el tamaño de lo que meti en el buffer del paquete que voy a mandar
 	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
 	desplazamiento += sizeof(paquete->buffer->size);
 
-	//por ultimo meto en el buffer todo lo que meti en el buffer del paquete
+	//por ultimo meto en el buffer lo que meti en el buffer del paquete
 	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
+	desplazamiento += sizeof(paquete->buffer->size);
 
 	(*size_serializado) = size_ya_armado;
 	return buffer_serializar; //devuelvo el mensaje listo para enviar
@@ -154,10 +198,10 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->cantPokemon), sizeof(pokemon->cantPokemon));
 	desplazamiento += sizeof(pokemon->cantPokemon);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -185,10 +229,10 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
 	desplazamiento += sizeof(pokemon->corrID);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->corrID);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -208,10 +252,10 @@ uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
 	desplazamiento += sizeof(pokemon->ID);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->ID);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -239,10 +283,10 @@ uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
 	desplazamiento += sizeof(pokemon->ID);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -262,10 +306,10 @@ uint32_t serializar_paquete_caught(t_paquete* paquete, Caught* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->pudoAtrapar), sizeof(pokemon->pudoAtrapar));
 	desplazamiento += sizeof(sizeof(pokemon->pudoAtrapar));
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->corrID) + sizeof(pokemon->pudoAtrapar);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -284,7 +328,7 @@ uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = strlen(mensaje)+1;
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -300,10 +344,10 @@ uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
 	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
 	desplazamiento += sizeof(cola->numeroCola);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(cola->numeroCola);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
@@ -319,10 +363,10 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
 	desplazamiento += sizeof(cola->numeroCola);
 
-	//le meto al size del buffer el tamaño de todo lo que acabo de meter en el buffer
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(cola->numeroCola);
 
-	//el tamaño del mensaje entero es el codigo de operacion + lo que meti en el el buffer + la variable donde me guarde el size
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc

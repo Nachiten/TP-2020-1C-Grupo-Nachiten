@@ -119,15 +119,3 @@ void libero_estructura_Dessuscripcion(Dessuscripcion* estructura)
 {
 	free(estructura);
 }
-
-
-/*este codigo es para que reciba cosas por consola, al final no se implemento
-	char* entrada1 = malloc(sizeof(char*)); //aca se guarda la primera orden que llega al gameboy
-	char* entrada2 = malloc(sizeof(char*));
-
-//leo lo que llegue por consola/terminal.
-	scanf("%s %s", entrada1, entrada2);
-
-	free(entrada1);
-	free(entrada2);
-*/

@@ -10,7 +10,7 @@ typedef struct PosicionPokemon{
 //void escribirBloquePrueba(){
 //	// path = /home/utnso/Escritorio/tall-grass/24.bin
 //
-//	posPokemon posicionPokemon = {3,2,10};
+//	posPokemon posicionPokemon= {3,2,10};
 //
 //	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "w" );
 //
@@ -126,28 +126,6 @@ t_bitarray* crearBitArray(char* bitarray, int cantBloques){
 	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
 	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
 	// 'bitarray' es un malloc de cantBloques / 8
-}
-
-void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
-	char* pathBitmap = "/Bitmap.bin";
-
-	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
-
-	// Copio path de metadata
-	strcpy(pathCompleto, pathMetadata);
-
-	// Pego el path de bitmap
-	strcat(pathCompleto, pathBitmap);
-
-	FILE* bitmapArchivo = fopen( pathCompleto , "a" );
-
-	fseek( bitmapArchivo, 0, SEEK_SET );
-
-	fwrite(bitArray, 1, 1, bitmapArchivo);
-
-	fclose(bitmapArchivo);
-
-	free(pathCompleto);
 }
 
 void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
@@ -278,6 +256,35 @@ void crearCarpetaPokemon(char* pathFiles, char* pokemon){
 	free(pathCarpetaPokemon);
 }
 
+void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
+	char* pathBitmap = "/Bitmap.bin";
+
+	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
+
+	// Copio path de metadata
+	strcpy(pathCompleto, pathMetadata);
+
+	// Pego el path de bitmap
+	strcat(pathCompleto, pathBitmap);
+
+	FILE* bitmapArchivo = fopen( pathCompleto , "a" );
+
+	fseek( bitmapArchivo, 0, SEEK_SET );
+
+	fwrite(bitArray, 1, 1, bitmapArchivo);
+
+	fclose(bitmapArchivo);
+
+	free(pathCompleto);
+}
+
+//TODO Terminar
+void leerBitArrayDeArchivo( char* pathMetadata , ){
+	char* pathBitmap = "/Bitmap.bin";
+
+	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
+
+}
 
 int main(void) {
 
@@ -336,6 +343,8 @@ int main(void) {
 	bitarray_set_bit(bitArrayBloques, 1);
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
+
+	//t_bitarray* =
 
     //posPokemon unasPosPokemon = {3,2,10};
 //

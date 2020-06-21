@@ -6,50 +6,88 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <shared/socket.h>
-#include <shared/cargador.h>
-#include <commons/collections/queue.h>
-/*
-typedef enum{
-	NEW,
-	READY,
-*/
-//enum{NEW, READY, EXEC, BLOCKED, EXIT};
-
-//enum{APPEARED, LOCALIZED, CAUGHT};
-enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
+#include <pthread.h>
+#include <string.h>
+#include <windows.h>
+#include <semaphore.h>
 
 typedef struct{
-	int posicion[2];
-	int estado;
-	char* target;
-	int estado_block;
-	char** objetivo;
-	char** pokemones_actuales;
+    int posicion[2];
+    int estado;
+    int estado_block;
+    char** objetivo;
+    char** pokemones_actuales;
 } d_entrenador;
 
 typedef struct{
-	char* pokemon;
-	int cantidad_pos;
-	int* posiciones;
+	int resultado;
+        int num_envio;
+}mensaje_caught;
+
+typedef struct{
+    char* pokemon;
+    int cantidad_pos;
+    int* posiciones;
 } mensaje_server;
 
 typedef struct{
-	int ubicacion;
-	char** no_necesito;
-	char** necesito;
+    int ubicacion;
+    char** no_necesito;
+    char** necesito;
+    int en_deadlock;
 } deadlock_entrenador;
 
-t_log* iniciar_logger(void);
-t_config* leer_config(void);
-void terminar_programa(t_log*, t_config*);
-int calcular_elementos(char**);
-void copiar_contenido(char**, char**, int);
-int calcular_mas_cerca_de(int, int, d_entrenador**, int);
-int distancia_a(int, int, int, int);
-int valor_absoluto(int);
-void asignar_target(d_entrenador*, char*);
-void cambiar_estado_a(d_entrenador*, int);
-void moverse_a(d_entrenador*, int, int);
-void bloquear(d_entrenador*, int);
-int recibir_respuesta_caught();
+typedef struct{
+    int posicion;
+    char* pokemon;
+}elemento_respuesta;
+
+typedef struct{
+    d_entrenador* entrenador;
+    int pos;
+    Appeared* mensaje;//
+} parametros_entrenador;
+
+typedef struct{
+    d_entrenador* entrenadores;
+    deadlock_entrenador* temp_entrenadores;
+    int tamano_respuesta;
+    elemento_respuesta* respuesta;
+} parametros_deadlock;
+
+typedef struct{
+    int socket;
+    int tiempo_reconexion;
+} parametros_recepcion;
+
+typedef struct{
+    int* flag_conexion_broker;
+    int tiempo_reconexion;
+} parametros_reconexion;
+
+enum{NEW, READY, EXEC, BLOCKED, EXIT};
+enum{APPEARED, GET, LOCALIZED, CATCH, CAUGHT};
+enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
+enum{FIFO, RR, SJF_S, SJF_C};
+
+void inicializar_semaforos(int);
+void destruir_semaforos(int);
+void inicializar_sem_entrenadores(int, int);
+void destruir_sem_entrenadores(int);
+void inicializar_hilos_entrenadores(d_entrenador*, int, pthread_t*);
+void* ciclo_vida_entrenador(parametros_entrenador*);
+void* administrar_cola_ready(void*);
+int comparar_estimaciones(int);
+void libero_exec_me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
+void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
+void* administrar_cola_caught(void*);
+int recibir_caught(int);
+void* ciclo_deadlock(parametros_deadlock*);
+void realizar_intercambio_entre(d_entrenador*, char*, d_entrenador*, char*, int);
+void tratar_circulos(deadlock_entrenador*, int, elemento_respuesta*, int, parametros_deadlock*, pthread_t*);
+void asignar_funcion_moverse(int);
+void moverse_fifo(d_entrenador*, int, int, int);
+void moverse_rr(d_entrenador*, int, int, int);
+void moverse_sjf_sin_d(d_entrenador*, int, int, int);
+void moverse_sjf_con_d(d_entrenador*, int, int, int);
+

@@ -6,6 +6,24 @@ typedef struct PosicionPokemon{
 	int cantidad;
 }posPokemon;
 
+//TODO Testing
+//void escribirBloquePrueba(){
+//	// path = /home/utnso/Escritorio/tall-grass/24.bin
+//
+//	posPokemon posicionPokemon = {3,2,10};
+//
+//	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "w" );
+//
+//	// Solucion con fwrite (no anda)
+//	//fwrite(&posicionPokemon, sizeof(posPokemon),1, bloque);
+//
+//	// Solucion con fprintf()
+//	//fprintf(bloque, "Estoy probando meterle un texto al archivo");
+//
+//	fclose(bloque);
+//
+//}
+
 char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
 
 	// Path de la carpeta {punto_montaje}/nombreCarpeta
@@ -55,6 +73,12 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 		strcat(pathBloqueActual, nombreArchivo);
 
 		FILE* bloque = fopen( pathBloqueActual , "w+" );
+
+		if (bloque == NULL){
+			printf("No se pudo crear el bloque %i", bloqueActual);
+			exit(3);
+		}
+
 		fclose(bloque);
 
 		free(nombreArchivo);
@@ -69,6 +93,11 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	t_config* config;
 
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
+
+	if (config == NULL){
+		printf("No se pudo leer la config!!");
+		exit(1);
+	}
 
 	*TIEM_REIN_CONEXION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_CONEXION");
 	*TIEM_REIN_OPERACION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_OPERACION");
@@ -93,11 +122,10 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	}
 }
 
-//
 t_bitarray* crearBitArray(char* bitarray, int cantBloques){
 	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
 	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
-	// Char'bitarray es un malloc de cantBloques / 8
+	// 'bitarray' es un malloc de cantBloques / 8
 }
 
 void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
@@ -141,6 +169,7 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 
 	if (metadataBin == NULL){
 		printf("No se pudo leer el archivo Metadata/Metadata.bin");
+		exit(2);
 	}
 
 	// Obtengo los valores (pasados por referencia)
@@ -186,25 +215,6 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 
 }
 
-//TODO Testing
-//void escribirBloquePrueba(){
-//	// path = /home/utnso/Escritorio/tall-grass/24.bin
-//
-//	posPokemon posicionPokemon = {3,2,10};
-//
-//	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "w" );
-//
-//	// Solucion con fwrite (no anda)
-//	//fwrite(&posicionPokemon, sizeof(posPokemon),1, bloque);
-//
-//	// Solucion con fprintf()
-//	//fprintf(bloque, "Estoy probando meterle un texto al archivo");
-//
-//	fclose(bloque);
-//
-//}
-
-// Pero funciona ._.
 void escribirLineaEnBloque(posPokemon posPokemon){
 // Tira error de  free(): invalid next size (normal): 0x08074b00 ***
 
@@ -213,8 +223,8 @@ void escribirLineaEnBloque(posPokemon posPokemon){
 	FILE *archivo = fopen("/home/utnso/Escritorio/tall-grass/Blocks/43.bin", "a");
 	if (archivo == NULL)
 	{
-		printf("Error opening file!\n");
-		exit(1);
+		printf("Hubo un error abriendo el archivo!\n");
+		exit(4);
 	}
 
 	fprintf(archivo, "%i-%i=%i\n", posPokemon.posX, posPokemon.posY, posPokemon.cantidad);
@@ -326,9 +336,6 @@ int main(void) {
 	bitarray_set_bit(bitArrayBloques, 1);
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
-
-	// Error en existecarpetapokemon se sospecha ...
-
 
     //posPokemon unasPosPokemon = {3,2,10};
 //

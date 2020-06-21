@@ -6,7 +6,6 @@ typedef struct PosicionPokemon{
 	int cantidad;
 }posPokemon;
 
-
 char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
 
 	// Path de la carpeta {punto_montaje}/nombreCarpeta
@@ -35,12 +34,11 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 
 		// Genero un array de chars que es el numero de bloque pasado a string
 		sprintf(enteroEnLetras, "%i", bloqueActual);
-		// IMPORTANTE: Como convertir entero a string
 
 		char* extension = ".bin";
 
 		// 5 = longitud del numero + 1 por la /
-		char* nombreArchivo = malloc( 6 + strlen(extension) + 1 );
+		char* nombreArchivo = malloc( strlen(enteroEnLetras) + strlen(extension) + 2 );
 
 		// El nombre de archivo es de la forma /{num}.bin | Ejemplo: /35.bin
 		strcpy(nombreArchivo, "/");
@@ -61,6 +59,7 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 
 		free(nombreArchivo);
 		free(pathBloqueActual);
+		free(enteroEnLetras);
 	}
 	
 }
@@ -94,7 +93,14 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	}
 }
 
-t_bitarray* crearBitArray(char* pathMetadata, int cantBloques){
+//
+t_bitarray* crearBitArray(char* bitarray, int cantBloques){
+	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
+	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
+	// Char'bitarray es un malloc de cantBloques / 8
+}
+
+void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
 	char* pathBitmap = "/Bitmap.bin";
 
 	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
@@ -105,8 +111,15 @@ t_bitarray* crearBitArray(char* pathMetadata, int cantBloques){
 	// Pego el path de bitmap
 	strcat(pathCompleto, pathBitmap);
 
-	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
-	return bitarray_create_with_mode(pathCompleto, cantBloques / 8, MSB_FIRST);
+	FILE* bitmapArchivo = fopen( pathCompleto , "a" );
+
+	fseek( bitmapArchivo, 0, SEEK_SET );
+
+	fwrite(bitArray, 1, 1, bitmapArchivo);
+
+	fclose(bitmapArchivo);
+
+	free(pathCompleto);
 }
 
 void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
@@ -142,10 +155,12 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	*/
 }
 
+//TODO No terminado
 void leerUnPokemon(char* pathFiles, char* pokemon){
-	// + 2 por el \0 y la /
+
 	char* metadataBin = "/Metadata.bin";
-	char* pathPokemonMetadata = malloc(sizeof(pathFiles) + sizeof(pokemon) + sizeof(metadataBin) + 2);
+	// + 2 por el \0 y la "/"
+	char* pathPokemonMetadata = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
 
 	strcpy(pathPokemonMetadata, pathFiles);
 	strcat(pathPokemonMetadata, "/");
@@ -158,7 +173,7 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 
 	metadataPokemon = leerConfiguracion(pathPokemonMetadata);
 
-	printf("%s\n", pathPokemonMetadata);
+	printf("Path pokemonMetadata: %s\n", pathPokemonMetadata);
 
 	config_set_value(metadataPokemon, "OPEN" , "N");
 	//config_remove_key(metadataPokemon, "DIRECTORY");
@@ -171,46 +186,88 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 
 }
 
-void escribirBloquePrueba(){
-	// path = /home/utnso/Escritorio/tall-grass/24.bin
+//TODO Testing
+//void escribirBloquePrueba(){
+//	// path = /home/utnso/Escritorio/tall-grass/24.bin
+//
+//	posPokemon posicionPokemon = {3,2,10};
+//
+//	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "w" );
+//
+//	// Solucion con fwrite (no anda)
+//	//fwrite(&posicionPokemon, sizeof(posPokemon),1, bloque);
+//
+//	// Solucion con fprintf()
+//	//fprintf(bloque, "Estoy probando meterle un texto al archivo");
+//
+//	fclose(bloque);
+//
+//}
 
-	posPokemon posicionPokemon = {3,2,10};
+// Pero funciona ._.
+void escribirLineaEnBloque(posPokemon posPokemon){
+// Tira error de  free(): invalid next size (normal): 0x08074b00 ***
 
-	FILE* bloque = fopen( "/home/utnso/Escritorio/tall-grass/24.bin" , "a" );
+	//printf("%s", pathBloque);
 
-	//fwrite();
+	FILE *archivo = fopen("/home/utnso/Escritorio/tall-grass/Blocks/43.bin", "a");
+	if (archivo == NULL)
+	{
+		printf("Error opening file!\n");
+		exit(1);
+	}
 
-	fclose(bloque);
+	fprintf(archivo, "%i-%i=%i\n", posPokemon.posX, posPokemon.posY, posPokemon.cantidad);
+
+	fclose(archivo);
+
 }
 
-void crearCarpetaPokemonSiNoExiste(char* pathFiles, char* pokemon){
-	char* pathCarpetaPokemon = malloc(sizeof(pathFiles) + sizeof(pokemon) + 2);
+// Checkear si existe un determinado pokemon dentro de la carpeta Files/
+int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 
-	//TODO problema con estos concat
+	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
+
 	strcpy(pathCarpetaPokemon, pathFiles);
 	strcat(pathCarpetaPokemon, "/");
 	strcat(pathCarpetaPokemon, pokemon);
 
-	printf("%s\n", pathCarpetaPokemon);
+	printf("Path carpeta pokemon: %s\n", pathCarpetaPokemon);
+
+	int retorno;
 
 	DIR* dir = opendir(pathCarpetaPokemon);
 	if (dir) {
-		printf("El directorio existe");
-		return;
+		// La carpeta existe
+		retorno = 1;
 	} else if (ENOENT == errno) {
-	    // El directorio no existe
-		printf("El directorio no existe");
-		mkdir(pathCarpetaPokemon, 0777);
+		// La carpeta no existe
+		retorno = 0;
 	} else {
-	    printf("Hubo un error inesperado al abrir una carpeta pokemon D:");
+		printf("Hubo un error inesperado al abrir una carpeta pokemon D:");
+		retorno = -1;
 	}
 
+	free(pathCarpetaPokemon);
+	return retorno;
 }
 
+// Crear la carpeta de un nuevo pokemon dentro de Files/
 void crearCarpetaPokemon(char* pathFiles, char* pokemon){
 
+	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
 
+	strcpy(pathCarpetaPokemon, pathFiles);
+	strcat(pathCarpetaPokemon, "/");
+	strcat(pathCarpetaPokemon, pokemon);
+
+	//printf("Path carpeta pokemon: %s\n", pathCarpetaPokemon);
+
+	mkdir(pathCarpetaPokemon, 0777);
+
+	free(pathCarpetaPokemon);
 }
+
 
 int main(void) {
 
@@ -236,6 +293,8 @@ int main(void) {
 	// Crear la carpeta /Files
 	char* pathFiles = crearCarpetaEn(PUNTO_MONTAJE, "/Files");
 
+	printf("Path files: %s\n", pathFiles);
+
 	// Datos de metadata/metadata.bin
 	int BLOCKS;
 	int BLOCK_SIZE;
@@ -246,14 +305,49 @@ int main(void) {
 	// Creaar los bloques dentro de carpeta /Blocks
 	crearBloquesEn(pathBloques, BLOCKS);
 
-	t_bitarray* bitArrayBloques = crearBitArray(pathMetadata, BLOCKS);
+	if (!existeCarpetaPokemon(pathFiles, "Pikachu")){
+		crearCarpetaPokemon(pathFiles, "Pikachu");
+		printf("No existia la carpeta Pikachu\n");
+	} else {
+		printf("Existe la carpeta Pikachu\n");
+	}
+
+	if (!existeCarpetaPokemon(pathFiles, "Bulbasaur")){
+		crearCarpetaPokemon(pathFiles, "Bulbasaur");
+		printf("No existia la carpeta Bulbasaur\n");
+	} else {
+		printf("Existe la carpeta Bulbasaur\n");
+	}
+
+	char* BITARRAY = malloc(BLOCKS / 8);
+
+	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
+
+	bitarray_set_bit(bitArrayBloques, 1);
+
+	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
+
+	// Error en existecarpetapokemon se sospecha ...
 
 
-	crearCarpetaPokemonSiNoExiste(pathFiles, "Bulbasaur");
+    //posPokemon unasPosPokemon = {3,2,10};
+//
+//	char* bloque43 = "/43.bin";
+//	char* pathBloque43 = malloc(strlen(pathBloques) + strlen(bloque43) + 1);
+//
+//	strcpy(pathBloque43, pathBloques);
+//	strcat(pathBloque43, bloque43);
+
+	//escribirLineaEnBloque(unasPosPokemon);
+
+	// Probando escribir .bin
+	//escribirBloquePrueba();
 
 	// No funciona todavia
-	// leerUnPokemon(pathFiles, "Pikachu");
+	//leerUnPokemon(pathFiles, "Pikachu");
 
+
+	// Tocando cosas del BitArray
 	// Devuelve 200 = cantidadTotalBits
 	//int cantBits = bitarray_get_max_bit(bitArrayBloques);
 

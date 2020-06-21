@@ -63,7 +63,7 @@ int32_t establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUERT
 void resultado_de_conexion(int32_t socket, t_log* logger, char* modulo); //enviarle el socket al que se intenta conectar, el logger y nombre del modulo al que intentamos conectar.
 void cerrar_conexion(int32_t socket); //se le da el socket y lo libera
 void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje,  int32_t socket_cliente); //se le da el mensaje, el tipo de mensaje que vamos a mandar y el socket que le dice donde mandarlo
-//void* recibir_mensaje(int socket_cliente, uint32_t* size); //recibe un mensaje
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente); //recibe un mensaje
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
 
 
@@ -94,15 +94,15 @@ uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //seriali
 
 
 //version 2
-void recibir_mensaje(void** estructura, int32_t socket_cliente);
-void desserializar_mensaje (void** estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente);
+//void recibir_mensaje(void** estructura, int32_t socket_cliente);
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t size, int32_t socket_cliente);
 void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_cliente);
 void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_suscripcion(Suscripcion* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t* size, int32_t socket_cliente);
+void desserializar_suscripcion(Suscripcion* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t size, int32_t socket_cliente);
 
 
 #endif /* SHARED_SOCKET_H_ */

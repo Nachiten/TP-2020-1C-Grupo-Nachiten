@@ -9,6 +9,7 @@
 
 void matarPrograma(t_log* logger, t_config* config, int32_t conexion)
 {
+
 	config_destroy(config);
 	puts("Puntero a config destruido.");
 	cerrar_conexion(conexion);

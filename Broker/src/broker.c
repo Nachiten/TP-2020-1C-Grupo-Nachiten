@@ -14,7 +14,7 @@ typedef struct Entrenador{
 // conexion de clientes -----------------------------------------------------------------
 void recibir_mensaje_cliente(Hilo* estructura){
 	while(1){
-	recibir_mensaje(estructura->mensaje,estructura->conexion);
+	//recibir_mensaje(estructura->mensaje,estructura->conexion);
 	//guardar estructura en una variable global para que la levante otro hilo
 	}
 }
@@ -358,6 +358,7 @@ void agregar_mensaje_caught(Caught* mensaje){
 			idCorr = id;
 		}else{
 			idCorr = mensaje->corrID;
+			printf("adentro de agregar mensaje, ID correlativo: %i\n",mensaje->corrID);
 		}
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
@@ -460,13 +461,13 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 
 // te devuelve el numero de cola al que se quiere suscribir el cliente
 int32_t a_suscribir(Suscripcion* mensaje){
-	printf("%i",mensaje->numeroCola);
 	return mensaje->numeroCola;
 }
 
 // te devuelve el numero de cola al que se quiere desuscribir el cliente
 int32_t a_desuscribir(Dessuscripcion* mensaje){
 	return mensaje->numeroCola;
+	printf("Me des suscribi de la cola %i", mensaje->numeroCola);
 }
 
 // revisar cuando hay que borrar un mensaje
@@ -552,7 +553,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		switch (cod_op) {
 		case NEW:
 			mensaje = malloc(sizeof(New));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semNew);
 			agregar_mensaje_new(mensaje);
 			sem_post(semNew);
@@ -560,7 +561,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semAppeared);
 			agregar_mensaje_appeared(mensaje);
 			sem_post(semAppeared);
@@ -568,7 +569,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case GET:
 			mensaje = malloc(sizeof(Get));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semGet);
 			agregar_mensaje_get(mensaje);
 			sem_post(semGet);
@@ -576,7 +577,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case LOCALIZED:
 			mensaje = malloc(sizeof(Localized));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semLocalized);
 			agregar_mensaje_localized(mensaje);
 			sem_post(semLocalized);
@@ -584,7 +585,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CATCH:
 			mensaje = malloc(sizeof(Catch));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semCatch);
 			agregar_mensaje_catch(mensaje);
 			sem_post(semCatch);
@@ -592,7 +593,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CAUGHT:
 			mensaje = malloc(sizeof(Caught));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			sem_wait(semCaught);
 			agregar_mensaje_caught(mensaje);
 			sem_post(semCaught);
@@ -600,51 +601,60 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));
-			recibir_mensaje(&mensaje, socket_cliente);
-			aLogear = "se suscribio a la cola";
-			log_info(logger, aLogear);
-
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			numeroCola = a_suscribir(mensaje);
-			//printf("%i",numeroCola);
+			fflush(stdout);
+
 			switch(numeroCola){
 			case NEW:
 				sem_wait(semNew);
 				agregar_sub(socket_cliente, colaNew);
 				sem_post(semNew);
-				aLogear = "se suscribio a la cola new";
+				aLogear = "Se suscribio a la cola New";
 				log_info(logger, aLogear);
 				break;
 			case APPEARED:
 				sem_wait(semAppeared);
 				agregar_sub(socket_cliente, colaAppeared);
 				sem_post(semAppeared);
+				aLogear = "Se suscribio a la cola Appeared";
+				log_info(logger, aLogear);
 				break;
 			case GET:
 				sem_wait(semGet);
 				agregar_sub(socket_cliente, colaGet);
 				sem_post(semGet);
+				aLogear = "Se suscribio a la cola Get";
+				log_info(logger, aLogear);
 				break;
 			case LOCALIZED:
 				sem_wait(semLocalized);
 				agregar_sub(socket_cliente, colaLocalized);
 				sem_post(semLocalized);
+				aLogear = "Se suscribio a la cola Localized";
+				log_info(logger, aLogear);
 				break;
 			case CATCH:
 				sem_wait(semCatch);
 				agregar_sub(socket_cliente, colaCatch);
 				sem_post(semCatch);
+				aLogear = "Se suscribio a la cola Catch";
+				log_info(logger, aLogear);
 				break;
 			case CAUGHT:
 				sem_wait(semCaught);
 				agregar_sub(socket_cliente, colaCaught);
 				sem_post(semCaught);
+				aLogear = "Se suscribio a la cola Caught";
+				log_info(logger, aLogear);
 				break;
 			}
 			free(mensaje);
 			break;
 		case DESSUSCRIPCION:
-			mensaje = malloc(sizeof(Suscripcion));
-			recibir_mensaje(&mensaje, socket_cliente);
+			puts("llege a des suscribirme");
+			mensaje = malloc(sizeof(Dessuscripcion));
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 
 			numeroCola = a_desuscribir(mensaje);
 
@@ -684,7 +694,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CONFIRMACION:
 			mensaje = malloc(sizeof(confirmacionMensaje));
-			recibir_mensaje(&mensaje, socket_cliente);
+			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			confirmar_mensaje(socket_cliente, mensaje);// los semaforos estan aca
 			break;
 		case TEST:

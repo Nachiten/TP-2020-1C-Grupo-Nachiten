@@ -37,3 +37,34 @@
 [INFO] 15:35:19:362 Broker/(9610:9618): se suscribio a la cola
 [INFO] 15:36:21:963 Broker/(9610:9913): se suscribio a la cola
 [INFO] 15:37:33:830 Broker/(9610:9925): se suscribio a la cola
+[INFO] 16:08:33:264 Broker/(11554:12032): se suscribio a la cola
+[INFO] 16:16:49:62 Broker/(12382:12393): se suscribio a la cola
+[INFO] 16:27:54:780 Broker/(12382:24783): se suscribio a la cola
+[INFO] 16:31:32:64 Broker/(12382:17234): se suscribio a la cola
+[INFO] 16:33:43:261 Broker/(12382:18622): se suscribio a la cola
+[INFO] 16:49:32:206 Broker/(4318:4326): Entre al case de Suscripcion
+[INFO] 16:57:32:198 Broker/(4564:4572): Entre al case de Suscripcion
+[INFO] 16:58:15:45 Broker/(4709:4719): Entre al case de Suscripcion
+[INFO] 16:59:39:507 Broker/(4709:4810): Entre al case de Suscripcion
+[INFO] 17:01:23:66 Broker/(4709:4876): Entre al case de Suscripcion
+[INFO] 17:29:28:653 Broker/(4854:4862): se suscribio a la cola new
+[INFO] 17:37:12:491 Broker/(4854:16621): se suscribio a la cola new
+[INFO] 17:47:29:113 Broker/(26371:26379): se suscribio a la cola new
+[INFO] 17:50:10:415 Broker/(26716:26724): se suscribio a la cola new
+[INFO] 17:54:02:981 Broker/(26971:26979): se suscribio a la cola new
+[INFO] 17:54:13:157 Broker/(26971:26984): se suscribio a la cola Localized
+[INFO] 17:59:21:388 Broker/(26971:17948): se suscribio a la cola Localized
+[INFO] 18:02:50:920 Broker/(24719:20185): Se suscribio a la cola New
+[INFO] 18:02:58:514 Broker/(24719:11832): Se suscribio a la cola Get
+[INFO] 18:03:09:962 Broker/(24719:11842): Se suscribio a la cola Catch
+[INFO] 18:03:40:247 Broker/(24719:11860): Se suscribio a la cola New
+[INFO] 18:03:46:331 Broker/(24719:11865): Se suscribio a la cola Appeared
+[INFO] 18:03:52:187 Broker/(24719:11875): Se suscribio a la cola Get
+[INFO] 18:04:05:323 Broker/(24719:11881): Se suscribio a la cola Localized
+[INFO] 18:04:16:3 Broker/(24719:11886): Se suscribio a la cola Catch
+[INFO] 18:04:22:947 Broker/(24719:11891): Se suscribio a la cola Caught
+[INFO] 18:06:19:541 Broker/(24719:11920): Se suscribio a la cola New
+[INFO] 18:09:05:744 Broker/(12012:12020): Se suscribio a la cola New
+[INFO] 18:11:23:508 Broker/(12064:12073): Se suscribio a la cola New
+[INFO] 18:15:18:960 Broker/(12179:12190): Se suscribio a la cola New
+[INFO] 18:20:29:104 Broker/(12334:12343): Se suscribio a la cola Catch

@@ -379,42 +379,40 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void** estructura, int32_t socket_cliente)
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
 {
-	codigo_operacion codigo;
+	//codigo_operacion codigo;
 	uint32_t size;
 
-	bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
+	//bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 
-	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de todo lo que sigue en el buffer
+	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
+	printf("Tamaño de lo que sigue en el buffer %u.\n",size);
 
-	desserializar_mensaje(&estructura, codigo, size, socket_cliente);
+	desserializar_mensaje(estructura, tipoMensaje, size, socket_cliente);
 }
 
-void desserializar_mensaje (void** estructura, codigo_operacion tipoMensaje, uint32_t* size, int32_t socket_cliente)
-//void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t* size)
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t size, int32_t socket_cliente)
 {
 	//void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
 
 	switch(tipoMensaje)
 	{
 		case NEW:
-			estructura = malloc (sizeof(New));
-			desserializar_new(&estructura, size, socket_cliente);
+			//estructura = malloc (sizeof(New));
+			desserializar_new(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case APPEARED:
-			estructura = malloc (sizeof(Appeared));
-			//datosDeMensaje = malloc(sizeof(Appeared));
-			//desserializar_appeared(restoDelMensaje, &datosDeMensaje, size);
-			desserializar_appeared(&estructura, size, socket_cliente);
+			//estructura = malloc (sizeof(Appeared));
+			desserializar_appeared(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case GET:
-			estructura = malloc (sizeof(Get));
-			desserializar_get(&estructura, size, socket_cliente);
+			//estructura = malloc (sizeof(Get));
+			desserializar_get(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
@@ -422,30 +420,26 @@ void desserializar_mensaje (void** estructura, codigo_operacion tipoMensaje, uin
 			break;
 
 		case CATCH:
-			estructura = malloc (sizeof(Catch));
-			desserializar_catch(&estructura, size, socket_cliente);
+			//estructura = malloc (sizeof(Catch));
+			desserializar_catch(estructura, size, socket_cliente);
 			free(estructura);
 			break;
 
 		case CAUGHT:
-			estructura = malloc (sizeof(Caught));
-			desserializar_caught(&estructura, size, socket_cliente);
-			free(estructura);
+			//estructura = malloc (sizeof(Caught));
+			desserializar_caught(estructura, size, socket_cliente);
 			break;
 
 		case TEST:
 			break;
 
 		case SUSCRIPCION:
-			estructura = malloc (sizeof(Suscripcion));
-			desserializar_suscripcion(&estructura, size, socket_cliente);
-			free(estructura);
+			desserializar_suscripcion(estructura, size, socket_cliente);
 			break;
 
 		case DESSUSCRIPCION:
-			estructura = malloc (sizeof(Dessuscripcion));
-			desserializar_dessuscripcion(&estructura, size, socket_cliente);
-			free(estructura);
+			//estructura = malloc (sizeof(Dessuscripcion));
+			desserializar_dessuscripcion(estructura, size, socket_cliente);
 			break;
 
 		case DESCONEXION://esto me parece que esta de mas, nunca deberían poder llegar hasta aca, tendría que romper antes
@@ -454,7 +448,6 @@ void desserializar_mensaje (void** estructura, codigo_operacion tipoMensaje, uin
 		case ERROR:
 			break;
 	}
-	//return datosDeMensaje;
 }
 
 void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente)
@@ -546,13 +539,13 @@ void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cli
 	bytesRecibidos(recv(socket_cliente, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar), MSG_WAITALL));
 }
 
-void desserializar_suscripcion(Suscripcion* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_suscripcion(Suscripcion* estructura, uint32_t size, int32_t socket_cliente)
 {
 	//saco la COLA a la que suscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }
 
-void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t size, int32_t socket_cliente)
 {
 	//saco la COLA dela que dessuscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));

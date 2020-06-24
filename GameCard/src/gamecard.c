@@ -122,12 +122,6 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	//config_destroy(config);
 }
 
-t_bitarray* crearBitArray(char* bitarray, int cantBloques){
-	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
-	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
-	// 'bitarray' es un malloc de cantBloques / 8
-}
-
 void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
 
 	// Nombre del archivo metadata
@@ -328,7 +322,13 @@ void crearPokemonSiNoExiste(char* pathFiles, char* pokemon){
 	}
 }
 
-void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
+t_bitarray* crearBitArray(char* bitarray, int cantBloques){
+	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
+	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
+	// 'bitarray' es un malloc de cantBloques / 8
+}
+
+void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray, int BLOCKS){
 	char* pathBitmap = "/Bitmap.bin";
 
 	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
@@ -339,24 +339,61 @@ void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
 	// Pego el path de bitmap
 	strcat(pathCompleto, pathBitmap);
 
-	FILE* bitmapArchivo = fopen( pathCompleto , "a" );
+	FILE* bitmapArchivo = fopen( pathCompleto , "w" );
 
+	// Me muevo al principio del archivo
 	fseek( bitmapArchivo, 0, SEEK_SET );
 
-	fwrite(bitArray, 1, 1, bitmapArchivo);
+	fwrite(bitArray, BLOCKS / 8, 1, bitmapArchivo);
 
 	fclose(bitmapArchivo);
 
 	free(pathCompleto);
 }
 
-//TODO Terminar
-//void leerBitArrayDeArchivo( char* pathMetadata , ){
-//	char* pathBitmap = "/Bitmap.bin";
-//
-//	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
-//
-//}
+void leerBitArrayDeArchivo(char* pathMetadata, char** bitArray, int BLOCKS){
+	char* pathBitmap = "/Bitmap.bin";
+
+	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
+
+	// Copio path de metadata
+	strcpy(pathCompleto, pathMetadata);
+
+	// Pego el path de bitmap
+	strcat(pathCompleto, pathBitmap);
+
+	FILE* bitmapArchivo = fopen( pathCompleto , "r" );
+
+	// Me muevo al principio del archivo
+	fseek( bitmapArchivo, 0, SEEK_SET );
+
+	fread(*bitArray, BLOCKS / 8, 1, bitmapArchivo);
+
+	fclose(bitmapArchivo);
+
+	free(pathCompleto);
+
+}
+
+void vaciarBitArray(t_bitarray* bitArray, int BLOCKS){
+
+	int i;
+
+	for (i = 0; i < BLOCKS / 8; i++){
+		bitarray_clean_bit(bitArray, i);
+	}
+}
+
+void liberarUnBloque(char* pathMetadata, int index, char* BITARRAY, int BLOCKS){
+
+	leerBitArrayDeArchivo(pathMetadata, &BITARRAY, BLOCKS);
+
+	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
+
+	bitarray_clean_bit(bitArrayBloques, index);
+
+	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+}
 
 int main(void) {
 
@@ -396,6 +433,11 @@ int main(void) {
 	// Funcion para leer metadata.bin
 	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
 
+	if (BLOCKS % 8 != 0){
+		printf("La cantidad de bloques debe ser multiplo de 8");
+		exit(5);
+	}
+
 	// Creaar los bloques dentro de carpeta /Blocks
 	crearBloquesEn(pathBloques, BLOCKS);
 
@@ -405,16 +447,43 @@ int main(void) {
 	char* bulbasaur = "Bulbasaur";
 	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
-	//
-//	char* BITARRAY = malloc(BLOCKS / 8);
-//
-//	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
-//
-//	bitarray_set_bit(bitArrayBloques, 1);
-//
-//	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
+    char* BITARRAY = malloc(BLOCKS / 8);
 
-	//t_bitarray* =
+    // Genero el bitarray
+	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
+
+	// Piso todos los bits a 0
+	vaciarBitArray(bitArrayBloques, BLOCKS);
+
+	bitarray_set_bit(bitArrayBloques, 0);
+	bitarray_set_bit(bitArrayBloques, 1);
+	bitarray_set_bit(bitArrayBloques, 4);
+
+	// Lo guardo en archivo
+	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+
+	liberarUnBloque(pathMetadata, 4, BITARRAY, BLOCKS);
+	liberarUnBloque(pathMetadata, 1, BITARRAY, BLOCKS);
+
+	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+
+	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
+
+	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+
+//	int i;
+//
+//	for (i = 0; i < BLOCKS / 8; i++){
+//		printf("%i", bitarray_test_bit( bitArrayBloques2 , i));
+//	}
+//	print("\n");
+
+
+// Quiero modificar un valor:
+// 1) Leer archivo pasarlo a memoria
+// 2) Editarlo en memoria
+// 3) Guardarlo en el archivo
+
 
     //posPokemon unasPosPokemon = {3,2,10};
 //

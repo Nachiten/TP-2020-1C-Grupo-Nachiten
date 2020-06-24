@@ -318,7 +318,7 @@ void crearMetadataCarpeta(char* pathCarpeta){
 	free(pathCompleto);
 }
 
-void crearPokemonSiNoExite(char* pathFiles, char* pokemon){
+void crearPokemonSiNoExiste(char* pathFiles, char* pokemon){
 	if (!existeCarpetaPokemon(pathFiles, pokemon)){
 		crearCarpetaPokemon(pathFiles, pokemon);
 		crearMetadataPokemon(pathFiles, pokemon);
@@ -400,10 +400,10 @@ int main(void) {
 	crearBloquesEn(pathBloques, BLOCKS);
 
 	char* pikachu = "Pikachu";
-	crearPokemonSiNoExite(pathFiles, pikachu);
+	crearPokemonSiNoExiste(pathFiles, pikachu);
 
 	char* bulbasaur = "Bulbasaur";
-	crearPokemonSiNoExite(pathFiles, bulbasaur);
+	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
 	//
 //	char* BITARRAY = malloc(BLOCKS / 8);

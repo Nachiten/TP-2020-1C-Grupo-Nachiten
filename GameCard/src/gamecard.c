@@ -240,7 +240,7 @@ int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 	return retorno;
 }
 
-// Crear la carpeta de un nuevo pokemon dentro de Files/
+// Crear la carpeta de un nuevo pokemon dentro de Files/pokemon
 void crearCarpetaPokemon(char* pathFiles, char* pokemon){
 
 	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
@@ -254,6 +254,60 @@ void crearCarpetaPokemon(char* pathFiles, char* pokemon){
 	mkdir(pathCarpetaPokemon, 0777);
 
 	free(pathCarpetaPokemon);
+}
+
+// Crea el Metadata.bin default de una carpeta Pokemon ya creada
+void crearMetadataPokemon(char* pathFiles, char* pokemon){
+	// pathCompleto = pathFiles/pokemon/metadata.bin
+	char* pathMetadata = "/Metadata.bin";
+
+	char* pathCompleto = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(pathMetadata) + 2);
+
+	strcpy(pathCompleto, pathFiles);
+	strcat(pathCompleto, "/");
+	strcat(pathCompleto, pokemon);
+	strcat(pathCompleto, pathMetadata);
+
+	printf("Path Metadata: %s\n",pathCompleto);
+
+	FILE* archivoMetadata = fopen( pathCompleto , "w" );
+	fclose(archivoMetadata);
+
+	t_config* datosMetadata = config_create(pathCompleto);
+
+	// Valores default del metadata.bin
+	config_set_value(datosMetadata, "DIRECTORY", "N");
+	config_set_value(datosMetadata, "SIZE", "0");
+	config_set_value(datosMetadata, "BLOCKS", "[]");
+	config_set_value(datosMetadata, "OPEN", "N");
+
+	config_save(datosMetadata);
+
+	free(pathMetadata);
+	free(pathCompleto);
+
+}
+
+// Crea un metadata con DIRECTORY=Y en pathCarpeta
+void crearMetadataCarpeta(char* pathCarpeta){
+	char* pathMetadata = "/Metadata.bin";
+
+	char* pathCompleto = malloc(strlen(pathCarpeta) + strlen(pathMetadata) + 1);
+
+	strcpy(pathCompleto, pathCarpeta);
+	strcat(pathCompleto, pathMetadata);
+
+	FILE* archivoMetadata = fopen( pathCompleto , "w" );
+	fclose(archivoMetadata);
+
+	t_config* datosMetadata = config_create(pathCompleto);
+
+	config_set_value(datosMetadata, "DIRECTORY", "Y");
+
+	config_save(datosMetadata);
+
+	free(pathMetadata);
+	free(pathCompleto);
 }
 
 void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
@@ -279,12 +333,12 @@ void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
 }
 
 //TODO Terminar
-void leerBitArrayDeArchivo( char* pathMetadata , ){
-	char* pathBitmap = "/Bitmap.bin";
-
-	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
-
-}
+//void leerBitArrayDeArchivo( char* pathMetadata , ){
+//	char* pathBitmap = "/Bitmap.bin";
+//
+//	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
+//
+//}
 
 int main(void) {
 
@@ -312,6 +366,9 @@ int main(void) {
 
 	printf("Path files: %s\n", pathFiles);
 
+	crearMetadataCarpeta(pathBloques);
+	crearMetadataCarpeta(pathFiles);
+
 	// Datos de metadata/metadata.bin
 	int BLOCKS;
 	int BLOCK_SIZE;
@@ -322,27 +379,34 @@ int main(void) {
 	// Creaar los bloques dentro de carpeta /Blocks
 	crearBloquesEn(pathBloques, BLOCKS);
 
-	if (!existeCarpetaPokemon(pathFiles, "Pikachu")){
-		crearCarpetaPokemon(pathFiles, "Pikachu");
+	char* pikachu = "Pikachu";
+
+	if (!existeCarpetaPokemon(pathFiles, pikachu)){
+		crearCarpetaPokemon(pathFiles, pikachu);
+		crearMetadataPokemon(pathFiles, pikachu);
 		printf("No existia la carpeta Pikachu\n");
 	} else {
 		printf("Existe la carpeta Pikachu\n");
 	}
 
-	if (!existeCarpetaPokemon(pathFiles, "Bulbasaur")){
-		crearCarpetaPokemon(pathFiles, "Bulbasaur");
+	char* bulbasaur = "Bulbasaur";
+
+	if (!existeCarpetaPokemon(pathFiles, bulbasaur)){
+		crearCarpetaPokemon(pathFiles, bulbasaur);
+		crearMetadataPokemon(pathFiles, bulbasaur);
 		printf("No existia la carpeta Bulbasaur\n");
 	} else {
 		printf("Existe la carpeta Bulbasaur\n");
 	}
 
-	char* BITARRAY = malloc(BLOCKS / 8);
-
-	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
-
-	bitarray_set_bit(bitArrayBloques, 1);
-
-	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
+	//
+//	char* BITARRAY = malloc(BLOCKS / 8);
+//
+//	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
+//
+//	bitarray_set_bit(bitArrayBloques, 1);
+//
+//	guardarBitArrayEnArchivo(pathMetadata, BITARRAY);
 
 	//t_bitarray* =
 

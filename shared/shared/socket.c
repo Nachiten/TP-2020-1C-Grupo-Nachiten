@@ -60,42 +60,6 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
-	/*		//PARA VERIFICAR SI ANDA
-	uint32_t desplazamiento = 0;
-	codigo_operacion* codigoQueCargue;
-	Suscripcion* estr = malloc(sizeof(Suscripcion));
-	puts("declare el malloc");
-	int32_t* size = NULL;
-
-	int32_t* mostrar1;
-	int32_t mostrar2;
-
-
-	memcpy(&codigoQueCargue, &paquete_serializado, sizeof(codigo_operacion));
-	desplazamiento += sizeof(codigo_operacion);
-
-	mostrar1 = codigoQueCargue;
-	printf("Lo primero que hay en el paquete serializado es esto: %i\n", *mostrar1);
-
-	size = (int32_t*) (paquete_serializado + desplazamiento);
-	desplazamiento += sizeof(size);
-
-
-	mostrar1 = size;
-	printf("Lo segundo que hay en el paquete serializado es esto: %i\n", *mostrar1);
-
-
-	memcpy(&(estr->numeroCola), (paquete_serializado + desplazamiento), sizeof(estr->numeroCola));
-	desplazamiento += sizeof(estr->numeroCola);
-
-	mostrar2 = estr->numeroCola;
-	printf("Lo tercero que hay en el paquete serializado es esto: %i\n", mostrar2);
-
-
-	free(estr);
-	*/
-
-
 	//mando el mensaje
 	bytesEnviados(send(socket, paquete_serializado, size_serializado, 0));
 
@@ -166,6 +130,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 	}
 
 	//ahora me preparo para meter en el buffer "posta", el choclo que va a enviar mandar_mensaje
+	printf("el size que tiene armado es: %i \n", size_ya_armado);
 	buffer_serializar = malloc(size_ya_armado);
 	uint32_t desplazamiento = 0;
 
@@ -176,10 +141,11 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 	//meto en el buffer el tamaño de lo que meti en el buffer del paquete que voy a mandar
 	memcpy(buffer_serializar  + desplazamiento, &(paquete->buffer->size), sizeof(paquete->buffer->size));
 	desplazamiento += sizeof(paquete->buffer->size);
+	printf("lo que sigue en buffer es: %i \n", paquete->buffer->size);
 
 	//por ultimo meto en el buffer lo que meti en el buffer del paquete
 	memcpy(buffer_serializar  + desplazamiento, paquete->buffer->stream, paquete->buffer->size);
-	desplazamiento += sizeof(paquete->buffer->size);
+	desplazamiento += paquete->buffer->size;
 
 	(*size_serializado) = size_ya_armado;
 	return buffer_serializar; //devuelvo el mensaje listo para enviar
@@ -190,9 +156,13 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
 	//meto nombre del pokemon en buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
-	desplazamiento += sizeof(pokemon->nombrePokemon);
+	desplazamiento += pokemon->largoNombre+1;
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -215,7 +185,7 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	desplazamiento += sizeof(pokemon->corrID);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon);
+	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 +sizeof(pokemon->largoNombre) + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
@@ -398,38 +368,29 @@ void eliminar_paquete(t_paquete* paquete)
 
 void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
 {
-	//codigo_operacion codigo;
 	uint32_t size;
-
-	//bytesRecibidos(recv(socket_cliente, &codigo, sizeof(codigo), MSG_WAITALL)); //saca el codigo de operacion
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
 	printf("Tamaño de lo que sigue en el buffer %u.\n",size);
 
-	desserializar_mensaje(estructura, tipoMensaje, size, socket_cliente);
+	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);
 }
 
-void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t size, int32_t socket_cliente)
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
 {
-	//void* datosDeMensaje; //esto va a ser una estructura donde se guarda lo que tenga el mensaje
-
 	switch(tipoMensaje)
 	{
 		case NEW:
-			//estructura = malloc (sizeof(New));
-			desserializar_new(estructura, size, socket_cliente);
-			free(estructura);
+			desserializar_new(estructura, socket_cliente);
 			break;
 
 		case APPEARED:
-			//estructura = malloc (sizeof(Appeared));
-			desserializar_appeared(estructura, size, socket_cliente);
+			desserializar_appeared(estructura, socket_cliente);
 			free(estructura);
 			break;
 
 		case GET:
-			//estructura = malloc (sizeof(Get));
-			desserializar_get(estructura, size, socket_cliente);
+			desserializar_get(estructura, socket_cliente);
 			free(estructura);
 			break;
 
@@ -437,26 +398,23 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 			break;
 
 		case CATCH:
-			//estructura = malloc (sizeof(Catch));
-			desserializar_catch(estructura, size, socket_cliente);
+			desserializar_catch(estructura, socket_cliente);
 			free(estructura);
 			break;
 
 		case CAUGHT:
-			//estructura = malloc (sizeof(Caught));
-			desserializar_caught(estructura, size, socket_cliente);
+			desserializar_caught(estructura, socket_cliente);
 			break;
 
 		case TEST:
 			break;
 
 		case SUSCRIPCION:
-			desserializar_suscripcion(estructura, size, socket_cliente);
+			desserializar_suscripcion(estructura, socket_cliente);
 			break;
 
 		case DESSUSCRIPCION:
-			//estructura = malloc (sizeof(Dessuscripcion));
-			desserializar_dessuscripcion(estructura, size, socket_cliente);
+			desserializar_dessuscripcion(estructura, socket_cliente);
 			break;
 
 		case DESCONEXION://Estos 3 están solo para que no sale el WARNING, no sirven para nada aca
@@ -470,12 +428,14 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 	}
 }
 
-void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_new(New* estructura, int32_t socket_cliente)
 {
-	estructura->nombrePokemon = malloc(sizeof(char*));
+	//saco el largo del nombre del pokemon
+	bytesRecibidos(recv(socket_cliente, &(estructura->largoNombre), sizeof(estructura->largoNombre), MSG_WAITALL));
 
 	//saco el nombre del pokemon
-	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
+	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), estructura->largoNombre+1, MSG_WAITALL));
+	printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
 
 	//saco pos X
 	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x), MSG_WAITALL));
@@ -483,7 +443,7 @@ void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente)
 	//saco pos Y
 	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y), MSG_WAITALL));
 
-	//saco cantidad
+	//saco cantidad de pokemones
 	bytesRecibidos(recv(socket_cliente, &(estructura->cantPokemon), sizeof(estructura->cantPokemon), MSG_WAITALL));
 
 	//saco ID del mensaje
@@ -493,13 +453,8 @@ void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente)
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
 }
 
-//void desserializar_appeared(void* restoDelMensaje, Appeared* estructura, uint32_t* size)
-void desserializar_appeared(Appeared* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_appeared(Appeared* estructura, int32_t socket_cliente)
 {
-	//uint32_t desplazamiento = 0;
-
-	estructura->nombrePokemon = malloc(sizeof(char*));
-
 	//saco el nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), sizeof(estructura->nombrePokemon), MSG_WAITALL));
 
@@ -508,24 +463,9 @@ void desserializar_appeared(Appeared* estructura, uint32_t size, int32_t socket_
 
 	//saco pos Y
 	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y), MSG_WAITALL));
-
-
-	/*
-	//saco el nombre del pokemon
-	memcpy(estructura->nombrePokemon, (&restoDelMensaje + desplazamiento), sizeof(estructura->nombrePokemon));
-	desplazamiento += sizeof(estructura->nombrePokemon);
-
-	//saco la coordenada X
-	memcpy(estructura->posPokemon.x, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.x));
-	desplazamiento += sizeof(estructura->posPokemon.x);
-
-	//saco la coordenada Y
-	memcpy(estructura->posPokemon.y, (&restoDelMensaje + desplazamiento), sizeof(estructura->posPokemon.y));
-	desplazamiento += sizeof(estructura->posPokemon.y);
-	*/
 }
 
-void desserializar_get(Get* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_get(Get* estructura, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -536,7 +476,7 @@ void desserializar_get(Get* estructura, uint32_t size, int32_t socket_cliente)
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 }
 
-void desserializar_catch(Catch* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_catch(Catch* estructura, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -553,7 +493,7 @@ void desserializar_catch(Catch* estructura, uint32_t size, int32_t socket_client
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 }
 
-void desserializar_caught(Caught* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_caught(Caught* estructura, int32_t socket_cliente)
 {
 	//saco ID CORRELATIVO del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
@@ -562,13 +502,13 @@ void desserializar_caught(Caught* estructura, uint32_t size, int32_t socket_clie
 	bytesRecibidos(recv(socket_cliente, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar), MSG_WAITALL));
 }
 
-void desserializar_suscripcion(Suscripcion* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente)
 {
 	//saco la COLA a la que suscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }
 
-void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t size, int32_t socket_cliente)
+void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente)
 {
 	//saco la COLA dela que dessuscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));

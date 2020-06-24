@@ -217,7 +217,6 @@ t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje){
 	nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
-	free(nuevo.mensaje);
 	return nuevo;
 }
 
@@ -266,6 +265,7 @@ void agregar_mensaje_new(New* mensaje){
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
 		mandar_mensajes_broker(colaNew);
+		free(new->mensaje);
 		free(new);
 	}
 }
@@ -286,6 +286,7 @@ void agregar_mensaje_appeared(Appeared* mensaje){
 		new->subs = colaAppeared->subs;
 		list_add(colaAppeared->mensajes,new);
 		mandar_mensajes_broker(colaAppeared);
+		free(new->mensaje);
 		free(new);
 	}
 }
@@ -393,6 +394,7 @@ void mandar_mensajes_broker(t_cola* cola){
 				}
 				free(sub);
 			}
+			free(mensaje->mensaje);
 			free(mensaje);
 		}
 	}
@@ -505,7 +507,7 @@ void borrar_mensajes(t_cola* cola){
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
 void desuscribir(int32_t socket, t_cola* cola){
-	t_sub* aux = malloc(sizeof(t_sub));
+	//t_sub* aux = malloc(sizeof(t_sub));
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
@@ -550,14 +552,16 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	int32_t numeroCola;
 	char* aLogear;
 	void* mensaje;
+	New* mensajeNew;
 		switch (cod_op) {
 		case NEW:
-			mensaje = malloc(sizeof(New));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeNew  = malloc(sizeof(New));
+			//mensaje = malloc(sizeof(New));
+			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 			sem_wait(semNew);
-			agregar_mensaje_new(mensaje);
+			agregar_mensaje_new(mensajeNew);
 			sem_post(semNew);
-			free(mensaje);
+			free(mensajeNew);
 			break;
 		case APPEARED:
 			mensaje = malloc(sizeof(Appeared));
@@ -709,8 +713,11 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 void serve_client(int32_t* socket)
 {
 	codigo_operacion cod_op;
-	if(recv(*socket, &cod_op, sizeof(int), MSG_WAITALL) == -1)
+	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+	bytesRecibidos(recibidos);
+	if(recibidos == -1)
 		cod_op = -1;
+
 	process_request(cod_op, *socket);
 }
 

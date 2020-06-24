@@ -54,25 +54,15 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //serializa mensaje de prueba
 
 //FUNCIONES DESSERIALIZAR
-
-//esto convierte lo que queda del mensaje en una estructura con los datos acomodados y bien piola
-//void* desserializar_mensaje (void* restoDelMensaje, codigo_operacion tipoMensaje, uint32_t size);
-
 //estas funciones las necesita desserializar_paquete para saber como manejar la info que le llega
-
-//void desserializar_appeared(void* restoDelMensaje, Appeared *estructura, uint32_t* size);
-
-
-//version 2
-//void recibir_mensaje(void** estructura, int32_t socket_cliente);
-void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t size, int32_t socket_cliente);
-void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_appeared(Appeared* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_get(Get* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_catch(Catch* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_caught(Caught* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_suscripcion(Suscripcion* estructura, uint32_t size, int32_t socket_cliente);
-void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente);
+void desserializar_new(New* estructura, int32_t socket_cliente);
+void desserializar_appeared(Appeared* estructura, int32_t socket_cliente);
+void desserializar_get(Get* estructura, int32_t socket_cliente);
+void desserializar_catch(Catch* estructura, int32_t socket_cliente);
+void desserializar_caught(Caught* estructura, int32_t socket_cliente);
+void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente);
+void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente);
 
 
 #endif /* SHARED_SOCKET_H_ */

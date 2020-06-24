@@ -60,7 +60,8 @@ int main(int cantArg, char* arg[]) {
 							mandar_mensaje(pokemonAppeared, APPEARED, socket);
 
 							//libero la estructura que acabo de crear
-							libero_estructura_appeared(pokemonAppeared);
+							free(pokemonAppeared);
+							//libero_estructura_appeared(pokemonAppeared);
 						}
 					}
 				}
@@ -93,10 +94,9 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								New* nuevoPokemon = malloc(sizeof(New));
-								//nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
 
 								nuevoPokemon->nombrePokemon = arg[3];
-								nuevoPokemon->largoNombre = sizeof(arg[3]);
+								nuevoPokemon->largoNombre = strlen(arg[3]);
 								nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
@@ -106,15 +106,8 @@ int main(int cantArg, char* arg[]) {
 								//mandamos el mensaje
 								mandar_mensaje(nuevoPokemon, NEW, socket);
 
-								/*
-								free(nuevoPokemon->nombrePokemon);
-								puts("libere nombre");
-								free(nuevoPokemon);
-								puts("libere estructura");
-								*/
 								//libero la estructura que acabo de crear
 								free(nuevoPokemon);
-								//libero_estructura_New(nuevoPokemon);
 							}
 						}
 
@@ -259,6 +252,9 @@ int main(int cantArg, char* arg[]) {
 								nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
 
 								nuevoPokemon->nombrePokemon = arg[3];
+								//ToDo ver si hace falta cambiar algo aca
+								nuevoPokemon->largoNombre = sizeof(arg[3]);
+
 								nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
@@ -269,7 +265,6 @@ int main(int cantArg, char* arg[]) {
 
 								//libero la estructura que acabo de crear
 								free(nuevoPokemon);
-								//libero_estructura_New(nuevoPokemon);
 							}
 						}
 
@@ -373,8 +368,8 @@ int main(int cantArg, char* arg[]) {
 						mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
 
 						//libero las estructuras que acabo de crear
-						libero_estructura_Suscripcion(estructuraSuscribirse);
-						libero_estructura_Dessuscripcion(estructuraDessuscribirse);
+						free(estructuraSuscribirse);
+						free(estructuraDessuscribirse);
 					}
 				}
 				break;

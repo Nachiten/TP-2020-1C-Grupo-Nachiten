@@ -80,6 +80,7 @@ void bytesEnviados (int32_t cantidad)
 	printf("Envié %d bytes sin crashear (Todavía).\n",cantidad);
 }
 
+/*
 void libero_estructura_appeared(Appeared* estructura)
 {
 	free(estructura->nombrePokemon);
@@ -119,3 +120,4 @@ void libero_estructura_Dessuscripcion(Dessuscripcion* estructura)
 {
 	free(estructura);
 }
+*/

@@ -39,7 +39,6 @@ typedef enum
 	DESCONEXION = 0
 }codigo_operacion;
 
-
 typedef struct
 {
 	uint32_t size;

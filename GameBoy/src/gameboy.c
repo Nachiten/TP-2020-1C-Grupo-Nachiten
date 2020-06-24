@@ -4,7 +4,7 @@ int main(int cantArg, char* arg[]) {
 
 	t_log* logger;
 	t_config* config;
-	int32_t socket;
+	int32_t socket = 0;
 	//NO TOCAR LOS MALLOC O EXPLOTA - (viejo, ignorar)
 	char* IP;
 	char* PUERTO;
@@ -93,19 +93,28 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								New* nuevoPokemon = malloc(sizeof(New));
-								nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
+								//nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
 
 								nuevoPokemon->nombrePokemon = arg[3];
+								nuevoPokemon->largoNombre = sizeof(arg[3]);
 								nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
 								nuevoPokemon->ID = 0; //serializar NECESITA una ID para estandarizarlo
+								nuevoPokemon->corrID = -2; //broker NECESITA una ID para estandarizarlo
 
 								//mandamos el mensaje
 								mandar_mensaje(nuevoPokemon, NEW, socket);
 
+								/*
+								free(nuevoPokemon->nombrePokemon);
+								puts("libere nombre");
+								free(nuevoPokemon);
+								puts("libere estructura");
+								*/
 								//libero la estructura que acabo de crear
-								libero_estructura_New(nuevoPokemon);
+								free(nuevoPokemon);
+								//libero_estructura_New(nuevoPokemon);
 							}
 						}
 
@@ -121,7 +130,7 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								Appeared* pokemonAppeared = malloc(sizeof(Appeared));
-								pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
+								//pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
 
 								pokemonAppeared->nombrePokemon = arg[3];
 								pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
@@ -131,8 +140,9 @@ int main(int cantArg, char* arg[]) {
 								//mandamos el mensaje
 								mandar_mensaje(pokemonAppeared, APPEARED, socket);
 
+								free(pokemonAppeared);
 								//libero la estructura que acabo de crear
-								libero_estructura_appeared(pokemonAppeared);
+								//libero_estructura_appeared(pokemonAppeared);
 							}
 						}
 
@@ -159,7 +169,8 @@ int main(int cantArg, char* arg[]) {
 								mandar_mensaje(pokemonCatch, CATCH, socket);
 
 								//libero la estructura que acabo de crear
-								libero_estructura_Catch(pokemonCatch);
+								free(pokemonCatch);
+								//libero_estructura_Catch(pokemonCatch);
 							}
 						}
 
@@ -184,7 +195,8 @@ int main(int cantArg, char* arg[]) {
 								mandar_mensaje(pokemonCaught, CAUGHT, socket);
 
 								//libero la estructura que acabo de crear
-								libero_estructura_Caught(pokemonCaught);
+								free(pokemonCaught);
+								//libero_estructura_Caught(pokemonCaught);
 							}
 						}
 
@@ -209,7 +221,8 @@ int main(int cantArg, char* arg[]) {
 								mandar_mensaje(pokemonGet, GET, socket);
 
 								//libero la estructura que acabo de crear
-								libero_estructura_Get(pokemonGet);
+								free(pokemonGet);
+								//libero_estructura_Get(pokemonGet);
 							}
 						}
 					}
@@ -255,7 +268,8 @@ int main(int cantArg, char* arg[]) {
 								mandar_mensaje(nuevoPokemon, NEW, socket);
 
 								//libero la estructura que acabo de crear
-								libero_estructura_New(nuevoPokemon);
+								free(nuevoPokemon);
+								//libero_estructura_New(nuevoPokemon);
 							}
 						}
 
@@ -282,7 +296,8 @@ int main(int cantArg, char* arg[]) {
 								mandar_mensaje(pokemonCatch, CATCH, socket);
 
 								//libero la estructura que acabo de crear
-								libero_estructura_Catch(pokemonCatch);
+								free(pokemonCatch);
+								//libero_estructura_Catch(pokemonCatch);
 							}
 						}
 
@@ -310,7 +325,8 @@ int main(int cantArg, char* arg[]) {
 								puts("despues del mensaje");
 
 								//libero la estructura que acabo de crear
-								libero_estructura_Get(pokemonGet);
+								free(pokemonGet);
+								//libero_estructura_Get(pokemonGet);
 							}
 						}
 

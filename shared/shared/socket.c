@@ -113,25 +113,31 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 
 	switch(tipoMensaje){
 		case NEW:
+				paquete->buffer->stream = malloc(sizeof(New));
 				size_ya_armado = serializar_paquete_new(paquete, mensaje);
 			break;
 
 		case APPEARED:
+				paquete->buffer->stream = malloc(sizeof(Appeared));
 				size_ya_armado = serializar_paquete_appeared(paquete, mensaje);
 			break;
 
 		case GET:
+				paquete->buffer->stream = malloc(sizeof(Get));
 				size_ya_armado = serializar_paquete_get(paquete, mensaje);
 			break;
 
 		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
+			paquete->buffer->stream = malloc(sizeof(Localized));
 			break;
 
 		case CATCH:
+				paquete->buffer->stream = malloc(sizeof(Catch));
 				size_ya_armado = serializar_paquete_catch(paquete, mensaje);
 			break;
 
 		case CAUGHT:
+				paquete->buffer->stream = malloc(sizeof(Caught));
 				size_ya_armado = serializar_paquete_caught(paquete, mensaje);
 			break;
 
@@ -140,10 +146,12 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case SUSCRIPCION:
+			paquete->buffer->stream = malloc(sizeof(Suscripcion));
 			size_ya_armado = serializar_paquete_suscripcion(paquete, mensaje);
 			break;
 
 		case DESSUSCRIPCION:
+			paquete->buffer->stream = malloc(sizeof(Dessuscripcion));
 			size_ya_armado = serializar_paquete_dessuscripcion(paquete, mensaje);
 			break;
 
@@ -197,6 +205,14 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	//meto cantidad de pokemons en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->cantPokemon), sizeof(pokemon->cantPokemon));
 	desplazamiento += sizeof(pokemon->cantPokemon);
+
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
+	desplazamiento += sizeof(pokemon->ID);
+
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon);
@@ -375,6 +391,7 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 
 void eliminar_paquete(t_paquete* paquete)
 {
+	free(paquete->buffer->stream);
 	free(paquete->buffer);
 	free(paquete);
 }
@@ -442,15 +459,18 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint
 			desserializar_dessuscripcion(estructura, size, socket_cliente);
 			break;
 
-		case DESCONEXION://esto me parece que esta de mas, nunca deberían poder llegar hasta aca, tendría que romper antes
+		case DESCONEXION://Estos 3 están solo para que no sale el WARNING, no sirven para nada aca
 			break;
 
 		case ERROR:
 			break;
+
+		case CONFIRMACION:
+			break;
 	}
 }
 
-void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -468,10 +488,13 @@ void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente)
 
 	//saco ID del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
+
+	//saco ID CORRELATIVO del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
 }
 
 //void desserializar_appeared(void* restoDelMensaje, Appeared* estructura, uint32_t* size)
-void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_appeared(Appeared* estructura, uint32_t size, int32_t socket_cliente)
 {
 	//uint32_t desplazamiento = 0;
 
@@ -502,7 +525,7 @@ void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket
 	*/
 }
 
-void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_get(Get* estructura, uint32_t size, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -513,7 +536,7 @@ void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente)
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 }
 
-void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_catch(Catch* estructura, uint32_t size, int32_t socket_cliente)
 {
 	estructura->nombrePokemon = malloc(sizeof(char*));
 
@@ -530,7 +553,7 @@ void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_clien
 	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 }
 
-void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cliente)
+void desserializar_caught(Caught* estructura, uint32_t size, int32_t socket_cliente)
 {
 	//saco ID CORRELATIVO del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));

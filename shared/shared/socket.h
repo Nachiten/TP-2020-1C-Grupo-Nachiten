@@ -24,36 +24,6 @@
 #include"estructuras.h"
 #include"utilidades.h"
 
-//ahora estan funcionando desde estructuras.h eliminar eventualmente, si no causa errores
-//typedef enum
-//{
-//	NEW = 1,
-//	APPEARED,
-//	GET,
-//	LOCALIZED,
-//	CATCH,
-//	CAUGHT,
-//	SUSCRIPCION,
-//	DESSUSCRIPCION,
-//	CONFIRMACION,
-//	TEST = 404,
-//	ERROR = -1,
-//	DESCONEXION = 0
-//}codigo_operacion;
-//
-//
-//typedef struct
-//{
-//	uint32_t size;
-//	void* stream;
-//} t_buffer;
-//
-//typedef struct
-//{
-//	codigo_operacion codigo_op;
-//	t_buffer* buffer;
-//} t_paquete;
-
 pthread_t thread;
 
 //los socket tienen que ser INT
@@ -96,11 +66,11 @@ uint32_t serializar_paquete_prueba(t_paquete* paquete, char* mensaje); //seriali
 //version 2
 //void recibir_mensaje(void** estructura, int32_t socket_cliente);
 void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, uint32_t size, int32_t socket_cliente);
-void desserializar_new(New* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_appeared(Appeared* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_get(Get* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_catch(Catch* estructura, uint32_t* size, int32_t socket_cliente);
-void desserializar_caught(Caught* estructura, uint32_t* size, int32_t socket_cliente);
+void desserializar_new(New* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_appeared(Appeared* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_get(Get* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_catch(Catch* estructura, uint32_t size, int32_t socket_cliente);
+void desserializar_caught(Caught* estructura, uint32_t size, int32_t socket_cliente);
 void desserializar_suscripcion(Suscripcion* estructura, uint32_t size, int32_t socket_cliente);
 void desserializar_dessuscripcion(Dessuscripcion* estructura, uint32_t size, int32_t socket_cliente);
 

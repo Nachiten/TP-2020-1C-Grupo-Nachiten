@@ -90,9 +90,7 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 
 void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER){
 
-	t_config* config;
-
-	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
+	t_config* config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
 
 	if (config == NULL){
 		printf("No se pudo leer la config!!");
@@ -120,6 +118,8 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	if (PUERTO_BROKER == NULL){
 		printf("No se ha podido leer el puerto_broker de la config");
 	}
+
+	//config_destroy(config);
 }
 
 t_bitarray* crearBitArray(char* bitarray, int cantBloques){
@@ -142,8 +142,7 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	strcat(pathMetadataBin, archivoMetadata);
 
 	// Leo el archivo
-	t_config* metadataBin;
-	metadataBin = leerConfiguracion(pathMetadataBin);
+	t_config* metadataBin = leerConfiguracion(pathMetadataBin);
 
 	if (metadataBin == NULL){
 		printf("No se pudo leer el archivo Metadata/Metadata.bin");
@@ -154,6 +153,9 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	*BLOCKS = config_get_int_value(metadataBin, "BLOCKS");
 	*BLOCK_SIZE = config_get_int_value(metadataBin, "BLOCK_SIZE");
 	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
+
+	config_destroy(metadataBin);
+	free(pathMetadataBin);
 
 	/*
 	printf("%i\n", *BLOCKS);
@@ -236,6 +238,8 @@ int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 		retorno = -1;
 	}
 
+	closedir(dir);
+
 	free(pathCarpetaPokemon);
 	return retorno;
 }
@@ -283,7 +287,9 @@ void crearMetadataPokemon(char* pathFiles, char* pokemon){
 
 	config_save(datosMetadata);
 
-	free(pathMetadata);
+	config_destroy(datosMetadata);
+
+	//free(pathMetadata);
 	free(pathCompleto);
 
 }
@@ -306,8 +312,20 @@ void crearMetadataCarpeta(char* pathCarpeta){
 
 	config_save(datosMetadata);
 
-	free(pathMetadata);
+	config_destroy(datosMetadata);
+
+	//free(pathMetadata);
 	free(pathCompleto);
+}
+
+void crearPokemonSiNoExite(char* pathFiles, char* pokemon){
+	if (!existeCarpetaPokemon(pathFiles, pokemon)){
+		crearCarpetaPokemon(pathFiles, pokemon);
+		crearMetadataPokemon(pathFiles, pokemon);
+		printf("No existia la carpeta: %s [Se creó]\n", pokemon);
+	} else {
+		printf("Existe la carpeta: %s\n", pokemon);
+	}
 }
 
 void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray){
@@ -350,6 +368,8 @@ int main(void) {
 
 	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
 
+	printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
+
 	/* Inicializacion del logger... todavia no es necesario
 	//t_log* logger;
 
@@ -380,24 +400,10 @@ int main(void) {
 	crearBloquesEn(pathBloques, BLOCKS);
 
 	char* pikachu = "Pikachu";
-
-	if (!existeCarpetaPokemon(pathFiles, pikachu)){
-		crearCarpetaPokemon(pathFiles, pikachu);
-		crearMetadataPokemon(pathFiles, pikachu);
-		printf("No existia la carpeta Pikachu\n");
-	} else {
-		printf("Existe la carpeta Pikachu\n");
-	}
+	crearPokemonSiNoExite(pathFiles, pikachu);
 
 	char* bulbasaur = "Bulbasaur";
-
-	if (!existeCarpetaPokemon(pathFiles, bulbasaur)){
-		crearCarpetaPokemon(pathFiles, bulbasaur);
-		crearMetadataPokemon(pathFiles, bulbasaur);
-		printf("No existia la carpeta Bulbasaur\n");
-	} else {
-		printf("Existe la carpeta Bulbasaur\n");
-	}
+	crearPokemonSiNoExite(pathFiles, bulbasaur);
 
 	//
 //	char* BITARRAY = malloc(BLOCKS / 8);
@@ -453,6 +459,15 @@ int main(void) {
 	printf("Bit 3: %i\n", bit3);
 	printf("Bit 4: %i\n", bit4);
 	*/
+
+	//Cierre del programa
+	free(pathBloques);
+	free(pathMetadata);
+	free(pathFiles);
+
+	// Si haces estos free explota.
+	//free(pikachu);
+	//free(bulbasaur);
 
 	return EXIT_SUCCESS;
 }

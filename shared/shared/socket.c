@@ -156,9 +156,6 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 {
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
-	char* mostrar;
-
-	printf("el largonombre es: %u\n",(pokemon->largoNombre));
 
 	//meto el largo del nombre del pokemon
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
@@ -167,9 +164,6 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	//meto nombre del pokemon en buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
 	desplazamiento += pokemon->largoNombre+1;
-
-	memcpy(mostrar, (paquete->buffer->stream + sizeof(pokemon->largoNombre)), pokemon->largoNombre+1);
-	printf("el nombre del pukemon es : %s", mostrar);
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -425,7 +419,7 @@ void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t soc
 	uint32_t size;
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
-	printf("Tamaño de lo que sigue en el buffer %u.\n",size);
+	printf("Tamaño de lo que sigue en el buffer: %u.\n",size);
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);
 }
@@ -486,10 +480,27 @@ void desserializar_new(New* estructura, int32_t socket_cliente)
 {
 	//saco el largo del nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->largoNombre), sizeof(estructura->largoNombre), MSG_WAITALL));
+	printf("el largo del nombre del pokemon es: %i\n", estructura->largoNombre);
+
+	char* saveMe = malloc(estructura->largoNombre+1);
+	//char* saveMe[estructura->largoNombre];
 
 	//saco el nombre del pokemon
-	bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), estructura->largoNombre+1, MSG_WAITALL));
-	printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
+	//bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), estructura->largoNombre+1, MSG_WAITALL));
+	//printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
+
+	bytesRecibidos(recv(socket_cliente, &saveMe, estructura->largoNombre+1, MSG_WAITALL));
+
+
+	printf("el nombre del pokemon es: %s\n", saveMe);
+
+	//strcpy(saveMe,estructura->nombrePokemon);
+	//printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
+
+
+
+	free(saveMe);
+
 
 	//saco pos X
 	bytesRecibidos(recv(socket_cliente, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x), MSG_WAITALL));
@@ -505,6 +516,12 @@ void desserializar_new(New* estructura, int32_t socket_cliente)
 
 	//saco ID CORRELATIVO del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
+
+	printf("la pos X es: %u\n", estructura->posPokemon.x);
+	printf("la pos Y es: %u\n", estructura->posPokemon.y);
+	printf("la cantidad de pokemones es: %u\n", estructura->cantPokemon);
+	printf("la ID del mensaje es: %u\n", estructura->ID);
+	printf("la ID correlativa del mensaje es: %i\n", estructura->corrID);
 }
 
 void desserializar_appeared(Appeared* estructura, int32_t socket_cliente)

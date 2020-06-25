@@ -57,6 +57,7 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 
 	printf("Voy a mandar un mensaje del tipo %i\n", tipoMensaje);
 
+	//ToDo cambiar la manera en que funciona esto?
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
@@ -77,31 +78,31 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 
 	switch(tipoMensaje){
 		case NEW:
-				paquete->buffer->stream = malloc(sizeof(New));
+				paquete->buffer->stream = malloc(sizeof(New) + 26); //+ 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_new(paquete, mensaje);
 			break;
 
 		case APPEARED:
-				paquete->buffer->stream = malloc(sizeof(Appeared));
+				paquete->buffer->stream = malloc(sizeof(Appeared) + 26); //+ 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_appeared(paquete, mensaje);
 			break;
 
 		case GET:
-				paquete->buffer->stream = malloc(sizeof(Get));
+				paquete->buffer->stream = malloc(sizeof(Get) + 26); //+ 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_get(paquete, mensaje);
 			break;
 
 		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
-			paquete->buffer->stream = malloc(sizeof(Localized));
+			paquete->buffer->stream = malloc(sizeof(Localized) + 26); //+ 25 posiciones para el nombre + el \n
 			break;
 
 		case CATCH:
-				paquete->buffer->stream = malloc(sizeof(Catch));
+				paquete->buffer->stream = malloc(sizeof(Catch) + 26); //+ 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_catch(paquete, mensaje);
 			break;
 
 		case CAUGHT:
-				paquete->buffer->stream = malloc(sizeof(Caught));
+				paquete->buffer->stream = malloc(sizeof(Caught) + 26); //+ 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_caught(paquete, mensaje);
 			break;
 
@@ -119,7 +120,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			size_ya_armado = serializar_paquete_dessuscripcion(paquete, mensaje);
 			break;
 
-		case DESCONEXION://Estos 3 están solo para que no sale el WARNING, no sirven para nada aca
+		case DESCONEXION://Estos 3 están solo para que no salga el WARNING, no sirven para nada aca
 			break;
 
 		case ERROR:
@@ -155,14 +156,20 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 {
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
+	char* mostrar;
+
+	printf("el largonombre es: %u\n",(pokemon->largoNombre));
 
 	//meto el largo del nombre del pokemon
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
 	desplazamiento += sizeof(pokemon->largoNombre);
 
 	//meto nombre del pokemon en buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
 	desplazamiento += pokemon->largoNombre+1;
+
+	memcpy(mostrar, (paquete->buffer->stream + sizeof(pokemon->largoNombre)), pokemon->largoNombre+1);
+	printf("el nombre del pukemon es : %s", mostrar);
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -185,10 +192,19 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	desplazamiento += sizeof(pokemon->corrID);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 +sizeof(pokemon->largoNombre) + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->cantPokemon) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+
+	puts("los size:");
+	printf("el size de largonombre es: %u\n",sizeof(pokemon->largoNombre));
+	printf("el largonombre +1 es: %u\n",(pokemon->largoNombre+1));
+	printf("el size de POS X es: %u\n",sizeof(pokemon->posPokemon.x));
+	printf("el size de POS Y es: %u\n",sizeof(pokemon->posPokemon.y));
+	printf("el size de cantidad de pokemon es: %u\n",sizeof(pokemon->cantPokemon));
+	printf("el size de ID es: %u\n",sizeof(pokemon->ID));
+	printf("el size de ID correl es: %u\n",sizeof(pokemon->corrID));
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -199,9 +215,13 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
 	//meto nombre del pokemon en buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
-	desplazamiento += sizeof(pokemon->nombrePokemon);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
+	desplazamiento += pokemon->largoNombre+1;
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -211,15 +231,19 @@ uint32_t serializar_paquete_appeared(t_paquete* paquete, Appeared* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.y), sizeof(pokemon->posPokemon.y));
 	desplazamiento += sizeof(pokemon->posPokemon.y);
 
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
+	desplazamiento += sizeof(pokemon->ID);
+
 	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
 	desplazamiento += sizeof(pokemon->corrID);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->corrID);
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -230,19 +254,27 @@ uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon)
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
 	//meto nombre del pokemon en buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
-	desplazamiento += sizeof(pokemon->nombrePokemon);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
+	desplazamiento += pokemon->largoNombre+1;
 
 	//meto la ID de mensaje en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
 	desplazamiento += sizeof(pokemon->ID);
 
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->ID);
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -253,9 +285,13 @@ uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
 	//meto nombre del pokemon en buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), sizeof(pokemon->nombrePokemon));
-	desplazamiento += sizeof(pokemon->nombrePokemon);
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
+	desplazamiento += pokemon->largoNombre+1;
 
 	//meto coordenada X de pokemon en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->posPokemon.x), sizeof(pokemon->posPokemon.x));
@@ -269,11 +305,15 @@ uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
 	desplazamiento += sizeof(pokemon->ID);
 
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->nombrePokemon) +1 + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID);
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->posPokemon.x) + sizeof(pokemon->posPokemon.y) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -284,19 +324,32 @@ uint32_t serializar_paquete_caught(t_paquete* paquete, Caught* pokemon)
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
-	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
-	desplazamiento += sizeof(pokemon->corrID);
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
+	//meto nombre del pokemon en buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
+	desplazamiento += pokemon->largoNombre+1;
 
 	//meto el resultado del intento de atrapar al pokemon
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->pudoAtrapar), sizeof(pokemon->pudoAtrapar));
 	desplazamiento += sizeof(sizeof(pokemon->pudoAtrapar));
 
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
+	desplazamiento += sizeof(pokemon->ID);
+
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(pokemon->corrID) + sizeof(pokemon->pudoAtrapar);
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->pudoAtrapar) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -315,11 +368,12 @@ uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 	paquete->buffer->size = strlen(mensaje)+1;
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
 }
+
 
 uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
 {
@@ -334,7 +388,7 @@ uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
 	paquete->buffer->size = sizeof(cola->numeroCola);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -353,7 +407,7 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 	paquete->buffer->size = sizeof(cola->numeroCola);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
-	size = sizeof(codigo_operacion) + sizeof(uint32_t) + paquete->buffer->size;
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -394,7 +448,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 			free(estructura);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque no pertenece a Gameboy, no conozco formato del mensaje
+		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
 			break;
 
 		case CATCH:

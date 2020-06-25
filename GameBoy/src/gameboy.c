@@ -5,7 +5,6 @@ int main(int cantArg, char* arg[]) {
 	t_log* logger;
 	t_config* config;
 	int32_t socket = 0;
-	//NO TOCAR LOS MALLOC O EXPLOTA - (viejo, ignorar)
 	char* IP;
 	char* PUERTO;
 	char* LOG_PATH;
@@ -45,23 +44,23 @@ int main(int cantArg, char* arg[]) {
 						socket = establecer_conexion(IP,PUERTO);//creo conexión con Team.
 						resultado_de_conexion(socket, logger, "TEAM");
 
-						if(socket != -1)//si y solo si se puedo conectar
+						if(socket != -1)//si y solo si se puede conectar
 						{
 							//Uso una estructura para guardar todos los datos del pokemon y mandarlo a la funcion mandar_mensaje
 							Appeared* pokemonAppeared = malloc(sizeof(Appeared));
-							pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
 
 							pokemonAppeared->nombrePokemon = arg[3];
+							pokemonAppeared->largoNombre = strlen(arg[3]);
 							pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 							pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
-							pokemonAppeared->corrID = -2; //serializar NECESITA una ID CORRELATIVA para estandarizarlo
+							pokemonAppeared->ID = 0;
+							pokemonAppeared->corrID = -2;
 
 							//mandamos el mensaje
 							mandar_mensaje(pokemonAppeared, APPEARED, socket);
 
 							//libero la estructura que acabo de crear
 							free(pokemonAppeared);
-							//libero_estructura_appeared(pokemonAppeared);
 						}
 					}
 				}
@@ -100,8 +99,8 @@ int main(int cantArg, char* arg[]) {
 								nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
-								nuevoPokemon->ID = 0; //serializar NECESITA una ID para estandarizarlo
-								nuevoPokemon->corrID = -2; //broker NECESITA una ID para estandarizarlo
+								nuevoPokemon->ID = 0;
+								nuevoPokemon->corrID = -2;
 
 								//mandamos el mensaje
 								mandar_mensaje(nuevoPokemon, NEW, socket);
@@ -123,19 +122,19 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								Appeared* pokemonAppeared = malloc(sizeof(Appeared));
-								//pokemonAppeared->nombrePokemon = malloc(sizeof(char*));
 
 								pokemonAppeared->nombrePokemon = arg[3];
+								pokemonAppeared->largoNombre = strlen(arg[3]);
 								pokemonAppeared->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								pokemonAppeared->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
+								pokemonAppeared->ID = 0;
 								pokemonAppeared->corrID = cambia_a_int(arg[6]); //cambiamos el string a int
 
 								//mandamos el mensaje
 								mandar_mensaje(pokemonAppeared, APPEARED, socket);
 
-								free(pokemonAppeared);
 								//libero la estructura que acabo de crear
-								//libero_estructura_appeared(pokemonAppeared);
+								free(pokemonAppeared);
 							}
 						}
 
@@ -151,19 +150,19 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								Catch* pokemonCatch = malloc(sizeof(Catch));
-								pokemonCatch->nombrePokemon = malloc(sizeof(char*));
 
 								pokemonCatch->nombrePokemon = arg[3];
+								pokemonCatch->largoNombre = strlen(arg[3]);
 								pokemonCatch->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								pokemonCatch->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
-								pokemonCatch->ID = 0; //serializar NECESITA una ID para estandarizarlo
+								pokemonCatch->ID = 0;
+								pokemonCatch->corrID = -2;
 
 								//mandamos el mensaje
 								mandar_mensaje(pokemonCatch, CATCH, socket);
 
 								//libero la estructura que acabo de crear
 								free(pokemonCatch);
-								//libero_estructura_Catch(pokemonCatch);
 							}
 						}
 
@@ -179,17 +178,20 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del intento de caught y mandarlo junto a la funcion mandar_mensaje
 								Caught* pokemonCaught = malloc(sizeof(Caught));
-								pokemonCaught->nombrePokemon = malloc(sizeof(char*)); //wtf?
 
 								pokemonCaught->corrID = cambia_a_int(arg[3]); //cambiamos el string a int
 								pokemonCaught->pudoAtrapar = cambia_a_int(arg[4]); //cambiamos el string a int
+
+								//lleno de basura para completar la estructura
+								pokemonCaught->ID = 0;
+								pokemonCaught->nombrePokemon = "Default";
+								pokemonCaught->largoNombre = strlen(pokemonCaught->nombrePokemon);
 
 								//mandamos el mensaje
 								mandar_mensaje(pokemonCaught, CAUGHT, socket);
 
 								//libero la estructura que acabo de crear
 								free(pokemonCaught);
-								//libero_estructura_Caught(pokemonCaught);
 							}
 						}
 
@@ -249,16 +251,15 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								New* nuevoPokemon = malloc(sizeof(New));
-								nuevoPokemon->nombrePokemon = malloc(sizeof(char*));
 
 								nuevoPokemon->nombrePokemon = arg[3];
-								//ToDo ver si hace falta cambiar algo aca
-								nuevoPokemon->largoNombre = sizeof(arg[3]);
+								nuevoPokemon->largoNombre = strlen(arg[3]);
 
 								nuevoPokemon->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								nuevoPokemon->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								nuevoPokemon->cantPokemon = cambia_a_int(arg[6]); //cambiamos el string a int
 								nuevoPokemon->ID = cambia_a_int(arg[7]); //cambiamos el string a int
+								nuevoPokemon->corrID = -2; //TIENE que tener algo, aunque GAMECARD no se fija en corrID?
 
 								//mandamos el mensaje
 								mandar_mensaje(nuevoPokemon, NEW, socket);
@@ -280,19 +281,19 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
 								Catch* pokemonCatch = malloc(sizeof(Catch));
-								pokemonCatch->nombrePokemon = malloc(sizeof(char*));
 
 								pokemonCatch->nombrePokemon = arg[3];
+								pokemonCatch->largoNombre = strlen(arg[3]);
 								pokemonCatch->posPokemon.x = cambia_a_int(arg[4]); //cambiamos el string a int
 								pokemonCatch->posPokemon.y = cambia_a_int(arg[5]); //cambiamos el string a int
 								pokemonCatch->ID = cambia_a_int(arg[6]); //cambiamos el string a int
+								pokemonCatch->corrID = -2;
 
 								//mandamos el mensaje
 								mandar_mensaje(pokemonCatch, CATCH, socket);
 
 								//libero la estructura que acabo de crear
 								free(pokemonCatch);
-								//libero_estructura_Catch(pokemonCatch);
 							}
 						}
 
@@ -352,6 +353,7 @@ int main(int cantArg, char* arg[]) {
 						//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
 						Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
 						Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
+
 						estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 						estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 

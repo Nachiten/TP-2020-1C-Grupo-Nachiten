@@ -265,8 +265,9 @@ void agregar_mensaje_new(New* mensaje){
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
 		mandar_mensajes_broker(colaNew);
-		free(new->mensaje);
-		free(new);
+		//free(new->mensaje);
+
+		//free(new);
 	}
 }
 
@@ -553,55 +554,59 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	char* aLogear;
 	void* mensaje;
 	New* mensajeNew;
+	Appeared* mensajeAppeared;
+	Get* mensajeGet;
+	Localized* mensajeLocalized;
+	Catch* mensajeCatch;
+	Caught* mensajeCaught;
 		switch (cod_op) {
 		case NEW:
 			mensajeNew  = malloc(sizeof(New));
-			//mensaje = malloc(sizeof(New));
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 			sem_wait(semNew);
 			agregar_mensaje_new(mensajeNew);
 			sem_post(semNew);
-			free(mensajeNew);
+			//free(mensajeNew); // cuando libero esto????
 			break;
 		case APPEARED:
-			mensaje = malloc(sizeof(Appeared));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeAppeared = malloc(sizeof(Appeared));
+			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente);
 			sem_wait(semAppeared);
-			agregar_mensaje_appeared(mensaje);
+			agregar_mensaje_appeared(mensajeAppeared);
 			sem_post(semAppeared);
-			free(mensaje);
+			//free(mensaje);
 			break;
 		case GET:
-			mensaje = malloc(sizeof(Get));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeGet = malloc(sizeof(Get));
+			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			sem_wait(semGet);
-			agregar_mensaje_get(mensaje);
+			agregar_mensaje_get(mensajeGet);
 			sem_post(semGet);
-			free(mensaje);
+			//free(mensaje);
 			break;
 		case LOCALIZED:
-			mensaje = malloc(sizeof(Localized));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeLocalized = malloc(sizeof(Localized));
+			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente);
 			sem_wait(semLocalized);
-			agregar_mensaje_localized(mensaje);
+			agregar_mensaje_localized(mensajeLocalized);
 			sem_post(semLocalized);
-			free(mensaje);
+			//free(mensaje);
 			break;
 		case CATCH:
-			mensaje = malloc(sizeof(Catch));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeCatch = malloc(sizeof(Catch));
+			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 			sem_wait(semCatch);
-			agregar_mensaje_catch(mensaje);
+			agregar_mensaje_catch(mensajeCatch);
 			sem_post(semCatch);
-			free(mensaje);
+			//free(mensaje);
 			break;
 		case CAUGHT:
-			mensaje = malloc(sizeof(Caught));
-			recibir_mensaje(mensaje, cod_op, socket_cliente);
+			mensajeCaught = malloc(sizeof(Caught));
+			recibir_mensaje(mensajeCaught, cod_op, socket_cliente);
 			sem_wait(semCaught);
-			agregar_mensaje_caught(mensaje);
+			agregar_mensaje_caught(mensajeCaught);
 			sem_post(semCaught);
-			free(mensaje);
+			//free(mensaje);
 			break;
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));

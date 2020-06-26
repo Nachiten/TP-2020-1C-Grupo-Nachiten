@@ -585,3 +585,10 @@ void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cli
 	//saco la COLA dela que dessuscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }
+
+void recibir_mensaje_cliente(Hilo* estructura){
+	//while(1){
+	recibir_mensaje(estructura->mensaje,NEW,estructura->conexion);
+	//guardar estructura en una variable global para que la levante otro hilo
+	//}
+}

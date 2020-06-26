@@ -64,5 +64,6 @@ void desserializar_caught(Caught* estructura, int32_t socket_cliente);
 void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente);
 void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente);
 
+void recibir_mensaje_cliente(Hilo* estructura);
 
 #endif /* SHARED_SOCKET_H_ */

@@ -72,3 +72,10 @@
 [INFO] 16:40:59:571 Broker/(4987:5093): Se suscribio a la cola New
 [INFO] 16:47:45:369 Broker/(5286:5293): Se suscribio a la cola New
 [INFO] 17:11:00:200 Broker/(5920:5926): Se suscribio a la cola New
+[INFO] 19:22:17:74 Broker/(8893:8900): Se suscribio a la cola New
+[INFO] 19:22:38:432 Broker/(8893:8910): estoy mandando mensajes
+[INFO] 19:24:08:725 Broker/(8961:8970): estoy mandando mensajes
+[INFO] 19:39:15:232 Broker/(9439:9446): estoy mandando mensajes
+[INFO] 19:51:14:476 Broker/(9838:9845): estoy mandando mensajes
+[INFO] 19:51:53:483 Broker/(9864:9871): estoy mandando mensajes
+[INFO] 19:52:15:157 Broker/(9884:9891): estoy mandando mensajes

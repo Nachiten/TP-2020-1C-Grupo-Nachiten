@@ -13,10 +13,10 @@ typedef struct Entrenador{
 
 // conexion de clientes -----------------------------------------------------------------
 void recibir_mensaje_cliente(Hilo* estructura){
-	while(1){
-	//recibir_mensaje(estructura->mensaje,estructura->conexion);
+	//while(1){
+	recibir_mensaje(estructura->mensaje,NEW,estructura->conexion);
 	//guardar estructura en una variable global para que la levante otro hilo
-	}
+	//}
 }
 
 void a (){
@@ -383,6 +383,7 @@ void agregar_sub(int32_t socket, t_cola* cola){
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensajes_broker(t_cola* cola){
+	log_info(logger,"estoy mandando mensajes");
 	if(cola->mensajes != NULL){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));

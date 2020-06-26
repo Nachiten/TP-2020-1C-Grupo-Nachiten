@@ -363,6 +363,19 @@ int main(int cantArg, char* arg[]) {
 						//logueamos la suscripcion a la cola de mensajes
 						log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
+						New* mensajeNew = malloc(sizeof(New));
+						pthread_t thread;
+						Hilo estructura;
+						estructura.conexion = socket;
+						estructura.mensaje = malloc(sizeof(New));
+						codigo_operacion cod_op;
+						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_DONTWAIT));
+						pthread_create(&thread, NULL, (void*)recibir_mensaje_cliente, &estructura);
+						pthread_join(thread,NULL);
+						mensajeNew = estructura.mensaje;
+						free(estructura.mensaje);
+						free(mensajeNew);
+
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 						sleep(cambia_a_int(arg[3]));
 
@@ -393,6 +406,8 @@ int main(int cantArg, char* arg[]) {
 	mensaje_recibido = recibir_mensaje(socket, size);
 	log_info(logger, mensaje_recibido);
 	*/
+
+
 
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);

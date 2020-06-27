@@ -369,7 +369,8 @@ int main(int cantArg, char* arg[]) {
 						estructura.conexion = socket;
 						estructura.mensaje = malloc(sizeof(New));
 						codigo_operacion cod_op;
-						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_DONTWAIT));
+						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
+						perror("ERROR -> ");
 						pthread_create(&thread, NULL, (void*)recibir_mensaje_cliente, &estructura);
 						pthread_join(thread,NULL);
 						mensajeNew = estructura.mensaje;

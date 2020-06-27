@@ -162,7 +162,7 @@ uint32_t serializar_paquete_new(t_paquete* paquete, New* pokemon)
 	desplazamiento += sizeof(pokemon->largoNombre);
 
 	//meto nombre del pokemon en buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->nombrePokemon), pokemon->largoNombre+1);
+	memcpy(paquete->buffer->stream + desplazamiento, pokemon->nombrePokemon, pokemon->largoNombre+1);
 	desplazamiento += pokemon->largoNombre+1;
 
 	//meto coordenada X de pokemon en el buffer del paquete
@@ -416,9 +416,10 @@ void eliminar_paquete(t_paquete* paquete)
 
 void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
 {
-	uint32_t size;
+	uint32_t size = 0;
 
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
+
 	printf("Tamaño de lo que sigue en el buffer: %u.\n",size);
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);

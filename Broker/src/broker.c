@@ -214,7 +214,7 @@ t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje){
 	t_mensaje nuevo;
 	nuevo.id = id;
 	nuevo.id_correlativo = id_correlativo;
-	nuevo.mensaje = malloc(sizeof(mensaje));
+	//nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
 	return nuevo;
@@ -735,8 +735,7 @@ void esperar_cliente(int32_t socket_servidor)
 	socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
 	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
-
-	accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+	//accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
 	pthread_detach(thread);

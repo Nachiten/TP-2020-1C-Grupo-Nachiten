@@ -482,25 +482,23 @@ void desserializar_new(New* estructura, int32_t socket_cliente)
 	bytesRecibidos(recv(socket_cliente, &(estructura->largoNombre), sizeof(estructura->largoNombre), MSG_WAITALL));
 	printf("el largo del nombre del pokemon es: %i\n", estructura->largoNombre);
 
-	//char* saveMe = malloc(estructura->largoNombre+1);
-	char* saveMe[estructura->largoNombre];
+	char* saveMe = malloc(estructura->largoNombre+1);
+	//char* saveMe[estructura->largoNombre];
 
 	//saco el nombre del pokemon
 	//bytesRecibidos(recv(socket_cliente, &(estructura->nombrePokemon), estructura->largoNombre+1, MSG_WAITALL));
 	//printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
 
-	bytesRecibidos(recv(socket_cliente, &saveMe, estructura->largoNombre+1, MSG_WAITALL));
+	bytesRecibidos(recv(socket_cliente, saveMe, estructura->largoNombre+1, MSG_WAITALL));
 
-	estructura->nombrePokemon = "pikachu";
+	//estructura->nombrePokemon = "pikachu"; esto es para harcodearlo si necesitamos hacer pruebas
 
-	//printf("el nombre del pokemon es: %s\n", saveMe);
+	printf("el nombre del pokemon es: %s\n", saveMe);
 
 	//strcpy(saveMe,estructura->nombrePokemon);
 	//printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
 
-
-
-	//free(saveMe);
+	free(saveMe);
 
 
 	//saco pos X

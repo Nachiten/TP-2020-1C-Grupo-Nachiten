@@ -88,9 +88,9 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 	
 }
 
-void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER){
+void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER, t_config* config){
 
-	t_config* config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
+	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
 
 	if (config == NULL){
 		printf("No se pudo leer la config!!");
@@ -122,7 +122,7 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 	//config_destroy(config);
 }
 
-void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
+void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER, t_config* metadataBin){
 
 	// Nombre del archivo metadata
 	char* archivoMetadata = "/Metadata.bin";
@@ -136,7 +136,7 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	strcat(pathMetadataBin, archivoMetadata);
 
 	// Leo el archivo
-	t_config* metadataBin = leerConfiguracion(pathMetadataBin);
+	metadataBin = leerConfiguracion(pathMetadataBin);
 
 	if (metadataBin == NULL){
 		printf("No se pudo leer el archivo Metadata/Metadata.bin");
@@ -148,7 +148,6 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	*BLOCK_SIZE = config_get_int_value(metadataBin, "BLOCK_SIZE");
 	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
 
-	config_destroy(metadataBin);
 	free(pathMetadataBin);
 
 	/*
@@ -395,15 +394,131 @@ void liberarUnBloque(char* pathMetadata, int index, char* BITARRAY, int BLOCKS){
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 }
 
+void escribirPokemon(char* path,int posX, int posY, int cantidad ){
+	FILE* archivo = fopen("34.bin", "a");
+	if (archivo == NULL)
+	{
+		printf("Error abriendo el archivo\n");
+		exit(1);
+	}
+
+	char* stringAEscribir;
+
+	int cantBytes = asprintf(&stringAEscribir, "%i-%i=%i\n", posX, posY, cantidad);
+
+	printf("El numero de bytes es: %i\n", cantBytes);
+	printf("El string es: %s", stringAEscribir);
+
+	fwrite(stringAEscribir, cantBytes, 1, archivo);
+
+	fclose(archivo);
+
+}
+
+char* separarCoord(char* unString){
+	char* token = malloc(strlen(unString));
+
+	char* stringModificado = strdup(unString);
+
+	token = strsep(&stringModificado, "=");
+
+	return token;
+}
+
+// Retorna la posicion de la linea de las coords. -1 Si no se encuentra
+int encontrarCoords(int posX, int posY){
+	char* line;
+	size_t len = 0;
+	ssize_t read;
+
+	FILE* fp = fopen("34.bin", "r");
+	if (fp == NULL)
+		exit(EXIT_FAILURE);
+
+	char* coords;
+
+	asprintf(&coords, "%i-%i" , posX, posY);
+
+	int lineaActual = 0;
+	int retorno = -1;
+
+	//char* coordenadasLineaActual = "5-4=50";
+
+	while ( (read = getline(&line, &len, fp) ) != -1) {
+		printf("Longitud de linea: %i:\n", read);
+		printf("La linea es: %s\n", line);
+
+		// La linea leida es las coordenadas que quiero encontrar
+
+		char* coordenadasLineaActual = separarCoord(line);
+
+		if (strcmp( coordenadasLineaActual, coords ) == 0)
+		{
+			retorno = lineaActual;
+		}
+
+		lineaActual ++;
+	}
+
+	printf("La cantidad de lineas totales es: %i", lineaActual);
+
+	fclose(fp);
+	free(line);
+
+	return retorno;
+}
+
+int existeFilesystem(char* pathMetadata){
+	int retorno = 0;
+
+	char* nombreBitmap = "/Bitmap.bin";
+
+	char* pathBitmap = malloc(strlen(pathMetadata) + strlen(nombreBitmap) + 1);
+
+	strcpy(pathBitmap, pathMetadata);
+	strcat(pathBitmap, nombreBitmap);
+
+	FILE* bitmap = fopen(pathBitmap, "r");
+
+	if (bitmap != NULL){
+		retorno = 1;
+	}
+
+	fclose(bitmap);
+	free(pathBitmap);
+
+	return retorno;
+
+}
+
+void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadata, int BLOCKS, char* BITARRAY){
+	// Crear metadatas con DIRECTORY=Y
+	crearMetadataCarpeta(pathBloques);
+	crearMetadataCarpeta(pathFiles);
+
+	// Crear los bloques dentro de carpeta /Blocks
+	crearBloquesEn(pathBloques, BLOCKS);
+
+	// Genero el bitarray
+	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
+
+	// Piso todos los bits a 0
+	vaciarBitArray(bitArrayBloques, BLOCKS);
+
+	// Lo guardo en archivo
+	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+}
+
 int main(void) {
 
+	t_config* config;
 	int TIEM_REIN_CONEXION;
 	int TIEM_REIN_OPERACION;
 	char* PUNTO_MONTAJE;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
-	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
+	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER, config);
 
 	printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
 
@@ -414,6 +529,7 @@ int main(void) {
 
 	*/
 
+
 	// Crear la carpeta /Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
 	// Crear la carpeta /Metadata [Si ya existe no hace nada]
@@ -421,55 +537,54 @@ int main(void) {
 	// Crear la carpeta /Files
 	char* pathFiles = crearCarpetaEn(PUNTO_MONTAJE, "/Files");
 
-	printf("Path files: %s\n", pathFiles);
+//	printf("%s\n", pathBloques);
+//	printf("%s\n", pathMetadata);
+//	printf("%s\n", pathFiles);
 
-	crearMetadataCarpeta(pathBloques);
-	crearMetadataCarpeta(pathFiles);
 
-	// Datos de metadata/metadata.bin
 	int BLOCKS;
 	int BLOCK_SIZE;
 	char* MAGIC_NUMBER;
+	t_config* metadataBin;
 	// Funcion para leer metadata.bin
-	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
+	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER, metadataBin);
+
+	printf("Lei metadata bin.");
 
 	if (BLOCKS % 8 != 0){
 		printf("La cantidad de bloques debe ser multiplo de 8");
 		exit(5);
 	}
 
-	// Creaar los bloques dentro de carpeta /Blocks
-	crearBloquesEn(pathBloques, BLOCKS);
+	char* BITARRAY = malloc(BLOCKS / 8);
 
+	int retorno = existeFilesystem(pathMetadata);
+
+	printf("%i\n", retorno);
+
+//	if (!existeFilesystem(pathMetadata)){
+//		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS, BITARRAY);
+//		printf("No existe filesystem... inicializando.");
+//	} else {
+//		printf("El filesystem ya existe. No creo nada.");
+//	}
+
+	/*
 	char* pikachu = "Pikachu";
 	crearPokemonSiNoExiste(pathFiles, pikachu);
 
 	char* bulbasaur = "Bulbasaur";
 	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
-    char* BITARRAY = malloc(BLOCKS / 8);
-
-    // Genero el bitarray
-	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
-
-	// Piso todos los bits a 0
-	vaciarBitArray(bitArrayBloques, BLOCKS);
-
-	bitarray_set_bit(bitArrayBloques, 0);
-	bitarray_set_bit(bitArrayBloques, 1);
-	bitarray_set_bit(bitArrayBloques, 4);
-
-	// Lo guardo en archivo
-	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
-
 	liberarUnBloque(pathMetadata, 4, BITARRAY, BLOCKS);
 	liberarUnBloque(pathMetadata, 1, BITARRAY, BLOCKS);
+	*/
 
-	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
-
-	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
-
-	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+//	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+//
+//	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
+//
+//	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
 
 //	int i;
 //
@@ -530,9 +645,9 @@ int main(void) {
 	*/
 
 	//Cierre del programa
-	free(pathBloques);
-	free(pathMetadata);
-	free(pathFiles);
+//	free(pathBloques);
+//	free(pathMetadata);
+//	free(pathFiles);
 
 	// Si haces estos free explota.
 	//free(pikachu);

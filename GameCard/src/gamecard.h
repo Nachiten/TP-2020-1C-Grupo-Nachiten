@@ -21,8 +21,8 @@
 
 char* crearCarpetaEn(char* ,char* );
 void crearBloquesEn(char* ,int );
-void leerConfig(int*, int* ,char** ,char** ,char** );
-void leerMetadataBin(char*, int* , int* , char** );
+void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
+void leerMetadataBin(char*, int* , int* , char**, t_config*);
 t_bitarray* crearBitArray(char*, int);
 
 

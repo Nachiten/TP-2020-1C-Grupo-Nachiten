@@ -72,7 +72,7 @@ void crearBloquesEn(char* pathBloques, int cantidadBloques){
 		// Le pego el valor hardcodeado 1.bin
 		strcat(pathBloqueActual, nombreArchivo);
 
-		FILE* bloque = fopen( pathBloqueActual , "w+" );
+		FILE* bloque = fopen( pathBloqueActual , "w" );
 
 		if (bloque == NULL){
 			printf("No se pudo crear el bloque %i", bloqueActual);
@@ -378,7 +378,7 @@ void vaciarBitArray(t_bitarray* bitArray, int BLOCKS){
 
 	int i;
 
-	for (i = 0; i < BLOCKS / 8; i++){
+	for (i = 0; i < BLOCKS; i++){
 		bitarray_clean_bit(bitArray, i);
 	}
 }
@@ -392,6 +392,7 @@ void liberarUnBloque(char* pathMetadata, int index, char* BITARRAY, int BLOCKS){
 	bitarray_clean_bit(bitArrayBloques, index);
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+
 }
 
 void escribirPokemon(char* path,int posX, int posY, int cantidad ){
@@ -478,13 +479,16 @@ int existeFilesystem(char* pathMetadata){
 	strcpy(pathBitmap, pathMetadata);
 	strcat(pathBitmap, nombreBitmap);
 
+	printf("Path bitmap: %s", pathBitmap);
+
 	FILE* bitmap = fopen(pathBitmap, "r");
 
+	// Si el archivo se encuentra
 	if (bitmap != NULL){
 		retorno = 1;
+		fclose(bitmap);
 	}
 
-	fclose(bitmap);
 	free(pathBitmap);
 
 	return retorno;
@@ -509,6 +513,51 @@ void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadat
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 }
 
+// TODO : Probar si funciona
+t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantidad){
+
+	t_list * listaNums = list_create();
+
+	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+
+	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
+
+	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+
+
+	int i;
+	for(i = 0; i< BLOCKS; i++){
+		if (bitarray_test_bit(bitArrayBloques2, i) == 0){
+			bitarray_set_bit(bitArrayBloques2, i);
+			list_add(listaNums, &i);
+			cantidad--;
+		}
+
+	}
+
+	guardarBitArrayEnArchivo(pathMetadata, bitArrayBloques2, BLOCKS);
+
+	return listaNums;
+}
+
+// Printea el bitarray completo, funciona
+void printearBitArray(char* pathMetadata, int BLOCKS, char* BITARRAY_ARCHIVO){
+
+	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
+
+	t_bitarray* bitArray = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+
+	int i;
+	for ( i = 0 ; i< BLOCKS; i++){
+		if(bitarray_test_bit(bitArray, i) == 1){
+			printf("%i", 1);
+		} else {
+			printf("%i", 0);
+		}
+	}
+
+}
+
 int main(void) {
 
 	t_config* config;
@@ -529,7 +578,6 @@ int main(void) {
 
 	*/
 
-
 	// Crear la carpeta /Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
 	// Crear la carpeta /Metadata [Si ya existe no hace nada]
@@ -549,42 +597,51 @@ int main(void) {
 	// Funcion para leer metadata.bin
 	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER, metadataBin);
 
-	printf("Lei metadata bin.");
-
 	if (BLOCKS % 8 != 0){
-		printf("La cantidad de bloques debe ser multiplo de 8");
+		printf("[Error] La cantidad de bloques debe ser multiplo de 8");
 		exit(5);
 	}
 
 	char* BITARRAY = malloc(BLOCKS / 8);
 
-	int retorno = existeFilesystem(pathMetadata);
+//	printf("Path Metadata: %s", pathMetadata);
+//
+//	int existeFS = existeFilesystem(pathMetadata);
+//
+//	printf("%i", existeFS);
 
-	printf("%i\n", retorno);
+	// Si no existe el filesystem
+	if ( existeFilesystem(pathMetadata) == 0){
+		printf("No existe filesystem... inicializando.\n");
+		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS, BITARRAY);
+	} else {
+		printf("El filesystem ya existe. No creo nada.\n");
+	}
 
-//	if (!existeFilesystem(pathMetadata)){
-//		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS, BITARRAY);
-//		printf("No existe filesystem... inicializando.");
-//	} else {
-//		printf("El filesystem ya existe. No creo nada.");
-//	}
+	// Desde aca el filesystem ya está inicializado
 
-	/*
+
 	char* pikachu = "Pikachu";
 	crearPokemonSiNoExiste(pathFiles, pikachu);
 
 	char* bulbasaur = "Bulbasaur";
 	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
-	liberarUnBloque(pathMetadata, 4, BITARRAY, BLOCKS);
-	liberarUnBloque(pathMetadata, 1, BITARRAY, BLOCKS);
-	*/
+	// No se obtienen los primeros libres de manera correcta, revisar
+	//t_list* unaLista = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, 15);
 
-//	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
-//
-//	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
-//
-//	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+
+	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
+
+	printearBitArray(pathMetadata, BLOCKS, BITARRAY_ARCHIVO);
+
+//	liberarUnBloque(pathMetadata, 4, BITARRAY, BLOCKS);
+//	liberarUnBloque(pathMetadata, 1, BITARRAY, BLOCKS);
+
+
+
+
 
 //	int i;
 //

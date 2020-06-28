@@ -494,8 +494,9 @@ void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadat
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 }
 
-// TODO : Probar si funciona
+// Obtiene "cantidad" de bloques libres (bits = 0) del bitmap
 t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantidad){
+	// Al meter un puntero en una lista si ese puntero cambia entonces cambia la lista. Porque guarda una referencia no una copia
 
 	t_list * listaNums = list_create();
 
@@ -503,19 +504,51 @@ t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantid
 
 	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
 
-	t_bitarray* bitArrayBloques2 = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
+	t_bitarray* bitArray = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
 
 	int i;
+	int numeroBloque = 1;
 	for(i = 0; i< BLOCKS; i++){
-		if (bitarray_test_bit(bitArrayBloques2, i) == 0 && cantidad > 0){
-			bitarray_set_bit(bitArrayBloques2, i);
-			list_add(listaNums, &i);
+
+		//printf("Estoy escaneando el bit numero: %i", i);
+
+		// Si el bit es uno y todavia necesiton sumar => sumo
+		if (bitarray_test_bit(bitArray, i) == 0 && cantidad > 0){
+			bitarray_set_bit(bitArray, i);
+
+			int* numeroBloqueCopiado = malloc(sizeof(int));
+
+			*numeroBloqueCopiado = numeroBloque;
+
+			printf("Encontre el bit numero: %i\n", numeroBloque);
+			list_add(listaNums, numeroBloqueCopiado);
+
 			cantidad--;
+
+		} else if (cantidad == 0){
+			printf("Ya encontre todos los bloques que queria :)");
+			break;
 		}
+		else {
+			printf("El bloque numero: %i Ya está siendo usado..\n", numeroBloque);
+		}
+
+		numeroBloque++;
 
 	}
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY_ARCHIVO, BLOCKS);
+
+//	t_list* miLista = list_create();
+//
+//	int num = 5;
+//	int num2 = 7;
+//
+//	list_add(miLista, &num);
+//	list_add(miLista, &num2);
+
+	// WHAT. Todos quedan como 129 por alguna razon mistica
+
 
 	return listaNums;
 }
@@ -607,22 +640,49 @@ int main(void) {
 	char* bulbasaur = "Bulbasaur";
 	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
-	// No se obtienen los primeros libres de manera correcta, revisar
+	liberarUnBloque(pathMetadata, 1, BLOCKS); // bloque 2
+	liberarUnBloque(pathMetadata, 2, BLOCKS); // bloque 3
+
+	// Ya funciona :D
 	t_list* unaLista = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, 4);
 
-	liberarUnBloque(pathMetadata, 4, BLOCKS);
+	// Vaciar un bloque del bitarray (hacerlo = 0)
 
 	printearBitArray(pathMetadata, BLOCKS);
 
-	int* num1 = list_get(unaLista, 0);
-	int* num2 = list_get(unaLista, 1);
-	int* num3 = list_get(unaLista, 2);
-	int* num4 = list_get(unaLista, 3);
+	int* item0 = list_get(unaLista, 0);
+	int* item1 = list_get(unaLista, 1);
+	int* item2 = list_get(unaLista, 2);
+	int* item3 = list_get(unaLista, 3);
 
-	printf("%i", *num1);
-	printf("%i", *num2);
-	printf("%i", *num3);
-	printf("%i", *num4);
+	printf("Item 0: %i\n", *item0);
+	printf("Item 1: %i\n", *item1);
+	printf("Item 2: %i\n", *item2);
+	printf("Item 3: %i\n", *item3);
+
+	// Testing de lista
+//   int* num1 = list_get(unaLista, 0);
+
+//	int* num2 = list_get(unaLista, 1);
+//	int* num3 = list_get(unaLista, 2);
+//	int* num4 = list_get(unaLista, 3);
+
+//  printf("%i", *num1);
+//	printf("%i", *num2);
+//	printf("%i", *num3);
+//	printf("%i", *num4);
+
+
+//	t_list* miLista = list_create();
+//	int num = 5;
+//	int num2 = 7;
+//
+//	list_add( miLista , &num );
+//	list_add(miLista, &num2);
+//
+//	int* item1 = list_get(miLista, 1);
+//
+//	printf("Item 0: %i\n", *item1);
 
 	//Cierre del programa
 //	free(pathBloques);

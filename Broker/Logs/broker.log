@@ -105,3 +105,20 @@
 [INFO] 19:35:27:110 Broker/(7511:7518): estoy mandando mensajes
 [INFO] 19:36:38:971 Broker/(7600:7607): estoy mandando mensajes
 [INFO] 19:37:56:248 Broker/(20275:20282): estoy mandando mensajes
+[INFO] 21:36:34:93 Broker/(22286:22292): estoy mandando mensajes
+[INFO] 21:36:46:132 Broker/(22286:22301): estoy mandando mensajes
+[INFO] 21:37:32:784 Broker/(22329:22335): estoy mandando mensajes
+[INFO] 21:38:23:526 Broker/(22419:22425): estoy mandando mensajes
+[INFO] 21:39:18:271 Broker/(22485:22492): estoy mandando mensajes
+[INFO] 21:44:13:499 Broker/(22626:22632): estoy mandando mensajes
+[INFO] 21:46:23:861 Broker/(22661:22667): estoy mandando mensajes
+[INFO] 21:52:02:977 Broker/(22854:22860): estoy mandando mensajes
+[INFO] 21:52:21:265 Broker/(22879:22885): estoy mandando mensajes
+[INFO] 21:55:59:729 Broker/(22955:22961): estoy mandando mensajes
+[INFO] 21:59:11:564 Broker/(23035:23041): estoy mandando mensajes
+[INFO] 21:59:41:253 Broker/(23147:23153): estoy mandando mensajes
+[INFO] 22:01:35:232 Broker/(23179:23186): estoy mandando mensajes
+[INFO] 22:02:12:449 Broker/(23215:23221): estoy mandando mensajes
+[INFO] 22:04:17:4 Broker/(23327:23333): estoy mandando mensajes
+[INFO] 22:04:52:317 Broker/(23353:23361): estoy mandando mensajes
+[INFO] 22:04:54:809 Broker/(23353:23363): Se suscribio a la cola New

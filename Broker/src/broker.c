@@ -572,6 +572,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case APPEARED:
 			mensajeAppeared = malloc(sizeof(Appeared));
 			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente);
+			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semAppeared);
 			agregar_mensaje_appeared(mensajeAppeared);
 			sem_post(semAppeared);
@@ -582,6 +583,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			sem_wait(semGet);
 			agregar_mensaje_get(mensajeGet);
+			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semGet);
 			//free(mensaje);
 			break;
@@ -590,12 +592,14 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente);
 			sem_wait(semLocalized);
 			agregar_mensaje_localized(mensajeLocalized);
+			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semLocalized);
 			//free(mensaje);
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
+			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semCatch);
 			agregar_mensaje_catch(mensajeCatch);
 			sem_post(semCatch);
@@ -604,6 +608,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		case CAUGHT:
 			mensajeCaught = malloc(sizeof(Caught));
 			recibir_mensaje(mensajeCaught, cod_op, socket_cliente);
+			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semCaught);
 			agregar_mensaje_caught(mensajeCaught);
 			sem_post(semCaught);

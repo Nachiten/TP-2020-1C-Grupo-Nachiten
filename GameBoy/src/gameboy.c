@@ -180,7 +180,19 @@ int main(int cantArg, char* arg[]) {
 								Caught* pokemonCaught = malloc(sizeof(Caught));
 
 								pokemonCaught->corrID = cambia_a_int(arg[3]); //cambiamos el string a int
-								pokemonCaught->pudoAtrapar = cambia_a_int(arg[4]); //cambiamos el string a int
+
+								//Ponemos el resultado de intentar atrapar
+								if (strcmp(arg[4],"OK") == 0)
+								{
+									pokemonCaught->pudoAtrapar = 1;
+								}
+								else
+								{
+									if (strcmp(arg[4],"FAIL") == 0)
+									{
+										pokemonCaught->pudoAtrapar = 0;
+									}
+								}
 
 								//lleno de basura para completar la estructura
 								pokemonCaught->ID = 0;
@@ -207,17 +219,17 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar el nombre del pokemon y mandarlo a la funcion mandar_mensaje
 								Get* pokemonGet = malloc(sizeof(Get));
-								pokemonGet->nombrePokemon = malloc(sizeof(char*));
 
+								pokemonGet->largoNombre = strlen(arg[3]);
 								pokemonGet->nombrePokemon = arg[3];
 								pokemonGet->ID = 0;//serializar NECESITA una ID para estandarizarlo
+								pokemonGet->corrID = -2;
 
 								//mandamos el mensaje
 								mandar_mensaje(pokemonGet, GET, socket);
 
 								//libero la estructura que acabo de crear
 								free(pokemonGet);
-								//libero_estructura_Get(pokemonGet);
 							}
 						}
 					}

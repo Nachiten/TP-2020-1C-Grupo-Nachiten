@@ -1,69 +1,5 @@
 #include "gamecard.h"
 
-char* crearCarpetaEn(char* pathPuntoMontaje, char* nombreCarpeta){
-
-	// Path de la carpeta {punto_montaje}/nombreCarpeta
-	char* pathCarpeta = malloc(strlen(pathPuntoMontaje) + strlen(nombreCarpeta) + 1);
-	// Hacer este malloc explota por sf | = malloc(strlen(pathPuntoMontaje + 1));
-
-	// Copiando el punto de montaje al path de la carpeta
-	strcpy(pathCarpeta, pathPuntoMontaje);
-
-	// Agrego el path de la carpeta /nombreCarpeta
-	strcat(pathCarpeta, nombreCarpeta);
-
-	mkdir(pathCarpeta, 0777);
-
-	return pathCarpeta;
-}
-
-void crearBloquesEn(char* pathBloques, int cantidadBloques){
-	
-	int bloqueActual;
-	
-	for(bloqueActual = 1 ; bloqueActual <= cantidadBloques ; bloqueActual++ ){
-
-		// Array de chars para meter el int convertido a array
-		char* enteroEnLetras = malloc(5 * sizeof(char));
-
-		// Genero un array de chars que es el numero de bloque pasado a string
-		sprintf(enteroEnLetras, "%i", bloqueActual);
-
-		char* extension = ".bin";
-
-		// 5 = longitud del numero + 1 por la /
-		char* nombreArchivo = malloc( strlen(enteroEnLetras) + strlen(extension) + 2 );
-
-		// El nombre de archivo es de la forma /{num}.bin | Ejemplo: /35.bin
-		strcpy(nombreArchivo, "/");
-		strcat(nombreArchivo, enteroEnLetras);
-		strcat(nombreArchivo, extension);
-
-		// Creo una copia del path de /Blocks para no modificarlo
-		char* pathBloqueActual = malloc(strlen(pathBloques) + strlen(nombreArchivo) + 1);
-
-		// Le pego el path de /Blocks
-		strcpy(pathBloqueActual, pathBloques);
-
-		// Le pego el valor hardcodeado 1.bin
-		strcat(pathBloqueActual, nombreArchivo);
-
-		FILE* bloque = fopen( pathBloqueActual , "w" );
-
-		if (bloque == NULL){
-			printf("No se pudo crear el bloque %i", bloqueActual);
-			exit(3);
-		}
-
-		fclose(bloque);
-
-		free(nombreArchivo);
-		free(pathBloqueActual);
-		free(enteroEnLetras);
-	}
-	
-}
-
 void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER, t_config* config){
 
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
@@ -289,90 +225,12 @@ void crearMetadataCarpeta(char* pathCarpeta){
 
 void crearPokemonSiNoExiste(char* pathFiles, char* pokemon){
 	if (!existeCarpetaPokemon(pathFiles, pokemon)){
+		printf("No existie la carpeta: %s. Creando...\n", pokemon);
 		crearCarpetaPokemon(pathFiles, pokemon);
 		crearMetadataPokemon(pathFiles, pokemon);
-		printf("No existia la carpeta: %s [Se creó]\n", pokemon);
 	} else {
 		printf("Existe la carpeta: %s\n", pokemon);
 	}
-}
-
-t_bitarray* crearBitArray(char* bitarray, int cantBloques){
-	// Se crea en cantidad de bytes no bits. (por eso hago cantBloques / 8)
-	return bitarray_create_with_mode(bitarray, cantBloques / 8, MSB_FIRST);
-	// 'bitarray' es un malloc de cantBloques / 8
-}
-
-void guardarBitArrayEnArchivo(char* pathMetadata, char* bitArray, int BLOCKS){
-	char* pathBitmap = "/Bitmap.bin";
-
-	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
-
-	// Copio path de metadata
-	strcpy(pathCompleto, pathMetadata);
-
-	// Pego el path de bitmap
-	strcat(pathCompleto, pathBitmap);
-
-	FILE* bitmapArchivo = fopen( pathCompleto , "w" );
-
-	// Me muevo al principio del archivo
-	fseek( bitmapArchivo, 0, SEEK_SET );
-
-	fwrite(bitArray, BLOCKS / 8, 1, bitmapArchivo);
-
-	fclose(bitmapArchivo);
-
-	free(pathCompleto);
-}
-
-void leerBitArrayDeArchivo(char* pathMetadata, char** bitArray, int BLOCKS){
-	char* pathBitmap = "/Bitmap.bin";
-
-	char* pathCompleto = malloc(strlen(pathMetadata) + strlen(pathBitmap) + 1);
-
-	// Copio path de metadata
-	strcpy(pathCompleto, pathMetadata);
-
-	// Pego el path de bitmap
-	strcat(pathCompleto, pathBitmap);
-
-	// VA UN SEMAFORO ACA !!!
-
-	FILE* bitmapArchivo = fopen( pathCompleto , "r" );
-
-	// Me muevo al principio del archivo
-	fseek( bitmapArchivo, 0, SEEK_SET );
-
-	fread(*bitArray, BLOCKS / 8, 1, bitmapArchivo);
-
-	fclose(bitmapArchivo);
-
-	free(pathCompleto);
-
-}
-
-void vaciarBitArray(t_bitarray* bitArray, int BLOCKS){
-
-	int i;
-
-	for (i = 0; i < BLOCKS; i++){
-		bitarray_clean_bit(bitArray, i);
-	}
-}
-
-void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
-
-	char* BITARRAY = malloc(BLOCKS / 8);
-
-	leerBitArrayDeArchivo(pathMetadata, &BITARRAY, BLOCKS);
-
-	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
-
-	bitarray_clean_bit(bitArrayBloques, index);
-
-	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
-
 }
 
 void escribirPokemon(char* path,int posX, int posY, int cantidad ){
@@ -396,6 +254,7 @@ void escribirPokemon(char* path,int posX, int posY, int cantidad ){
 
 }
 
+// Tomar los caracteres de coordenadas: Por ejemplo: 2-3=10 => 2-3
 char* separarCoord(char* unString){
 	char* token = malloc(strlen(unString));
 
@@ -449,133 +308,65 @@ int encontrarCoords(int posX, int posY){
 	return retorno;
 }
 
-int existeFilesystem(char* pathMetadata){
-	int retorno = 0;
+char** leerBloques(char* pathFiles , char* pokemon){
+	char* metadataBin = "/Metadata.bin";
 
-	char* nombreBitmap = "/Bitmap.bin";
+	// algo/Files/Pikachu/Metadata.bin
 
-	char* pathBitmap = malloc(strlen(pathMetadata) + strlen(nombreBitmap) + 1);
+	char* pathMetadataPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
 
-	strcpy(pathBitmap, pathMetadata);
-	strcat(pathBitmap, nombreBitmap);
+	strcpy(pathMetadataPokemon, pathFiles);
+	strcat(pathMetadataPokemon, "/");
+	strcat(pathMetadataPokemon, pokemon);
+	strcat(pathMetadataPokemon, metadataBin);
 
-	FILE* bitmap = fopen(pathBitmap, "r");
+	printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
 
-	// Si el archivo se encuentra
-	if (bitmap != NULL){
-		retorno = 1;
-		fclose(bitmap);
+	t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+	return config_get_array_value(datosMetadata, "BLOCKS");
+}
+
+int hayAlgunBloque(char* pathFiles , char* pokemon){
+
+	char** bloques = leerBloques(pathFiles , pokemon);
+
+	if (bloques[0] != NULL){
+		return 1;
 	}
 
-	free(pathBitmap);
+	return 0;
+}
 
-	return retorno;
+char* generarLineaCoordsPokemon(int posX, int posY, int cantidad){
+	char* stringAEscribir; // No hago malloc porque asprintf lo hace :)
+
+	asprintf(&stringAEscribir, "%i-%i=%i\n", posX, posY, cantidad);
+
+	return stringAEscribir;
+}
+
+int cantidadDeBloquesQueOcupa(int pesoEnBytes, int BLOCK_SIZE){
+
+	float bloquesQueOcupa = pesoEnBytes / BLOCK_SIZE;
+
+	// Undefined reference :(
+	float cantidadBloques = ceilf(bloquesQueOcupa);
+
+	printf("Cantidad bloques: %f", cantidadBloques);
+
+	return cantidadBloques;
 
 }
 
-void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadata, int BLOCKS){
+void escribirLineaNuevaPokemon(int posX, int posY, int cantidad, int BLOCK_SIZE){
+	char* lineaAEscribir = generarLineaCoordsPokemon(posX, posY, cantidad);
 
-	char* BITARRAY = malloc(BLOCKS / 8);
+	int pesoEnBytes = strlen(lineaAEscribir);
 
-	// Crear metadatas con DIRECTORY=Y
-	crearMetadataCarpeta(pathBloques);
-	crearMetadataCarpeta(pathFiles);
+	cantidadDeBloquesQueOcupa(pesoEnBytes, BLOCK_SIZE);
 
-	// Crear los bloques dentro de carpeta /Blocks
-	crearBloquesEn(pathBloques, BLOCKS);
-
-	// Genero el bitarray
-	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
-
-	// Piso todos los bits a 0
-	vaciarBitArray(bitArrayBloques, BLOCKS);
-
-	// Lo guardo en archivo
-	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
-}
-
-// Obtiene "cantidad" de bloques libres (bits = 0) del bitmap
-t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantidad){
-	// Al meter un puntero en una lista si ese puntero cambia entonces cambia la lista. Porque guarda una referencia no una copia
-
-	t_list * listaNums = list_create();
-
-	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
-
-	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
-
-	t_bitarray* bitArray = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
-
-	int i;
-	int numeroBloque = 1;
-	for(i = 0; i< BLOCKS; i++){
-
-		//printf("Estoy escaneando el bit numero: %i", i);
-
-		// Si el bit es uno y todavia necesiton sumar => sumo
-		if (bitarray_test_bit(bitArray, i) == 0 && cantidad > 0){
-			bitarray_set_bit(bitArray, i);
-
-			int* numeroBloqueCopiado = malloc(sizeof(int));
-
-			*numeroBloqueCopiado = numeroBloque;
-
-			printf("Encontre el bit numero: %i\n", numeroBloque);
-			list_add(listaNums, numeroBloqueCopiado);
-
-			cantidad--;
-
-		} else if (cantidad == 0){
-			printf("Ya encontre todos los bloques que queria :)");
-			break;
-		}
-		else {
-			printf("El bloque numero: %i Ya está siendo usado..\n", numeroBloque);
-		}
-
-		numeroBloque++;
-
-	}
-
-	guardarBitArrayEnArchivo(pathMetadata, BITARRAY_ARCHIVO, BLOCKS);
-
-//	t_list* miLista = list_create();
-//
-//	int num = 5;
-//	int num2 = 7;
-//
-//	list_add(miLista, &num);
-//	list_add(miLista, &num2);
-
-	// WHAT. Todos quedan como 129 por alguna razon mistica
-
-
-	return listaNums;
-}
-
-// Printea el bitarray completo, funciona
-void printearBitArray(char* pathMetadata, int BLOCKS){
-
-	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
-
-	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
-
-	t_bitarray* bitArray = crearBitArray(BITARRAY_ARCHIVO, BLOCKS);
-
-	int i;
-	for ( i = 0 ; i< BLOCKS; i++){
-		if(bitarray_test_bit(bitArray, i) == 1){
-			printf("%i", 1);
-		} else {
-			printf("%i", 0);
-		}
-	}
-
-	printf("\n");
-
-	//bitarray_destroy(bitArray);
-	//free(BITARRAY_ARCHIVO);
-
+	// TODO Faltan cosas
 }
 
 int main(void) {
@@ -644,21 +435,40 @@ int main(void) {
 	liberarUnBloque(pathMetadata, 2, BLOCKS); // bloque 3
 
 	// Ya funciona :D
-	t_list* unaLista = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, 4);
+	//t_list* unaLista = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, 4);
 
 	// Vaciar un bloque del bitarray (hacerlo = 0)
 
 	printearBitArray(pathMetadata, BLOCKS);
 
-	int* item0 = list_get(unaLista, 0);
-	int* item1 = list_get(unaLista, 1);
-	int* item2 = list_get(unaLista, 2);
-	int* item3 = list_get(unaLista, 3);
+	char** bloquesPikachu = leerBloques(pathFiles , pikachu);
 
-	printf("Item 0: %i\n", *item0);
-	printf("Item 1: %i\n", *item1);
-	printf("Item 2: %i\n", *item2);
-	printf("Item 3: %i\n", *item3);
+	int i = 0;
+
+	while(bloquesPikachu[i] != NULL){
+
+		printf("Elemento %i: %s\n", i, bloquesPikachu[i]);
+
+		i++;
+	}
+
+	int hayBloquePikachu = hayAlgunBloque(pathFiles , pikachu);
+
+	printf("Hay algun bloque: %i", hayBloquePikachu);
+
+	escribirLineaNuevaPokemon(3, 4, 10, BLOCK_SIZE);
+
+
+
+//	int* item0 = list_get(unaLista, 0);
+//	int* item1 = list_get(unaLista, 1);
+//	int* item2 = list_get(unaLista, 2);
+//	int* item3 = list_get(unaLista, 3);
+//
+//	printf("Item 0: %i\n", *item0);
+//	printf("Item 1: %i\n", *item1);
+//	printf("Item 2: %i\n", *item2);
+//	printf("Item 3: %i\n", *item3);
 
 	// Testing de lista
 //   int* num1 = list_get(unaLista, 0);

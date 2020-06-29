@@ -214,7 +214,6 @@ t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje){
 	t_mensaje nuevo;
 	nuevo.id = id;
 	nuevo.id_correlativo = id_correlativo;
-	//nuevo.mensaje = malloc(sizeof(mensaje));
 	nuevo.mensaje = mensaje;
 	nuevo.subs = list_create();
 	return nuevo;
@@ -227,7 +226,7 @@ void suscribir(t_sub* sub,t_cola* cola){
 			t_mensaje* aux = malloc(sizeof(t_mensaje));
 			aux = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 			list_add(aux->subs,sub);
-			free(aux);
+			//free(aux);
 		}
 	}
 }
@@ -239,10 +238,10 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i);
 			if(mensaje->id_correlativo == id_correlativo){
-				free(mensaje);
+				//free(mensaje);
 				return -1;
 			}
-			free(mensaje);
+			//free(mensaje);
 		}
 	}
 	return 1;
@@ -265,9 +264,6 @@ void agregar_mensaje_new(New* mensaje){
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
 		mandar_mensajes_broker(colaNew);
-		//free(new->mensaje);
-
-		//free(new);
 	}
 }
 
@@ -287,8 +283,6 @@ void agregar_mensaje_appeared(Appeared* mensaje){
 		new->subs = colaAppeared->subs;
 		list_add(colaAppeared->mensajes,new);
 		mandar_mensajes_broker(colaAppeared);
-		free(new->mensaje);
-		free(new);
 	}
 }
 
@@ -308,7 +302,6 @@ void agregar_mensaje_get(Get* mensaje){
 		new->subs = colaGet->subs;
 		list_add(colaGet->mensajes,new);
 		mandar_mensajes_broker(colaGet);
-		free(new);
 	}
 }
 
@@ -328,7 +321,6 @@ void agregar_mensaje_localized(Localized* mensaje){
 		new->subs = colaLocalized->subs;
 		list_add(colaLocalized->mensajes,new);
 		mandar_mensajes_broker(colaGet);
-		free(new);
 	}
 }
 
@@ -348,7 +340,6 @@ void agregar_mensaje_catch(Catch* mensaje){
 		new->subs = colaCatch->subs;
 		list_add(colaCatch->mensajes,new);
 		mandar_mensajes_broker(colaCatch);
-		free(new);
 	}
 }
 
@@ -369,7 +360,6 @@ void agregar_mensaje_caught(Caught* mensaje){
 		new->subs = colaCaught->subs;
 		list_add(colaCaught->mensajes,new);
 		mandar_mensajes_broker(colaCaught);
-		free(new);
 	}
 }
 
@@ -378,7 +368,7 @@ void agregar_sub(int32_t socket, t_cola* cola){
 	*new = crear_sub(socket);
 	list_add(cola->subs,new);
 	suscribir(new,cola);
-	free(new);
+	mandar_mensajes_broker(cola);
 }
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
@@ -394,10 +384,10 @@ void mandar_mensajes_broker(t_cola* cola){
 				if(sub->recibido != 1 && sub->suscripto == 1){
 					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 				}
-				free(sub);
+				//free(sub);
 			}
-			free(mensaje->mensaje);
-			free(mensaje);
+//			free(mensaje->mensaje);
+//			free(mensaje);
 		}
 	}
 }
@@ -420,10 +410,10 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 					sub->recibido = 1;
 					exit(EXIT_SUCCESS);
 				}
-				free(sub);
+				//free(sub);
 			}
 		}
-		free(mensaje);
+		//free(mensaje);
 	}
 }
 
@@ -490,7 +480,7 @@ void borrar_mensajes(t_cola* cola){
 						yaRecibido++;
 					}
 					subsTotales++;
-					free(sub);
+					//free(sub);
 				}
 				if(subsTotales == yaRecibido){
 					// cuando este agregado memoria el mensaje eliminado deberia agregarse ahi
@@ -498,9 +488,9 @@ void borrar_mensajes(t_cola* cola){
 					borrado = list_remove(cola->mensajes, i);
 					//probar
 					//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, borrado->mensaje, cola->tipoCola);
-					free(mensaje);
+					//free(mensaje);
 				}
-				free(mensaje);
+				//free(mensaje);
 			}
 		}
 }
@@ -519,9 +509,9 @@ void desuscribir(int32_t socket, t_cola* cola){
 			if(sub->socket == socket){
 				sub->suscripto = 0;
 			}
-			free(sub);
+			//free(sub);
 		}
-		free(mensaje);
+		//free(mensaje);
 	}
 	for(int j = 0; j < cola->subs->elements_count; j++ ){ //avanza hasta el final de la cola subs
 		t_sub* sub = malloc(sizeof(t_sub));
@@ -529,20 +519,11 @@ void desuscribir(int32_t socket, t_cola* cola){
 		if(sub->socket == socket){
 			sub->suscripto = 0;
 		}
-		free(sub);
+		//free(sub);
 	}
 }
 
 //Todo esto es para que arranque el server y se quede escuchando mensajes.
-
-void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_cliente, codigo_operacion tipoMensaje)
-{
-	char* mensaje = malloc(sizeof(char)); //esto es para almacenar el mensaje
-	memcpy(mensaje, mensaje_recibido,size);//lo almaceno para ya devolverlo como char*
-
-	mandar_mensaje(mensaje, tipoMensaje, socket_cliente);
-	free(mensaje);
-}
 
 /* dependiendo del codigo de operacion hace diferentes cosas
  * si es el numero de las colas es que estas mandando un mensaje a esas colas y tiene que agregarse
@@ -618,7 +599,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			mensaje = malloc(sizeof(Suscripcion));
 			recibir_mensaje(mensaje, cod_op, socket_cliente);
 			numeroCola = a_suscribir(mensaje);
-			fflush(stdout);
 
 			switch(numeroCola){
 			case NEW:
@@ -667,7 +647,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			free(mensaje);
 			break;
 		case DESSUSCRIPCION:
-			puts("llege a des suscribirme");
+			log_info(logger, "llege a desuscribirme");
 			mensaje = malloc(sizeof(Dessuscripcion));
 			recibir_mensaje(mensaje, cod_op, socket_cliente);
 

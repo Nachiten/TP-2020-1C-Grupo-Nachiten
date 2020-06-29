@@ -56,7 +56,6 @@ void iniciar_server(char* ip, char* puerto); //sacar IP y PUERTO de los archivos
 void esperar_cliente(int32_t);
 void serve_client(int32_t *socket);//Está atento a si llega un mensaje o el socket falla?
 void process_request(codigo_operacion cod_op, int32_t cliente_fd);//esta cosa administra segun el tipo de mensaje que llegó, a quien llama para que lo abra.
-void devolver_mensaje(void* mensaje_recibido, uint32_t size, int32_t socket_cliente, codigo_operacion codigo_op);
 
 // ***********funciones de broker***********
 void loggear_obligatorio(char* aLogear);

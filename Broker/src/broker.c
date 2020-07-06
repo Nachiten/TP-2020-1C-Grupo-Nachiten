@@ -84,7 +84,7 @@ int main(void) {
 		printf("No se pudo leer la ip de la config\n");
 		return EXIT_FAILURE;
 	} else {
-		printf("La ip fue leido correctamente\n");
+		printf("La IP fue leida correctamente\n");
 	}
 
 	PUERTO_BROKER = config_get_string_value(config,"PUERTO_BROKER");
@@ -96,43 +96,57 @@ int main(void) {
 		printf("El puerto fue leido correctamente\n");
 	}
 
-	// lo comente porque no andaba el codigo con lo de memoria
 //desde aca tengo lo de memoria (ToDo)**************************************************************************************************************
-/*
+
 	//va para declaraciones
 	uint32_t TAMANIO_MEM;
-	uint32_t* TAMANIO_MIN_PART;
+	uint32_t TAMANIO_MIN_PART;
 	char* ADMIN_MEMORIA;
 	char* ALGOR_REEMPLAZO;
 	char* ALGOR_ASIGN_PARTICION;
-	char* FRECUEN_COMPACT;
+	uint32_t FRECUEN_COMPACT;
+	puts("****************************************************");
+	puts("Cargando configuraciones de memoria...\n");
 
 	//aca cargo las los valores del config para manejar la memoria
-	//esta funcion falla pero feo
-	//cargar_config_memoria(config, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, ALGOR_REEMPLAZO, ALGOR_ASIGN_PARTICION, FRECUEN_COMPACT);
 	TAMANIO_MEM = config_get_int_value(config,"TAMANO_MEMORIA");
+	printf("-El tamaño para la memoria Cache es: %u bytes.\n", TAMANIO_MEM);
 	TAMANIO_MIN_PART = config_get_int_value(config,"TAMANO_MINIMO_PARTICION");
+	printf("-El tamaño minimo de partición es: %u bytes.\n", TAMANIO_MIN_PART);
 	ADMIN_MEMORIA = config_get_string_value(config,"ALGORITMO_MEMORIA");
+	printf("-La memoria será administrada usando el algoritmo %s.\n", ADMIN_MEMORIA);
 	ALGOR_REEMPLAZO = config_get_string_value(config,"ALGORITMO_REEMPLAZO");
+	printf("-Algoritmo de reemplazo en uso: %s.\n", ALGOR_REEMPLAZO);
 	ALGOR_ASIGN_PARTICION = config_get_string_value(config,"ALGORITMO_PARTICION_LIBRE");
-	FRECUEN_COMPACT = config_get_string_value(config,"FRECUENCIA_COMPACTACION");
+	printf("-Algoritmo de asignacion de partición: %s.\n", ALGOR_ASIGN_PARTICION);
+	FRECUEN_COMPACT = config_get_int_value(config,"FRECUENCIA_COMPACTACION");
+	printf("-Frecuencia de compactación: %u.\n", FRECUEN_COMPACT);
+
+	puts("\nConfiguraciones de memoria cargadas correctamente.");
+	puts("****************************************************");
 
 	//preparo el espacio de memoria cache
 	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, hay que actualizarlo segun vayamos avanzando con esto
-	CACHE = malloc(cambia_a_int(TAMANIO_MEM));
+	CACHE = malloc(TAMANIO_MEM);
+	puts("Malloc de memoria completo");
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones);
-
-	//borramos toda referencia a particiones dentro de CACHE
-	matar_lista_particiones(hoja_de_particiones);
-
-	//no olvidarse de reventar la memoria reservada para CACHE
-	free(CACHE);*/
-//hasta aca lo de memoria***************************************************************************************************************************
+	puts("Lista de particiones inicializada.");
 
 	//Arranco el Broker como servidor.
+	puts("Arrancando servidor Broker...\n");
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
+
+	//borramos toda referencia a particiones dentro de CACHE
+	//matar_lista_particiones(hoja_de_particiones); (ToDo esta cosa me crashea y no se por que!! hay que probarla de nuevo cuando haya particiones creadas)
+	puts("Referencias a particiones eliminadas.");
+	puts("----HAY QUE ARREGLAR matar_lista_particiones TODAVIA----");
+
+	//no olvidarse de reventar la memoria reservada para CACHE
+	puts("Liberando memoria Cache...");
+	free(CACHE);
+	puts("Memoria Cache Liberada.");
 
 	return EXIT_SUCCESS;
 }

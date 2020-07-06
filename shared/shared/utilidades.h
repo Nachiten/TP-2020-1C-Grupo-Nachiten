@@ -51,21 +51,4 @@ void bytesRecibidos (int32_t cantidad);
 //muestra por pantalla los bytes enviados de SEND
 void bytesEnviados (int32_t cantidad);
 
-//libera el espacio reservado para usar una estructura Appeared
-void libero_estructura_appeared(Appeared* estructura);
-//libera el espacio reservado para usar una estructura New
-void libero_estructura_New(New* estructura);
-//libera el espacio reservado para usar una estructura Catch
-void libero_estructura_Catch(Catch* estructura);
-//libera el espacio reservado para usar una estructura Caught
-void libero_estructura_Caught(Caught* estructura);
-//libera el espacio reservado para usar una estructura Get
-void libero_estructura_Get(Get* estructura);
-//libera el espacio reservado para usar una estructura Suscripcion
-void libero_estructura_Suscripcion(Suscripcion* estructura);
-//libera el espacio reservado para usar una estructura Suscripcion
-void libero_estructura_Dessuscripcion(Dessuscripcion* estructura);
-
-
-
 #endif /* SHARED_UTILIDADES_H_ */

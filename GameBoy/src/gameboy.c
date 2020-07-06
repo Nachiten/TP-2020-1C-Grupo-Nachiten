@@ -321,7 +321,6 @@ int main(int cantArg, char* arg[]) {
 							{
 								//Uso una estructura para guardar el nombre del pokemon y mandarlo a la funcion mandar_mensaje
 								Get* pokemonGet = malloc(sizeof(Get));
-								pokemonGet->nombrePokemon = malloc(sizeof(char*));
 
 								pokemonGet->nombrePokemon = arg[3];
 								pokemonGet->ID = cambia_a_int(arg[4]); //cambiamos el string a int
@@ -334,7 +333,6 @@ int main(int cantArg, char* arg[]) {
 
 								//libero la estructura que acabo de crear
 								free(pokemonGet);
-								//libero_estructura_Get(pokemonGet);
 							}
 						}
 

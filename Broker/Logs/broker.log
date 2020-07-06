@@ -166,3 +166,5 @@
 [INFO] 12:33:32:902 Broker/(5416:5422): Se suscribio a la cola New
 [INFO] 12:33:36:3 Broker/(5416:5426): estoy mandando mensajes
 [INFO] 12:33:48:573 Broker/(5416:5429): estoy mandando mensajes
+[INFO] 14:37:58:370 Broker/(7369:7406): estoy mandando mensajes
+[INFO] 14:58:11:177 Broker/(8215:28753): estoy mandando mensajes

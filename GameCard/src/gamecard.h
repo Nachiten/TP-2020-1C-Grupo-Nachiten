@@ -10,12 +10,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
 #include <commons/bitarray.h>
-#include <math.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
@@ -34,11 +34,18 @@ void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
 void escribirLineaEnBloque(posPokemon);
-void crearCarpetaPokemon(char* , char* );
-void crearMetadataPokemon(char* , char* );
-void crearMetadataCarpeta(char* );
+void crearCarpetaPokemon(char*, char*);
+void crearMetadataPokemon(char*, char*);
+void crearMetadataCarpeta(char*);
 void crearPokemonSiNoExiste(char* , char* );
 void escribirPokemon(char* ,int , int , int  );
+
+void escribirLineasEnBloques(t_list*, t_list*, int, char*);
+void escribirDatoEnBloque(char*, int, char*);
+t_list* separarStringEnBloques(char*, int, int);
+void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
+char* crearStringArrayBloques(t_list*);
+
 int existeCarpetaPokemon(char* , char* );
 int encontrarCoords(int , int );
 char* separarCoord(char* );

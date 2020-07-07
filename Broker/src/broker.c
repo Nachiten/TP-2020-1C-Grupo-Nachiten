@@ -161,8 +161,6 @@ int main(void) {
 	mensajePrueba->id_correlativo = pokemonNew->corrID;
 	mensajePrueba->mensaje = pokemonNew;
 
-
-
 	//ToDo atencion, necesito el tamaño del mensaje para asignarle un espacio, hablar con Nico. Harcodeado por ahora
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
 	// *************************************************
@@ -173,9 +171,8 @@ int main(void) {
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
 
 	//borramos toda referencia a particiones dentro de CACHE
-	//matar_lista_particiones(hoja_de_particiones); (ToDo esta cosa me crashea y no se por que!! hay que probarla de nuevo cuando haya particiones creadas)
+	matar_lista_particiones(hoja_de_particiones);
 	puts("Referencias a particiones eliminadas.");
-	puts("----HAY QUE ARREGLAR matar_lista_particiones TODAVIA----");
 
 	//no olvidarse de reventar la memoria reservada para CACHE
 	puts("Liberando memoria Cache...");

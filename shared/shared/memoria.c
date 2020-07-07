@@ -240,8 +240,8 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -263,8 +263,42 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
-	printf("desplazamiento: %u\n", desplazamiento);
 	printf("fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
+/*
+	uint32_t* mostrar_numero = 0;
+	char* mostrar_texto = malloc(8);
+	desplazamiento = 0;
+
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+
+	memcpy(mostrar_texto, CACHE + desplazamiento, 7+1);
+	desplazamiento += 7+1; //porque el nombre es pikachu, no me jodas
+	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
+
+	puts("Pichona = puts");
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->cantPokemon));
+	desplazamiento += sizeof(estructura->cantPokemon);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+
+	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+*/
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -278,8 +312,8 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -309,8 +343,8 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto ID del mensaje en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
@@ -332,8 +366,8 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto la cantidad de lugares donde se encuentra el pokemon, en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
@@ -361,8 +395,8 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -392,8 +426,8 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += estructura->largoNombre;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 
 	//meto el resultado del intento de CATCH en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar));

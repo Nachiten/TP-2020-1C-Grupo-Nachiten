@@ -30,24 +30,29 @@ typedef struct PosicionPokemon{
 	int cantidad;
 }posPokemon;
 
+void crearCarpetaPokemon(char*, char*);
+void crearMetadataCarpeta(char*);
+void crearMetadataPokemon(char*, char*);
+void crearPokemonSiNoExiste(char* , char* );
+void escribirDatoEnBloque(char*, int, char*);
+void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
+void escribirLineasEnBloques(t_list*, t_list*, int, char*);
+void fijarBloquesA(char*, char*, t_list*);
 void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
-void escribirLineaEnBloque(posPokemon);
-void crearCarpetaPokemon(char*, char*);
-void crearMetadataPokemon(char*, char*);
-void crearMetadataCarpeta(char*);
-void crearPokemonSiNoExiste(char* , char* );
-void escribirPokemon(char* ,int , int , int  );
 
-void escribirLineasEnBloques(t_list*, t_list*, int, char*);
-void escribirDatoEnBloque(char*, int, char*);
-t_list* separarStringEnBloques(char*, int, int);
-void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
-char* crearStringArrayBloques(t_list*);
-
-int existeCarpetaPokemon(char* , char* );
+int cantidadDeBloquesQueOcupa(int, int);
 int encontrarCoords(int , int );
+int existeCarpetaPokemon(char* , char* );
+int hayAlgunBloque(char* , char*);
+
+char* crearStringArrayBloques(t_list*);
+char* generarLineaCoordsPokemon(int, int, int);
 char* separarCoord(char* );
+
+char** leerBloques(char* , char*);
+
+t_list* separarStringEnBloques(char*, int, int);
 
 #endif /* SRC_GAMECARD_H_ */

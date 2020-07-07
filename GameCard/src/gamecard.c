@@ -100,24 +100,6 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 
 }
 
-//void escribirLineaEnBloque(posPokemon posPokemon){
-//// Tira error de  free(): invalid next size (normal): 0x08074b00 ***
-//
-//	//printf("%s", pathBloque);
-//
-//	FILE *archivo = fopen("/home/utnso/Escritorio/tall-grass/Blocks/43.bin", "a");
-//	if (archivo == NULL)
-//	{
-//		printf("Hubo un error abriendo el archivo!\n");
-//		exit(4);
-//	}
-//
-//	fprintf(archivo, "%i-%i=%i\n", posPokemon.posX, posPokemon.posY, posPokemon.cantidad);
-//
-//	fclose(archivo);
-//
-//}
-
 // Checkear si existe un determinado pokemon dentro de la carpeta Files/
 int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 
@@ -233,27 +215,6 @@ void crearPokemonSiNoExiste(char* pathFiles, char* pokemon){
 	}
 }
 
-//void escribirPokemon(char* path,int posX, int posY, int cantidad ){
-//	FILE* archivo = fopen("34.bin", "a");
-//	if (archivo == NULL)
-//	{
-//		printf("Error abriendo el archivo\n");
-//		exit(1);
-//	}
-//
-//	char* stringAEscribir;
-//
-//	int cantBytes = asprintf(&stringAEscribir, "%i-%i=%i\n", posX, posY, cantidad);
-//
-//	printf("El numero de bytes es: %i\n", cantBytes);
-//	printf("El string es: %s", stringAEscribir);
-//
-//	fwrite(stringAEscribir, cantBytes, 1, archivo);
-//
-//	fclose(archivo);
-//
-//}
-
 // Tomar los caracteres de coordenadas: Por ejemplo: 2-3=10 => 2-3
 char* separarCoord(char* unString){
 	char* token = malloc(strlen(unString));
@@ -265,7 +226,10 @@ char* separarCoord(char* unString){
 	return token;
 }
 
-// Retorna la posicion de la linea de las coords. -1 Si no se encuentra
+// Obsoleto | Se debe modificar para que se lean los bloques apendeen y luego
+// realizar la misma logica pero con un char* con los datos, no de esta manera
+// Se debe agregar de buscar las coordenadas dentro de un pokemon
+// no dentro de bloque de prueba
 int encontrarCoords(int posX, int posY){
 	char* line;
 	size_t len = 0;
@@ -308,6 +272,7 @@ int encontrarCoords(int posX, int posY){
 	return retorno;
 }
 
+// Lee los bloques del metadata.bin de un pokemon existente
 char** leerBloques(char* pathFiles , char* pokemon){
 	char* metadataBin = "/Metadata.bin";
 
@@ -324,10 +289,15 @@ char** leerBloques(char* pathFiles , char* pokemon){
 
 	t_config* datosMetadata = config_create(pathMetadataPokemon);
 
+	if (datosMetadata == NULL){
+		printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
+		exit(6);
+	}
+
 	return config_get_array_value(datosMetadata, "BLOCKS");
 }
 
-// Modificar los bloques del metadata.bin del pokemon
+// Fijar los bloques del metadata.bin del pokemon a los dados
 void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
 	char* metadataBin = "/Metadata.bin";
 
@@ -498,7 +468,7 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 }
 
-
+// Escribir las lineas en listaDatosBloques en los bloques listaBloquesAOcupar
 void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques, int BLOCK_SIZE, char* pathBloques){
 
 	// 1) Leer lista de bloques
@@ -521,6 +491,7 @@ void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloq
 	}
 }
 
+// Escribir un dato en un bloque determinado
 void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 	// Array de chars para meter el int convertido a array
 	char* enteroEnLetras;
@@ -609,7 +580,7 @@ int main(void) {
 		printf("No existe filesystem... inicializando.\n");
 		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS);
 	} else {
-		printf("El filesystem ya existe. No creo nada.\n");
+		printf("El filesystem ya existe. No se debe inicializar.\n");
 	}
 
 	// -- Desde aca el filesystem ya está inicializado --

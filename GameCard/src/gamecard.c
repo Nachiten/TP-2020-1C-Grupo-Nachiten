@@ -529,6 +529,60 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 }
 
+void suscribirseANew(int32_t socket){
+
+	//Uso una estructura para guardar el numero de cola al que me quiero subscribir y mandarlo a la funcion mandar_mensaje
+	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
+
+	estructuraSuscribirse->numeroCola = NEW;
+
+	//mandamos el mensaje pidiendo suscribirse a la cola
+	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
+	free(estructuraSuscribirse);
+}
+
+int conectarseABroker(char* IP_BROKER, char* PUERTO_BROKER, t_log* logger){
+	int socket = establecer_conexion(IP_BROKER, PUERTO_BROKER);//creo conexión con el Broker.
+
+	resultado_de_conexion(socket, logger, "BROKER");
+
+	return socket;
+}
+
+int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger){
+	int socket = establecer_conexion(IP_GAMECARD, PUERTO_GAMECARD);//creo conexión con el Broker.
+
+	resultado_de_conexion(socket, logger, "SOCKET_ESCUCHA");
+
+	return socket;
+}
+
+void esperarMensajes(int socket){
+
+	codigo_operacion cod_op;
+
+	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+	bytesRecibidos(recibidos);
+
+	switch (cod_op)
+	{
+		case NEW: ;
+
+			New* mensajeNew = malloc(sizeof(New));
+			//bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
+			recibir_mensaje(mensajeNew, cod_op, socket);
+
+			//mensajeNew->
+
+			break;
+		default:
+			printf("No deberia entrar aca D:");
+			break;
+	}
+
+}
+
 int main(void) {
 
 	t_config* config = NULL;
@@ -543,12 +597,10 @@ int main(void) {
 	// Testing
 	//printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
 
-	/* Inicializacion del logger... todavia no es necesario
+	// Inicializacion del logger... todavia no es necesario
 
-	//t_log* logger;
-	//logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
-
-	*/
+	t_log* logger;
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	// puntoMontaje/Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -601,10 +653,29 @@ int main(void) {
 		// Escribe una linea por primera vez en un archivo vacio
 		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 	} else {
-		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder");
+		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
 	}
 
+	int socketBroker = -1;
 
+	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+
+	while (socketBroker == -1){
+		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+		sleep(TIEM_REIN_CONEXION);
+	}
+
+	suscribirseANew(socketBroker);
+
+	//esperarMensajes(socketBroker);
+
+	int socketGameCard = -1;
+
+	socketGameCard = escucharGameBoy("127.0.0.1", "5001", logger);
+
+	esperarMensajes(socketGameCard);
+
+	//esperarMensajeGame
 
 	//char* cosaAEscribir = "Hola capo como estas\n hola soy ignacio";
 	//escribirDatoEnBloque(cosaAEscribir, 1, pathBloques);

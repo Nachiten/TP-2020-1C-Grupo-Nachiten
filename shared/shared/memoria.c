@@ -25,7 +25,7 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 	{
 		laLista->laParticion.estaLibre = 0;
 		laLista->laParticion.limiteSuperior = sizeDeLosDatos;
-		laLista->numero_de_particion++;
+		//laLista->numero_de_particion++; en la particion 0 no hace falta me parece
 		return laLista;
 	}
 	else
@@ -79,6 +79,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
+		crear_particion(particionElegida, size);//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
@@ -142,7 +143,6 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 		}
 	}
 	puts("Particion elegida exitosamente"); //borrar en el futuro?
-	free(auxiliar);//atencion con esto
 	return particionElegida;
 }
 
@@ -175,7 +175,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	{
 			case NEW:
 				poner_NEW_en_particion(CACHE, particionElegida, estructura);
-				free(estructura);
+				free(estructura);//esto me causaria problemas???
 				break;
 
 			case APPEARED:
@@ -233,6 +233,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -240,7 +241,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -262,6 +263,9 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
+	printf("desplazamiento: %u\n", desplazamiento);
+	printf("fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
@@ -275,7 +279,7 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -306,7 +310,7 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto ID del mensaje en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
@@ -329,7 +333,7 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto la cantidad de lugares donde se encuentra el pokemon, en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
@@ -358,7 +362,7 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -389,7 +393,7 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 
 	//meto nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
-	desplazamiento += sizeof(estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto el resultado del intento de CATCH en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar));
@@ -420,7 +424,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 		}
 		else
 		{
-			puts("ATENCION! LA INFORMACIÓN SE SALIÓ DE LA PARTICION!!.\n");
+			puts("ATENCION! LA INFORMACIÓN SE SALIÓ DE LA PARTICION!!\n");
 		}
 	}
 }
@@ -428,7 +432,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje)
 {
 	lista_particiones* particionElegida;
-	uint32_t sizeDelMensaje = 33; //ToDo harcodeado, ver con Nico
+	uint32_t sizeDelMensaje = 31; //ToDo harcodeado, ver con Nico
 
 	puts("Agregando mensaje a Cache...");
 

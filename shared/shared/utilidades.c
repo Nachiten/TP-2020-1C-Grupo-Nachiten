@@ -25,7 +25,7 @@ uint32_t valor_para_switch_case(char* input) //tirarle el primer input del modul
 	{
 		switcher = GAMECARD;
 	}
-	if (strcmp(input,"SUSCRIPTOR") == 0)//mentira, es un placeholder, vamos a tener que tomar otra cosa por consola, en vez de "SUSCRIPTOR"
+	if (strcmp(input,"SUSCRIPTOR") == 0)
 	{
 		switcher = SUSCRIPTOR;
 	}

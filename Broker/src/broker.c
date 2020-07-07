@@ -96,7 +96,7 @@ int main(void) {
 		printf("El puerto fue leido correctamente\n");
 	}
 
-//desde aca tengo lo de memoria (ToDo)**************************************************************************************************************
+//desde aca tengo lo de memoria (ToDo)
 
 	//va para declaraciones
 	uint32_t TAMANIO_MEM;
@@ -105,6 +105,8 @@ int main(void) {
 	char* ALGOR_REEMPLAZO;
 	char* ALGOR_ASIGN_PARTICION;
 	uint32_t FRECUEN_COMPACT;
+	hoja_de_particiones = malloc(sizeof(lista_particiones));
+
 	puts("****************************************************");
 	puts("Cargando configuraciones de memoria...\n");
 
@@ -132,7 +134,39 @@ int main(void) {
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones);
+
 	puts("Lista de particiones inicializada.");
+
+
+	// *************************************************
+	//TESTING AGREGAR MENSAJE A CACHE
+	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
+
+	New* pokemonNew = malloc(sizeof(New));
+
+	pokemonNew->largoNombre = 7;
+	pokemonNew->nombrePokemon = "pikachu";
+
+	pokemonNew->posPokemon.x = 1;
+	pokemonNew->posPokemon.y = 1;
+
+	pokemonNew->cantPokemon = 1;
+
+	pokemonNew->ID = 30;
+	pokemonNew->corrID = 4;
+
+
+	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
+	mensajePrueba->id = pokemonNew->ID;
+	mensajePrueba->id_correlativo = pokemonNew->corrID;
+	mensajePrueba->mensaje = pokemonNew;
+
+
+
+	//ToDo atencion, necesito el tamaño del mensaje para asignarle un espacio, hablar con Nico. Harcodeado por ahora
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
+	// *************************************************
+
 
 	//Arranco el Broker como servidor.
 	puts("Arrancando servidor Broker...\n");
@@ -537,7 +571,7 @@ void desuscribir(int32_t socket, t_cola* cola){
 	}
 }
 
-//Todo esto es para que arranque el server y se quede escuchando mensajes.
+//esto es para que arranque el server y se quede escuchando mensajes.
 
 /* dependiendo del codigo de operacion hace diferentes cosas
  * si es el numero de las colas es que estas mandando un mensaje a esas colas y tiene que agregarse

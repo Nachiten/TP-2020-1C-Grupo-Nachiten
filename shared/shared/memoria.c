@@ -278,7 +278,6 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	desplazamiento += 7+1; //porque el nombre es pikachu, no me jodas
 	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
 
-	puts("Pichona = puts");
 	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
 	desplazamiento += sizeof(estructura->posPokemon.x);
 	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
@@ -298,7 +297,8 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
-*/
+	*/
+
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -466,7 +466,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje)
 {
 	lista_particiones* particionElegida;
-	uint32_t sizeDelMensaje = 31; //ToDo harcodeado, ver con Nico
+	uint32_t sizeDelMensaje = 32; //ToDo harcodeado, ver con Nico
 
 	puts("Agregando mensaje a Cache...");
 

@@ -265,7 +265,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 
 	printf("fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 
-/*
+
 	uint32_t* mostrar_numero = 0;
 	char* mostrar_texto = malloc(8);
 	desplazamiento = 0;
@@ -274,8 +274,8 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	desplazamiento += sizeof(estructura->largoNombre);
 	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
 
-	memcpy(mostrar_texto, CACHE + desplazamiento, 7+1);
-	desplazamiento += 7+1; //porque el nombre es pikachu, no me jodas
+	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
 	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
 
 	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
@@ -297,7 +297,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
-	*/
+
 
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);

@@ -14,7 +14,6 @@ void matarPrograma(t_log* logger, t_config* config, int32_t conexion)
 	puts("Puntero a config destruido.");
 	cerrar_conexion(conexion);
 	puts("Conexion terminada.");
-	log_destroy(logger);//por que hace agua???
+	log_destroy(logger);
 	puts("Puntero al logger destruido.");
 }
-

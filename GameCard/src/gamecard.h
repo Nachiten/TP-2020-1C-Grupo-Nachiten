@@ -19,6 +19,8 @@
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
+#include<pthread.h>
+#include <semaphore.h> // para los semaforos
 
 // Header files mios
 #include "bitarray.h"
@@ -29,6 +31,10 @@ typedef struct PosicionPokemon{
 	int posY;
 	int cantidad;
 }posPokemon;
+
+void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
+void esperar_conexiones(int32_t socket_servidor);
+
 
 void crearCarpetaPokemon(char*, char*);
 void crearMetadataCarpeta(char*);

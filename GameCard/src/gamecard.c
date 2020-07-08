@@ -539,6 +539,19 @@ void suscribirseANew(int32_t socket){
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
+	sleep(1);
+
+	estructuraSuscribirse->numeroCola = GET;
+	//mandamos el mensaje pidiendo suscribirse a la cola
+	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
+	sleep(1);
+
+
+	estructuraSuscribirse->numeroCola = CATCH;
+	//mandamos el mensaje pidiendo suscribirse a la cola
+	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
 	free(estructuraSuscribirse);
 }
 
@@ -583,7 +596,87 @@ void esperarMensajes(int socket){
 
 }
 
+
+void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
+	New* mensajeNew;
+	Get* mensajeGet;
+	Catch* mensajeCatch;
+
+		switch (cod_op) {
+		case NEW:
+			mensajeNew  = malloc(sizeof(New));
+			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
+
+			//ya te llegaron los datos y llamas a tus funciones
+
+			puts("llegue al new");
+
+			break;
+		case GET:
+			mensajeGet = malloc(sizeof(Get));
+			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
+
+			puts("llegue al get");
+
+			//ya te llegaron los datos y llamas a tus funciones
+
+			break;
+		case CATCH:
+			mensajeCatch = malloc(sizeof(Catch));
+			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
+
+			puts("llegue al catch");
+
+			//ya te llegaron los datos y llamas a tus funciones
+
+			break;
+		}
+}
+
+
+void serve_client(int32_t* socket)
+{
+	codigo_operacion cod_op;
+	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+	bytesRecibidos(recibidos);
+	if(recibidos == -1)
+	{
+		cod_op = -1;
+	}
+
+	process_request(cod_op, *socket);
+}
+
+void esperar_conexiones(int32_t socket_servidor)
+{
+	struct sockaddr_in dir_cliente;
+
+	// Entero lindo para el socket (es un int)
+	socklen_t tam_direccion = sizeof(struct sockaddr_in);
+
+	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);//espera una conexion
+
+	serve_client(&socket_cliente);
+
+	//pthread_create(&threadGamecard,NULL,(void*)serve_client,&socket_cliente);
+	//pthread_detach(threadGamecard);
+}
+
+void escuchoSocket(int32_t miSocket)
+{
+	//acepto conexiones entrantes
+	struct sockaddr_in direccionConexionEntrante;
+	uint32_t tamanioConexionEntrante;
+	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
+	//printf ("me llego una conexion: %i", conexionEntrante);
+	 while(1)
+	 {
+		 esperar_conexiones(miSocket);
+	 }
+}
+
 int main(void) {
+
 
 	t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
@@ -601,6 +694,8 @@ int main(void) {
 
 	t_log* logger;
 	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+
+	/*
 
 	// puntoMontaje/Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -656,24 +751,47 @@ int main(void) {
 		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
 	}
 
+*/
+
 	int socketBroker = -1;
 
 	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 
 	while (socketBroker == -1){
-		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 		sleep(TIEM_REIN_CONEXION);
+		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 	}
 
 	suscribirseANew(socketBroker);
 
 	//esperarMensajes(socketBroker);
 
-	int socketGameCard = -1;
 
-	socketGameCard = escucharGameBoy("127.0.0.1", "5001", logger);
 
-	esperarMensajes(socketGameCard);
+
+	//****************************************************************
+
+
+
+
+	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
+
+
+	//iniciarlos como hilos
+	escuchoSocket(socketoide);
+
+	escuchoSocket(socketoide); //escuchando al broker
+
+	close(socketoide);
+
+
+
+
+
+
+
+	//****************************************************************
+
 
 	//esperarMensajeGame
 

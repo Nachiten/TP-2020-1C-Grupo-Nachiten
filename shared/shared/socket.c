@@ -37,22 +37,6 @@ int32_t reservarSocket(char* miPuerto)
 	return miSocket;
 }
 
-void escuchoSocket(int32_t miSocket)
-{
-	//acepto conexiones entrantes
-	struct sockaddr_in direccionConexionEntrante;
-	uint32_t tamanioConexionEntrante;
-	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
-	printf ("me llego una conexion: %i", conexionEntrante);
-
-	 while(1)
-	 {
-		//me quedo rascando eternamente
-	 }
-}
-
-
-
 int32_t establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
@@ -103,7 +87,6 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 
 	printf("Voy a mandar un mensaje del tipo %i\n", tipoMensaje);
 
-	//ToDo cambiar la manera en que funciona esto?
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 

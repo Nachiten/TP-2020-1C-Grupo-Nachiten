@@ -770,8 +770,13 @@ int main(void) {
 
 
 	//****************************************************************
+/*
+	Appeared* estructura = malloc(sizeof(Appeared));
 
+	estructura->posPokemon.x =21;
 
+	mandar_mensaje(estructura,APPEARED,socketBroker);
+	*/
 
 
 	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config

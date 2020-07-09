@@ -24,7 +24,7 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 	if((laLista->numero_de_particion == 0) && (laLista->laParticion.limiteSuperior == 0))
 	{
 		laLista->laParticion.estaLibre = 0;
-		laLista->laParticion.limiteSuperior = sizeDeLosDatos;
+		laLista->laParticion.limiteSuperior = sizeDeLosDatos;//agregar control de particion minima
 		//laLista->numero_de_particion++; en la particion 0 no hace falta me parece
 		return laLista;
 	}
@@ -34,12 +34,12 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 
 		laLista->sig_particion = particionACrear;
 
-		particionACrear->numero_de_particion = laLista->numero_de_particion++;
+		particionACrear->numero_de_particion = (laLista->numero_de_particion +1);
 		particionACrear->anter_particion = laLista;
 		particionACrear->sig_particion = NULL;
 		particionACrear->laParticion.estaLibre = 0;
 		particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
-		particionACrear->laParticion.limiteSuperior = sizeDeLosDatos;
+		particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos) ;
 		return particionACrear;
 	}
 }
@@ -76,7 +76,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	uint32_t encontreUnaParticionUtil = 0;
 
 	//si estoy al principio de la lista, y no hay + particiones, la eleccion es facil...
-	if((auxiliar->numero_de_particion == 0) && (auxiliar->sig_particion == NULL))
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
 		crear_particion(particionElegida, size);//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
@@ -108,7 +108,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 			}
 		}
 
-		//ver si sali porque encontre una particion, o si llegue al final
+		//ver si sali del while porque encontre una particion, o si llegue al final
 		if(encontreUnaParticionUtil == 0)
 		{
 			//estoy en la particion final, esta libre?
@@ -117,21 +117,23 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				//su espacio me alcanza?
 				if((tenemosEspacio(auxiliar,particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
 				{
-					//ToDo ACA TENDRIA QUE ENTRAR COMPILACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
 				}
 			}
 			//no esta libre, hay que crear una particion nueva
 			else
 			{
-				//el espacio que resta en la memoria no me alcanza?
-				if((tenemosEspacio(auxiliar,particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
+				//el espacio que resta en la memoria me alcanza?
+				if((auxiliar->laParticion.limiteSuperior < tamanioMemoria) && ((tamanioMemoria - auxiliar->laParticion.limiteSuperior)>= size))
 				{
-					//ToDo ACA TENDRIA QUE ENTRAR COMPILACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+					//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
+					particionElegida = crear_particion(auxiliar, size);
+
 				}
-				//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
+				//el espacio que resta en memoria NO me alcanza
 				else
 				{
-					particionElegida = crear_particion(auxiliar, size);
+					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
 				}
 			}
 		}

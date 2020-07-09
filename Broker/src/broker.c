@@ -172,7 +172,7 @@ int main(void) {
 
 
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
 
 

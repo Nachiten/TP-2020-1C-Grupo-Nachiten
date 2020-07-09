@@ -583,6 +583,80 @@ void esperarMensajes(int socket){
 
 }
 
+t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
+	int cantidadNumeros = 0;
+	t_list* miLista = list_create();
+
+	while (listaDeChars[cantidadNumeros] != NULL){
+		printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
+		cantidadNumeros++;
+		int charConvertido = atoi(listaDeChars[cantidadNumeros]);
+		list_add(miLista, &charConvertido);
+	}
+
+	return miLista;
+}
+
+void leerContenidoDeUnBloque(char* pathACarpetaBloques, int bloqueALeer){ //, int cantidadALeer
+
+	// logica para mañana: hacer esto de aca abajo. En teoria, un int es un char, asi que no deberia hacer falta convertir de int a char.
+	// https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c
+	char* pathDeArchivos = malloc(strlen(pathACarpetaBloques) + strlen(bloqueALeer) + 6); // 1 del /, 4 del .bin, 1 del fin de string
+	strcpy(pathDeArchivos, pathACarpetaBloques);
+	strcat(pathDeArchivos, "/");
+	strcat(pathDeArchivos, bloqueALeer);
+	strcat(pathDeArchivos, ".bin");
+
+	printf("path: %s \n", pathDeArchivos);
+	// myFile = fopen(pathDeArchivos, r);
+	// fread(ptr, size, cantidadALeer, myFile);
+	// cantidad a leer esta definido asi ya que la iteracion, y por ende la lógica detras de cual es el último bloque, se debe hacer en el loop.
+	// como el último bloque tiene menos cosas, este tiene que ser leido con un tamaño diferente.
+	// fclose
+	// return ""; //esto, obviamente, es lo que retornaría el fread.
+}
+
+void leerContenidoBloquesPokemon(char* pathACarpetaBloques , t_list* bloquesALeer) {
+
+	//calcular tamaño del string y hacerle un malloc
+
+	char* stringARetornar = "";
+
+	//list_iterate(bloquesALeer, leerContenidoDeUnBloque());
+	// el iterate no va a funcionar por la cantidad limitada de parametros en la funcion. Se podria copiar y modificar la funcion de las commons. Aqui está:
+	/*
+	 void list_iterate(t_list* self, void(*closure)(void*)) {
+		t_link_element *element = self->head;
+		t_link_element *aux = NULL;
+		while (element != NULL) {
+			aux = element->next;
+			closure(element->data);
+			element = aux;
+		}
+	}
+	 */
+	/* --------------------------------------------ejemplo aproximado de lo que digo
+	char* mystring = "";
+	t_link_element *element = self->head;
+	t_link_element *aux = NULL;
+	while (element != NULL) {
+				aux = element->next;
+				strcat(mystring, leerContenidoDeUnBloque(blablabla));
+				element = aux;
+			}
+	--------------------------------------------------*/
+	//return stringARetornar
+
+	/*
+	t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+	if (datosMetadata == NULL){
+		printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
+		exit(6);
+	}
+	*/
+}
+
 int main(void) {
 
 	t_config* config = NULL;
@@ -653,10 +727,20 @@ int main(void) {
 		// Escribe una linea por primera vez en un archivo vacio
 		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 	} else {
-		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+		// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+		char** bloquesALeer = leerBloques(pathFiles, pikachu);
+
+		// printf("el primer bloque a leer de pikachu es: %s \n", bloquesALeer[1]);
+
+		t_list* listaConvertida = convertirAListaDeEnterosDesdeChars(bloquesALeer);
+		leerContenidoDeUnBloque(pathBloques, bloquesALeer[0]);
+		leerContenidoDeUnBloque(pathBloques, bloquesALeer[1]);
+		leerContenidoDeUnBloque(pathBloques, bloquesALeer[2]);
+
+		// leerContenidoBloquesPokemon(pathBloques, listaConvertida);
 	}
 
-	int socketBroker = -1;
+	/* int socketBroker = -1;
 
 	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 
@@ -674,7 +758,7 @@ int main(void) {
 	socketGameCard = escucharGameBoy("127.0.0.1", "5001", logger);
 
 	esperarMensajes(socketGameCard);
-
+	*/
 	//esperarMensajeGame
 
 	//char* cosaAEscribir = "Hola capo como estas\n hola soy ignacio";

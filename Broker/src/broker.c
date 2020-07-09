@@ -112,7 +112,6 @@ int main(void) {
 	codigo_operacion codigoPrueba2 = 2;
 	codigo_operacion codigoPrueba3 = 3;
 
-
 	uint32_t sizeDelMensajeNew = 32;
 	uint32_t sizeDelMensajeAppeared = 28;
 	uint32_t sizeDelMensajeGet = 23;
@@ -160,11 +159,12 @@ int main(void) {
 	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
 
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
+	borrarReferenciaAParticion(hoja_de_particiones->sig_particion);
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
 
 
 	// *************************************************

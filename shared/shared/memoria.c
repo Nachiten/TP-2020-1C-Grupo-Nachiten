@@ -115,7 +115,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 			if(auxiliar->laParticion.estaLibre == 1)
 			{
 				//su espacio me alcanza?
-				if((tenemosEspacio(auxiliar,particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
+				if((tenemosEspacio(&auxiliar,&particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
 				{
 					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
 				}
@@ -148,16 +148,18 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	return particionElegida;
 }
 
-uint32_t tenemosEspacio(lista_particiones* auxiliar, lista_particiones* particionElegida, uint32_t tamanioMemoria, uint32_t size)
+uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size)
 {
+	lista_particiones* punteroAAuxiliar = *auxiliar;
+
 	uint32_t resultado;
 	//si todavia hay espacio para meter algo...
-	if(auxiliar->laParticion.limiteSuperior <= tamanioMemoria)
+	if(punteroAAuxiliar->laParticion.limiteSuperior <= tamanioMemoria)
 	{
 		//...veo si ese espacio me sirve
-		if((auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior) >= size)
+		if((punteroAAuxiliar->laParticion.limiteSuperior - punteroAAuxiliar->laParticion.limiteInferior) >= size)
 		{
-			particionElegida = auxiliar; //tenemos un ganador
+			*particionElegida = *auxiliar; //tenemos un ganador
 			resultado = 1;
 		}
 		//el espacio no me sirve y la memoria esta totalmente copada
@@ -479,7 +481,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 	}
 }
 
-void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje)
+void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, char* algorAdminMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje)
 {
 	lista_particiones* particionElegida;
 	uint32_t tamanioAAsignar = tamanioMinParticion;
@@ -492,29 +494,43 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 
 	puts("Agregando mensaje a Cache...");
 
-	//para poder meter el mensaje en Cache, primero hay que buscarle una particion
-	if(strcmp(algoritmoAsignacion,"FF") == 0)
+	//se administra con Particiones Dinamicas
+	if(strcmp(algorAdminMemoria, "PD") == 0)
 	{
-		particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar);
-	}
-	else
-	{
-		if(strcmp(algoritmoAsignacion,"BF") == 0)
+		//para poder meter el mensaje en Cache, primero hay que buscarle una particion
+		if(strcmp(algoritmoAsignacion,"FF") == 0)
 		{
-			//ToDo
-			//particionElegida = seleccionar_particion_Best_Fit();
-			puts("Falta implementar");
+			particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar);
 		}
 		else
 		{
-			puts("Alguien escribió mal el campo de ALGORITMO_PARTICION_LIBRE del archivo config.\n");
+			if(strcmp(algoritmoAsignacion,"BF") == 0)
+			{
+				//ToDo
+				//particionElegida = seleccionar_particion_Best_Fit();
+				puts("Falta implementar");
+			}
+			else
+			{
+				puts("Alguien escribió mal el campo de ALGORITMO_PARTICION_LIBRE del archivo config.\n");
+			}
 		}
+	}
+	//se administra con Buddy System
+	else
+	{
+		puts("me estas jodiendo? no esta implementado Buddy System.");
 	}
 
 	//ahora que tenemos la particion, metemos los datos
 	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje);
 
-//PASO 3: profit???
+//PASO 3: profit?
+}
 
+void borrarReferenciaAParticion(lista_particiones* particionABorrar)
+{
+	particionABorrar->laParticion.estaLibre = 1;
+	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 }
 

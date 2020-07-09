@@ -175,7 +175,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	{
 			case NEW:
 				poner_NEW_en_particion(CACHE, particionElegida, estructura);
-				free(estructura);//esto me causaria problemas???
+				//free(estructura);//esto me causaria problemas???
 				break;
 
 			case APPEARED:
@@ -263,42 +263,41 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
-	printf("fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 
-
-	uint32_t* mostrar_numero = 0;
-	char* mostrar_texto = malloc(8);
+	/*//PARA PROBAR LECTURA DE CACHE
+	uint32_t mostrar_numero = 0;
+	char* mostrar_texto = malloc(10);
 	desplazamiento = 0;
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
 	desplazamiento += sizeof(estructura->largoNombre);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 
 	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
 	desplazamiento += estructura->largoNombre+1;
 	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
 	desplazamiento += sizeof(estructura->posPokemon.x);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->cantPokemon));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
 	desplazamiento += sizeof(estructura->cantPokemon);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->ID));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->ID));
 	desplazamiento += sizeof(estructura->ID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 
-	memcpy(&mostrar_numero, &CACHE + desplazamiento, sizeof(estructura->corrID));
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", *mostrar_numero);
-
-
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	*/
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -306,6 +305,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -331,12 +331,15 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -354,12 +357,15 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -383,12 +389,15 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -414,12 +423,15 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
 
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
 void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
+	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
 	//meto el largo del nombre del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
@@ -440,6 +452,8 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	//meto ID Correlativa del mensaje en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
+
+	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }

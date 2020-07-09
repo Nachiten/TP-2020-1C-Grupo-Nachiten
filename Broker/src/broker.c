@@ -144,14 +144,11 @@ int main(void) {
 
 	New* pokemonNew = malloc(sizeof(New));
 
-	pokemonNew->largoNombre = 7;
 	pokemonNew->nombrePokemon = "pikachu";
-
+	pokemonNew->largoNombre = strlen(pokemonNew->nombrePokemon);
 	pokemonNew->posPokemon.x = 1;
 	pokemonNew->posPokemon.y = 1;
-
 	pokemonNew->cantPokemon = 1;
-
 	pokemonNew->ID = 30;
 	pokemonNew->corrID = 4;
 
@@ -161,8 +158,20 @@ int main(void) {
 	mensajePrueba->id_correlativo = pokemonNew->corrID;
 	mensajePrueba->mensaje = pokemonNew;
 
+
+
 	//ToDo atencion, necesito el tamaño del mensaje para asignarle un espacio, hablar con Nico. Harcodeado por ahora
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
+
+
+
+
+
+
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, codigoPrueba);
+
+
 	// *************************************************
 
 

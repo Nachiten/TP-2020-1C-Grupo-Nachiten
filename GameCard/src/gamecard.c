@@ -298,7 +298,7 @@ char** leerBloques(char* pathFiles , char* pokemon){
 }
 
 // Fijar los bloques del metadata.bin del pokemon a los dados
-void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
+void fijarBloquesYPesoA(char* pokemon, char* pathFiles, t_list* listaBloques, int pesoEnBytes){
 	char* metadataBin = "/Metadata.bin";
 
 	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
@@ -317,6 +317,12 @@ void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
 	char* arrayBloques = crearStringArrayBloques(listaBloques);
 
 	config_set_value(datosMetadata, "BLOCKS", arrayBloques);
+
+	char* pesoEnBytesAChar;
+
+	asprintf(&pesoEnBytesAChar, "%i", pesoEnBytes);
+
+	config_set_value(datosMetadata, "SIZE", pesoEnBytesAChar);
 
 	config_save(datosMetadata);
 }
@@ -462,7 +468,7 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques, BLOCK_SIZE, pathBloques);
 
-	fijarBloquesA(pokemon, pathFiles, listaBloquesAOcupar);
+	fijarBloquesYPesoA(pokemon, pathFiles, listaBloquesAOcupar, pesoEnBytes);
 
 	// Falta modificar metadata.bin para tener los bloques
 
@@ -520,7 +526,7 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 	FILE* bloque = fopen( pathBloque , "w" );
 
-	fwrite(dato, strlen(dato), 1, bloque);
+	fwrite(dato, strlen(dato) + 1, 1, bloque);
 
 	fclose(bloque);
 
@@ -589,15 +595,15 @@ t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 
 	while (listaDeChars[cantidadNumeros] != NULL){
 		printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
-		cantidadNumeros++;
 		int charConvertido = atoi(listaDeChars[cantidadNumeros]);
 		list_add(miLista, &charConvertido);
+		cantidadNumeros++;
 	}
 
 	return miLista;
 }
 
-void leerContenidoDeUnBloque(char* pathACarpetaBloques, int bloqueALeer){ //, int cantidadALeer
+char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int cantBytesALeer){
 
 	// logica para mañana: hacer esto de aca abajo. En teoria, un int es un char, asi que no deberia hacer falta convertir de int a char.
 	// https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c
@@ -607,14 +613,29 @@ void leerContenidoDeUnBloque(char* pathACarpetaBloques, int bloqueALeer){ //, in
 	strcat(pathDeArchivos, bloqueALeer);
 	strcat(pathDeArchivos, ".bin");
 
-	printf("path: %s \n", pathDeArchivos);
-	// myFile = fopen(pathDeArchivos, r);
-	// fread(ptr, size, cantidadALeer, myFile);
+	printf("path: %s\n", pathDeArchivos);
+
+	char* datosLeidos = malloc(cantBytesALeer + 1);
+
+	FILE* myFile = fopen(pathDeArchivos, "r");
+
+	printf("Bytes a leer: %i\n", cantBytesALeer);
+
+	fread(datosLeidos, cantBytesALeer + 1, 1, myFile);
+
+	fclose(myFile);
+
+	printf("Linea leida: %s\n", datosLeidos);
+
+	return datosLeidos;
+
+
 	// cantidad a leer esta definido asi ya que la iteracion, y por ende la lógica detras de cual es el último bloque, se debe hacer en el loop.
 	// como el último bloque tiene menos cosas, este tiene que ser leido con un tamaño diferente.
 	// fclose
 	// return ""; //esto, obviamente, es lo que retornaría el fread.
 }
+
 
 void leerContenidoBloquesPokemon(char* pathACarpetaBloques , t_list* bloquesALeer) {
 
@@ -725,20 +746,26 @@ int main(void) {
 
 	if(hayAlgunBloque(pathFiles , pikachu) == 0){
 		// Escribe una linea por primera vez en un archivo vacio
-		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
-	} else {
-		// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
-		char** bloquesALeer = leerBloques(pathFiles, pikachu);
+		//escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
+	}
 
-		// printf("el primer bloque a leer de pikachu es: %s \n", bloquesALeer[1]);
+	escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 
-		t_list* listaConvertida = convertirAListaDeEnterosDesdeChars(bloquesALeer);
-		leerContenidoDeUnBloque(pathBloques, bloquesALeer[0]);
-		leerContenidoDeUnBloque(pathBloques, bloquesALeer[1]);
-		leerContenidoDeUnBloque(pathBloques, bloquesALeer[2]);
+	// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+	char** bloquesALeer = leerBloques(pathFiles, pikachu);
+
+	// printf("el primer bloque a leer de pikachu es: %s \n", bloquesALeer[1]);
+
+	//t_list* listaConvertida = convertirAListaDeEnterosDesdeChars(bloquesALeer);
+
+
+
+	char* lineaLeida = leerContenidoDeUnBloque(pathBloques, bloquesALeer[0], 4);
+
+
 
 		// leerContenidoBloquesPokemon(pathBloques, listaConvertida);
-	}
+
 
 	/* int socketBroker = -1;
 

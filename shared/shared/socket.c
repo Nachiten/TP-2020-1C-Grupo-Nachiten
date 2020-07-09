@@ -462,10 +462,8 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* size)
 {
-	uint32_t size = 0;
-
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
 
 	printf("Tamaño de lo que sigue en el buffer: %u.\n",size);
@@ -680,9 +678,3 @@ void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cli
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }
 
-void recibir_mensaje_cliente(Hilo* estructura){
-	//while(1){
-	recibir_mensaje(estructura->mensaje,NEW,estructura->conexion);
-	//guardar estructura en una variable global para que la levante otro hilo
-	//}
-}

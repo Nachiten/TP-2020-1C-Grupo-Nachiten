@@ -64,6 +64,7 @@ typedef struct {
 	int32_t id;
 	int32_t id_correlativo;
 	void* mensaje;
+	uint32_t tamanioMensaje;
 	t_list* subs; //lista de suscriptores
 }t_mensaje;
 

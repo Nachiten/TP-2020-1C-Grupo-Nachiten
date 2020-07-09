@@ -373,10 +373,14 @@ int main(int cantArg, char* arg[]) {
 						//logueamos la suscripcion a la cola de mensajes
 						log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
+
+						uint32_t sizeMensaje = 0;
 						New* mensajeNew = malloc(sizeof(New));
 						codigo_operacion cod_op;
 						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
-						recibir_mensaje(mensajeNew,cod_op,socket);
+						recibir_mensaje(mensajeNew,cod_op,socket, &sizeMensaje);
+
+
 
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 						sleep(cambia_a_int(arg[3]));

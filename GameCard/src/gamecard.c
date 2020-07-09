@@ -565,13 +565,15 @@ void esperarMensajes(int socket){
 	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 	bytesRecibidos(recibidos);
 
+	uint32_t sizeMensaje;
+
 	switch (cod_op)
 	{
 		case NEW: ;
 
 			New* mensajeNew = malloc(sizeof(New));
 			//bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
-			recibir_mensaje(mensajeNew, cod_op, socket);
+			recibir_mensaje(mensajeNew, cod_op, socket, &sizeMensaje);
 
 			//mensajeNew->
 

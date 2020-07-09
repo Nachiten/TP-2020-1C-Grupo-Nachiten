@@ -177,7 +177,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	{
 			case NEW:
 				poner_NEW_en_particion(CACHE, particionElegida, estructura);
-				//free(estructura);//esto me causaria problemas???
+				free(estructura);//esto me causaria problemas? parece que no...
 				break;
 
 			case APPEARED:
@@ -464,7 +464,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 {
 	if(limiteSuperiorDeParticion == posicionSuperiorUltimoDato)
 	{
-		puts("Información agregada correctamente en la partición.\n");
+		puts("Información agregada ocupando toda la partición.\n");
 	}
 	else
 	{
@@ -479,17 +479,23 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 	}
 }
 
-void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, codigo_operacion tipoMensaje)
+void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje)
 {
 	lista_particiones* particionElegida;
-	uint32_t sizeDelMensaje = 32; //ToDo harcodeado, ver con Nico
+	uint32_t tamanioAAsignar = tamanioMinParticion;
+
+	//si el tamanio de los datos del mensaje es mayor al tamaño min de particion, se asigna el tamanio del mensaje
+	if(tamanioMinParticion < sizeDelMensaje)
+	{
+		tamanioAAsignar = sizeDelMensaje;
+	}
 
 	puts("Agregando mensaje a Cache...");
 
 	//para poder meter el mensaje en Cache, primero hay que buscarle una particion
 	if(strcmp(algoritmoAsignacion,"FF") == 0)
 	{
-		particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, sizeDelMensaje);
+		particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar);
 	}
 	else
 	{

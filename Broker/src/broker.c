@@ -159,6 +159,7 @@ int main(void) {
 	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
 
 
+
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
@@ -167,8 +168,11 @@ int main(void) {
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
 
 
-	// *************************************************
+	//para ver como quedan las particiones luego de "manosearlas"
+	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 
+
+	// *************************************************
 
 	//Arranco el Broker como servidor.
 	puts("Arrancando servidor Broker...\n");

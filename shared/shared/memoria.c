@@ -69,6 +69,52 @@ void matar_lista_particiones(lista_particiones* laLista)
 	free(particionABorrar);
 }
 
+void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria)
+{
+	lista_particiones* auxiliar = laLista;
+	uint32_t espacioLibre = 0;
+	uint32_t espacioOcupado = 0;
+	uint32_t control = 1;
+
+	puts("Realizando control del estado de memoria y particiones...");
+	puts("------------------------------------");
+
+
+	//recorro las particiones hasta la ultima
+	while(control == 1)
+	{
+		printf("Nº de particion: %u.\n", auxiliar->numero_de_particion);
+		if(auxiliar->laParticion.estaLibre == 1)
+		{
+			puts("La partición está libre.");
+			espacioLibre += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion libre, suma el espacio "desperdiciado"
+		}
+		else
+		{
+			puts("La particion está en uso.");
+			espacioOcupado += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion ocupada, suma el espacio en uso
+		}
+		printf("Límite inferior de la partición: %u.\n", auxiliar->laParticion.limiteInferior);
+		printf("Límite superior de la partición: %u.\n", auxiliar->laParticion.limiteSuperior);
+		puts("------------------------------------");
+
+		//avanzo
+		if(auxiliar->sig_particion != NULL)
+		{
+			auxiliar = auxiliar->sig_particion;
+		}
+		else
+		{
+			control = 0;
+		}
+	}
+	printf("\nEspacio desperdiciado en particiones libres: %u.\n", espacioLibre);
+	printf("Espacio libre en CACHE (No particionado): %u.\n", (tamanioMemoria - espacioOcupado - espacioLibre));
+	printf("Espacio total libre: %u.\n", (tamanioMemoria - espacioOcupado));
+
+	puts("---No se tuvo en cuenta la fragmentación interna durante el checkeo---\n");
+}
+
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
 {
 	lista_particiones* auxiliar = laLista;
@@ -268,6 +314,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	/*//PARA PROBAR LECTURA DE CACHE
 	uint32_t mostrar_numero = 0;
@@ -336,6 +383,7 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -362,6 +410,7 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -394,6 +443,7 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -428,6 +478,7 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -458,6 +509,7 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
+	particionElegida->laParticion.estaLibre = 0;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }

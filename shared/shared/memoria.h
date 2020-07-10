@@ -21,9 +21,10 @@ void inicializar_lista_particiones(lista_particiones* laLista); //antes de empez
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
 void borrarReferenciaAParticion(lista_particiones* particionABorrar); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
+//BEST FIT
 void matar_lista_particiones(lista_particiones* laLista); //usar cuando se quiere cerrar el programa
-
-//e fija si en la ultima particion de la memoria hay espacio para meter los datos o no.
+void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria); //para fines de control, muestrar por pantalla info de las particiones y espacio libre en memoria
+//se fija si en la ultima particion de la memoria hay espacio para meter los datos o no.
 uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size);
 
 //para empezar a agregar cosas al CACHE

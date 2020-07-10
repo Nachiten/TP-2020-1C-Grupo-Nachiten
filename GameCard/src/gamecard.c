@@ -636,46 +636,52 @@ char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int 
 	// return ""; //esto, obviamente, es lo que retornaría el fread.
 }
 
+int cantidadDeElementosEnArray(char** array){
+	int i = 0;
+	while(array[i] != NULL){
+		i++;
+		printf("tuviejaentanga");
+	}
+	return i;
+}
 
-void leerContenidoBloquesPokemon(char* pathACarpetaBloques , t_list* bloquesALeer) {
 
-	//calcular tamaño del string y hacerle un malloc
+char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALeer, int cantidadALeerEnBytes, int BLOCK_SIZE) {
 
-	char* stringARetornar = "";
+	char* stringARetornar = malloc(cantidadALeerEnBytes + 1);
 
-	//list_iterate(bloquesALeer, leerContenidoDeUnBloque());
-	// el iterate no va a funcionar por la cantidad limitada de parametros en la funcion. Se podria copiar y modificar la funcion de las commons. Aqui está:
-	/*
-	 void list_iterate(t_list* self, void(*closure)(void*)) {
-		t_link_element *element = self->head;
-		t_link_element *aux = NULL;
-		while (element != NULL) {
-			aux = element->next;
-			closure(element->data);
-			element = aux;
+	int bytesLeidos = 0;
+
+	int cantidadDeBloquesALeer = cantidadDeElementosEnArray(bloquesALeer);
+
+	int cantidadDeBytesALeer;
+
+	int i;
+
+	char* aux;
+
+	for(i = 0; i <cantidadDeBloquesALeer; i++) {
+
+		if(bytesLeidos+BLOCK_SIZE <= cantidadALeerEnBytes) {
+			cantidadDeBytesALeer = BLOCK_SIZE;
+			}else{
+			cantidadDeBytesALeer = cantidadALeerEnBytes - bytesLeidos;
 		}
-	}
-	 */
-	/* --------------------------------------------ejemplo aproximado de lo que digo
-	char* mystring = "";
-	t_link_element *element = self->head;
-	t_link_element *aux = NULL;
-	while (element != NULL) {
-				aux = element->next;
-				strcat(mystring, leerContenidoDeUnBloque(blablabla));
-				element = aux;
-			}
-	--------------------------------------------------*/
-	//return stringARetornar
 
-	/*
-	t_config* datosMetadata = config_create(pathMetadataPokemon);
+		aux = leerContenidoDeUnBloque(pathACarpetaBloques, bloquesALeer[i], cantidadDeBytesALeer);
 
-	if (datosMetadata == NULL){
-		printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
-		exit(6);
+		if(i == 0){
+			strcpy(stringARetornar, aux);
+		}else{
+			strcat(stringARetornar, aux);
+		}
+
+		bytesLeidos += cantidadDeBytesALeer;
+
+		free(aux);
 	}
-	*/
+
+	return stringARetornar;
 }
 
 int main(void) {
@@ -760,8 +766,9 @@ int main(void) {
 
 
 
-	char* lineaLeida = leerContenidoDeUnBloque(pathBloques, bloquesALeer[0], 4);
+	char* tuvieja = leerContenidoBloquesPokemon(pathBloques, bloquesALeer, 9, BLOCK_SIZE);
 
+	printf("tuvieja %s\n", tuvieja);
 
 
 		// leerContenidoBloquesPokemon(pathBloques, listaConvertida);

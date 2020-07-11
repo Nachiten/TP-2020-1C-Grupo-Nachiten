@@ -7,7 +7,7 @@
 
 #include "memoria.h"
 
-void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria)
+void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria)
 {
 	if(strcmp(algorAdminMemoria, "PD") == 0)
 	{
@@ -17,16 +17,17 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 		laLista->numero_de_particion = 0;
 		laLista->anter_particion = NULL;
 		laLista->sig_particion = NULL;
-
-		puts("Lista de particiones inicializada.\n");
 	}
 	else
 	{
 		if(strcmp(algorAdminMemoria, "BS") == 0)
 		{
-			puts("falta implementar inicializacion para buddy system");
-
-			puts("Lista de particiones inicializada.\n");
+			laLista->laParticion.estaLibre = 1;
+			laLista->laParticion.limiteInferior = 0;
+			laLista->laParticion.limiteSuperior = tamanioMemoria;
+			laLista->numero_de_particion = 0;
+			laLista->anter_particion = NULL;
+			laLista->sig_particion = NULL;
 		}
 		else
 		{
@@ -34,6 +35,7 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 			abort();
 		}
 	}
+	puts("Lista de particiones inicializada.\n");
 }
 
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos)

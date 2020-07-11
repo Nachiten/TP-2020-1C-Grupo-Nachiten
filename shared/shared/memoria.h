@@ -17,7 +17,7 @@
 #include"estructuras.h"
 
 //para manejo de la lista de las particiones existentes en CACHE
-void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo
+void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
 void borrarReferenciaAParticion(lista_particiones* particionABorrar); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona la primera particion que sirva y devuelve un puntero a esa particion

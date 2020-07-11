@@ -101,7 +101,7 @@ int main(void) {
 	puts("Malloc de memoria completo");
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
-	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA);
+	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA, TAMANIO_MEM);
 
 
 	// *************************************************
@@ -156,7 +156,7 @@ int main(void) {
 	mensajePrueba3->mensaje = pokemonGet;
 	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
 
-
+	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 

@@ -832,3 +832,4 @@
 [WARNING] 21:58:07:972 Gameboy/(15443:15443): Conexión fallida con socket de BROKER
 [INFO] 22:24:01:150 Gameboy/(388:388): Conexión establecida con socket de BROKER
 [WARNING] 22:24:10:326 Gameboy/(393:393): Conexión fallida con socket de BROKER
+[WARNING] 12:16:01:447 Gameboy/(6364:6364): Conexión fallida con socket de GAMECARD

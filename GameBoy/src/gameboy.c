@@ -325,11 +325,8 @@ int main(int cantArg, char* arg[]) {
 								pokemonGet->nombrePokemon = arg[3];
 								pokemonGet->ID = cambia_a_int(arg[4]); //cambiamos el string a int
 
-								puts("antes del mensaje");
 								//mandamos el mensaje
 								mandar_mensaje(pokemonGet, GET, socket);
-
-								puts("despues del mensaje");
 
 								//libero la estructura que acabo de crear
 								free(pokemonGet);

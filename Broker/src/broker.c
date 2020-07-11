@@ -126,7 +126,7 @@ int main(void) {
 
 	Appeared* pokemonAppeared = malloc(sizeof(Appeared));
 
-	pokemonAppeared->nombrePokemon = "pikachu";
+	pokemonAppeared->nombrePokemon = "Bulbasur";
 	pokemonAppeared->largoNombre = strlen(pokemonAppeared->nombrePokemon);
 	pokemonAppeared->posPokemon.x = 1;
 	pokemonAppeared->posPokemon.y = 1;
@@ -134,7 +134,7 @@ int main(void) {
 	pokemonAppeared->corrID = 4;
 
 	Get* pokemonGet = malloc(sizeof(Get));
-	pokemonGet->nombrePokemon = "MicaBezona";
+	pokemonGet->nombrePokemon = "Charmander";
 	pokemonGet->largoNombre = strlen(pokemonGet->nombrePokemon);
 	pokemonGet->ID = 11;
 	pokemonGet->corrID = 10;

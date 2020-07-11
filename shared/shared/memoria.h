@@ -20,6 +20,7 @@
 void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos, char* algorAdminMemoria); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
 void borrarReferenciaAParticion(lista_particiones* particionABorrar); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
+void consolidarParticion(lista_particiones* particionABorrar); //consolida particiones en caso que sea necesario
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size);//selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona particion por BS (le voy a decir bullshit)

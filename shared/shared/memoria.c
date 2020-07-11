@@ -93,7 +93,68 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 void borrarReferenciaAParticion(lista_particiones* particionABorrar)
 {
 	particionABorrar->laParticion.estaLibre = 1;
-	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
+	printf("La particion %u ahora está libre!\n", particionABorrar->numero_de_particion);
+	consolidarParticion(particionABorrar);
+}
+
+void consolidarParticion(lista_particiones* particionABorrar)
+{
+	uint32_t numPart = particionABorrar->numero_de_particion;
+	uint32_t numPartAnt = 0;
+	uint32_t numPartSig = 0;
+	uint32_t resultado = 0;
+	uint32_t consolidado = 0;
+
+	if(particionABorrar->anter_particion != NULL)
+	{
+		numPartAnt = particionABorrar->anter_particion->numero_de_particion;
+
+		//si la particion anterior a la que borro esta libre, las consolido
+		if(particionABorrar->anter_particion->laParticion.estaLibre == 1)
+		{
+			//expando el tamaño de la particion anterior
+			particionABorrar->anter_particion->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+			resultado = particionABorrar->anter_particion->numero_de_particion;
+
+			//si la particion que estoy borrando no apunta a NULL, entonces hago que la anterior apunte a su siguiente
+			if(particionABorrar->sig_particion != NULL)
+			{
+				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
+			}
+
+			consolidado = 1;
+			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n;", numPart, numPartAnt, resultado);
+		}
+	}
+
+	if(particionABorrar->sig_particion != NULL)
+	{
+		numPartSig = particionABorrar->sig_particion->numero_de_particion;
+
+		//si la particion siguiente a la que borro esta libre, las consolido
+		if(particionABorrar->sig_particion->laParticion.estaLibre == 1)
+		{
+			//expando el tamaño de la particion siguiente
+			particionABorrar->sig_particion->laParticion.limiteInferior = particionABorrar->laParticion.limiteInferior;
+			particionABorrar->sig_particion->numero_de_particion = particionABorrar->numero_de_particion;
+
+			resultado = particionABorrar->numero_de_particion;
+
+			//si la particion que estoy borrando no "viene de" NULL, entonces hago que la siguiente apunte a su anterior
+			if(particionABorrar->anter_particion != NULL)
+			{
+				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
+			}
+
+			consolidado = 1;
+			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
+		}
+	}
+
+	if(consolidado == 1)
+	{
+		free(particionABorrar);
+	}
 }
 
 void matar_lista_particiones(lista_particiones* laLista)

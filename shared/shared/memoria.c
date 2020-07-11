@@ -88,17 +88,22 @@ void matar_lista_particiones(lista_particiones* laLista)
 void matar_lista_particiones_candidatas(particionesCandidatas* listaDeCandidatas)
 {
 	particionesCandidatas* aBorrar = NULL;
+	particionesCandidatas* seleccionAnterior = NULL;
 
+	//si tengo mas de una particion candidata
 	while(listaDeCandidatas->sig_candidata != NULL)
 	{
-		aBorrar = listaDeCandidatas->sig_candidata;
-		while(aBorrar->sig_candidata != NULL)
+		aBorrar = listaDeCandidatas->sig_candidata;//selecciono la 2da candidata
+		seleccionAnterior = listaDeCandidatas; //esta solo está para que no crashee
+		while(aBorrar->sig_candidata != NULL)//siempre que haya mas candidatas
 		{
-			aBorrar = aBorrar->sig_candidata;
+			seleccionAnterior = aBorrar;
+			aBorrar = aBorrar->sig_candidata;//avanzo a la siguiente candidata
 		}
-		free(aBorrar);
+		free(aBorrar);//borro la ultima candidata
+		seleccionAnterior->sig_candidata = NULL;
 	}
-	free(listaDeCandidatas);
+	free(listaDeCandidatas); //borro la primera candidata
 }
 
 void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria)

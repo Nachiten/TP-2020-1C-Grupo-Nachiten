@@ -298,7 +298,7 @@ char** leerBloques(char* pathFiles , char* pokemon){
 }
 
 // Fijar los bloques del metadata.bin del pokemon a los dados
-void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
+void fijarBloquesYPesoA(char* pokemon, char* pathFiles, t_list* listaBloques, int pesoEnBytes){
 	char* metadataBin = "/Metadata.bin";
 
 	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
@@ -317,6 +317,12 @@ void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
 	char* arrayBloques = crearStringArrayBloques(listaBloques);
 
 	config_set_value(datosMetadata, "BLOCKS", arrayBloques);
+
+	char* pesoEnBytesAChar;
+
+	asprintf(&pesoEnBytesAChar, "%i", pesoEnBytes);
+
+	config_set_value(datosMetadata, "SIZE", pesoEnBytesAChar);
 
 	config_save(datosMetadata);
 }
@@ -339,7 +345,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 		// El tamanio del numero a insertar
 		tamanioTotalBytes+= strlen(numeroEnString);
 
-		printf("El string es: %s\n", numeroEnString);
+		//printf("El string es: %s\n", numeroEnString);
 	}
 
 	// La cantidad de comas
@@ -347,7 +353,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 	// El "[" + "]" + \0
 	tamanioTotalBytes += 3;
 
-	printf("El size total es: %i\n", tamanioTotalBytes);
+	//printf("El size total es: %i\n", tamanioTotalBytes);
 
 	char* stringCompleto = malloc(tamanioTotalBytes);
 
@@ -371,7 +377,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 
 	strcat(stringCompleto, "]");
 
-	printf("String completo: %s", stringCompleto);
+	//printf("String completo: %s", stringCompleto);
 
 	return stringCompleto;
 
@@ -462,7 +468,7 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques, BLOCK_SIZE, pathBloques);
 
-	fijarBloquesA(pokemon, pathFiles, listaBloquesAOcupar);
+	fijarBloquesYPesoA(pokemon, pathFiles, listaBloquesAOcupar, pesoEnBytes);
 
 	// Falta modificar metadata.bin para tener los bloques
 
@@ -520,7 +526,7 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 	FILE* bloque = fopen( pathBloque , "w" );
 
-	fwrite(dato, strlen(dato), 1, bloque);
+	fwrite(dato, strlen(dato) + 1, 1, bloque);
 
 	fclose(bloque);
 
@@ -595,7 +601,6 @@ void esperarMensajes(int socket){
 	}
 
 }
-
 
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	New* mensajeNew;
@@ -675,6 +680,99 @@ void escuchoSocket(int32_t miSocket)
 	 }
 }
 
+t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
+	int cantidadNumeros = 0;
+	t_list* miLista = list_create();
+
+	while (listaDeChars[cantidadNumeros] != NULL){
+		printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
+		int charConvertido = atoi(listaDeChars[cantidadNumeros]);
+		list_add(miLista, &charConvertido);
+		cantidadNumeros++;
+	}
+
+	return miLista;
+}
+
+char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int cantBytesALeer){
+
+	// logica para mañana: hacer esto de aca abajo. En teoria, un int es un char, asi que no deberia hacer falta convertir de int a char.
+	// https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c
+	char* pathDeArchivos = malloc(strlen(pathACarpetaBloques) + strlen(bloqueALeer) + 6); // 1 del /, 4 del .bin, 1 del fin de string
+	strcpy(pathDeArchivos, pathACarpetaBloques);
+	strcat(pathDeArchivos, "/");
+	strcat(pathDeArchivos, bloqueALeer);
+	strcat(pathDeArchivos, ".bin");
+
+	//printf("path: %s\n", pathDeArchivos);
+
+	char* datosLeidos = malloc(cantBytesALeer + 1);
+
+	FILE* myFile = fopen(pathDeArchivos, "r");
+
+	printf("Bytes a leer: %i\n", cantBytesALeer);
+
+	fread(datosLeidos, cantBytesALeer + 1, 1, myFile);
+
+	fclose(myFile);
+
+	printf("Linea leida: %s\n", datosLeidos);
+
+	return datosLeidos;
+
+
+	// cantidad a leer esta definido asi ya que la iteracion, y por ende la lógica detras de cual es el último bloque, se debe hacer en el loop.
+	// como el último bloque tiene menos cosas, este tiene que ser leido con un tamaño diferente.
+	// fclose
+	// return ""; //esto, obviamente, es lo que retornaría el fread.
+}
+
+int cantidadDeElementosEnArray(char** array){
+	int i = 0;
+	while(array[i] != NULL){
+		i++;
+	}
+	return i;
+}
+
+
+char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALeer, int cantidadALeerEnBytes, int BLOCK_SIZE) {
+
+	char* stringARetornar = malloc(cantidadALeerEnBytes + 1);
+
+	int bytesLeidos = 0;
+
+	int cantidadDeBloquesALeer = cantidadDeElementosEnArray(bloquesALeer);
+
+	int i;
+
+	for(i = 0; i < cantidadDeBloquesALeer; i++) {
+
+		int cantidadDeBytesALeer;
+
+		if(bytesLeidos+BLOCK_SIZE <= cantidadALeerEnBytes) {
+			cantidadDeBytesALeer = BLOCK_SIZE;
+			}else{
+			cantidadDeBytesALeer = cantidadALeerEnBytes - bytesLeidos;
+		}
+
+		char* aux = leerContenidoDeUnBloque(pathACarpetaBloques, bloquesALeer[i], cantidadDeBytesALeer);
+
+		if(i == 0){
+			strcpy(stringARetornar, aux);
+		}else{
+			strcat(stringARetornar, aux);
+		}
+
+		bytesLeidos += cantidadDeBytesALeer;
+
+		free(aux);
+	}
+
+	return stringARetornar;
+
+}
+
 int main(void) {
 
 
@@ -692,10 +790,7 @@ int main(void) {
 
 	// Inicializacion del logger... todavia no es necesario
 
-	t_log* logger;
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
-
-	/*
+	t_log* logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	// puntoMontaje/Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -748,29 +843,47 @@ int main(void) {
 		// Escribe una linea por primera vez en un archivo vacio
 		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 	} else {
-		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+
+//		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
+//
+//		// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+//		char** bloquesALeer = leerBloques(pathFiles, pikachu);
+//
+//		char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloquesALeer, 9, BLOCK_SIZE);
+//
+//		printf("Lineas Leidas:%s\n", lineasLeidas);
 	}
 
-*/
+	escribirLineaNuevaPokemon(pikachu, 300, 40, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 
-	int socketBroker = -1;
+	// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+	char** bloquesALeer = leerBloques(pathFiles, pikachu);
 
-	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+	char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloquesALeer, 10, BLOCK_SIZE);
 
-	while (socketBroker == -1){
-		sleep(TIEM_REIN_CONEXION);
-		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
-	}
+	printf("Lineas Leidas:%s\n", lineasLeidas);
 
-	suscribirseANew(socketBroker);
+	//****************************************************************
 
-	//esperarMensajes(socketBroker);
-
-
+	// CONEXION Y ESPERAR MENSAJES DE BROKER
+//	int socketBroker = -1;
+//
+//
+//	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+//
+//	while (socketBroker == -1){
+//		sleep(TIEM_REIN_CONEXION);
+//		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+//	}
+//
+//	suscribirseANew(socketBroker);
+//
+//	esperarMensajes(socketBroker);
 
 
 	//****************************************************************
-/*
+
+	/* MANDAR MENSAJE A UNA COLA
 	Appeared* estructura = malloc(sizeof(Appeared));
 
 	estructura->posPokemon.x =21;
@@ -778,30 +891,21 @@ int main(void) {
 	mandar_mensaje(estructura,APPEARED,socketBroker);
 	*/
 
+	//****************************************************************
 
-	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
+	// CONEXION DIRECTA CON GAMEBOY
 
-
-	//iniciarlos como hilos
-	escuchoSocket(socketoide);
-
-	escuchoSocket(socketoide); //escuchando al broker
-
-	close(socketoide);
-
-
-
-
-
+//	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
+//
+//	// Iniciarlos como hilos
+//	escuchoSocket(socketoide); //escuchando al broker
+//
+//	close(socketoide);
 
 
 	//****************************************************************
 
 
-	//esperarMensajeGame
-
-	//char* cosaAEscribir = "Hola capo como estas\n hola soy ignacio";
-	//escribirDatoEnBloque(cosaAEscribir, 1, pathBloques);
 
 //	int i;
 //
@@ -840,6 +944,7 @@ int main(void) {
 //	printf("%i", *num4);
 
 
+// PRUEBA ESCRIBIR COSAS EN LISTA
 //	t_list* miLista = list_create();
 //	int num = 5;
 //	int num2 = 7;

@@ -283,7 +283,7 @@ int main(int cantArg, char* arg[]) {
 
 						if(strcmp(arg[2],"CATCH_POKEMON") == 0)
 						{
-							if(cantArg != 8)
+							if(cantArg != 7)
 							{
 								puts("La sintáxis correcta es: ./GameBoy GAMECARD CATCH_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE]");
 								return EXIT_FAILURE;
@@ -322,8 +322,10 @@ int main(int cantArg, char* arg[]) {
 								//Uso una estructura para guardar el nombre del pokemon y mandarlo a la funcion mandar_mensaje
 								Get* pokemonGet = malloc(sizeof(Get));
 
+								pokemonGet->largoNombre = strlen(arg[3]);
 								pokemonGet->nombrePokemon = arg[3];
 								pokemonGet->ID = cambia_a_int(arg[4]); //cambiamos el string a int
+								pokemonGet->corrID = -2;
 
 								puts("antes del mensaje");
 								//mandamos el mensaje

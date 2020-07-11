@@ -38,27 +38,55 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 	puts("Lista de particiones inicializada.\n");
 }
 
-lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos)
+lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos, char* algorAdminMemoria)
 {
-	if((laLista->numero_de_particion == 0) && (laLista->laParticion.limiteSuperior == 0))
+	if(strcmp(algorAdminMemoria, "PD") == 0)
 	{
-		laLista->laParticion.estaLibre = 0;
-		laLista->laParticion.limiteSuperior = sizeDeLosDatos;
-		return laLista;
+		if((laLista->numero_de_particion == 0) && (laLista->laParticion.limiteSuperior == 0))
+		{
+			laLista->laParticion.estaLibre = 0;
+			laLista->laParticion.limiteSuperior = sizeDeLosDatos;
+			return laLista;
+		}
+		else
+		{
+			lista_particiones* particionACrear = malloc(sizeof(lista_particiones));
+
+			laLista->sig_particion = particionACrear;
+
+			particionACrear->numero_de_particion = (laLista->numero_de_particion +1);
+			particionACrear->anter_particion = laLista;
+			particionACrear->sig_particion = NULL;
+			particionACrear->laParticion.estaLibre = 0;
+			particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
+			particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos);
+			return particionACrear;
+		}
 	}
 	else
 	{
-		lista_particiones* particionACrear = malloc(sizeof(lista_particiones));
+		uint32_t mitad = laLista->laParticion.limiteSuperior/2;
+		uint32_t numeroParticionOriginal = laLista->numero_de_particion;
 
+		lista_particiones* particionACrear = malloc(sizeof(lista_particiones));
+		particionACrear->sig_particion = laLista->sig_particion;
 		laLista->sig_particion = particionACrear;
 
-		particionACrear->numero_de_particion = (laLista->numero_de_particion +1);
+		particionACrear->laParticion.limiteSuperior = laLista->laParticion.limiteSuperior;
+		laLista->laParticion.limiteSuperior = mitad;
+
 		particionACrear->anter_particion = laLista;
-		particionACrear->sig_particion = NULL;
-		particionACrear->laParticion.estaLibre = 0;
-		particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
-		particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos) ;
-		return particionACrear;
+		particionACrear->laParticion.estaLibre = 1;
+		particionACrear->laParticion.limiteInferior = mitad;
+
+		while(laLista->sig_particion != NULL)
+		{
+			laLista = laLista->sig_particion;
+			numeroParticionOriginal++;
+			laLista->numero_de_particion = numeroParticionOriginal;
+		}
+
+		return laLista;
 	}
 }
 
@@ -164,7 +192,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
-		crear_particion(particionElegida, size);//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
+		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
@@ -212,7 +240,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				if((auxiliar->laParticion.limiteSuperior < tamanioMemoria) && ((tamanioMemoria - auxiliar->laParticion.limiteSuperior)>= size))
 				{
 					//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
-					particionElegida = crear_particion(auxiliar, size);
+					particionElegida = crear_particion(auxiliar, size, "PD");
 
 				}
 				//el espacio que resta en memoria NO me alcanza
@@ -247,7 +275,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
-		crear_particion(particionElegida, size);//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
+		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
@@ -325,7 +353,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 			if((auxiliar->laParticion.limiteSuperior < tamanioMemoria) && ((tamanioMemoria - auxiliar->laParticion.limiteSuperior)>= size))
 			{
 				//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
-				particionElegida = crear_particion(auxiliar, size);
+				particionElegida = crear_particion(auxiliar, size, "PD");
 
 			}
 			//el espacio que resta en memoria NO me alcanza
@@ -338,6 +366,26 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 
 	//libero el espacio para la lista de particiones candidatas
 	matar_lista_particiones_candidatas(candidata);
+
+	puts("Particion elegida exitosamente"); //borrar en el futuro?
+	return particionElegida;
+}
+
+lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
+{
+	lista_particiones* auxiliar = laLista;
+	lista_particiones* particionElegida = NULL;
+	particionesCandidatas* candidata = malloc(sizeof(particionesCandidatas));
+	candidata->numero_de_particion = -1;
+	particionesCandidatas* nuevaCandidata = candidata;
+	particionesCandidatas* manejo_de_candidatas = NULL;
+	uint32_t variableControlRecorrerLista = 1;
+
+	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, comienza la locura...
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
+	{
+		crear_particion(laLista, size, "BS");//ToDo no tan rapido campeon...
+	}
 
 	puts("Particion elegida exitosamente"); //borrar en el futuro?
 	return particionElegida;
@@ -750,8 +798,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	//se administra con Buddy System
 	else
 	{
-		puts("me estas jodiendo? no esta implementado Buddy System.");
-		abort();
+		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, tamanioAAsignar); //ToDo tamanio de memoria al pedo? ver
 	}
 
 	//ahora que tenemos la particion, metemos los datos

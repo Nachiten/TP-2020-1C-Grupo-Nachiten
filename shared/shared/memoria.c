@@ -90,6 +90,12 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 	}
 }
 
+void borrarReferenciaAParticion(lista_particiones* particionABorrar)
+{
+	particionABorrar->laParticion.estaLibre = 1;
+	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
+}
+
 void matar_lista_particiones(lista_particiones* laLista)
 {
 	lista_particiones* particionABorrar = laLista;
@@ -189,7 +195,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	uint32_t encontreUnaParticionUtil = 0;
 
 	//si estoy al principio de la lista, y no hay + particiones, la eleccion es facil...
-	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
 		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
@@ -272,7 +278,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	uint32_t variableControlRecorrerLista = 1;
 
 	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, la eleccion es facil...
-	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
 		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
@@ -382,10 +388,18 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 	uint32_t variableControlRecorrerLista = 1;
 
 	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, comienza la locura...
-	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
-		crear_particion(laLista, size, "BS");//ToDo no tan rapido campeon...
+		crear_particion(auxiliar, 0, "BS");
 	}
+
+	//creo particiones a lo loco hasta que las ultimas que cree hayan sido demasiado chicas?
+	while((auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior) > size)
+	{
+		crear_particion(auxiliar, 0, "BS");
+	}
+
+
 
 	puts("Particion elegida exitosamente"); //borrar en el futuro?
 	return particionElegida;
@@ -798,18 +812,12 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	//se administra con Buddy System
 	else
 	{
-		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, tamanioAAsignar); //ToDo tamanio de memoria al pedo? ver
+		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, tamanioAAsignar);
 	}
 
 	//ahora que tenemos la particion, metemos los datos
 	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje);
 
 //PASO 3: profit?
-}
-
-void borrarReferenciaAParticion(lista_particiones* particionABorrar)
-{
-	particionABorrar->laParticion.estaLibre = 1;
-	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 }
 

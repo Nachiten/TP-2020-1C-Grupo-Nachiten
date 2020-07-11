@@ -79,7 +79,7 @@ typedef struct {
 typedef struct {
 	uint32_t limiteSuperior;
 	uint32_t limiteInferior;
-	uint32_t estaLibre; //es un fucking booleano, meterle solo 0(ocupada) o 1(libre)
+	uint32_t estaLibre; //es un fucking booleano de cuarta, meterle solo 0(ocupada) o 1(libre)
 }particion;
 
 /*---->NO TOCAR!!!!<---- el "lista_particiones" al lado del "typedef struct", si se saca, aparece un error extraño donde la estructura
@@ -91,6 +91,12 @@ typedef struct lista_particiones{
 	struct lista_particiones* sig_particion;
 }lista_particiones;
 
+typedef struct particionesCandidatas{
+	int32_t numero_de_particion;
+	uint32_t size_de_particion;
+	lista_particiones* puntero_a_particion_candidata;
+	struct particionesCandidatas* sig_candidata;
+}particionesCandidatas;
 
 // Structs para los tipos de mensaje ------------------------------------------------------------------------------------
 

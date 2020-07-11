@@ -827,3 +827,5 @@
 [INFO] 16:50:18:638 Gameboy/(23549:23549): Conexión establecida con socket de BROKER
 [INFO] 17:04:45:226 Gameboy/(419:419): Conexión establecida con socket de BROKER
 [INFO] 17:05:02:905 Gameboy/(453:453): Conexión establecida con socket de BROKER
+[WARNING] 19:15:22:837 Gameboy/(11530:11530): Conexión fallida con socket de BROKER
+[WARNING] 21:03:04:193 Gameboy/(14303:14303): Conexión fallida con socket de BROKER

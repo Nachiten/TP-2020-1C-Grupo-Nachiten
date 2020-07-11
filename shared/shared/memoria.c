@@ -7,16 +7,33 @@
 
 #include "memoria.h"
 
-void inicializar_lista_particiones(lista_particiones* laLista)
+void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria)
 {
-	//laLista = (lista_particiones*) malloc(sizeof(lista_particiones)); //si no genera problemas, borrar esta linea
-	//laLista = malloc(sizeof(lista_particiones));
-	laLista->laParticion.estaLibre = 1;
-	laLista->laParticion.limiteInferior = 0;
-	laLista->laParticion.limiteSuperior = 0;
-	laLista->numero_de_particion = 0;
-	laLista->anter_particion = NULL;
-	laLista->sig_particion = NULL;
+	if(strcmp(algorAdminMemoria, "PD") == 0)
+	{
+		laLista->laParticion.estaLibre = 1;
+		laLista->laParticion.limiteInferior = 0;
+		laLista->laParticion.limiteSuperior = 0;
+		laLista->numero_de_particion = 0;
+		laLista->anter_particion = NULL;
+		laLista->sig_particion = NULL;
+
+		puts("Lista de particiones inicializada.\n");
+	}
+	else
+	{
+		if(strcmp(algorAdminMemoria, "BS") == 0)
+		{
+			puts("falta implementar inicializacion para buddy system");
+
+			puts("Lista de particiones inicializada.\n");
+		}
+		else
+		{
+			puts("Alguien escribió mal el campo de ALGORITMO_MEMORIA del archivo config, asi que Hasta La vista, Baby!");
+			abort();
+		}
+	}
 }
 
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos)
@@ -24,8 +41,7 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 	if((laLista->numero_de_particion == 0) && (laLista->laParticion.limiteSuperior == 0))
 	{
 		laLista->laParticion.estaLibre = 0;
-		laLista->laParticion.limiteSuperior = sizeDeLosDatos;//agregar control de particion minima
-		//laLista->numero_de_particion++; en la particion 0 no hace falta me parece
+		laLista->laParticion.limiteSuperior = sizeDeLosDatos;
 		return laLista;
 	}
 	else
@@ -67,6 +83,22 @@ void matar_lista_particiones(lista_particiones* laLista)
 	//una vez llego al principio de la lista, libero la particion original
 	printf("Borrando referencia a particion de memoria original, Nº %u\n", particionABorrar->numero_de_particion);
 	free(particionABorrar);
+}
+
+void matar_lista_particiones_candidatas(particionesCandidatas* listaDeCandidatas)
+{
+	particionesCandidatas* aBorrar = NULL;
+
+	while(listaDeCandidatas->sig_candidata != NULL)
+	{
+		aBorrar = listaDeCandidatas->sig_candidata;
+		while(aBorrar->sig_candidata != NULL)
+		{
+			aBorrar = aBorrar->sig_candidata;
+		}
+		free(aBorrar);
+	}
+	free(listaDeCandidatas);
 }
 
 void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria)
@@ -192,6 +224,145 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	}
 	puts("Particion elegida exitosamente"); //borrar en el futuro?
 	return particionElegida;
+}
+
+lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
+{
+	lista_particiones* auxiliar = laLista;
+	lista_particiones* particionElegida = NULL;
+	particionesCandidatas* candidata = malloc(sizeof(particionesCandidatas));
+	candidata->numero_de_particion = -1;
+	particionesCandidatas* nuevaCandidata = candidata;
+	particionesCandidatas* manejo_de_candidatas = NULL;
+	uint32_t variableControlRecorrerLista = 1;
+
+	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, la eleccion es facil...
+	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) &&(auxiliar->sig_particion == NULL))
+	{
+		particionElegida = auxiliar;
+		crear_particion(particionElegida, size);//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
+	}
+
+	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
+	else
+	{
+		//seguir recorriendo la lista hasta que llegue al final
+		while(variableControlRecorrerLista == 1)
+		{
+			//si la particion esta ocupada, busco otra
+			if(auxiliar->laParticion.estaLibre == 0)
+			{
+				auxiliar = auxiliar->sig_particion;
+			}
+			else
+			{
+				//una vez encuentro una particion libre, tengo que ver si el espacio que tiene me sirve
+				if((auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior) >= size)
+				{
+					//me sirve, lo "anoto" en la lista de candidatas
+					nuevaCandidata->numero_de_particion = auxiliar->numero_de_particion;
+					nuevaCandidata->size_de_particion = (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior);
+					nuevaCandidata->puntero_a_particion_candidata = auxiliar;
+
+					//burocracia para armar la lista de candidatas
+					manejo_de_candidatas = nuevaCandidata;
+					nuevaCandidata->sig_candidata = malloc(sizeof(particionesCandidatas));
+					nuevaCandidata = nuevaCandidata->sig_candidata;
+					nuevaCandidata->sig_candidata = NULL;
+					nuevaCandidata->numero_de_particion = -1;
+					manejo_de_candidatas->sig_candidata = nuevaCandidata;
+
+					//y me muevo en la lista de particiones
+					auxiliar = auxiliar->sig_particion;
+				}
+				//esta libre, pero no me alcanza el espacio
+				else
+				{
+					auxiliar = auxiliar->sig_particion;
+				}
+			}
+			//si se llego al final de la lista, freno el while
+			if(auxiliar == NULL)
+			{
+
+				variableControlRecorrerLista = 0;
+			}
+		}
+
+		//Encontre una particion util?
+		if(candidata->numero_de_particion != -1)
+		{
+			if(candidata->sig_candidata->numero_de_particion == -1)//solo encontre 1 particion util => uso esa :P
+			{
+				particionElegida = candidata->puntero_a_particion_candidata;
+			}
+
+			//hay + de una particion potable, las comparo
+			else
+			{
+				particionElegida = comparador_de_candidatas(candidata);
+			}
+		}
+
+		//nop, no sirve nada
+		else
+		{
+			auxiliar = laLista;
+			//me posiciono al final de la lista
+			while(auxiliar->sig_particion != NULL)
+			{
+				auxiliar = auxiliar->sig_particion;
+			}
+
+			//el espacio que resta en la memoria me alcanza?
+			if((auxiliar->laParticion.limiteSuperior < tamanioMemoria) && ((tamanioMemoria - auxiliar->laParticion.limiteSuperior)>= size))
+			{
+				//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
+				particionElegida = crear_particion(auxiliar, size);
+
+			}
+			//el espacio que resta en memoria NO me alcanza
+			else
+			{
+				//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+			}
+		}
+	}
+
+	//libero el espacio para la lista de particiones candidatas
+	matar_lista_particiones_candidatas(candidata);
+
+	puts("Particion elegida exitosamente"); //borrar en el futuro?
+	return particionElegida;
+}
+
+lista_particiones* comparador_de_candidatas(particionesCandidatas* listaDeCandidatas)
+{
+	//asumo que la primera particion es la mas chica
+	lista_particiones* elegida = listaDeCandidatas->puntero_a_particion_candidata;
+	uint32_t sizeMenor = listaDeCandidatas->size_de_particion;
+	uint32_t variableControlRecorrerLista = 1;
+	uint32_t mostrarElegida = listaDeCandidatas->numero_de_particion;
+
+	//recorro la lista de particiones candidatas entera para comparar todos los sizes
+	while(variableControlRecorrerLista == 1)
+	{
+		if((sizeMenor > listaDeCandidatas->size_de_particion) && (listaDeCandidatas->numero_de_particion != -1)) //si alguno tiene un size mas chico, se elige ese
+		{
+			sizeMenor = listaDeCandidatas->size_de_particion;
+			elegida = listaDeCandidatas->puntero_a_particion_candidata;
+			mostrarElegida = listaDeCandidatas->numero_de_particion;
+		}
+
+		listaDeCandidatas = listaDeCandidatas->sig_candidata;
+
+		if(listaDeCandidatas == NULL)
+		{
+			variableControlRecorrerLista = 0;
+		}
+	}
+	printf("Algoritmo BF: Se eligió la partición: %u.\n", mostrarElegida);
+	return elegida;
 }
 
 uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size)
@@ -558,20 +729,22 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 		{
 			if(strcmp(algoritmoAsignacion,"BF") == 0)
 			{
-				//ToDo
-				//particionElegida = seleccionar_particion_Best_Fit();
-				puts("Falta implementar");
+				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, tamanioAAsignar);
+				puts("Implementando...");
 			}
 			else
 			{
-				puts("Alguien escribió mal el campo de ALGORITMO_PARTICION_LIBRE del archivo config.\n");
+				puts("Alguien escribió mal el campo de ALGORITMO_PARTICION_LIBRE del archivo config, asi que Hasta La vista, Baby!");
+				abort();
 			}
 		}
 	}
+
 	//se administra con Buddy System
 	else
 	{
 		puts("me estas jodiendo? no esta implementado Buddy System.");
+		abort();
 	}
 
 	//ahora que tenemos la particion, metemos los datos

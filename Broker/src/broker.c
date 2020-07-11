@@ -101,9 +101,7 @@ int main(void) {
 	puts("Malloc de memoria completo");
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
-	inicializar_lista_particiones(hoja_de_particiones);
-
-	puts("Lista de particiones inicializada.\n");
+	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA);
 
 
 	// *************************************************

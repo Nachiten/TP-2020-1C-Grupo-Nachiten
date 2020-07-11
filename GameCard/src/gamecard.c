@@ -535,24 +535,19 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 }
 
-void suscribirseANew(int32_t socket){
+void suscribirseAColas(int32_t socket){
 
 	//Uso una estructura para guardar el numero de cola al que me quiero subscribir y mandarlo a la funcion mandar_mensaje
 	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-
-	estructuraSuscribirse->numeroCola = NEW;
-
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	sleep(1);
 
 	estructuraSuscribirse->numeroCola = GET;
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
-	sleep(1);
+	estructuraSuscribirse->numeroCola = NEW;
 
+	//mandamos el mensaje pidiendo suscribirse a la cola
+	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
 	estructuraSuscribirse->numeroCola = CATCH;
 	//mandamos el mensaje pidiendo suscribirse a la cola
@@ -582,18 +577,24 @@ void esperarMensajes(int socket){
 	codigo_operacion cod_op;
 
 	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+
+	//
+
 	bytesRecibidos(recibidos);
 
 	switch (cod_op)
 	{
 		case NEW: ;
-
 			New* mensajeNew = malloc(sizeof(New));
-			//bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
 			recibir_mensaje(mensajeNew, cod_op, socket);
-
-			//mensajeNew->
-
+			break;
+		case GET: ;
+			Get* mensajeGet = malloc(sizeof(Get));
+			recibir_mensaje(mensajeGet, cod_op, socket);
+			break;
+		case CATCH: ;
+			Catch* mensajeCatch = malloc(sizeof(Catch));
+			recibir_mensaje(mensajeCatch, cod_op, socket);
 			break;
 		default:
 			printf("No deberia entrar aca D:");
@@ -614,14 +615,14 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			//ya te llegaron los datos y llamas a tus funciones
 
-			puts("llegue al new");
+			printf("Termine de recibir un mensaje NEW\n");
 
 			break;
 		case GET:
 			mensajeGet = malloc(sizeof(Get));
 			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 
-			puts("llegue al get");
+			printf("Termine de recibir un mensaje GET\n");
 
 			//ya te llegaron los datos y llamas a tus funciones
 
@@ -630,7 +631,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			mensajeCatch = malloc(sizeof(Catch));
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 
-			puts("llegue al catch");
+			printf("Termine de recibir un mensaje CATCH\n");
 
 			//ya te llegaron los datos y llamas a tus funciones
 
@@ -672,11 +673,14 @@ void escuchoSocket(int32_t miSocket)
 	//acepto conexiones entrantes
 	struct sockaddr_in direccionConexionEntrante;
 	uint32_t tamanioConexionEntrante;
-	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
+	//int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
 	//printf ("me llego una conexion: %i", conexionEntrante);
+
 	 while(1)
 	 {
 		 esperar_conexiones(miSocket);
+
+		 // restauro conexion
 	 }
 }
 
@@ -773,6 +777,44 @@ char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALee
 
 }
 
+
+void comenzarConexionConBroker(datosHiloBroker* datos){
+
+	// CONEXION Y ESPERAR MENSAJES DE BROKER
+	char* IP_BROKER = datos->IP_BROKER;
+	char* PUERTO_BROKER = datos->PUERTO_BROKER;
+	int TIEM_REIN_CONEXION = datos->TIEM_REIN_CONEXION;
+
+	t_log* logger = datos->logger;
+
+	int socketBroker = -1;
+
+	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+
+	while (socketBroker == -1){
+		sleep(TIEM_REIN_CONEXION);
+		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+	}
+
+	suscribirseAColas(socketBroker);
+
+	while(1){
+		esperarMensajes(socketBroker);
+	}
+}
+
+void comenzarEscuchaGameBoy(){
+	//CONEXION DIRECTA CON GAMEBOY
+
+	int32_t socketGameCard = reservarSocket("5001"); //tirarle la key de la config
+
+	// Iniciarlos como hilos
+	escuchoSocket(socketGameCard); //escuchando al broker
+
+	close(socketGameCard);
+
+}
+
 int main(void) {
 
 
@@ -865,21 +907,22 @@ int main(void) {
 
 	//****************************************************************
 
-	// CONEXION Y ESPERAR MENSAJES DE BROKER
-//	int socketBroker = -1;
-//
-//
-//	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
-//
-//	while (socketBroker == -1){
-//		sleep(TIEM_REIN_CONEXION);
-//		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
-//	}
-//
-//	suscribirseANew(socketBroker);
-//
-//	esperarMensajes(socketBroker);
+	// Levanto hilo para escuchar broker
+	//comenzarConexionConBroker
 
+	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+
+	pthread_t hiloBroker;
+
+	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+
+	//****************************************************************
+
+	// Levanto hilo para escuchar mensajes directos de gameboy
+
+	pthread_t hiloGameBoy;
+
+	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 
 	//****************************************************************
 
@@ -893,19 +936,8 @@ int main(void) {
 
 	//****************************************************************
 
-	// CONEXION DIRECTA CON GAMEBOY
-
-//	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
-//
-//	// Iniciarlos como hilos
-//	escuchoSocket(socketoide); //escuchando al broker
-//
-//	close(socketoide);
-
-
-	//****************************************************************
-
-
+	pthread_join(hiloBroker, NULL);
+	pthread_join(hiloGameBoy, NULL);
 
 //	int i;
 //

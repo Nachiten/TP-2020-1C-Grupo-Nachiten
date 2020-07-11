@@ -15,11 +15,11 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <pthread.h>
 #include <commons/bitarray.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
-#include<pthread.h>
 #include <semaphore.h> // para los semaforos
 
 // Header files mios
@@ -31,6 +31,13 @@ typedef struct PosicionPokemon{
 	int posY;
 	int cantidad;
 }posPokemon;
+
+typedef struct datosHiloBroker{
+	char* IP_BROKER;
+	char* PUERTO_BROKER;
+	int TIEM_REIN_CONEXION;
+	t_log* logger;
+}datosHiloBroker;
 
 void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
 void esperar_conexiones(int32_t socket_servidor);

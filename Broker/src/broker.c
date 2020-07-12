@@ -72,8 +72,8 @@ int main(void) {
 	char* ADMIN_MEMORIA;
 	char* ALGOR_REEMPLAZO;
 	char* ALGOR_ASIGN_PARTICION;
-	uint32_t FRECUEN_COMPACT;
 	hoja_de_particiones = malloc(sizeof(lista_particiones));
+	PARTICIONES_ELIMINADAS = 0;
 
 	puts("****************************************************");
 	puts("Cargando configuraciones de memoria...\n");
@@ -159,12 +159,12 @@ int main(void) {
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
 
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
 
-	borrarReferenciaAParticion(hoja_de_particiones->sig_particion->sig_particion);
-	borrarReferenciaAParticion(hoja_de_particiones->sig_particion);
+
+	//borrarReferenciaAParticion(hoja_de_particiones->sig_particion, PARTICIONES_ELIMINADAS);
 
 
 	//para ver como quedan las particiones luego de "manosearlas"

@@ -19,11 +19,13 @@
 //para manejo de la lista de las particiones existentes en CACHE
 void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos, char* algorAdminMemoria); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
-void borrarReferenciaAParticion(lista_particiones* particionABorrar); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
+void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal); //arregla los numeros de particiones despues de que la aberracion de BS cree sus particiones
+void seleccionDeVictima(lista_particiones* particionABorrar, uint32_t FRECUEN_COMPACT, uint32_t PARTICIONES_ELIMINADAS, char* ALGOR_REEMPLAZO, char* ALGORITMO_MEMORIA); //selecciona la particion a ser eliminada
+void borrarReferenciaAParticion(lista_particiones* particionABorrar, uint32_t PARTICIONES_ELIMINADAS); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
 void consolidarParticion(lista_particiones* particionABorrar); //consolida particiones en caso que sea necesario
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size);//selecciona la primera particion que sirva y devuelve un puntero a esa particion
-lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size); //selecciona particion por BS (le voy a decir bullshit)
+lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion); //selecciona particion por BS (le voy a decir bullshit)
 void matar_lista_particiones(lista_particiones* laLista); //usar cuando se quiere cerrar el programa
 void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria); //para fines de control, muestrar por pantalla info de las particiones y espacio libre en memoria
 //se fija si en la ultima particion de la memoria hay espacio para meter los datos o no.

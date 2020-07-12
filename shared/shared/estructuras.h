@@ -87,6 +87,7 @@ no se reconoce a si misma cuando queremos sus campos anterior y siguiente apunte
 typedef struct lista_particiones{
 	particion laParticion;
 	uint32_t numero_de_particion;
+	uint32_t numero_de_victima;
 	struct lista_particiones* anter_particion;
 	struct lista_particiones* sig_particion;
 }lista_particiones;

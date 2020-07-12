@@ -47,7 +47,8 @@ void* CACHE;
 lista_particiones* hoja_de_particiones;
 char* TAMANIO_MEM;
 char* ALGOR_REEMPLAZO;
-char* ALGOR_ASIGN_PARTICION;
+uint32_t FRECUEN_COMPACT;
+uint32_t PARTICIONES_ELIMINADAS;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.

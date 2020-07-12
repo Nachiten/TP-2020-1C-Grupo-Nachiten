@@ -43,7 +43,7 @@ void crearPokemonSiNoExiste(char* , char* );
 void escribirDatoEnBloque(char*, int, char*);
 void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
 void escribirLineasEnBloques(t_list*, t_list*, int, char*);
-void fijarBloquesYPesoA(char*, char*, t_list*, int);
+void fijarBloquesA(char*, char*, t_list*);
 void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);

@@ -489,30 +489,149 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
+	uint32_t variableControlRecorrerLista = 1;
+	uint32_t encontreUnaParticionUtil = 0;
 	particionesCandidatas* candidata = malloc(sizeof(particionesCandidatas));
 	candidata->numero_de_particion = -1;
 	particionesCandidatas* nuevaCandidata = candidata;
 	particionesCandidatas* manejo_de_candidatas = NULL;
-	uint32_t variableControlRecorrerLista = 1;
 
 	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, comienza la locura...
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
-		auxiliar = crear_particion(auxiliar, size, "BS");
-
-		if(strcmp(algoritmoAsignacion, "FF") == 0)
-		{
-			particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, auxiliar, size);
-			puts("ff");
-		}
-		else
-		{
-			particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, size);
-			puts("bf");
-		}
+		//como es la primera, todas las particiones se acomodan en base a esta info, asi que se termina eligiendo la primera
+		particionElegida = crear_particion(auxiliar, size, "BS");
 	}
 
+	//la primera esta en uso, asi que sigo buscando siempre que no llegue al final
+	else
+	{
+		//busco particion con FF
+		if(strcmp(algoritmoAsignacion,"FF") == 0)
+		{
+			//seguir recorriendo la lista hasta que llegue al final o encuentre algo
+			while(variableControlRecorrerLista == 1)
+			{
+				//si la particion esta ocupada, busco otra
+				if(auxiliar->laParticion.estaLibre == 0)
+				{
+					auxiliar = auxiliar->sig_particion;
+				}
 
+				//encontre una libre
+				else
+				{
+					//si encuentro una particion lo suficientemente grande como para poner mis datos, es la candidata para ser mutilada
+					if((auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior) >= size)
+					{
+						//victima
+						particionElegida = crear_particion(auxiliar, size, "BS");
+
+						//No hace falta seguir recorriendo la lista si ya encontre candidata
+						variableControlRecorrerLista = 0;
+						encontreUnaParticionUtil = 1;
+					}
+					//esta libre, pero no me alcanza el espacio
+					else
+					{
+						auxiliar = auxiliar->sig_particion;
+					}
+				}
+				//si se llego al final de la lista, freno el while
+				if(auxiliar == NULL)
+				{
+					variableControlRecorrerLista = 0;
+				}
+			}
+
+			//no me sirve ninguna particion?
+			if(encontreUnaParticionUtil != 1)
+			{
+				//ToDo time to call grim Reaper
+				puts("eliminar no implementado");
+				abort();
+			}
+		}
+
+		//busco particion con Best Fit
+		if(strcmp(algoritmoAsignacion,"BF") == 0)
+		{
+			//seguir recorriendo la lista hasta que llegue al final
+			while(variableControlRecorrerLista == 1)
+			{
+				//si la particion esta ocupada, busco otra
+				if(auxiliar->laParticion.estaLibre == 0)
+				{
+					auxiliar = auxiliar->sig_particion;
+				}
+				else
+				{
+					//una vez encuentro una particion libre, tengo que ver si el espacio que tiene me sirve
+					if((auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior) >= size)
+					{
+						//me sirve, lo "anoto" en la lista de candidatas
+						nuevaCandidata->numero_de_particion = auxiliar->numero_de_particion;
+						nuevaCandidata->size_de_particion = (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior);
+						nuevaCandidata->puntero_a_particion_candidata = auxiliar;
+
+						//burocracia para armar la lista de candidatas
+						manejo_de_candidatas = nuevaCandidata;
+						nuevaCandidata->sig_candidata = malloc(sizeof(particionesCandidatas));
+						nuevaCandidata = nuevaCandidata->sig_candidata;
+						nuevaCandidata->sig_candidata = NULL;
+						nuevaCandidata->numero_de_particion = -1;
+						manejo_de_candidatas->sig_candidata = nuevaCandidata;
+
+						//y me muevo en la lista de particiones
+						auxiliar = auxiliar->sig_particion;
+					}
+					//esta libre, pero no me alcanza el espacio
+					else
+					{
+						auxiliar = auxiliar->sig_particion;
+					}
+				}
+				//si se llego al final de la lista, freno el while
+				if(auxiliar == NULL)
+				{
+					variableControlRecorrerLista = 0;
+				}
+			}
+
+			//Encontre una particion util?
+			if(candidata->numero_de_particion != -1)
+			{
+				if(candidata->sig_candidata->numero_de_particion == -1)//solo encontre 1 particion util => uso esa :P
+				{
+					particionElegida = crear_particion(candidata->puntero_a_particion_candidata, size, "BS");
+				}
+
+				//hay + de una particion potable, las comparo
+				else
+				{
+					particionElegida = crear_particion(comparador_de_candidatas(candidata), size, "BS");
+				}
+			}
+
+			//nop, no sirve nada
+			else
+			{
+				//ToDo time to call grim Reaper
+				puts("eliminar no implementado");
+				abort();
+			}
+		}
+	}//esta llave es el cierre de "la primera esta en uso, revisar las otras..."
+
+	//si para este punto TODAVIA no se eligio una particion, es ninguna servia, por lo que corrio el algoritmo para eliminar una particion
+	if(particionElegida == NULL)
+	{
+		//por lo que llamamos a buddy system de nuevo
+		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, size, algoritmoAsignacion);
+	}
+
+	//libero el espacio para la lista de particiones candidatas
+	matar_lista_particiones_candidatas(candidata);
 
 	return particionElegida;
 }

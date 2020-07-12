@@ -810,3 +810,12 @@
 [WARNING] 14:24:59:770 Gameboy/(7328:7328): Conexión fallida con socket de GAMECARD
 [WARNING] 14:25:00:339 Gameboy/(7329:7329): Conexión fallida con socket de GAMECARD
 [WARNING] 14:25:00:979 Gameboy/(7330:7330): Conexión fallida con socket de GAMECARD
+[INFO] 18:20:34:924 Gameboy/(10697:10697): Conexión establecida con socket de BROKER
+[INFO] 18:21:05:943 Gameboy/(10704:10704): Conexión establecida con socket de BROKER
+[INFO] 18:21:07:155 Gameboy/(10706:10706): Conexión establecida con socket de BROKER
+[INFO] 18:21:07:411 Gameboy/(10708:10708): Conexión establecida con socket de BROKER
+[INFO] 18:21:07:691 Gameboy/(10710:10710): Conexión establecida con socket de BROKER
+[INFO] 18:22:02:619 Gameboy/(10745:10745): Conexión establecida con socket de BROKER
+[INFO] 18:22:19:205 Gameboy/(10749:10749): Conexión establecida con socket de GAMECARD
+[INFO] 18:26:01:775 Gameboy/(10894:10894): Conexión establecida con socket de BROKER
+[WARNING] 18:43:46:354 Gameboy/(11534:11534): Conexión fallida con socket de GAMECARD

@@ -571,12 +571,24 @@ int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger){
 	return socket;
 }
 
-void esperarMensajes(int socket){
+void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* logger, int TIEM_REIN_CONEXION){
 
 	codigo_operacion cod_op;
+	uint32_t desconexion = 1;
 
 	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 	bytesRecibidos(recibidos);
+
+	while((recibidos == -1) || (desconexion == -1))
+	{
+		sleep(TIEM_REIN_CONEXION);
+		desconexion = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+		if(desconexion != -1)
+		{
+			recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+			bytesRecibidos(recibidos);
+		}
+	}
 
 	switch (cod_op)
 	{
@@ -585,7 +597,6 @@ void esperarMensajes(int socket){
 			New* mensajeNew = malloc(sizeof(New));
 			//bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
 			recibir_mensaje(mensajeNew, cod_op, socket);
-
 			//mensajeNew->
 
 			break;
@@ -764,7 +775,8 @@ int main(void) {
 
 	suscribirseANew(socketBroker);
 
-	//esperarMensajes(socketBroker);
+	esperarMensajes(socketBroker, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION);
+	puts("sali de esperar mensaje");
 
 
 

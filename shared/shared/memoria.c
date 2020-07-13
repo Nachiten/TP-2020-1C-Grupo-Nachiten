@@ -72,10 +72,9 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 		uint32_t mitad = 0;
 		uint32_t numeroParticionOriginal = laLista->numero_de_particion;
 
-		while((laLista->laParticion.limiteSuperior/2) >= sizeDeLosDatos)
+		while(((laLista->laParticion.limiteSuperior - laLista->laParticion.limiteInferior)/2) >= sizeDeLosDatos)
 		{
-			mitad = laLista->laParticion.limiteSuperior/2;
-
+			mitad = laLista->laParticion.limiteInferior + ((laLista->laParticion.limiteSuperior - laLista->laParticion.limiteInferior)/2);
 
 			lista_particiones* particionACrear = malloc(sizeof(lista_particiones));
 			particionACrear->sig_particion = laLista->sig_particion;
@@ -88,10 +87,10 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 			particionACrear->laParticion.estaLibre = 1;
 			particionACrear->laParticion.limiteInferior = mitad;
 
-			while(laLista->anter_particion != NULL)
-			{
-				laLista = laLista->anter_particion;
-			}
+//			if(laLista->anter_particion != NULL)
+//			{
+//				laLista = laLista->anter_particion;
+//			}
 
 			printf("limite sup: %u\n",laLista->laParticion.limiteSuperior);
 		}
@@ -381,6 +380,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	lista_particiones* particionElegida = NULL;
 	particionesCandidatas* candidata = malloc(sizeof(particionesCandidatas));
 	candidata->numero_de_particion = -1;
+	candidata->sig_candidata = NULL;
 	particionesCandidatas* nuevaCandidata = candidata;
 	particionesCandidatas* manejo_de_candidatas = NULL;
 	uint32_t variableControlRecorrerLista = 1;
@@ -493,6 +493,7 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 	uint32_t encontreUnaParticionUtil = 0;
 	particionesCandidatas* candidata = malloc(sizeof(particionesCandidatas));
 	candidata->numero_de_particion = -1;
+	candidata->sig_candidata = NULL;
 	particionesCandidatas* nuevaCandidata = candidata;
 	particionesCandidatas* manejo_de_candidatas = NULL;
 
@@ -623,7 +624,7 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 		}
 	}//esta llave es el cierre de "la primera esta en uso, revisar las otras..."
 
-	//si para este punto TODAVIA no se eligio una particion, es ninguna servia, por lo que corrio el algoritmo para eliminar una particion
+	//si para este punto TODAVIA no se eligio una particion, entonces ninguna servia, por lo que corrio el algoritmo para eliminar una particion
 	if(particionElegida == NULL)
 	{
 		//por lo que llamamos a buddy system de nuevo

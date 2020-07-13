@@ -109,10 +109,16 @@ int main(void) {
 	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
 	codigo_operacion codigoPrueba2 = 2;
 	codigo_operacion codigoPrueba3 = 3;
+	codigo_operacion codigoPrueba4 = 4;
+	codigo_operacion codigoPrueba5 = 5;
+	codigo_operacion codigoPrueba6 = 6;
 
 	uint32_t sizeDelMensajeNew = 32;
 	uint32_t sizeDelMensajeAppeared = 28;
 	uint32_t sizeDelMensajeGet = 23;
+	uint32_t sizeDelMensajeLocalized = 35;
+	uint32_t sizeDelMensajeCatch = 37;
+	uint32_t sizeDelMensajeCaught = 23;
 
 	New* pokemonNew = malloc(sizeof(New));
 
@@ -139,6 +145,28 @@ int main(void) {
 	pokemonGet->ID = 11;
 	pokemonGet->corrID = 10;
 
+	Localized* pokemonLocalized = malloc(sizeof(Localized));
+	pokemonLocalized->nombrePokemon = "Charmander";
+	pokemonLocalized->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonLocalized->cantPosciciones = 1;
+	pokemonLocalized->ID = 12;
+	pokemonLocalized->corrID = 12;
+
+	Catch* pokemonCatch = malloc(sizeof(Catch));
+	pokemonCatch->nombrePokemon = "unnumeromayora32";
+	pokemonCatch->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonCatch->posPokemon.x = 1;
+	pokemonCatch->posPokemon.y = 1;
+	pokemonCatch->ID = 12;
+	pokemonCatch->corrID = 12;
+
+	Caught* pokemonCaught = malloc(sizeof(Caught));
+	pokemonCaught->nombrePokemon = "Catch";
+	pokemonCaught->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonCaught->pudoAtrapar = 1;
+	pokemonCaught->ID = 12;
+	pokemonCaught->corrID = 12;
+
 	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
 	mensajePrueba->id = pokemonNew->ID;
 	mensajePrueba->id_correlativo = pokemonNew->corrID;
@@ -156,12 +184,34 @@ int main(void) {
 	mensajePrueba3->mensaje = pokemonGet;
 	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
 
+	t_mensaje* mensajePrueba4 = malloc(sizeof(t_mensaje));
+	mensajePrueba4->id = pokemonLocalized->ID;
+	mensajePrueba4->mensaje = pokemonLocalized;
+	mensajePrueba4->tamanioMensaje = sizeDelMensajeLocalized;
+
+	t_mensaje* mensajePrueba5 = malloc(sizeof(t_mensaje));
+	mensajePrueba5->id = pokemonCatch->ID;
+	mensajePrueba5->mensaje = pokemonCatch;
+	mensajePrueba5->tamanioMensaje = sizeDelMensajeCatch;
+
+	t_mensaje* mensajePrueba6 = malloc(sizeof(t_mensaje));
+	mensajePrueba6->id = pokemonCaught->ID;
+	mensajePrueba6->mensaje = pokemonCaught;
+	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
+
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2);
 
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3);
+
+	//ESTE ES LOCALIZED, NO USAR
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, mensajePrueba4->tamanioMensaje, codigoPrueba4);
+
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, mensajePrueba5->tamanioMensaje, codigoPrueba5);
+
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6);
 
 
 	//borrarReferenciaAParticion(hoja_de_particiones->sig_particion, PARTICIONES_ELIMINADAS);

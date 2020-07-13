@@ -298,7 +298,7 @@ char** leerBloques(char* pathFiles , char* pokemon){
 }
 
 // Fijar los bloques del metadata.bin del pokemon a los dados
-void fijarBloquesYPesoA(char* pokemon, char* pathFiles, t_list* listaBloques, int pesoEnBytes){
+void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
 	char* metadataBin = "/Metadata.bin";
 
 	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
@@ -317,12 +317,6 @@ void fijarBloquesYPesoA(char* pokemon, char* pathFiles, t_list* listaBloques, in
 	char* arrayBloques = crearStringArrayBloques(listaBloques);
 
 	config_set_value(datosMetadata, "BLOCKS", arrayBloques);
-
-	char* pesoEnBytesAChar;
-
-	asprintf(&pesoEnBytesAChar, "%i", pesoEnBytes);
-
-	config_set_value(datosMetadata, "SIZE", pesoEnBytesAChar);
 
 	config_save(datosMetadata);
 }
@@ -345,7 +339,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 		// El tamanio del numero a insertar
 		tamanioTotalBytes+= strlen(numeroEnString);
 
-		//printf("El string es: %s\n", numeroEnString);
+		printf("El string es: %s\n", numeroEnString);
 	}
 
 	// La cantidad de comas
@@ -353,7 +347,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 	// El "[" + "]" + \0
 	tamanioTotalBytes += 3;
 
-	//printf("El size total es: %i\n", tamanioTotalBytes);
+	printf("El size total es: %i\n", tamanioTotalBytes);
 
 	char* stringCompleto = malloc(tamanioTotalBytes);
 
@@ -377,7 +371,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 
 	strcat(stringCompleto, "]");
 
-	//printf("String completo: %s", stringCompleto);
+	printf("String completo: %s", stringCompleto);
 
 	return stringCompleto;
 
@@ -468,7 +462,7 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques, BLOCK_SIZE, pathBloques);
 
-	fijarBloquesYPesoA(pokemon, pathFiles, listaBloquesAOcupar, pesoEnBytes);
+	fijarBloquesA(pokemon, pathFiles, listaBloquesAOcupar);
 
 	// Falta modificar metadata.bin para tener los bloques
 
@@ -526,7 +520,7 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 	FILE* bloque = fopen( pathBloque , "w" );
 
-	fwrite(dato, strlen(dato) + 1, 1, bloque);
+	fwrite(dato, strlen(dato), 1, bloque);
 
 	fclose(bloque);
 
@@ -540,14 +534,15 @@ void suscribirseAColas(int32_t socket){
 	//Uso una estructura para guardar el numero de cola al que me quiero subscribir y mandarlo a la funcion mandar_mensaje
 	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
 
-	estructuraSuscribirse->numeroCola = GET;
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
 	estructuraSuscribirse->numeroCola = NEW;
 
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
+	estructuraSuscribirse->numeroCola = GET;
+	//mandamos el mensaje pidiendo suscribirse a la cola
+	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
 
 	estructuraSuscribirse->numeroCola = CATCH;
 	//mandamos el mensaje pidiendo suscribirse a la cola
@@ -561,6 +556,8 @@ int conectarseABroker(char* IP_BROKER, char* PUERTO_BROKER, t_log* logger){
 
 	resultado_de_conexion(socket, logger, "BROKER");
 
+	if (socket != -1) suscribirseAColas(socket);
+
 	return socket;
 }
 
@@ -572,29 +569,41 @@ int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger){
 	return socket;
 }
 
-void esperarMensajes(int socket){
+void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* logger, int TIEM_REIN_CONEXION){
 
 	codigo_operacion cod_op;
+	uint32_t desconexion = 1;
 
 	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-
-	//
-
 	bytesRecibidos(recibidos);
+
+	while((recibidos == -1) || (desconexion == -1))
+	{
+		sleep(TIEM_REIN_CONEXION);
+		desconexion = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+		if(desconexion != -1)
+		{
+			recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+			bytesRecibidos(recibidos);
+		}
+	}
 
 	switch (cod_op)
 	{
-		case NEW: ;
+	 	case NEW: ;
 			New* mensajeNew = malloc(sizeof(New));
 			recibir_mensaje(mensajeNew, cod_op, socket);
+
 			break;
 		case GET: ;
 			Get* mensajeGet = malloc(sizeof(Get));
 			recibir_mensaje(mensajeGet, cod_op, socket);
+
 			break;
 		case CATCH: ;
 			Catch* mensajeCatch = malloc(sizeof(Catch));
 			recibir_mensaje(mensajeCatch, cod_op, socket);
+
 			break;
 		default:
 			printf("No deberia entrar aca D:");
@@ -602,6 +611,8 @@ void esperarMensajes(int socket){
 	}
 
 }
+
+
 
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	New* mensajeNew;
@@ -663,9 +674,6 @@ void esperar_conexiones(int32_t socket_servidor)
 	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);//espera una conexion
 
 	serve_client(&socket_cliente);
-
-	//pthread_create(&threadGamecard,NULL,(void*)serve_client,&socket_cliente);
-	//pthread_detach(threadGamecard);
 }
 
 void escuchoSocket(int32_t miSocket)
@@ -673,15 +681,14 @@ void escuchoSocket(int32_t miSocket)
 	//acepto conexiones entrantes
 	struct sockaddr_in direccionConexionEntrante;
 	uint32_t tamanioConexionEntrante;
-	//int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
-	//printf ("me llego una conexion: %i", conexionEntrante);
+	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
 
-	 while(1)
-	 {
-		 esperar_conexiones(miSocket);
+	printf ("Me llego una conexion (GameBoy): %i", conexionEntrante);
 
-		 // restauro conexion
-	 }
+	while(1)
+	{
+		esperar_conexiones(miSocket);
+	}
 }
 
 t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
@@ -796,24 +803,22 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 		socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 	}
 
-	suscribirseAColas(socketBroker);
-
-	while(1){
-		esperarMensajes(socketBroker);
+	while(1)
+	{
+	esperarMensajes(socketBroker, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION);
 	}
+
+	puts("sali de esperar mensaje");
+
 }
 
 void comenzarEscuchaGameBoy(){
-	//CONEXION DIRECTA CON GAMEBOY
+	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
 
-	int32_t socketGameCard = reservarSocket("5001"); //tirarle la key de la config
-
-	// Iniciarlos como hilos
-	escuchoSocket(socketGameCard); //escuchando al broker
-
-	close(socketGameCard);
-
+	escuchoSocket(socketoide); //escuchando al gameboy
+	close(socketoide);
 }
+
 
 int main(void) {
 
@@ -832,7 +837,10 @@ int main(void) {
 
 	// Inicializacion del logger... todavia no es necesario
 
-	t_log* logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+	t_log* logger;
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+
+
 
 	// puntoMontaje/Blocks
 	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -885,47 +893,32 @@ int main(void) {
 		// Escribe una linea por primera vez en un archivo vacio
 		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
 	} else {
-
-//		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
-//
-//		// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
-//		char** bloquesALeer = leerBloques(pathFiles, pikachu);
-//
-//		char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloquesALeer, 9, BLOCK_SIZE);
-//
-//		printf("Lineas Leidas:%s\n", lineasLeidas);
+		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
 	}
-
-	escribirLineaNuevaPokemon(pikachu, 300, 40, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
-
-	// printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
-	char** bloquesALeer = leerBloques(pathFiles, pikachu);
-
-	char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloquesALeer, 10, BLOCK_SIZE);
-
-	printf("Lineas Leidas:%s\n", lineasLeidas);
 
 	//****************************************************************
 
 	// Levanto hilo para escuchar broker
-	//comenzarConexionConBroker
-
 	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
 
 	pthread_t hiloBroker;
 
 	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
-	//****************************************************************
-
 	// Levanto hilo para escuchar mensajes directos de gameboy
+
+	//****************************************************************
 
 	pthread_t hiloGameBoy;
 
-	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+	//pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+
+	// CIERRO HILOS
+	pthread_join(hiloBroker, NULL);
+	//pthread_join(hiloGameBoy, NULL);
 
 	//****************************************************************
-
+	/*
 	/* MANDAR MENSAJE A UNA COLA
 	Appeared* estructura = malloc(sizeof(Appeared));
 
@@ -936,8 +929,8 @@ int main(void) {
 
 	//****************************************************************
 
-	pthread_join(hiloBroker, NULL);
-	pthread_join(hiloGameBoy, NULL);
+
+
 
 //	int i;
 //
@@ -976,7 +969,6 @@ int main(void) {
 //	printf("%i", *num4);
 
 
-// PRUEBA ESCRIBIR COSAS EN LISTA
 //	t_list* miLista = list_create();
 //	int num = 5;
 //	int num2 = 7;

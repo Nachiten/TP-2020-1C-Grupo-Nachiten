@@ -12,6 +12,8 @@ typedef struct Entrenador{
 }Entrenador;
 
 // *************************************************
+void mostrameMemoria(int32_t senial);
+
 int main(void) {
 
 	t_config* config;
@@ -22,6 +24,10 @@ int main(void) {
 	id_inicial = 0;
 	inicializar_colas();
 	inicializar_semaforos();
+
+	printf("Process ID del Broker: %i\n", getpid());
+	signal(SIGUSR1, mostrameMemoria);
+	signal(SIGUSR2, mostrameMemoria);
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Broker.config");
@@ -99,6 +105,9 @@ int main(void) {
 	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, hay que actualizarlo segun vayamos avanzando con esto
 	CACHE = malloc(TAMANIO_MEM);
 	puts("Malloc de memoria completo");
+
+
+
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA, TAMANIO_MEM);
@@ -211,7 +220,7 @@ int main(void) {
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, mensajePrueba5->tamanioMensaje, codigoPrueba5);
 
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6);
 
 
 	//borrarReferenciaAParticion(hoja_de_particiones->sig_particion, PARTICIONES_ELIMINADAS);
@@ -860,4 +869,17 @@ void iniciar_server(char* ip, char* puerto)
 
     while(1)
     	esperar_cliente(socket_servidor);
+}
+
+void mostrameMemoria(int32_t senial)
+{
+	if(senial == SIGUSR1 || senial == SIGUSR2)
+	{
+		puts("funcion llamada correctamente");
+	}
+	else
+	{
+		puts("Señal incorrecta, abortando...");
+		abort();
+	}
 }

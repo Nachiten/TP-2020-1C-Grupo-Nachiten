@@ -147,11 +147,11 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	}
 }
 
-void borrarReferenciaAParticion(lista_particiones* particionABorrar, uint32_t PARTICIONES_ELIMINADAS)
+void borrarReferenciaAParticion(lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	particionABorrar->laParticion.estaLibre = 1;
-	printf("La particion %u ahora está libre!\n", particionABorrar->numero_de_particion);
-	PARTICIONES_ELIMINADAS++;
+	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
+	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
 	consolidarParticion(particionABorrar);
 }
 
@@ -162,6 +162,8 @@ void consolidarParticion(lista_particiones* particionABorrar)
 	uint32_t numPartSig = 0;
 	uint32_t resultado = 0;
 	uint32_t consolidado = 0;
+	lista_particiones* correctorDeNumeros = particionABorrar->anter_particion;
+	uint32_t numeroACorregir = particionABorrar->anter_particion->numero_de_particion;
 
 	if(particionABorrar->anter_particion != NULL)
 	{
@@ -173,16 +175,16 @@ void consolidarParticion(lista_particiones* particionABorrar)
 			//expando el tamaño de la particion anterior
 			particionABorrar->anter_particion->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
 			resultado = particionABorrar->anter_particion->numero_de_particion;
+			particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
 
-			//si la particion que estoy borrando no apunta a NULL, entonces hago que la anterior apunte a su siguiente y viceversa
+			//si la particion que estoy borrando no apunta a NULL, entonces hago que la siguiente apunte a su anterior
 			if(particionABorrar->sig_particion != NULL)
 			{
-				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
 				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
 			}
 
 			consolidado = 1;
-			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n;", numPart, numPartAnt, resultado);
+			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartAnt, resultado);
 		}
 	}
 
@@ -213,6 +215,13 @@ void consolidarParticion(lista_particiones* particionABorrar)
 
 	if(consolidado == 1)
 	{
+		while(correctorDeNumeros != NULL)
+		{
+			correctorDeNumeros->numero_de_particion = numeroACorregir;
+			numeroACorregir++;
+			correctorDeNumeros = correctorDeNumeros->sig_particion;
+		}
+
 		free(particionABorrar);
 	}
 }
@@ -391,7 +400,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 			particionElegida = auxiliar;
 		}
 	}
-	puts("Particion elegida exitosamente"); //borrar en el futuro?
+	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 	return particionElegida;
 }
 
@@ -502,7 +511,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	//libero el espacio para la lista de particiones candidatas
 	matar_lista_particiones_candidatas(candidata);
 
-	puts("Particion elegida exitosamente"); //borrar en el futuro?
+	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 	return particionElegida;
 }
 
@@ -690,18 +699,25 @@ lista_particiones* comparador_de_candidatas(particionesCandidatas* listaDeCandid
 uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size)
 {
 	lista_particiones* punteroAAuxiliar = *auxiliar;
-
 	uint32_t resultado;
-	//si todavia hay espacio para meter algo...
-	if(punteroAAuxiliar->laParticion.limiteSuperior <= tamanioMemoria)
+
+	//me sirve la ultima particion?
+	if((punteroAAuxiliar->laParticion.limiteSuperior - punteroAAuxiliar->laParticion.limiteInferior) >= size)
+	{
+		*particionElegida = *auxiliar; //tenemos un ganador
+		resultado = 1;
+	}
+
+	//no me sirve, si todavia hay espacio en memoria para meter algo...
+	if(punteroAAuxiliar->laParticion.limiteSuperior < tamanioMemoria)
 	{
 		//...veo si ese espacio me sirve
-		if((punteroAAuxiliar->laParticion.limiteSuperior - punteroAAuxiliar->laParticion.limiteInferior) >= size)
+		if(tamanioMemoria - punteroAAuxiliar->laParticion.limiteSuperior >= size)
 		{
-			*particionElegida = *auxiliar; //tenemos un ganador
-			resultado = 1;
+			//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
+			*particionElegida = crear_particion(punteroAAuxiliar, size, "PD");
 		}
-		//el espacio no me sirve y la memoria esta totalmente copada
+		//el espacio que resta en memoria no me alcanza
 		else
 		{
 			puts("Desesperaos mortales, el fin se acerca.");

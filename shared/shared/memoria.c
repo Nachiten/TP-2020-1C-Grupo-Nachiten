@@ -114,7 +114,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 {
 	lista_particiones* particionABorrar = laLista;
 	uint32_t masViejoUsado = particionABorrar->numero_de_victima;
-	uint32_t victima = 0;
+	uint32_t victima = particionABorrar->numero_de_particion;
 
 	//recorremos la lista hasta el final buscando una victima
 	while(particionABorrar != NULL)
@@ -150,7 +150,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 void borrarReferenciaAParticion(lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	particionABorrar->laParticion.estaLibre = 1;
-	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
+	printf("\nLa particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
 	consolidarParticion(particionABorrar);
 }
@@ -397,6 +397,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				{
 					//hay que fletar una particion
 					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 		}
@@ -407,7 +408,6 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 			particionElegida = auxiliar;
 		}
 	}
-	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 	return particionElegida;
 }
 
@@ -519,7 +519,6 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	//libero el espacio para la lista de particiones candidatas
 	matar_lista_particiones_candidatas(candidata);
 
-	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 	return particionElegida;
 }
 
@@ -1131,6 +1130,8 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 		}
 		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, tamanioAAsignar, algoritmoAsignacion);
 	}
+
+	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 
 	//ahora que tenemos la particion, metemos los datos
 	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA);

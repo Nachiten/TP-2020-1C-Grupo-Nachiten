@@ -104,7 +104,8 @@ t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantid
 
 			*numeroBloqueCopiado = numeroBloque;
 
-			//printf("Encontre el bit numero: %i\n", numeroBloque);
+			printf("Encontre el bit numero: %i\n", numeroBloque);
+
 			list_add(listaNums, numeroBloqueCopiado);
 
 			cantidad--;

@@ -109,7 +109,7 @@ int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 	strcat(pathCarpetaPokemon, "/");
 	strcat(pathCarpetaPokemon, pokemon);
 
-	printf("Path carpeta pokemon: %s\n", pathCarpetaPokemon);
+	//printf("Path carpeta pokemon: %s\n", pathCarpetaPokemon);
 
 	int retorno;
 
@@ -269,7 +269,7 @@ char** leerBloques(char* pathFiles , char* pokemon){
 	strcat(pathMetadataPokemon, pokemon);
 	strcat(pathMetadataPokemon, metadataBin);
 
-	printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
+	//printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
 
 	t_config* datosMetadata = config_create(pathMetadataPokemon);
 
@@ -861,6 +861,23 @@ char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas)
 }
 
 void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
+
+	// Checkeo de variables
+	if (pokemon == NULL){
+		printf("ERROR | No hay ningun pokemon");
+		return;
+	}
+
+	if (posX < 0 || posY < 0){
+		printf("ERROR | La posicion no puede ser negativa");
+		return;
+	}
+
+	if (cantidad < 1){
+		printf("ERROR | La cantidad no puede ser 0 ni negativa");
+		return;
+	}
+
 	crearPokemonSiNoExiste(pathFiles, pokemon);
 
 	// Realizar lo que corresponde para abrir el archivo metadata (marcarlo open=y)
@@ -881,28 +898,53 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 
 			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
 
+			// TODO Esta lista de bloques queda rota al leer por alguna razon D:
 			t_list* listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
 
 			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon), BLOCK_SIZE);
 
 			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
 
+			t_list* bloquesExtraPedidos;
+
 			if (cantidadBloquesRequeridos == cantidadBloquesActual){
 
 				// La cantidad se mantiene igual, solo escribir los bloques
-
-				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesActual, BLOCK_SIZE);
-
-				escribirLineasEnBloques(listaBloques, listaDatos, BLOCK_SIZE, pathBloques);
-
-				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+				printf("No se necesitan bloques extra... solo escribir\n");
 
 			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
 				// pedir los bloques necesarios
-				printf("Se necesitan mas bloques");
+
+				printf("Se necesitan mas bloques... pidiendo\n");
+
+				// Cantidad de bloques extra que se deben pedir
+				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
+
+				printf("Cantidad extra a pedir: %i", cantidadBloquesExtra);
+
+				// Obtener libres de bitmap para llenar
+				bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, cantidadBloquesExtra);
+
+				int i;
+
+				// Agrego los elementos de bloques extra en la lista de bloques actual
+				for ( i = 0; i< list_size(bloquesExtraPedidos) ; i++){
+					list_add(listaBloques, list_get(bloquesExtraPedidos, i));
+				}
+
+				fijarBloquesA(pokemon, listaBloques);
+
 			} else {
 				printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
 			}
+
+			// Generar lista con los datos a escribir en los bloques
+			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos, BLOCK_SIZE);
+
+			// Escribir los datos en los bloques correspondientes
+			escribirLineasEnBloques(listaBloques, listaDatos, BLOCK_SIZE, pathBloques);
+
+			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
 			//void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques, int BLOCK_SIZE, char* pathBloques){
 
@@ -1007,8 +1049,9 @@ int main(void) {
 	mensajeNew("Pikachu", 1,5,3);
 	mensajeNew("Pikachu", 1,3,3);
 	mensajeNew("Pikachu", 1,7,3);
-
 	mensajeNew("Pikachu", 32,5,3);
+
+
 	mensajeNew("Pikachu", 33,3,3);
 	mensajeNew("Pikachu", 34,7,3);
 

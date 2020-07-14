@@ -239,7 +239,7 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 	char* lineaActual;
 	while( (lineaActual = arrayLineas[numLinea]) != NULL){
 
-		printf("La linea es: %s\n", lineaActual);
+		//printf("La linea es: %s\n", lineaActual);
 
 		char* lineaConvertidaABuscar;
 		char* lineaActualConvertida = separarCoord(lineaActual);
@@ -281,8 +281,33 @@ char** leerBloques(char* pathFiles , char* pokemon){
 	return config_get_array_value(datosMetadata, "BLOCKS");
 }
 
+// Retorna el SIZE de un pokemon existente
+int leerSizePokemon(char* pokemon){
+	char* metadataBin = "/Metadata.bin";
+
+	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
+
+	char* pathMetadataPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
+
+	strcpy(pathMetadataPokemon, pathFiles);
+	strcat(pathMetadataPokemon, "/");
+	strcat(pathMetadataPokemon, pokemon);
+	strcat(pathMetadataPokemon, metadataBin);
+
+	printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
+
+	t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+	if (datosMetadata == NULL){
+		printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
+		exit(6);
+	}
+
+	return config_get_int_value(datosMetadata, "SIZE");
+}
+
 // Fijar los bloques del metadata.bin del pokemon a los dados
-void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
+void fijarBloquesA(char* pokemon, t_list* listaBloques){
 	char* metadataBin = "/Metadata.bin";
 
 	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
@@ -301,6 +326,31 @@ void fijarBloquesA(char* pokemon, char* pathFiles, t_list* listaBloques){
 	char* arrayBloques = crearStringArrayBloques(listaBloques);
 
 	config_set_value(datosMetadata, "BLOCKS", arrayBloques);
+
+	config_save(datosMetadata);
+}
+
+void fijarSizeA(char* pokemon, int sizeEnBytes){
+	char* metadataBin = "/Metadata.bin";
+
+	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
+
+	char* pathMetadataPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
+
+	strcpy(pathMetadataPokemon, pathFiles);
+	strcat(pathMetadataPokemon, "/");
+	strcat(pathMetadataPokemon, pokemon);
+	strcat(pathMetadataPokemon, metadataBin);
+
+	printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
+
+	t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+	char* sizeEnString;
+
+	asprintf(&sizeEnString, "%i", sizeEnBytes);
+
+	config_set_value(datosMetadata, "SIZE", sizeEnString);
 
 	config_save(datosMetadata);
 }
@@ -446,28 +496,26 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques, BLOCK_SIZE, pathBloques);
 
-	fijarBloquesA(pokemon, pathFiles, listaBloquesAOcupar);
-
-	// Falta modificar metadata.bin para tener los bloques
+	// Fijar el array BLOCKS a por ejemeplo [1,2,3]
+	fijarBloquesA(pokemon, listaBloquesAOcupar);
+	// Fijar el SIZE=35
+	fijarSizeA(pokemon, pesoEnBytes);
 
 }
 
 // Escribir las lineas en listaDatosBloques en los bloques listaBloquesAOcupar
 void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques, int BLOCK_SIZE, char* pathBloques){
-
-	// 1) Leer lista de bloques
-	// (para cada bloque) abrir numero correcto -> pegar datos correspondientes
-
 	if (list_size(listaBloquesAOcupar) != list_size(listaDatosBloques)){
 		printf("ERROR | La cantidad de bloques a escribir debe coincidir con la cantidad de datos a escribir");
 	}
 
 	int i;
 
+	// Se recorre la lista de bloques que se deben ocupar
 	for (i = 0 ; i < list_size(listaBloquesAOcupar) ; i++){
 		char* datoAEscribir = list_get(listaDatosBloques, i);
 		int* bloqueAOcupar = list_get(listaBloquesAOcupar, i);
-		printf("En el bloque %i se escribira el dato:%s\n", *bloqueAOcupar , datoAEscribir );
+		printf("En el bloque %i se escribira el dato:\n%s\n", *bloqueAOcupar , datoAEscribir );
 
 		escribirDatoEnBloque(datoAEscribir, *bloqueAOcupar, pathBloques);
 
@@ -504,7 +552,7 @@ void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
 
 	FILE* bloque = fopen( pathBloque , "w" );
 
-	fwrite(dato, strlen(dato), 1, bloque);
+	fwrite(dato, strlen(dato) + 1, 1, bloque);
 
 	fclose(bloque);
 
@@ -680,7 +728,7 @@ t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 	t_list* miLista = list_create();
 
 	while (listaDeChars[cantidadNumeros] != NULL){
-		printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
+		//printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
 		int charConvertido = atoi(listaDeChars[cantidadNumeros]);
 		list_add(miLista, &charConvertido);
 		cantidadNumeros++;
@@ -691,15 +739,11 @@ t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 
 char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int cantBytesALeer){
 
-	// logica para mañana: hacer esto de aca abajo. En teoria, un int es un char, asi que no deberia hacer falta convertir de int a char.
-	// https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c
 	char* pathDeArchivos = malloc(strlen(pathACarpetaBloques) + strlen(bloqueALeer) + 6); // 1 del /, 4 del .bin, 1 del fin de string
 	strcpy(pathDeArchivos, pathACarpetaBloques);
 	strcat(pathDeArchivos, "/");
 	strcat(pathDeArchivos, bloqueALeer);
 	strcat(pathDeArchivos, ".bin");
-
-	//printf("path: %s\n", pathDeArchivos);
 
 	char* datosLeidos = malloc(cantBytesALeer + 1);
 
@@ -718,8 +762,6 @@ char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int 
 
 	// cantidad a leer esta definido asi ya que la iteracion, y por ende la lógica detras de cual es el último bloque, se debe hacer en el loop.
 	// como el último bloque tiene menos cosas, este tiene que ser leido con un tamaño diferente.
-	// fclose
-	// return ""; //esto, obviamente, es lo que retornaría el fread.
 }
 
 int cantidadDeElementosEnArray(char** array){
@@ -803,14 +845,85 @@ void comenzarEscuchaGameBoy(){
 	close(socketoide);
 }
 
-//void mensajeNew(){
-//	crearPokemonSiNoExiste();
-//}
+// Pegar una nueva linea de pokemon al final de lineas
+char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas){
 
+	char* lineaParaAgregar = generarLineaCoordsPokemon(posX, posY, cantidad);
+
+	char* lineaARetornar = malloc(strlen(lineas) + strlen(lineaParaAgregar) + 1);
+
+	strcpy(lineaARetornar, lineas);
+	strcat(lineaARetornar, lineaParaAgregar);
+
+	printf("LineaARetornar: %s", lineaARetornar);
+
+	return lineaARetornar;
+}
+
+void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
+	crearPokemonSiNoExiste(pathFiles, pokemon);
+
+	// Realizar lo que corresponde para abrir el archivo metadata (marcarlo open=y)
+
+	if (hayAlgunBloque(pathFiles, pokemon)){
+		printf("Ya habia bloques, leyendo...");
+
+		char** bloques = leerBloques(pathFiles, pokemon);
+
+		int cantidadBytesALeer = leerSizePokemon(pokemon);
+
+		char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloques, cantidadBytesALeer, BLOCK_SIZE);
+
+		// Si no se encuentra la linea buscada entonces se debe agregar al final
+		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
+
+			printf("La linea NO fue encontrada... pegando al final\n");
+
+			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
+
+			t_list* listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
+
+			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon), BLOCK_SIZE);
+
+			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
+
+			if (cantidadBloquesRequeridos == cantidadBloquesActual){
+
+				// La cantidad se mantiene igual, solo escribir los bloques
+
+				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesActual, BLOCK_SIZE);
+
+				escribirLineasEnBloques(listaBloques, listaDatos, BLOCK_SIZE, pathBloques);
+
+				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+
+			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
+				// pedir los bloques necesarios
+				printf("Se necesitan mas bloques");
+			} else {
+				printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
+			}
+
+			//void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques, int BLOCK_SIZE, char* pathBloques){
+
+			// Calcular cantBloques ocupada por nuevas lineas
+			// si cantBloques == a bloques anteriores. lista de bloques se mantiene igual
+			// si cantBloques > a bloques anteriores. pedir lo necesario
+
+
+		} else {
+			printf("La linea fue encontrada, se la debe modificar...");
+			printf("Encontrada en la linea: %i", encontrarCoords(posX, posY, lineasLeidas));
+		}
+
+
+	} else {
+		printf("No habia bloques... generando de 0");
+		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
+	}
+}
 
 int main(void) {
-
-
 	t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
 	int TIEM_REIN_OPERACION;
@@ -828,22 +941,18 @@ int main(void) {
 	t_log* logger;
 	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
-
-
 	// puntoMontaje/Blocks
-	char* pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
+	pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
 	// puntoMontaje/Metadata
-	char* pathMetadata = crearCarpetaEn(PUNTO_MONTAJE, "/Metadata");
+	pathMetadata = crearCarpetaEn(PUNTO_MONTAJE, "/Metadata");
 	// puntoMontaje/Files
-	char* pathFiles = crearCarpetaEn(PUNTO_MONTAJE, "/Files");
+	pathFiles = crearCarpetaEn(PUNTO_MONTAJE, "/Files");
 
 	// Testing
     // printf("%s\n", pathBloques);
     // printf("%s\n", pathMetadata);
     // printf("%s\n", pathFiles);
 
-	int BLOCKS;
-	int BLOCK_SIZE;
 	char* MAGIC_NUMBER;
 	t_config* metadataBin = NULL;
 
@@ -865,11 +974,11 @@ int main(void) {
 
 	// -- Desde aca el filesystem ya está inicializado --
 
-	char* pikachu = "Pikachu";
-	crearPokemonSiNoExiste(pathFiles, pikachu);
-
-	char* bulbasaur = "Bulbasaur";
-	crearPokemonSiNoExiste(pathFiles, bulbasaur);
+//	char* pikachu = "Pikachu";
+//	crearPokemonSiNoExiste(pathFiles, pikachu);
+//
+//	char* bulbasaur = "Bulbasaur";
+//	crearPokemonSiNoExiste(pathFiles, bulbasaur);
 
 	// Vaciar un bloque del bitarray (hacerlo = 0)
 
@@ -877,21 +986,40 @@ int main(void) {
 	printf("Bitarray antes: \n");
 	printearBitArray(pathMetadata, BLOCKS);
 
-	if(hayAlgunBloque(pathFiles , pikachu) == 0){
-		// Escribe una linea por primera vez en un archivo vacio
-		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
-	} else {
-		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
-	}
+//	if(hayAlgunBloque(pathFiles , pikachu) == 0){
+//		// Escribe una linea por primera vez en un archivo vacio
+//		escribirLineaNuevaPokemon(pikachu, 300, 4, 10, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
+//	} else {
+//		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
+//	}
 
-	char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
+//	char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
+//
+//	int numLinea = encontrarCoords(15, 20, lineaDePrueba);
+//
+//	printf("La linea encontrada es: %i", numLinea);
 
-	int numLinea = encontrarCoords(15, 20, lineaDePrueba);
+	mensajeNew("Pikachu", 1,15,3);
+    mensajeNew("Pikachu", 1,14,3);
+	mensajeNew("Pikachu", 1,20,3);
+	mensajeNew("Pikachu", 1,21,3);
+	mensajeNew("Pikachu", 1,23,3);
+	mensajeNew("Pikachu", 1,5,3);
+	mensajeNew("Pikachu", 1,3,3);
+	mensajeNew("Pikachu", 1,7,3);
 
-	printf("La linea encontrada es: %i", numLinea);
+	mensajeNew("Pikachu", 32,5,3);
+	mensajeNew("Pikachu", 33,3,3);
+	mensajeNew("Pikachu", 34,7,3);
+
+//	char* bloque1 = "1";
+//
+//	char* bloqueLeido = leerContenidoDeUnBloque(pathBloques, bloque1, 8);
+//
+//	printf("Bloque leido: %s", bloqueLeido);
 
 	/*
-	//****************************************************************
+	// ****************************************************************
 
 	// Levanto hilo para escuchar broker
 	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
@@ -900,7 +1028,7 @@ int main(void) {
 
 	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
-	//****************************************************************
+	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
 
 	pthread_t hiloGameBoy;
@@ -913,8 +1041,8 @@ int main(void) {
 
 	*/
 
-	//****************************************************************
-	/*
+	// ****************************************************************
+
 	/* MANDAR MENSAJE A UNA COLA
 	Appeared* estructura = malloc(sizeof(Appeared));
 

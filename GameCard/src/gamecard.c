@@ -577,7 +577,9 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 	bytesRecibidos(recibidos);
 
+
 	while((recibidos == -1) || (desconexion == -1))
+
 	{
 		sleep(TIEM_REIN_CONEXION);
 		desconexion = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
@@ -593,7 +595,6 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	 	case NEW: ;
 			New* mensajeNew = malloc(sizeof(New));
 			recibir_mensaje(mensajeNew, cod_op, socket);
-
 			break;
 		case GET: ;
 			Get* mensajeGet = malloc(sizeof(Get));

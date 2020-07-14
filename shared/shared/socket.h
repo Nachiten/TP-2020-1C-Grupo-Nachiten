@@ -35,7 +35,7 @@ int32_t establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUERT
 void resultado_de_conexion(int32_t socket, t_log* logger, char* modulo); //enviarle el socket al que se intenta conectar, el logger y nombre del modulo al que intentamos conectar.
 void cerrar_conexion(int32_t socket); //se le da el socket y lo libera
 void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje,  int32_t socket_cliente); //se le da el mensaje, el tipo de mensaje que vamos a mandar y el socket que le dice donde mandarlo
-void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente); //recibe un mensaje
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* size); //recibe un mensaje
 void eliminar_paquete(t_paquete* paquete); //libera la memoria utilizada para manejar los paquetes
 
 

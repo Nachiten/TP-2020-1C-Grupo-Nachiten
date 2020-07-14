@@ -64,6 +64,7 @@ typedef struct {
 	int32_t id;
 	int32_t id_correlativo;
 	void* mensaje;
+	uint32_t tamanioMensaje;
 	t_list* subs; //lista de suscriptores
 }t_mensaje;
 
@@ -78,7 +79,7 @@ typedef struct {
 typedef struct {
 	uint32_t limiteSuperior;
 	uint32_t limiteInferior;
-	uint32_t estaLibre; //es un fucking booleano, meterle solo 0(ocupada) o 1(libre)
+	uint32_t estaLibre; //es un fucking booleano de cuarta, meterle solo 0(ocupada) o 1(libre)
 }particion;
 
 /*---->NO TOCAR!!!!<---- el "lista_particiones" al lado del "typedef struct", si se saca, aparece un error extraño donde la estructura
@@ -86,10 +87,17 @@ no se reconoce a si misma cuando queremos sus campos anterior y siguiente apunte
 typedef struct lista_particiones{
 	particion laParticion;
 	uint32_t numero_de_particion;
+	uint32_t numero_de_victima;
 	struct lista_particiones* anter_particion;
 	struct lista_particiones* sig_particion;
 }lista_particiones;
 
+typedef struct particionesCandidatas{
+	int32_t numero_de_particion;
+	uint32_t size_de_particion;
+	lista_particiones* puntero_a_particion_candidata;
+	struct particionesCandidatas* sig_candidata;
+}particionesCandidatas;
 
 // Structs para los tipos de mensaje ------------------------------------------------------------------------------------
 

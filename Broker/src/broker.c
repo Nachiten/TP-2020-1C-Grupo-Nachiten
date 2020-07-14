@@ -215,14 +215,17 @@ int main(void) {
 	//pesa 28
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
+	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
+	borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS);
+
 	//pesa 23
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//ESTE ES LOCALIZED, NO USAR
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, mensajePrueba4->tamanioMensaje, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 37
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, mensajePrueba5->tamanioMensaje, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, mensajePrueba5->tamanioMensaje, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 23
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
@@ -234,11 +237,11 @@ int main(void) {
 //	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
 //	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
 
-//	borrarReferenciaAParticion(particion0, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(particion1, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(particion2, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(particion3, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(particion4, &PARTICIONES_ELIMINADAS);
+//	borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS);
+//	borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS);
+//	borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS);
+//	borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS);
+//	borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
 
 
 	//para ver como quedan las particiones luego de "manosearlas"

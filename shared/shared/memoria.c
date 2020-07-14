@@ -135,7 +135,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	}
 
 	//mandamos la victima al matadero
-	borrarReferenciaAParticion(particionABorrar, PARTICIONES_ELIMINADAS);
+	borrarReferenciaAParticion(laLista, particionABorrar, PARTICIONES_ELIMINADAS);
 
 	//si frecuencia de compactacion es -1, 0 o 1 se compacta siempre
 	//sino, solo cuando la cantidad de particiones eliminadas sea igual a la frecuencia que piden
@@ -147,15 +147,15 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	}
 }
 
-void borrarReferenciaAParticion(lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
+void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	particionABorrar->laParticion.estaLibre = 1;
 	printf("\nLa particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
-	consolidarParticion(particionABorrar);
+	consolidarParticion(laLista, particionABorrar);
 }
 
-void consolidarParticion(lista_particiones* particionABorrar)
+void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar)
 {
 	uint32_t numPart = particionABorrar->numero_de_particion;
 	uint32_t numPartAnt = 0;
@@ -212,6 +212,16 @@ void consolidarParticion(lista_particiones* particionABorrar)
 				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
 				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
 			}
+			else
+			{
+				particionABorrar->sig_particion->anter_particion = NULL;
+			}
+
+			//si la particion que estoy a punto de borrar es a la que apunta la lista, tengo que hacer que la lista apunte a la siguiente
+			if(laLista == particionABorrar)
+			{
+				laLista = particionABorrar->sig_particion;
+			}
 
 			consolidado = 1;
 			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
@@ -226,7 +236,6 @@ void consolidarParticion(lista_particiones* particionABorrar)
 			numeroACorregir++;
 			correctorDeNumeros = correctorDeNumeros->sig_particion;
 		}
-
 		free(particionABorrar);
 	}
 }
@@ -340,7 +349,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
-		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
+		crear_particion(particionElegida, size, "PD");
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
@@ -380,6 +389,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				{
 					//hay que fletar una particion
 					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 			//no esta libre, hay que crear una particion nueva
@@ -426,7 +436,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
-		crear_particion(particionElegida, size, "PD");//ToDo puede la primera particion ser la unica, estar vacia y TENER un tamaño mayor a 0?????
+		crear_particion(particionElegida, size, "PD");
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones

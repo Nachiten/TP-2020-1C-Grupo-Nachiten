@@ -708,16 +708,26 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 		resultado = 1;
 	}
 
-	//no me sirve, si todavia hay espacio en memoria para meter algo...
-	if(punteroAAuxiliar->laParticion.limiteSuperior < tamanioMemoria)
+	else
 	{
-		//...veo si ese espacio me sirve
-		if(tamanioMemoria - punteroAAuxiliar->laParticion.limiteSuperior >= size)
+		//no me sirve, si todavia hay espacio en memoria para meter algo...
+		if(punteroAAuxiliar->laParticion.limiteSuperior < tamanioMemoria)
 		{
-			//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
-			*particionElegida = crear_particion(punteroAAuxiliar, size, "PD");
+			//...veo si ese espacio me sirve
+			if(tamanioMemoria - punteroAAuxiliar->laParticion.limiteSuperior >= size)
+			{
+				//el espacio que resta en memoria SI me alcanza, por lo que creo una particion nueva a continuacion de la particion en que estoy parado
+				*particionElegida = crear_particion(punteroAAuxiliar, size, "PD");
+			}
+			//el espacio que resta en memoria no me alcanza
+			else
+			{
+				puts("Desesperaos mortales, el fin se acerca.");
+				resultado = 0;
+			}
 		}
-		//el espacio que resta en memoria no me alcanza
+
+		//la memoria esta totalmente copada
 		else
 		{
 			puts("Desesperaos mortales, el fin se acerca.");
@@ -726,6 +736,7 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 	}
 	return resultado;
 }
+
 
 //ToDo actualizar los PONER EN PARTICION!!
 void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje)

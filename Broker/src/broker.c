@@ -221,8 +221,9 @@ int main(void) {
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, mensajePrueba4->tamanioMensaje, codigoPrueba4);
 
 	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
-	borrarReferenciaAParticion(particion1, &PARTICIONES_ELIMINADAS);
 	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
+
+	borrarReferenciaAParticion(particion1, &PARTICIONES_ELIMINADAS);
 	borrarReferenciaAParticion(particion2, &PARTICIONES_ELIMINADAS);
 
 	//pesa 37

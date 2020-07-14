@@ -49,6 +49,7 @@ char* TAMANIO_MEM;
 char* ALGOR_REEMPLAZO;
 uint32_t FRECUEN_COMPACT;
 uint32_t PARTICIONES_ELIMINADAS;
+uint32_t NUMERO_VICTIMA;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.

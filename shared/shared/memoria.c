@@ -110,7 +110,7 @@ void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t n
 }
 
 
-void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t PARTICIONES_ELIMINADAS, char* ALGORITMO_MEMORIA)
+void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* particionABorrar = laLista;
 	uint32_t masViejoUsado = particionABorrar->numero_de_victima;
@@ -140,10 +140,10 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	//si frecuencia de compactacion es -1, 0 o 1 se compacta siempre
 	//sino, solo cuando la cantidad de particiones eliminadas sea igual a la frecuencia que piden
 	//Y SI Y SOLO SI NO SE ESTA USANDO Bullshit System
-	if(((FRECUEN_COMPACT == -1) || (FRECUEN_COMPACT == 0) || (FRECUEN_COMPACT == 1) || (FRECUEN_COMPACT == PARTICIONES_ELIMINADAS)) && (strcmp(ALGORITMO_MEMORIA,"BS") != 0))
+	if(((FRECUEN_COMPACT == -1) || (FRECUEN_COMPACT == 0) || (FRECUEN_COMPACT == 1) || (FRECUEN_COMPACT == *PARTICIONES_ELIMINADAS)) && (strcmp(ADMIN_MEMORIA,"BS") != 0))
 	{
 		compactacion();
-		PARTICIONES_ELIMINADAS = 0;
+		*PARTICIONES_ELIMINADAS = 0;
 	}
 }
 
@@ -163,7 +163,12 @@ void consolidarParticion(lista_particiones* particionABorrar)
 	uint32_t resultado = 0;
 	uint32_t consolidado = 0;
 	lista_particiones* correctorDeNumeros = particionABorrar->anter_particion;
-	uint32_t numeroACorregir = particionABorrar->anter_particion->numero_de_particion;
+	uint32_t numeroACorregir = 0;
+
+	if(correctorDeNumeros != NULL)
+	{
+		numeroACorregir = particionABorrar->anter_particion->numero_de_particion;
+	}
 
 	if(particionABorrar->anter_particion != NULL)
 	{
@@ -226,7 +231,7 @@ void consolidarParticion(lista_particiones* particionABorrar)
 	}
 }
 
-void compactacion ()
+void compactacion()
 {
 	puts("todavia no hago un zorongo, asi q bye bye");
 	abort();
@@ -303,6 +308,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 			puts("La particion está en uso.");
 			espacioOcupado += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion ocupada, suma el espacio en uso
 		}
+		printf("Número de víctima: %u.\n", auxiliar->numero_de_victima);
 		printf("Límite inferior de la partición: %u.\n", auxiliar->laParticion.limiteInferior);
 		printf("Límite superior de la partición: %u.\n", auxiliar->laParticion.limiteSuperior);
 		puts("------------------------------------");
@@ -324,7 +330,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 	puts("---No se tuvo en cuenta la fragmentación interna durante el checkeo---\n");
 }
 
-lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
+lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
@@ -372,8 +378,8 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				//su espacio me alcanza?
 				if((tenemosEspacio(&auxiliar,&particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
 				{
-					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
-					//seleccionDeVictima();
+					//hay que fletar una particion
+					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 			//no esta libre, hay que crear una particion nueva
@@ -389,7 +395,8 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				//el espacio que resta en memoria NO me alcanza
 				else
 				{
-					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+					//hay que fletar una particion
+					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 		}
@@ -404,7 +411,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	return particionElegida;
 }
 
-lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size)
+lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
@@ -503,7 +510,8 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 			//el espacio que resta en memoria NO me alcanza
 			else
 			{
-				//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+				//hay que fletar una particion
+				seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 		}
 	}
@@ -579,6 +587,8 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 			if(encontreUnaParticionUtil != 1)
 			{
 				//ToDo time to call grim Reaper
+				//hay que fletar una particion
+				//seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				puts("eliminar no implementado");
 				abort();
 			}
@@ -648,6 +658,8 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 			else
 			{
 				//ToDo time to call grim Reaper
+				//hay que fletar una particion
+				//seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				puts("eliminar no implementado");
 				abort();
 			}
@@ -738,44 +750,44 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 }
 
 
-//ToDo actualizar los PONER EN PARTICION!!
-void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje)
+//ToDo Hay que agregar LOCALIZED
+void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA)
 {
 	switch(tipoMensaje)
 	{
 			case NEW:
-				poner_NEW_en_particion(CACHE, particionElegida, estructura);
+				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);//esto me causaria problemas? parece que no...
 				break;
 
 			case APPEARED:
 				//estructura = malloc (sizeof(Appeared));
-				poner_APPEARED_en_particion(CACHE, particionElegida, estructura);
+				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);
 				break;
 
 			case GET:
 				//estructura = malloc (sizeof(Get));
-				poner_GET_en_particion(CACHE, particionElegida, estructura);
+				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);
 				break;
 
 			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
 				/*estructura = malloc (sizeof(Localized));
-				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura);
+				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);
 				*/
 				break;
 
 			case CATCH:
 				//estructura = malloc (sizeof(Catch));
-				poner_CATCH_en_particion(CACHE, particionElegida, estructura);
+				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);
 				break;
 
 			case CAUGHT:
 				//estructura = malloc (sizeof(Caught));
-				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura);
+				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				free(estructura);
 				break;
 
@@ -800,7 +812,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 
 }
 
-void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura)
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -870,10 +882,13 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
 	*/
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura)
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -905,10 +920,13 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura)
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -932,10 +950,13 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura)
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -965,10 +986,13 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura)
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1000,10 +1024,13 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura)
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1031,6 +1058,9 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
@@ -1053,7 +1083,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 	}
 }
 
-void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, char* algorAdminMemoria, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje)
+void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, char* ADMIN_MEMORIA, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	lista_particiones* particionElegida;
 	uint32_t tamanioAAsignar = 0;
@@ -1062,7 +1092,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	puts("Agregando mensaje a Cache...");
 
 	//se administra con Particiones Dinamicas
-	if(strcmp(algorAdminMemoria, "PD") == 0)
+	if(strcmp(ADMIN_MEMORIA, "PD") == 0)
 	{
 		tamanioAAsignar =tamanioMinParticion;
 
@@ -1075,14 +1105,13 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 		//para poder meter el mensaje en Cache, primero hay que buscarle una particion
 		if(strcmp(algoritmoAsignacion,"FF") == 0)
 		{
-			particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar);
+			particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 		}
 		else
 		{
 			if(strcmp(algoritmoAsignacion,"BF") == 0)
 			{
-				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, tamanioAAsignar);
-				puts("Implementando...");
+				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 			else
 			{
@@ -1104,7 +1133,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	}
 
 	//ahora que tenemos la particion, metemos los datos
-	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje);
+	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA);
 
 //PASO 3: profit?
 }

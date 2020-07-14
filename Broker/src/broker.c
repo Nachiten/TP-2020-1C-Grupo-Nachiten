@@ -208,6 +208,12 @@ int main(void) {
 	mensajePrueba6->mensaje = pokemonCaught;
 	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
 
+	//para pruebas de borrado
+	lista_particiones* particion1 = hoja_de_particiones;
+	lista_particiones* particion2 = hoja_de_particiones->sig_particion;
+	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion;
+	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
+	lista_particiones* particion5 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
 
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba);
 
@@ -223,8 +229,11 @@ int main(void) {
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6);
 
 
-	//borrarReferenciaAParticion(hoja_de_particiones->sig_particion, PARTICIONES_ELIMINADAS);
-
+	//borrarReferenciaAParticion(particion1, PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(particion2, PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(particion3, PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(particion4, PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(particion5, PARTICIONES_ELIMINADAS);
 
 	//para ver como quedan las particiones luego de "manosearlas"
 	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);

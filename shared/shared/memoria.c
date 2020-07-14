@@ -109,13 +109,33 @@ void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t n
 	}
 }
 
-//ToDo
-void seleccionDeVictima(lista_particiones* particionABorrar, uint32_t FRECUEN_COMPACT, uint32_t PARTICIONES_ELIMINADAS, char* ALGOR_REEMPLAZO, char* ALGORITMO_MEMORIA)
+
+void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t PARTICIONES_ELIMINADAS, char* ALGORITMO_MEMORIA)
 {
-//	if(ALGOR_REEMPLAZO)??
-//	{
-		borrarReferenciaAParticion(particionABorrar, PARTICIONES_ELIMINADAS);
-//	}
+	lista_particiones* particionABorrar = laLista;
+	uint32_t masViejoUsado = particionABorrar->numero_de_victima;
+	uint32_t victima = 0;
+
+	//recorremos la lista hasta el final buscando una victima
+	while(particionABorrar != NULL)
+	{
+		//cuanto mas viejo fue su uso, mejor opcion como victima
+		if(particionABorrar->numero_de_victima < masViejoUsado)
+		{
+			victima = particionABorrar->numero_de_particion;
+			masViejoUsado = particionABorrar->numero_de_victima;
+		}
+		particionABorrar = particionABorrar->sig_particion;
+	}
+	particionABorrar = laLista;
+	//para este punto ya tenemos nuestra victima, solo hay que seleccionarla y mandarla a borrar
+	while(laLista->numero_de_particion != victima)
+	{
+		particionABorrar = particionABorrar->sig_particion;
+	}
+
+	//mandamos la victima al matadero
+	borrarReferenciaAParticion(particionABorrar, PARTICIONES_ELIMINADAS);
 
 	//si frecuencia de compactacion es -1, 0 o 1 se compacta siempre
 	//sino, solo cuando la cantidad de particiones eliminadas sea igual a la frecuencia que piden
@@ -344,6 +364,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				if((tenemosEspacio(&auxiliar,&particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
 				{
 					//ToDo ACA TENDRIA QUE ENTRAR COMPACTACION? COMPLETAR CUANDO ESTE CLARO QUE HACER SI NO HAY MANERA DE METER LOS DATOS
+					//seleccionDeVictima();
 				}
 			}
 			//no esta libre, hay que crear una particion nueva

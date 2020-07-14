@@ -226,50 +226,34 @@ char* separarCoord(char* unString){
 	return token;
 }
 
-// Obsoleto | Se debe modificar para que se lean los bloques apendeen y luego
-// realizar la misma logica pero con un char* con los datos, no de esta manera
-// Se debe agregar de buscar las coordenadas dentro de un pokemon
-// no dentro de bloque de prueba
-int encontrarCoords(int posX, int posY){
-	char* line;
-	size_t len = 0;
-	ssize_t read;
+// Retorna el numero de linea donde se encontro el pokemon, en caso de no encontrarlo devuelve -1
+int encontrarCoords(int posX, int posY, char* lineaABuscar){
+	// Primera linea = 0
 
-	FILE* fp = fopen("34.bin", "r");
-	if (fp == NULL)
-		exit(EXIT_FAILURE);
+	//char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
 
-	char* coords;
+	int numLinea = 0;
 
-	asprintf(&coords, "%i-%i" , posX, posY);
+	char** arrayLineas = string_split(lineaABuscar, "\n");
 
-	int lineaActual = 0;
-	int retorno = -1;
+	char* lineaActual;
+	while( (lineaActual = arrayLineas[numLinea]) != NULL){
 
-	//char* coordenadasLineaActual = "5-4=50";
+		printf("La linea es: %s\n", lineaActual);
 
-	while ( (read = getline(&line, &len, fp) ) != -1) {
-		printf("Longitud de linea: %i:\n", read);
-		printf("La linea es: %s\n", line);
+		char* lineaConvertidaABuscar;
+		char* lineaActualConvertida = separarCoord(lineaActual);
 
-		// La linea leida es las coordenadas que quiero encontrar
+		asprintf(&lineaConvertidaABuscar, "%i-%i", posX, posY);
 
-		char* coordenadasLineaActual = separarCoord(line);
-
-		if (strcmp( coordenadasLineaActual, coords ) == 0)
-		{
-			retorno = lineaActual;
+		if (strcmp(lineaConvertidaABuscar, lineaActualConvertida) == 0){
+			return numLinea;
 		}
 
-		lineaActual ++;
+		numLinea++;
 	}
 
-	printf("La cantidad de lineas totales es: %i", lineaActual);
-
-	fclose(fp);
-	free(line);
-
-	return retorno;
+	return -1;
 }
 
 // Lee los bloques del metadata.bin de un pokemon existente
@@ -594,16 +578,16 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	{
 	 	case NEW: ;
 			New* mensajeNew = malloc(sizeof(New));
-			recibir_mensaje(mensajeNew, cod_op, socket);
+			//recibir_mensaje(mensajeNew, cod_op, socket);
 			break;
 		case GET: ;
 			Get* mensajeGet = malloc(sizeof(Get));
-			recibir_mensaje(mensajeGet, cod_op, socket);
+			//recibir_mensaje(mensajeGet, cod_op, socket);
 
 			break;
 		case CATCH: ;
 			Catch* mensajeCatch = malloc(sizeof(Catch));
-			recibir_mensaje(mensajeCatch, cod_op, socket);
+			//recibir_mensaje(mensajeCatch, cod_op, socket);
 
 			break;
 		default:
@@ -623,7 +607,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		switch (cod_op) {
 		case NEW:
 			mensajeNew  = malloc(sizeof(New));
-			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
+			//recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 
 			//ya te llegaron los datos y llamas a tus funciones
 
@@ -632,8 +616,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case GET:
 			mensajeGet = malloc(sizeof(Get));
-			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
-
+			//recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			printf("Termine de recibir un mensaje GET\n");
 
 			//ya te llegaron los datos y llamas a tus funciones
@@ -641,7 +624,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
-			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
+			//recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 
 			printf("Termine de recibir un mensaje CATCH\n");
 
@@ -747,7 +730,7 @@ int cantidadDeElementosEnArray(char** array){
 	return i;
 }
 
-
+// bloquesALeer = BLOCKS cantidadALeerEnBytes = SIZE (del metadata.bin)
 char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALeer, int cantidadALeerEnBytes, int BLOCK_SIZE) {
 
 	char* stringARetornar = malloc(cantidadALeerEnBytes + 1);
@@ -819,6 +802,10 @@ void comenzarEscuchaGameBoy(){
 	escuchoSocket(socketoide); //escuchando al gameboy
 	close(socketoide);
 }
+
+//void mensajeNew(){
+//	crearPokemonSiNoExiste();
+//}
 
 
 int main(void) {
@@ -897,6 +884,13 @@ int main(void) {
 		printf("Ya hay bloques, se deben leer y apendear a memoria antes de proceder\n");
 	}
 
+	char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
+
+	int numLinea = encontrarCoords(15, 20, lineaDePrueba);
+
+	printf("La linea encontrada es: %i", numLinea);
+
+	/*
 	//****************************************************************
 
 	// Levanto hilo para escuchar broker
@@ -906,9 +900,8 @@ int main(void) {
 
 	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
-	// Levanto hilo para escuchar mensajes directos de gameboy
-
 	//****************************************************************
+	// Levanto hilo para escuchar mensajes directos de gameboy
 
 	pthread_t hiloGameBoy;
 
@@ -917,6 +910,8 @@ int main(void) {
 	// CIERRO HILOS
 	pthread_join(hiloBroker, NULL);
 	//pthread_join(hiloGameBoy, NULL);
+
+	*/
 
 	//****************************************************************
 	/*
@@ -929,66 +924,5 @@ int main(void) {
 	*/
 
 	//****************************************************************
-
-
-
-
-//	int i;
-//
-//	for (i = 0; i < list_size(listaBloques); i++){
-//		char* miString = list_get(listaBloques, i);
-//		printf("Elemento %i de la lista: %s", i, miString);
-//	}
-
-
-//	cantidadDeBloquesQueOcupa(10, BLOCK_SIZE); // block_size = 64 //1
-//	cantidadDeBloquesQueOcupa(64, BLOCK_SIZE); // 1
-//	cantidadDeBloquesQueOcupa(128, BLOCK_SIZE);
-//	cantidadDeBloquesQueOcupa(129, BLOCK_SIZE);
-
-
-//	int* item0 = list_get(unaLista, 0);
-//	int* item1 = list_get(unaLista, 1);
-//	int* item2 = list_get(unaLista, 2);
-//	int* item3 = list_get(unaLista, 3);
-//
-//	printf("Item 0: %i\n", *item0);
-//	printf("Item 1: %i\n", *item1);
-//	printf("Item 2: %i\n", *item2);
-//	printf("Item 3: %i\n", *item3);
-
-	// Testing de lista
-//   int* num1 = list_get(unaLista, 0);
-
-//	int* num2 = list_get(unaLista, 1);
-//	int* num3 = list_get(unaLista, 2);
-//	int* num4 = list_get(unaLista, 3);
-
-//  printf("%i", *num1);
-//	printf("%i", *num2);
-//	printf("%i", *num3);
-//	printf("%i", *num4);
-
-
-//	t_list* miLista = list_create();
-//	int num = 5;
-//	int num2 = 7;
-//
-//	list_add( miLista , &num );
-//	list_add(miLista, &num2);
-//
-//	int* item1 = list_get(miLista, 1);
-//
-//	printf("Item 0: %i\n", *item1);
-
-	//Cierre del programa
-//	free(pathBloques);
-//	free(pathMetadata);
-//	free(pathFiles);
-
-	// Si haces estos free explota.
-	//free(pikachu);
-	//free(bulbasaur);
-
 	return EXIT_SUCCESS;
 }

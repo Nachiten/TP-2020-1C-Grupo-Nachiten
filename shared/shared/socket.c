@@ -462,11 +462,13 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* size)
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* sizeDeLosDatos)
 {
+	int32_t size;
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
 
-	printf("Tamaño de lo que sigue en el buffer: %u.\n", *size);
+	printf("Tamaño de lo que sigue en el buffer: %u.\n", size);
+	*sizeDeLosDatos = size;
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);
 }

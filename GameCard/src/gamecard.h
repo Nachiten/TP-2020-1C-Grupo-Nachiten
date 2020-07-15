@@ -61,7 +61,7 @@ void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
 
-int cantidadDeBloquesQueOcupa(int, int);
+int cantidadDeBloquesQueOcupa(int);
 int encontrarCoords(int , int, char* );
 int existeCarpetaPokemon(char* , char* );
 int hayAlgunBloque(char* , char*);

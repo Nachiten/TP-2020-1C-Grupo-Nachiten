@@ -79,7 +79,7 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 }
 
 // Obtiene "cantidad" de bloques libres (bits = 0) del bitmap
-t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantidad){
+t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 	// Al meter un puntero en una lista si ese puntero cambia entonces cambia la lista. Porque guarda una referencia no una copia
 
 	t_list * listaNums = list_create();

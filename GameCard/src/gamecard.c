@@ -436,7 +436,7 @@ char* generarLineaCoordsPokemon(int posX, int posY, int cantidad){
 }
 
 // Devuelve la cantidad de bloques que necesito para un string a escribir
-int cantidadDeBloquesQueOcupa(int pesoEnBytes, int BLOCK_SIZE){
+int cantidadDeBloquesQueOcupa(int pesoEnBytes){
 
 	int cantBloques = 0;
 
@@ -483,10 +483,10 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 
 	int pesoEnBytes = strlen(lineaAEscribir);
 
-	int cantBloques = cantidadDeBloquesQueOcupa(pesoEnBytes, BLOCK_SIZE);
+	int cantBloques = cantidadDeBloquesQueOcupa(pesoEnBytes);
 
 	// Obtengo los bloques que necesito para guardar la info
-	t_list* listaBloquesAOcupar = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, cantBloques);
+	t_list* listaBloquesAOcupar = obtenerPrimerosLibresDeBitmap(cantBloques);
 
 	// Testing para ver que se asignen bien los bloques
 	// printf("Bitarray despues: \n");
@@ -622,20 +622,23 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 		}
 	}
 
+	uint32_t tamanioDatos;
+
 	switch (cod_op)
 	{
 	 	case NEW: ;
 			New* mensajeNew = malloc(sizeof(New));
-			//recibir_mensaje(mensajeNew, cod_op, socket);
+			recibir_mensaje(mensajeNew, cod_op, socket, &tamanioDatos);
+
 			break;
 		case GET: ;
 			Get* mensajeGet = malloc(sizeof(Get));
-			//recibir_mensaje(mensajeGet, cod_op, socket);
+			recibir_mensaje(mensajeGet, cod_op, socket, &tamanioDatos);
 
 			break;
 		case CATCH: ;
 			Catch* mensajeCatch = malloc(sizeof(Catch));
-			//recibir_mensaje(mensajeCatch, cod_op, socket);
+			recibir_mensaje(mensajeCatch, cod_op, socket, &tamanioDatos);
 
 			break;
 		default:
@@ -651,11 +654,12 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	New* mensajeNew;
 	Get* mensajeGet;
 	Catch* mensajeCatch;
+	uint32_t tamanioDatos;
 
 		switch (cod_op) {
 		case NEW:
 			mensajeNew  = malloc(sizeof(New));
-			//recibir_mensaje(mensajeNew, cod_op, socket_cliente);
+			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &tamanioDatos);
 
 			//ya te llegaron los datos y llamas a tus funciones
 
@@ -664,7 +668,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case GET:
 			mensajeGet = malloc(sizeof(Get));
-			//recibir_mensaje(mensajeGet, cod_op, socket_cliente);
+			recibir_mensaje(mensajeGet, cod_op, socket_cliente, &tamanioDatos);
 			printf("Termine de recibir un mensaje GET\n");
 
 			//ya te llegaron los datos y llamas a tus funciones
@@ -672,7 +676,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
-			//recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
+			recibir_mensaje(mensajeCatch, cod_op, socket_cliente, &tamanioDatos);
 
 			printf("Termine de recibir un mensaje CATCH\n");
 
@@ -711,11 +715,11 @@ void esperar_conexiones(int32_t socket_servidor)
 void escuchoSocket(int32_t miSocket)
 {
 	//acepto conexiones entrantes
-	struct sockaddr_in direccionConexionEntrante;
-	uint32_t tamanioConexionEntrante;
-	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
+	//struct sockaddr_in direccionConexionEntrante;
+	//uint32_t tamanioConexionEntrante;
+//	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
 
-	printf ("Me llego una conexion (GameBoy): %i", conexionEntrante);
+	//printf ("Me llego una conexion (GameBoy): %i", conexionEntrante);
 
 	while(1)
 	{
@@ -883,7 +887,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 	// Realizar lo que corresponde para abrir el archivo metadata (marcarlo open=y)
 
 	if (hayAlgunBloque(pathFiles, pokemon)){
-		printf("Ya habia bloques, leyendo...");
+		printf("Ya habia bloques, leyendo...\n");
 
 		char** bloques = leerBloques(pathFiles, pokemon);
 
@@ -892,8 +896,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloques, cantidadBytesALeer, BLOCK_SIZE);
 
 		// Si no se encuentra la linea buscada entonces se debe agregar al final
-		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
 
+		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
 			printf("La linea NO fue encontrada... pegando al final\n");
 
 			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
@@ -901,11 +905,9 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 			// TODO Esta lista de bloques queda rota al leer por alguna razon D:
 			t_list* listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
 
-			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon), BLOCK_SIZE);
+			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon));
 
 			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
-
-			t_list* bloquesExtraPedidos;
 
 			if (cantidadBloquesRequeridos == cantidadBloquesActual){
 
@@ -920,15 +922,17 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				// Cantidad de bloques extra que se deben pedir
 				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
 
-				printf("Cantidad extra a pedir: %i", cantidadBloquesExtra);
+				//printf("Cantidad extra a pedir: %i", cantidadBloquesExtra);
 
 				// Obtener libres de bitmap para llenar
-				bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(pathMetadata, BLOCKS, cantidadBloquesExtra);
+				t_list* bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
 
 				int i;
 
 				// Agrego los elementos de bloques extra en la lista de bloques actual
-				for ( i = 0; i< list_size(bloquesExtraPedidos) ; i++){
+				for ( i = 0; i< list_size(bloquesExtraPedidos) ; i++)
+				// En esta linea explota y magicamente la listaBloques pasa a tener fruta (sin tocarla)
+				{
 					list_add(listaBloques, list_get(bloquesExtraPedidos, i));
 				}
 
@@ -1041,19 +1045,19 @@ int main(void) {
 //
 //	printf("La linea encontrada es: %i", numLinea);
 
-	mensajeNew("Pikachu", 1,15,3);
-    mensajeNew("Pikachu", 1,14,3);
-	mensajeNew("Pikachu", 1,20,3);
-	mensajeNew("Pikachu", 1,21,3);
-	mensajeNew("Pikachu", 1,23,3);
-	mensajeNew("Pikachu", 1,5,3);
-	mensajeNew("Pikachu", 1,3,3);
-	mensajeNew("Pikachu", 1,7,3);
-	mensajeNew("Pikachu", 32,5,3);
+	mensajeNew("Jorge", 1,15,3);
+	mensajeNew("Jorge", 1,14,3);
+	mensajeNew("Jorge", 1,20,3);
+	mensajeNew("Jorge", 1,21,3);
+	mensajeNew("Jorge", 1,23,3);
+	mensajeNew("Jorge", 1,5,3);
+	mensajeNew("Jorge", 1,3,3);
+	mensajeNew("Jorge", 1,7,3);
+	mensajeNew("Jorge", 32,5,3);
 
 
-	mensajeNew("Pikachu", 33,3,3);
-	mensajeNew("Pikachu", 34,7,3);
+	mensajeNew("Jorge", 33,3,3);
+	mensajeNew("Jorge", 34,7,3);
 
 //	char* bloque1 = "1";
 //
@@ -1061,28 +1065,25 @@ int main(void) {
 //
 //	printf("Bloque leido: %s", bloqueLeido);
 
-	/*
 	// ****************************************************************
 
 	// Levanto hilo para escuchar broker
-	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
-
-	pthread_t hiloBroker;
-
-	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+//	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+//
+//	pthread_t hiloBroker;
+//
+//	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
 
-	pthread_t hiloGameBoy;
-
-	//pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
-
-	// CIERRO HILOS
-	pthread_join(hiloBroker, NULL);
-	//pthread_join(hiloGameBoy, NULL);
-
-	*/
+//	pthread_t hiloGameBoy;
+//
+//	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+//
+//	// CIERRO HILOS
+//	//pthread_join(hiloBroker, NULL);
+//	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************
 

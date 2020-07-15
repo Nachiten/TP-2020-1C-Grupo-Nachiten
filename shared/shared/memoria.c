@@ -150,12 +150,12 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	particionABorrar->laParticion.estaLibre = 1;
-	printf("\nLa particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
+	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
-	consolidarParticion(laLista, particionABorrar);
+	consolidarParticion(&laLista, particionABorrar);
 }
 
-void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar)
+void consolidarParticion(lista_particiones** laLista, lista_particiones* particionABorrar)
 {
 	uint32_t numPart = particionABorrar->numero_de_particion;
 	uint32_t numPartAnt = 0;
@@ -218,9 +218,9 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 			}
 
 			//si la particion que estoy a punto de borrar es a la que apunta la lista, tengo que hacer que la lista apunte a la siguiente
-			if(laLista == particionABorrar)
+			if(*laLista == particionABorrar)
 			{
-				laLista = particionABorrar->sig_particion;
+				*laLista = particionABorrar->sig_particion;
 			}
 
 			consolidado = 1;
@@ -1098,7 +1098,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	uint32_t tamanioAAsignar = 0;
 	uint32_t iterador = 0;
 
-	puts("Agregando mensaje a Cache...");
+	puts("Agregando mensaje a Cache...\n");
 
 	//se administra con Particiones Dinamicas
 	if(strcmp(ADMIN_MEMORIA, "PD") == 0)

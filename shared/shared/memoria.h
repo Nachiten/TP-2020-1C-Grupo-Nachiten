@@ -22,7 +22,7 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal); //arregla los numeros de particiones despues de que la aberracion de BS cree sus particiones
 void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ALGORITMO_MEMORIA); //selecciona la particion a ser eliminada
 void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
-void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar); //consolida particiones en caso que sea necesario
+void consolidarParticion(lista_particiones** laLista, lista_particiones* particionABorrar); //consolida particiones en caso que sea necesario
 void compactacion(); //compacta...
 lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA);//selecciona la primera particion que sirva y devuelve un puntero a esa particion

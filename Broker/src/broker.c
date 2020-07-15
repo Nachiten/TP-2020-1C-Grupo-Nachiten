@@ -107,9 +107,6 @@ int main(void) {
 	CACHE = malloc(TAMANIO_MEM);
 	puts("Malloc de memoria completo");
 
-
-
-
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA, TAMANIO_MEM);
 

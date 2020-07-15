@@ -864,7 +864,7 @@ char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas)
 	return lineaARetornar;
 }
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
+void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBloques, t_list* bloquesExtraPedidos){
 
 	// Checkeo de variables
 	if (pokemon == NULL){
@@ -898,12 +898,16 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		// Si no se encuentra la linea buscada entonces se debe agregar al final
 
 		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
+			/* TODO Fixear :)
+
 			printf("La linea NO fue encontrada... pegando al final\n");
 
 			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
 
 			// TODO Esta lista de bloques queda rota al leer por alguna razon D:
-			t_list* listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
+			listaBloques = malloc(sizeof(t_list));
+
+			listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
 
 			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon));
 
@@ -925,7 +929,9 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				//printf("Cantidad extra a pedir: %i", cantidadBloquesExtra);
 
 				// Obtener libres de bitmap para llenar
-				t_list* bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
+				bloquesExtraPedidos = malloc(sizeof(t_list));
+
+				bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
 
 				int i;
 
@@ -955,11 +961,25 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 			// Calcular cantBloques ocupada por nuevas lineas
 			// si cantBloques == a bloques anteriores. lista de bloques se mantiene igual
 			// si cantBloques > a bloques anteriores. pedir lo necesario
-
+			*/
 
 		} else {
 			printf("La linea fue encontrada, se la debe modificar...");
-			printf("Encontrada en la linea: %i", encontrarCoords(posX, posY, lineasLeidas));
+			// Se debe sumar el numero dado en "cantidad" en la linea que corresponde
+
+			// Retorna la linea donde esta las coordenadas
+			int lineaDePos = encontrarCoords(posX, posY, lineasLeidas);
+
+			// Genera la linea tipo 3-4=2\n
+			char* lineaGenerada = generarLineaCoordsPokemon(posX, posY, cantidad);
+
+			/*
+			    1- alocas memoria a un nuevo string que tenga el tamaño adecuado
+				2- usas strstr (o cual sea el nombre) para buscar la posicion (osea el puntero a memoria) de donde esta esa cosita en el string
+				3- creas un nuevo string desde el inicio hasta esa posicion de la cosita (en este caso,  hasta el = justo antes del nro), y le haces memcopy al string previamente creado
+				4- le haces concat al nuevo string del nro que necesitas
+				5- creas un nuevo string desde el /n hasta el fin, y le haces concat
+			 */
 		}
 
 
@@ -1045,19 +1065,22 @@ int main(void) {
 //
 //	printf("La linea encontrada es: %i", numLinea);
 
-	mensajeNew("Jorge", 1,15,3);
-	mensajeNew("Jorge", 1,14,3);
-	mensajeNew("Jorge", 1,20,3);
-	mensajeNew("Jorge", 1,21,3);
-	mensajeNew("Jorge", 1,23,3);
-	mensajeNew("Jorge", 1,5,3);
-	mensajeNew("Jorge", 1,3,3);
-	mensajeNew("Jorge", 1,7,3);
-	mensajeNew("Jorge", 32,5,3);
+	t_list* listaBloques = malloc(sizeof(t_list));
+	t_list* bloquesExtraPedidos = malloc(sizeof(t_list));
+
+	mensajeNew("Jorge", 1,15,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,14,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,20,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,21,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,23,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,5,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,3,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 1,7,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 32,5,3, listaBloques, bloquesExtraPedidos);
 
 
-	mensajeNew("Jorge", 33,3,3);
-	mensajeNew("Jorge", 34,7,3);
+	mensajeNew("Jorge", 33,3,3, listaBloques, bloquesExtraPedidos);
+	mensajeNew("Jorge", 34,7,3, listaBloques, bloquesExtraPedidos);
 
 //	char* bloque1 = "1";
 //

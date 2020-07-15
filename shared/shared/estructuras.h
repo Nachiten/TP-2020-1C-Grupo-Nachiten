@@ -66,6 +66,7 @@ typedef struct {
 	void* mensaje;
 	uint32_t tamanioMensaje;
 	t_list* subs; //lista de suscriptores
+	uint32_t particion; // de 0 en adelante
 }t_mensaje;
 
 typedef struct {

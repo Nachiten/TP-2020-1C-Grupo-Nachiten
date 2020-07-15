@@ -45,11 +45,14 @@ int32_t id_inicial;
 //Memoria del Broker
 void* CACHE;
 lista_particiones* hoja_de_particiones;
-char* TAMANIO_MEM;
+uint32_t TAMANIO_MEM;
 char* ALGOR_REEMPLAZO;
 uint32_t FRECUEN_COMPACT;
 uint32_t PARTICIONES_ELIMINADAS;
 uint32_t NUMERO_VICTIMA;
+uint32_t TAMANIO_MIN_PART;
+char* ADMIN_MEMORIA;
+char* ALGOR_ASIGN_PARTICION;
 
 // ***********servidor***********
 //Esta función arranca el servidor, solo hay que pasarle la IP y PUERTO en los que queremos que escuche.
@@ -60,8 +63,6 @@ void serve_client(int32_t *socket);//Está atento a si llega un mensaje o el soc
 void process_request(codigo_operacion cod_op, int32_t cliente_fd);//esta cosa administra segun el tipo de mensaje que llegó, a quien llama para que lo abra.
 
 // ***********funciones de broker***********
-void loggear_obligatorio(char* aLogear);
-void loggear_propio(char* aLogear);
 void inicializar_colas();
 void inicializar_semaforos();
 void llenar_listaColas();

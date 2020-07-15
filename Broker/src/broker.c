@@ -17,11 +17,10 @@ void mostrameMemoria(int32_t senial);
 int main(void) {
 
 	t_config* config;
-	//t_log* logger;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
-	id_inicial = 0;
+	id_inicial = -1;
 	inicializar_colas();
 	inicializar_semaforos();
 
@@ -73,11 +72,11 @@ int main(void) {
 //desde aca tengo lo de memoria (ToDo)
 
 	//va para declaraciones
-	uint32_t TAMANIO_MEM;
-	uint32_t TAMANIO_MIN_PART;
-	char* ADMIN_MEMORIA;
-	char* ALGOR_REEMPLAZO;
-	char* ALGOR_ASIGN_PARTICION;
+//	uint32_t TAMANIO_MEM;
+//	uint32_t TAMANIO_MIN_PART;
+//	char* ADMIN_MEMORIA;
+//	char* ALGOR_REEMPLAZO;
+//	char* ALGOR_ASIGN_PARTICION;
 	hoja_de_particiones = malloc(sizeof(lista_particiones));
 	PARTICIONES_ELIMINADAS = 0;
 	NUMERO_VICTIMA = 0;
@@ -112,7 +111,7 @@ int main(void) {
 
 
 	// *************************************************
-	//TESTING AGREGAR MENSAJES A CACHE
+/*	//TESTING AGREGAR MENSAJES A CACHE
 	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
 	codigo_operacion codigoPrueba2 = 2;
 	codigo_operacion codigoPrueba3 = 3;
@@ -246,7 +245,7 @@ int main(void) {
 
 
 	// *************************************************
-
+*/
 	//Arranco el Broker como servidor.
 	puts("Arrancando servidor Broker...\n");
 	iniciar_server(IP_BROKER, PUERTO_BROKER);
@@ -311,21 +310,10 @@ void inicializar_semaforos(){
 	sem_init(semCatch, 0, 1);
 	sem_init(semCaught, 0, 1);
 }
-
+//todo semaforo aca
 int32_t crear_id(){
-	return id_inicial++;
-}
-
-void loggear_propio(char* aLogear){
-	t_log* logger;
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/brokerPropio.log","BROKER");
-	log_info(logger, aLogear);
-}
-
-void loggear_obligatorio(char* aLogear){
-	t_log* logger;
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Broker/Logs/broker.log","BROKER");
-	log_info(logger, aLogear);
+	id_inicial += 1;
+	return id_inicial;
 }
 
 t_sub crear_sub(int32_t socket){
@@ -353,7 +341,6 @@ void suscribir(t_sub* sub,t_cola* cola){
 			t_mensaje* aux = malloc(sizeof(t_mensaje));
 			aux = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 			list_add(aux->subs,sub);
-			//free(aux);
 		}
 	}
 }
@@ -365,10 +352,8 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i);
 			if(mensaje->id_correlativo == id_correlativo){
-				//free(mensaje);
 				return -1;
 			}
-			//free(mensaje);
 		}
 	}
 	return 1;
@@ -378,7 +363,8 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaNew) != -1){
 		t_mensaje* new = malloc(sizeof(t_mensaje));
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -511,10 +497,7 @@ void mandar_mensajes_broker(t_cola* cola){
 				if(sub->recibido != 1 && sub->suscripto == 1){
 					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 				}
-				//free(sub);
 			}
-//			free(mensaje->mensaje);
-//			free(mensaje);
 		}
 	}
 }
@@ -537,10 +520,8 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 					sub->recibido = 1;
 					exit(EXIT_SUCCESS);
 				}
-				//free(sub);
 			}
 		}
-		//free(mensaje);
 	}
 }
 
@@ -626,7 +607,6 @@ void borrar_mensajes(t_cola* cola){
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
 void desuscribir(int32_t socket, t_cola* cola){
-	//t_sub* aux = malloc(sizeof(t_sub));
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
@@ -636,9 +616,7 @@ void desuscribir(int32_t socket, t_cola* cola){
 			if(sub->socket == socket){
 				sub->suscripto = 0;
 			}
-			//free(sub);
 		}
-		//free(mensaje);
 	}
 	for(int j = 0; j < cola->subs->elements_count; j++ ){ //avanza hasta el final de la cola subs
 		t_sub* sub = malloc(sizeof(t_sub));
@@ -646,7 +624,6 @@ void desuscribir(int32_t socket, t_cola* cola){
 		if(sub->socket == socket){
 			sub->suscripto = 0;
 		}
-		//free(sub);
 	}
 }
 
@@ -675,9 +652,11 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semNew);
+			//todo agregar a memoria
+			//todo agregar funcion que calcule el tamaño(mensaje NEW)
+			//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensaje, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_new(mensajeNew,sizeMensaje);
 			sem_post(semNew);
-			//free(mensajeNew); // cuando libero esto????
 			break;
 		case APPEARED:
 			mensajeAppeared = malloc(sizeof(Appeared));
@@ -686,7 +665,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sem_wait(semAppeared);
 			agregar_mensaje_appeared(mensajeAppeared,sizeMensaje);
 			sem_post(semAppeared);
-			//free(mensaje);
 			break;
 		case GET:
 			mensajeGet = malloc(sizeof(Get));
@@ -695,7 +673,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			agregar_mensaje_get(mensajeGet,sizeMensaje);
 			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semGet);
-			//free(mensaje);
 			break;
 		case LOCALIZED:
 			mensajeLocalized = malloc(sizeof(Localized));
@@ -704,7 +681,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			agregar_mensaje_localized(mensajeLocalized,sizeMensaje);
 			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semLocalized);
-			//free(mensaje);
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
@@ -713,7 +689,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sem_wait(semCatch);
 			agregar_mensaje_catch(mensajeCatch,sizeMensaje);
 			sem_post(semCatch);
-			//free(mensaje);
 			break;
 		case CAUGHT:
 			mensajeCaught = malloc(sizeof(Caught));
@@ -722,7 +697,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sem_wait(semCaught);
 			agregar_mensaje_caught(mensajeCaught,sizeMensaje);
 			sem_post(semCaught);
-			//free(mensaje);
 			break;
 		case SUSCRIPCION:
 			mensaje = malloc(sizeof(Suscripcion));

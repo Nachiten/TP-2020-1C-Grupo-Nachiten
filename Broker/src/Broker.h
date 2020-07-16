@@ -78,7 +78,7 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
 void agregar_sub(int32_t socket, t_cola* cola);
 void mandar_mensajes_broker(t_cola* cola);
-void borrar_datos(t_cola cola, t_mensaje* mensaje);
+void borrar_datos(t_cola* cola, t_mensaje* mensaje);
 void borrar_datos_new(New* mensaje);
 void borrar_datos_appeared(Appeared* mensaje);
 void borrar_datos_get(Get* mensaje);

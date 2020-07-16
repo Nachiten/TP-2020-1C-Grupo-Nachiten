@@ -17,5 +17,6 @@
 #include"shared/estructuras.h"
 #include"shared/utilidades.h"
 
+void hilo_recibir_mensajes(Hilo* estructura);
 
 #endif /* SRC_GAMEBOY_H_ */

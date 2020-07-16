@@ -18,7 +18,9 @@
 
 typedef struct {
 	void* mensaje;
+	int32_t cod_op;
 	int32_t conexion;
+	uint32_t size;
 } Hilo;
 
 //estructuras que usa socket ------------------------------------------------------------------------------------

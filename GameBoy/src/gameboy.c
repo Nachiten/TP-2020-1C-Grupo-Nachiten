@@ -376,10 +376,7 @@ int main(int cantArg, char* arg[]) {
 						uint32_t sizeMensaje = 0;
 						pthread_t hilo;
 						New* mensajeNew = malloc(sizeof(New));
-						codigo_operacion cod_op;
-						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
 						Hilo estructura;
-						estructura.cod_op = cod_op;
 						estructura.conexion = socket;
 						estructura.mensaje = mensajeNew;
 						estructura.size = sizeMensaje;
@@ -428,6 +425,8 @@ int main(int cantArg, char* arg[]) {
 
 void hilo_recibir_mensajes(Hilo* estructura){
 	while(1){
-		recibir_mensaje(estructura->mensaje,estructura->cod_op,estructura->conexion, &estructura->size);
+		codigo_operacion cod_op;
+		bytesRecibidos(recv(&estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
+		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
 	}
 }

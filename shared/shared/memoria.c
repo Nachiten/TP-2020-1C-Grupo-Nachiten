@@ -120,7 +120,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	while(particionABorrar != NULL)
 	{
 		//cuanto mas viejo fue su uso, mejor opcion como victima
-		if(particionABorrar->numero_de_victima < masViejoUsado)
+		if((particionABorrar->numero_de_victima < masViejoUsado) && particionABorrar->laParticion.estaLibre != 1)
 		{
 			victima = particionABorrar->numero_de_particion;
 			masViejoUsado = particionABorrar->numero_de_victima;
@@ -129,7 +129,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	}
 	particionABorrar = laLista;
 	//para este punto ya tenemos nuestra victima, solo hay que seleccionarla y mandarla a borrar
-	while(laLista->numero_de_particion != victima)
+	while(particionABorrar->numero_de_particion != victima)
 	{
 		particionABorrar = particionABorrar->sig_particion;
 	}

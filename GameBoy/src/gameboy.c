@@ -373,6 +373,9 @@ int main(int cantArg, char* arg[]) {
 						log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
 
+						//listen(socket, SOMAXCONN);
+
+
 						uint32_t sizeMensaje = 0;
 						pthread_t hilo;
 						New* mensajeNew = malloc(sizeof(New));
@@ -380,14 +383,16 @@ int main(int cantArg, char* arg[]) {
 						estructura.conexion = socket;
 						estructura.mensaje = mensajeNew;
 						estructura.size = sizeMensaje;
+
 						pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+						//pthread_join(hilo,NULL);
 
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-						sleep(cambia_a_int(arg[3]));
-						pthread_detach(hilo);
+						//sleep(cambia_a_int(arg[3]));
+						//pthread_detach(hilo);
 
 						//mandamos el mensaje pidiendo dessuscribirse a la cola
-						mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+						//mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
 
 						//libero las estructuras que acabo de crear
 						free(estructuraSuscribirse);
@@ -402,20 +407,6 @@ int main(int cantArg, char* arg[]) {
 				socket = establecer_conexion("127.0.0.1","99999");
 				break;
 	}
-	/* era para mandar mensaje de prueba, ya no esta implementado
-	//Enviamos mensaje de prueba
-	mandar_mensaje("1 2 3 probando...\n", TEST, socket);
-	*/
-
-
-	/* antiguo, posiblemente obsoleto, revisar antes de querer usar
-	uint32_t size;
-	//Para recibir mensajes (coming soon)
-	mensaje_recibido = recibir_mensaje(socket, size);
-	log_info(logger, mensaje_recibido);
-	*/
-
-
 
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);
@@ -424,9 +415,19 @@ int main(int cantArg, char* arg[]) {
 }
 
 void hilo_recibir_mensajes(Hilo* estructura){
-	while(1){
+	uint32_t control = 1;
+	int32_t tamanioRecibido = 0;
+
+	while(control == 1 || tamanioRecibido != 0)
+	{
+		control = 0;
 		codigo_operacion cod_op;
-		bytesRecibidos(recv(&estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
+
+		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
+		bytesRecibidos(tamanioRecibido);
+
 		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
+		sleep(5);
 	}
+
 }

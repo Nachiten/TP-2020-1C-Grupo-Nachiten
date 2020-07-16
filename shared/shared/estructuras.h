@@ -142,7 +142,7 @@ typedef struct LocalizedPokemon // INCOMPLETO
 	char* nombrePokemon;
 
 	uint32_t cantPosciciones;
-	Coords* posPokemones;
+	Coords* posPokemones; //esto tiene que ser una lista/array o algo, no podemos mandar un puntero ToDo
 
 	int32_t ID;
 	int32_t corrID;//si no tienen ninguno pongan -2

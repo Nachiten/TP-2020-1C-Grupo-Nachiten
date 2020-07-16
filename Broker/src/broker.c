@@ -128,12 +128,14 @@ int main(void) {
 
 	New* pokemonNew = malloc(sizeof(New));
 
+	//pokemonNew->nombrePokemon = malloc(10);
+	//todo probar sin malloc
 	pokemonNew->nombrePokemon = "pikachu";
 	pokemonNew->largoNombre = strlen(pokemonNew->nombrePokemon);
-	pokemonNew->posPokemon.x = 1;
-	pokemonNew->posPokemon.y = 1;
+	pokemonNew->posPokemon.x = 5;
+	pokemonNew->posPokemon.y = 6;
 	pokemonNew->cantPokemon = 1;
-	pokemonNew->ID = 30;
+	pokemonNew->ID = 5;
 	pokemonNew->corrID = 4;
 
 	Appeared* pokemonAppeared = malloc(sizeof(Appeared));
@@ -163,14 +165,14 @@ int main(void) {
 	pokemonCatch->largoNombre = strlen(pokemonGet->nombrePokemon);
 	pokemonCatch->posPokemon.x = 1;
 	pokemonCatch->posPokemon.y = 1;
-	pokemonCatch->ID = 12;
+	pokemonCatch->ID = 102;
 	pokemonCatch->corrID = 12;
 
 	Caught* pokemonCaught = malloc(sizeof(Caught));
 	pokemonCaught->nombrePokemon = "Catch";
 	pokemonCaught->largoNombre = strlen(pokemonGet->nombrePokemon);
 	pokemonCaught->pudoAtrapar = 1;
-	pokemonCaught->ID = 12;
+	pokemonCaught->ID = 22;
 	pokemonCaught->corrID = 12;
 
 	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
@@ -206,7 +208,7 @@ int main(void) {
 	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
 
 	//pesa 32
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 28
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
@@ -237,10 +239,10 @@ int main(void) {
 //	borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de lectura
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, pokemonNew, pokemonNew->ID, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, pokemonNew, pokemonNew->ID, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 
 	//para ver como quedan las particiones luego de "manosearlas"
-	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
+	//revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 
 
 	// *************************************************
@@ -494,6 +496,10 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
+//			if(1/*funcionComparar(mensaje, cola); //si la ID de mensaje es != a la de mensaje->mensaje devuelve 0, sino 1*/) toDo
+//			{
+//				sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//			}
 			for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
 				t_sub* sub = malloc(sizeof(t_sub));
 				sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
@@ -530,7 +536,6 @@ void borrar_datos(t_cola* cola, t_mensaje* mensaje){
 }
 
 void borrar_datos_new(New* mensaje){
-	mensaje->ID = -10;
 	mensaje->cantPokemon = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
@@ -540,7 +545,6 @@ void borrar_datos_new(New* mensaje){
 }
 
 void borrar_datos_appeared(Appeared* mensaje){
-	mensaje->ID = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
@@ -549,14 +553,12 @@ void borrar_datos_appeared(Appeared* mensaje){
 }
 
 void borrar_datos_get(Get* mensaje){
-	mensaje->ID = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 }
 
 void borrar_datos_localized(Localized* mensaje){
-	mensaje->ID = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
@@ -565,7 +567,6 @@ void borrar_datos_localized(Localized* mensaje){
 }
 
 void borrar_datos_catch(Catch* mensaje){
-	mensaje->ID = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
@@ -574,7 +575,6 @@ void borrar_datos_catch(Catch* mensaje){
 }
 
 void borrar_datos_caught(Caught* mensaje){
-	mensaje->ID = -10;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
@@ -731,9 +731,13 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semNew);
-			//todo agregar a memoria
 			//todo tamaño = funcionQueCalculaElTamañoDelMensaje(mensajeNew); //mandar ese tamaño a agregar_mensaje_a_Cache()
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensaje, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+
+			//borrar_datos_new(mensajeNew);
+			//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajeNew, mensajeNew->ID, cod_op, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+
+
 			agregar_mensaje_new(mensajeNew,sizeMensaje);
 			sem_post(semNew);
 			break;
@@ -898,11 +902,9 @@ void esperar_cliente(int32_t socket_servidor)
 {
 	struct sockaddr_in dir_cliente;
 
-	// Entero lindo para el socket (es un int)
 	socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
 	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
-	//accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
 	pthread_detach(thread);

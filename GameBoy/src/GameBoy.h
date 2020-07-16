@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include<pthread.h>
+#include <pthread.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"

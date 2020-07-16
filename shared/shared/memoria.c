@@ -1221,36 +1221,41 @@ void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 	//PARA PROBAR LECTURA DE CACHE
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
 
-	uint32_t mostrar_numero = 0;
+	//uint32_t mostrar_numero = 0;
 	char* mostrar_texto = malloc(10);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	//memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
 	desplazamiento += sizeof(estructura->largoNombre);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("largo nombre: %u\n", estructura->largoNombre);
 
 	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
+	//memcpy(estructura->nombrePokemon, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	estructura->nombrePokemon = mostrar_texto;
 	desplazamiento += estructura->largoNombre+1;
-	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	//memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	memcpy(&estructura->posPokemon.x, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
 	desplazamiento += sizeof(estructura->posPokemon.x);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("pos X: %u\n", estructura->posPokemon.x);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	memcpy(&estructura->posPokemon.y, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("pos Y: %u\n", estructura->posPokemon.y);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
+	memcpy(&estructura->cantPokemon, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
 	desplazamiento += sizeof(estructura->cantPokemon);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("cantidad: %u\n", estructura->cantPokemon);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->ID));
+	memcpy(&estructura->ID, CACHE + desplazamiento, sizeof(estructura->ID));
 	desplazamiento += sizeof(estructura->ID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("ID: %u\n", estructura->ID);
 
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->corrID));
+	memcpy(&estructura->corrID, CACHE + desplazamiento, sizeof(estructura->corrID));
 	desplazamiento += sizeof(estructura->corrID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+	printf("ID CORR: %i\n", estructura->corrID);
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
@@ -1275,6 +1280,7 @@ void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estru
 	else
 	{
 		puts("Los datos del mensaje ya no se encuentran en CACHE.");
+		//devolver 0 si no esta en memoria, 1 si la encontro
 	}
 }
 

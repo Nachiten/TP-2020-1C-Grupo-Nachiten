@@ -791,38 +791,38 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	{
 			case NEW:
 				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);//esto me causaria problemas? parece que no...
+				//free(estructura);//esto me causaria problemas? parece que no...
 				break;
 
 			case APPEARED:
 				//estructura = malloc (sizeof(Appeared));
 				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);
+				//free(estructura);
 				break;
 
 			case GET:
 				//estructura = malloc (sizeof(Get));
 				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);
+				//free(estructura);
 				break;
 
 			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
 				/*estructura = malloc (sizeof(Localized));
 				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);
+				//free(estructura);
 				*/
 				break;
 
 			case CATCH:
 				//estructura = malloc (sizeof(Catch));
 				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);
+				//free(estructura);
 				break;
 
 			case CAUGHT:
 				//estructura = malloc (sizeof(Caught));
 				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				free(estructura);
+				//free(estructura);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -882,42 +882,11 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
-	/*//PARA PROBAR LECTURA DE CACHE
-	uint32_t mostrar_numero = 0;
-	char* mostrar_texto = malloc(10);
-	desplazamiento = 0;
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
-	desplazamiento += sizeof(estructura->largoNombre);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-
-	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
-	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
-	desplazamiento += sizeof(estructura->posPokemon.x);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
-	desplazamiento += sizeof(estructura->posPokemon.y);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
-	desplazamiento += sizeof(estructura->cantPokemon);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-
-	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
-	*/
-
+	//aumento su numero de victima
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -1174,73 +1143,140 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 //PASO 3: profit?
 }
 
+lista_particiones* buscarLaParticionDelMensaje(lista_particiones* laLista, int32_t ID_MENSAJE, int32_t* particionEncontrada)
+{
+	lista_particiones* auxiliar = laLista;
 
-//void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, uint32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
-//{
-//	lista_particiones* particionDelMensaje;
-//
-//	//particionDelMensaje = buscarLaParticionDelMensaje(laLista, ID_MENSAJE);
-//	sacar_de_particion(CACHE, particionDelMensaje, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//}
-//
-//void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
-//{
-//	switch(tipoMensaje)
-//	{
-//			case NEW:
-//				//sacar_NEW_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA);
-//				free(estructura);//esto me causaria problemas?
-//				break;
-//
-//			case APPEARED:
-//				//estructura = malloc (sizeof(Appeared));
-//				//poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-//				free(estructura);
-//				break;
-//
-//			case GET:
-//				//estructura = malloc (sizeof(Get));
-//				//poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-//				free(estructura);
-//				break;
-//
-//			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
-//				/*estructura = malloc (sizeof(Localized));
-//				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-//				free(estructura);
-//				*/
-//				break;
-//
-//			case CATCH:
-//				//estructura = malloc (sizeof(Catch));
-//				//poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-//				free(estructura);
-//				break;
-//
-//			case CAUGHT:
-//				//estructura = malloc (sizeof(Caught));
-//				//poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-//				free(estructura);
-//				break;
-//
-//			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
-//				break;
-//
-//			case DESSUSCRIPCION:
-//				break;
-//
-//			case TEST://que se joda test
-//				break;
-//
-//			case DESCONEXION:
-//				break;
-//
-//			case ERROR:
-//				break;
-//
-//			case CONFIRMACION:
-//				break;
-//	}
-//}
-//
+	while(auxiliar != NULL && *particionEncontrada == -1)
+	{
+		if(auxiliar->ID_MENSAJE_GUARDADO == ID_MENSAJE)
+		{
+			*particionEncontrada = 1;
+			printf("Los datos del mensaje ID: %u fueron encontrados en la partición %u.\n", ID_MENSAJE, auxiliar->numero_de_particion);
+		}
+		else
+		{
+			auxiliar = auxiliar->sig_particion;
+		}
+	}
+	return auxiliar;
+}
+
+void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	switch(tipoMensaje)
+	{
+			case NEW:
+				sacar_NEW_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				break;
+
+			case APPEARED:
+				//estructura = malloc (sizeof(Appeared));
+				//poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				break;
+
+			case GET:
+				//estructura = malloc (sizeof(Get));
+				//poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				break;
+
+			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
+				/*estructura = malloc (sizeof(Localized));
+				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				*/
+				break;
+
+			case CATCH:
+				//estructura = malloc (sizeof(Catch));
+				//poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				break;
+
+			case CAUGHT:
+				//estructura = malloc (sizeof(Caught));
+				//poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				break;
+
+			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+				break;
+
+			case DESSUSCRIPCION:
+				break;
+
+			case TEST://que se joda test
+				break;
+
+			case DESCONEXION:
+				break;
+
+			case ERROR:
+				break;
+
+			case CONFIRMACION:
+				break;
+	}
+}
+
+void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje, New* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//PARA PROBAR LECTURA DE CACHE
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	uint32_t mostrar_numero = 0;
+	char* mostrar_texto = malloc(10);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
+	desplazamiento += estructura->largoNombre+1;
+	printf("lo que tiene la variable mostrar_texto es: %s\n", mostrar_texto);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
+	desplazamiento += sizeof(estructura->cantPokemon);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->ID));
+	desplazamiento += sizeof(estructura->ID);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->corrID));
+	desplazamiento += sizeof(estructura->corrID);
+	printf("lo que tiene la variable mostrar_numero es: %u\n", mostrar_numero);
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	lista_particiones* particionDelMensaje;
+	int32_t particionEncontrada = -1;
+
+	puts("Buscando mensaje en CACHE...");
+	particionDelMensaje = buscarLaParticionDelMensaje(laLista, ID_MENSAJE, &particionEncontrada);
+
+	if(particionEncontrada == 1)
+	{
+		sacar_de_particion(CACHE, particionDelMensaje, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	}
+
+	else
+	{
+		puts("Los datos del mensaje ya no se encuentran en CACHE.");
+	}
+}
+
+
 

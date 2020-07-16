@@ -89,6 +89,7 @@ typedef struct lista_particiones{
 	particion laParticion;
 	uint32_t numero_de_particion;
 	uint32_t numero_de_victima;
+	int32_t ID_MENSAJE_GUARDADO;
 	struct lista_particiones* anter_particion;
 	struct lista_particiones* sig_particion;
 }lista_particiones;

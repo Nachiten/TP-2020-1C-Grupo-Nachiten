@@ -68,6 +68,9 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 
 	char* BITARRAY = malloc(BLOCKS / 8);
 
+	// Se espera el semaforo antes de leer el bitarray
+	sem_wait(semBitmap);
+
 	leerBitArrayDeArchivo(pathMetadata, &BITARRAY, BLOCKS);
 
 	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
@@ -75,6 +78,9 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 	bitarray_clean_bit(bitArrayBloques, index);
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+
+	// Se hace el signal luego dde guardar el bitarray en archivo
+	sem_post(semBitmap);
 
 }
 
@@ -85,6 +91,9 @@ t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 	t_list * listaNums = list_create();
 
 	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+
+	// Se espera el semaforo antes de leer el bitarray
+	sem_wait(semBitmap);
 
 	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
 
@@ -124,16 +133,8 @@ t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY_ARCHIVO, BLOCKS);
 
-//	t_list* miLista = list_create();
-//
-//	int num = 5;
-//	int num2 = 7;
-//
-//	list_add(miLista, &num);
-//	list_add(miLista, &num2);
-
-	// WHAT. Todos quedan como 129 por alguna razon mistica
-
+	// Se hace el signal luego dde guardar el bitarray en archivo
+	sem_post(semBitmap);
 
 	return listaNums;
 }

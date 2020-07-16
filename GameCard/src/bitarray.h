@@ -9,6 +9,8 @@
 #define SRC_BITARRAY_H_
 #include "gamecard.h"
 
+sem_t* semBitmap;
+
 // BITARRAY
 void printearBitArray(char*, int);
 void guardarBitArrayEnArchivo(char* , char* , int );

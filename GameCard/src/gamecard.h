@@ -25,6 +25,7 @@
 // Header files mios
 #include "bitarray.h"
 #include "iniciarFS.h"
+#include "semaforos.h"
 
 char* pathBloques;
 char* pathMetadata;
@@ -32,11 +33,12 @@ char* pathFiles;
 int BLOCKS;
 int BLOCK_SIZE;
 
-typedef struct PosicionPokemon{
-	int posX;
-	int posY;
-	int cantidad;
-}posPokemon;
+typedef struct semaforoPokemon{
+	sem_t* semaforo;
+	char* nombrePokemon;
+}semPokemon;
+
+t_list* listaSemPokemon;
 
 typedef struct datosHiloBroker{
 	char* IP_BROKER;
@@ -49,13 +51,13 @@ void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE s
 void esperar_conexiones(int32_t socket_servidor);
 
 
-void crearCarpetaPokemon(char*, char*);
+void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);
-void crearMetadataPokemon(char*, char*);
-void crearPokemonSiNoExiste(char* , char* );
-void escribirDatoEnBloque(char*, int, char*);
-void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
-void escribirLineasEnBloques(t_list*, t_list*, int, char*);
+void crearMetadataPokemon(char*);
+void crearPokemonSiNoExiste(char* );
+void escribirDatoEnBloque(char*, int);
+void escribirLineaNuevaPokemon(char*, int, int, int);
+void escribirLineasEnBloques(t_list*, t_list*);
 void fijarBloquesA(char*, t_list*);
 void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
@@ -63,15 +65,15 @@ void leerUnPokemon(char*, char*);
 
 int cantidadDeBloquesQueOcupa(int);
 int encontrarCoords(int , int, char* );
-int existeCarpetaPokemon(char* , char* );
+int existeCarpetaPokemon(char* );
 int hayAlgunBloque(char* , char*);
 
 char* crearStringArrayBloques(t_list*);
 char* generarLineaCoordsPokemon(int, int, int);
 char* separarCoord(char* );
 
-char** leerBloques(char* , char*);
+char** leerBloques(char*);
 
-t_list* separarStringEnBloques(char*, int, int);
+t_list* separarStringEnBloques(char*, int);
 
 #endif /* SRC_GAMECARD_H_ */

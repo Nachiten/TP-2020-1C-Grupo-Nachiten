@@ -101,7 +101,7 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 }
 
 // Checkear si existe un determinado pokemon dentro de la carpeta Files/
-int existeCarpetaPokemon(char* pathFiles, char* pokemon){
+int existeCarpetaPokemon(char* pokemon){
 
 	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
 
@@ -132,7 +132,7 @@ int existeCarpetaPokemon(char* pathFiles, char* pokemon){
 }
 
 // Crear la carpeta de un nuevo pokemon dentro de Files/pokemon
-void crearCarpetaPokemon(char* pathFiles, char* pokemon){
+void crearCarpetaPokemon(char* pokemon){
 
 	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
 
@@ -148,7 +148,7 @@ void crearCarpetaPokemon(char* pathFiles, char* pokemon){
 }
 
 // Crea el Metadata.bin default de una carpeta Pokemon ya creada
-void crearMetadataPokemon(char* pathFiles, char* pokemon){
+void crearMetadataPokemon(char* pokemon){
 	// pathCompleto = pathFiles/pokemon/metadata.bin
 	char* pathMetadata = "/Metadata.bin";
 
@@ -205,11 +205,12 @@ void crearMetadataCarpeta(char* pathCarpeta){
 	free(pathCompleto);
 }
 
-void crearPokemonSiNoExiste(char* pathFiles, char* pokemon){
-	if (!existeCarpetaPokemon(pathFiles, pokemon)){
-		printf("No existie la carpeta: %s. Creando...\n", pokemon);
-		crearCarpetaPokemon(pathFiles, pokemon);
-		crearMetadataPokemon(pathFiles, pokemon);
+void crearPokemonSiNoExiste(char* pokemon){
+	if (!existeCarpetaPokemon(pokemon)){
+		printf("No existe la carpeta: %s. Creando...\n", pokemon);
+		crearCarpetaPokemon(pokemon);
+		crearMetadataPokemon(pokemon);
+		crearSemaforoPokemon(pokemon);
 	} else {
 		printf("Existe la carpeta: %s\n", pokemon);
 	}
@@ -257,7 +258,7 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 }
 
 // Lee los bloques del metadata.bin de un pokemon existente
-char** leerBloques(char* pathFiles , char* pokemon){
+char** leerBloques(char* pokemon){
 	char* metadataBin = "/Metadata.bin";
 
 	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
@@ -413,7 +414,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 
 int hayAlgunBloque(char* pathFiles , char* pokemon){
 
-	char** bloques = leerBloques(pathFiles , pokemon);
+	char** bloques = leerBloques(pokemon);
 
 	if (bloques[0] != NULL){
 		// Retorna uno en caso de haber algun bloque
@@ -457,7 +458,7 @@ int cantidadDeBloquesQueOcupa(int pesoEnBytes){
 
 }
 
-t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques, int blockSize){
+t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques){
 
 	t_list* listaStrings = list_create();
 
@@ -465,7 +466,7 @@ t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques, int blockS
 
 	for (i = 0; i < cantBloques; i++){
 		// Recortar la longitud del bloque del string
-		char* miString = string_substring(lineaAEscribir, i * blockSize, blockSize);
+		char* miString = string_substring(lineaAEscribir, i * BLOCK_SIZE, BLOCK_SIZE);
 
 		// Agrego el bloque recortado a la lista de strings
 		list_add(listaStrings, miString);
@@ -478,7 +479,7 @@ t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques, int blockS
 }
 
 // Escribe la primera linea de un pokemon
-void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, int BLOCK_SIZE, int BLOCKS, char* pathMetadata, char* pathBloques, char* pathFiles){
+void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad){
 	char* lineaAEscribir = generarLineaCoordsPokemon(posX, posY, cantidad);
 
 	int pesoEnBytes = strlen(lineaAEscribir);
@@ -492,9 +493,9 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 	// printf("Bitarray despues: \n");
 	// printearBitArray(pathMetadata, BLOCKS);
 
-	t_list* listaDatosBloques = separarStringEnBloques(lineaAEscribir, cantBloques, BLOCK_SIZE);
+	t_list* listaDatosBloques = separarStringEnBloques(lineaAEscribir, cantBloques);
 
-	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques, BLOCK_SIZE, pathBloques);
+	escribirLineasEnBloques(listaBloquesAOcupar, listaDatosBloques);
 
 	// Fijar el array BLOCKS a por ejemeplo [1,2,3]
 	fijarBloquesA(pokemon, listaBloquesAOcupar);
@@ -504,7 +505,7 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad, 
 }
 
 // Escribir las lineas en listaDatosBloques en los bloques listaBloquesAOcupar
-void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques, int BLOCK_SIZE, char* pathBloques){
+void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloques){
 	if (list_size(listaBloquesAOcupar) != list_size(listaDatosBloques)){
 		printf("ERROR | La cantidad de bloques a escribir debe coincidir con la cantidad de datos a escribir");
 	}
@@ -517,14 +518,14 @@ void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloq
 		int* bloqueAOcupar = list_get(listaBloquesAOcupar, i);
 		printf("En el bloque %i se escribira el dato:\n%s\n", *bloqueAOcupar , datoAEscribir );
 
-		escribirDatoEnBloque(datoAEscribir, *bloqueAOcupar, pathBloques);
+		escribirDatoEnBloque(datoAEscribir, *bloqueAOcupar);
 
 		// escribirDatoEnBloque(dato, bloque, pathBloques);
 	}
 }
 
 // Escribir un dato en un bloque determinado
-void escribirDatoEnBloque(char* dato, int numBloque, char* pathBloques){
+void escribirDatoEnBloque(char* dato, int numBloque){
 	// Array de chars para meter el int convertido a array
 	char* enteroEnLetras;
 
@@ -882,14 +883,14 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 		return;
 	}
 
-	crearPokemonSiNoExiste(pathFiles, pokemon);
+	crearPokemonSiNoExiste(pokemon);
 
 	// Realizar lo que corresponde para abrir el archivo metadata (marcarlo open=y)
 
 	if (hayAlgunBloque(pathFiles, pokemon)){
 		printf("Ya habia bloques, leyendo...\n");
 
-		char** bloques = leerBloques(pathFiles, pokemon);
+		char** bloques = leerBloques(pokemon);
 
 		int cantidadBytesALeer = leerSizePokemon(pokemon);
 
@@ -898,7 +899,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 		// Si no se encuentra la linea buscada entonces se debe agregar al final
 
 		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
-			/* TODO Fixear :)
+			// TODO Fixear :)
 
 			printf("La linea NO fue encontrada... pegando al final\n");
 
@@ -921,8 +922,9 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
 				// pedir los bloques necesarios
 
-				printf("Se necesitan mas bloques... pidiendo\n");
+				printf("Se necesitan mas bloques... no hecho todavia\n");
 
+				/*
 				// Cantidad de bloques extra que se deben pedir
 				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
 
@@ -943,16 +945,17 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 				}
 
 				fijarBloquesA(pokemon, listaBloques);
+				*/
 
 			} else {
 				printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
 			}
 
 			// Generar lista con los datos a escribir en los bloques
-			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos, BLOCK_SIZE);
+			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
 
 			// Escribir los datos en los bloques correspondientes
-			escribirLineasEnBloques(listaBloques, listaDatos, BLOCK_SIZE, pathBloques);
+			escribirLineasEnBloques(listaBloques, listaDatos);
 
 			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
@@ -961,7 +964,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 			// Calcular cantBloques ocupada por nuevas lineas
 			// si cantBloques == a bloques anteriores. lista de bloques se mantiene igual
 			// si cantBloques > a bloques anteriores. pedir lo necesario
-			*/
+
 
 		} else {
 			printf("La linea fue encontrada, se la debe modificar...");
@@ -985,8 +988,24 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 
 	} else {
 		printf("No habia bloques... generando de 0");
-		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad, BLOCK_SIZE, BLOCKS, pathMetadata, pathBloques, pathFiles);
+		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 	}
+}
+
+void leerSemaforosLista(){
+
+	int i;
+
+	for (i=0 ; i<list_size(listaSemPokemon) ; i++){
+		semPokemon* structSemaforoActual = list_get(listaSemPokemon, i);
+
+		int* valorSemaforo = malloc(sizeof(int));
+
+		sem_getvalue(structSemaforoActual->semaforo, valorSemaforo);
+
+		printf("Valor semaforo: %i es: %i\n", i, *valorSemaforo);
+	}
+
 }
 
 int main(void) {
@@ -996,6 +1015,14 @@ int main(void) {
 	char* PUNTO_MONTAJE;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
+
+	semBitmap = malloc(sizeof(sem_t));
+
+	// Inicializar semaforo bitmap
+	sem_init(semBitmap, 0, 1);
+
+	//Inicializar lista de semaforos pokemon
+	listaSemPokemon = list_create();
 
 	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER, config);
 
@@ -1036,6 +1063,7 @@ int main(void) {
 		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS);
 	} else {
 		printf("El filesystem ya existe. No se debe inicializar.\n");
+		// Escanear pokemones existentes para crear semaforos
 	}
 
 	// -- Desde aca el filesystem ya está inicializado --
@@ -1049,8 +1077,8 @@ int main(void) {
 	// Vaciar un bloque del bitarray (hacerlo = 0)
 
 	// Testing
-	printf("Bitarray antes: \n");
-	printearBitArray(pathMetadata, BLOCKS);
+	//printf("Bitarray antes: \n");
+	//printearBitArray(pathMetadata, BLOCKS);
 
 //	if(hayAlgunBloque(pathFiles , pikachu) == 0){
 //		// Escribe una linea por primera vez en un archivo vacio
@@ -1065,22 +1093,48 @@ int main(void) {
 //
 //	printf("La linea encontrada es: %i", numLinea);
 
-	t_list* listaBloques = malloc(sizeof(t_list));
-	t_list* bloquesExtraPedidos = malloc(sizeof(t_list));
+//	t_list* listaBloques = malloc(sizeof(t_list));
+//	t_list* bloquesExtraPedidos = malloc(sizeof(t_list));
 
-	mensajeNew("Jorge", 1,15,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,14,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,20,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,21,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,23,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,5,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,3,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 1,7,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 32,5,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,15,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,14,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,20,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,21,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,23,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,5,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,3,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 1,7,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 32,5,3, listaBloques, bloquesExtraPedidos);
+//
+//
+//	mensajeNew("Jorge", 33,3,3, listaBloques, bloquesExtraPedidos);
+//	mensajeNew("Jorge", 34,7,3, listaBloques, bloquesExtraPedidos);
 
+	// Testing semaforos pokemon
+	char* pikachu = "Pikachu";
+	char* bulbasaur = "Bulbasaur";
+	char* jorge = "Jorge";
+	char* fruta = "Fruta";
 
-	mensajeNew("Jorge", 33,3,3, listaBloques, bloquesExtraPedidos);
-	mensajeNew("Jorge", 34,7,3, listaBloques, bloquesExtraPedidos);
+	// Testing semaforos
+//	crearPokemonSiNoExiste(pikachu);
+//	crearPokemonSiNoExiste(bulbasaur);
+//	crearPokemonSiNoExiste(jorge);
+//	crearPokemonSiNoExiste(fruta);
+//
+//	leerSemaforosLista();
+//
+//	waitSemaforoPokemon(bulbasaur);
+//	waitSemaforoPokemon(fruta);
+//
+//	leerSemaforosLista();
+//
+//	signalSemaforoPokemon(bulbasaur);
+//
+//	signalSemaforoPokemon(fruta);
+//
+//	leerSemaforosLista();
+
 
 //	char* bloque1 = "1";
 //

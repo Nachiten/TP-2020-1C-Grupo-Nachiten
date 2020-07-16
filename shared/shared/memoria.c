@@ -1174,3 +1174,73 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 //PASO 3: profit?
 }
 
+
+//void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, uint32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+//{
+//	lista_particiones* particionDelMensaje;
+//
+//	//particionDelMensaje = buscarLaParticionDelMensaje(laLista, ID_MENSAJE);
+//	sacar_de_particion(CACHE, particionDelMensaje, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//}
+//
+//void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+//{
+//	switch(tipoMensaje)
+//	{
+//			case NEW:
+//				//sacar_NEW_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA);
+//				free(estructura);//esto me causaria problemas?
+//				break;
+//
+//			case APPEARED:
+//				//estructura = malloc (sizeof(Appeared));
+//				//poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+//				free(estructura);
+//				break;
+//
+//			case GET:
+//				//estructura = malloc (sizeof(Get));
+//				//poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+//				free(estructura);
+//				break;
+//
+//			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
+//				/*estructura = malloc (sizeof(Localized));
+//				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+//				free(estructura);
+//				*/
+//				break;
+//
+//			case CATCH:
+//				//estructura = malloc (sizeof(Catch));
+//				//poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+//				free(estructura);
+//				break;
+//
+//			case CAUGHT:
+//				//estructura = malloc (sizeof(Caught));
+//				//poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+//				free(estructura);
+//				break;
+//
+//			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+//				break;
+//
+//			case DESSUSCRIPCION:
+//				break;
+//
+//			case TEST://que se joda test
+//				break;
+//
+//			case DESCONEXION:
+//				break;
+//
+//			case ERROR:
+//				break;
+//
+//			case CONFIRMACION:
+//				break;
+//	}
+//}
+//
+

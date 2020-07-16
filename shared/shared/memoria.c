@@ -152,10 +152,10 @@ void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* p
 	particionABorrar->laParticion.estaLibre = 1;
 	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
-	consolidarParticion(&laLista, particionABorrar);
+	consolidarParticion(laLista, particionABorrar);
 }
 
-void consolidarParticion(lista_particiones** laLista, lista_particiones* particionABorrar)
+void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar)
 {
 	uint32_t numPart = particionABorrar->numero_de_particion;
 	uint32_t numPartAnt = 0;
@@ -163,6 +163,7 @@ void consolidarParticion(lista_particiones** laLista, lista_particiones* partici
 	uint32_t resultado = 0;
 	uint32_t consolidado = 0;
 	lista_particiones* correctorDeNumeros = particionABorrar->anter_particion;
+	lista_particiones* auxiliame;
 	uint32_t numeroACorregir = 0;
 
 	if(correctorDeNumeros != NULL)
@@ -197,31 +198,47 @@ void consolidarParticion(lista_particiones** laLista, lista_particiones* partici
 	{
 		numPartSig = particionABorrar->sig_particion->numero_de_particion;
 
-		//si la particion siguiente a la que borro esta libre, las consolido
+		//si la particion siguiente a la que quiero borrar esta libre, las consolido (Y BORRO LA SIGUIENTE)
 		if(particionABorrar->sig_particion->laParticion.estaLibre == 1)
 		{
-			//expando el tamaño de la particion siguiente
-			particionABorrar->sig_particion->laParticion.limiteInferior = particionABorrar->laParticion.limiteInferior;
-			particionABorrar->sig_particion->numero_de_particion = particionABorrar->numero_de_particion;
-
 			resultado = particionABorrar->numero_de_particion;
 
-			//si la particion que estoy borrando no "viene de" NULL, entonces hago que la siguiente apunte a su anterior y viceversa
-			if(particionABorrar->anter_particion != NULL)
+			auxiliame = particionABorrar;
+
+			//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
+			particionABorrar = particionABorrar->sig_particion;
+
+			//expando el tamaño de la particion incluyendo el espacio de la siguiente
+			auxiliame->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+
+			//si la particion siguiente (LA QUE VOY A BORRAR) no apunta a NULL, entonces hago que SU siguiente apunte a esta particion
+			if(particionABorrar->sig_particion != NULL)
 			{
-				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
-				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
-			}
-			else
-			{
-				particionABorrar->sig_particion->anter_particion = NULL;
+				particionABorrar->sig_particion->anter_particion = auxiliame;
 			}
 
-			//si la particion que estoy a punto de borrar es a la que apunta la lista, tengo que hacer que la lista apunte a la siguiente
-			if(*laLista == particionABorrar)
-			{
-				*laLista = particionABorrar->sig_particion;
-			}
+			//apunto a la siguiente de mi siguiente
+			auxiliame->sig_particion = particionABorrar->sig_particion;
+
+
+
+
+			//expando el tamaño de la particion siguiente
+			//particionABorrar->sig_particion->laParticion.limiteInferior = particionABorrar->laParticion.limiteInferior;
+			//particionABorrar->sig_particion->numero_de_particion = particionABorrar->numero_de_particion;
+
+			//resultado = particionABorrar->numero_de_particion;
+
+			//si la particion que estoy borrando no "viene de" NULL, entonces hago que la siguiente apunte a su anterior y viceversa
+//			if(particionABorrar->anter_particion != NULL)
+//			{
+//				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
+//				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
+//			}
+//			else
+//			{
+//				particionABorrar->sig_particion->anter_particion = NULL;
+//			}
 
 			consolidado = 1;
 			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
@@ -349,7 +366,11 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
 	{
 		particionElegida = auxiliar;
-		crear_particion(particionElegida, size, "PD");
+		//por fin encontre el fucking UNICO caso en el que la primera particion es la unica y con un tamaño distinto de 0
+		if((particionElegida->laParticion.limiteSuperior - particionElegida->laParticion.limiteInferior) < size)
+		{
+			crear_particion(particionElegida, size, "PD");
+		}
 	}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
@@ -434,10 +455,14 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 
 	//si estoy al principio de la lista, la particion esta libre y no hay + particiones, la eleccion es facil...
 	if((auxiliar->numero_de_particion == 0) && (auxiliar->laParticion.estaLibre == 1) && (auxiliar->sig_particion == NULL))
-	{
-		particionElegida = auxiliar;
-		crear_particion(particionElegida, size, "PD");
-	}
+		{
+			particionElegida = auxiliar;
+			//por fin encontre el fucking UNICO caso en el que la primera particion es la unica y con un tamaño distinto de 0
+			if((particionElegida->laParticion.limiteSuperior - particionElegida->laParticion.limiteInferior) < size)
+			{
+				crear_particion(particionElegida, size, "PD");
+			}
+		}
 
 	//si no se puede hacer en la 1ra particion, hago todas las otras verificaciones
 	else

@@ -468,7 +468,7 @@ void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t soc
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
 
 	printf("Tamaño de lo que sigue en el buffer: %u.\n", size);
-	*sizeDeLosDatos = size;
+	*sizeDeLosDatos = size;//Quizas te creas muy inteligente y pienses que esto está al pedo y podriamos pisar el valor de sizeDeLosDatos directamente. No sos tan inteligente y no esta al pedo
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);
 }

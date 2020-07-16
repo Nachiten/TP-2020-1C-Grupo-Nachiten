@@ -109,7 +109,6 @@ void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t n
 	}
 }
 
-
 void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* particionABorrar = laLista;
@@ -547,6 +546,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 			{
 				//hay que fletar una particion
 				seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 		}
 	}

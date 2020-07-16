@@ -301,6 +301,7 @@ void inicializar_semaforos(){
 	semLocalized = malloc(sizeof(sem_t));
 	semCatch = malloc(sizeof(sem_t));
 	semCaught = malloc(sizeof(sem_t));
+	semId = malloc(sizeof(sem_t));
 
 	sem_init(semNew, 0, 1);
 	sem_init(semAppeared, 0, 1);
@@ -308,10 +309,13 @@ void inicializar_semaforos(){
 	sem_init(semLocalized, 0, 1);
 	sem_init(semCatch, 0, 1);
 	sem_init(semCaught, 0, 1);
+	sem_init(semId, 0, 1);
 }
-//todo semaforo aca
+
 int32_t crear_id(){
+	sem_wait(semId);
 	id_inicial += 1;
+	sem_post(semId);
 	return id_inicial;
 }
 
@@ -497,8 +501,84 @@ void mandar_mensajes_broker(t_cola* cola){
 					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 				}
 			}
+			borrar_datos(cola,mensaje);
 		}
 	}
+}
+
+void borrar_datos(t_cola* cola, t_mensaje* mensaje){
+	switch(cola->tipoCola){
+	case NEW:
+		borrar_datos_new(mensaje->mensaje);
+		break;
+	case APPEARED:
+		borrar_datos_appeared(mensaje->mensaje);
+		break;
+	case GET:
+		borrar_datos_get(mensaje->mensaje);
+		break;
+	case LOCALIZED:
+		borrar_datos_localized(mensaje->mensaje);
+		break;
+	case CATCH:
+		borrar_datos_catch(mensaje->mensaje);
+		break;
+	case CAUGHT:
+		borrar_datos_caught(mensaje->mensaje);
+		break;
+	}
+}
+
+void borrar_datos_new(New* mensaje){
+	mensaje->ID = -10;
+	mensaje->cantPokemon = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+	mensaje->posPokemon.x = 100;
+	mensaje->posPokemon.y = 100;
+}
+
+void borrar_datos_appeared(Appeared* mensaje){
+	mensaje->ID = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+	mensaje->posPokemon.x = 100;
+	mensaje->posPokemon.y = 100;
+}
+
+void borrar_datos_get(Get* mensaje){
+	mensaje->ID = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+}
+
+void borrar_datos_localized(Localized* mensaje){
+	mensaje->ID = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+	mensaje->posPokemones->x = 100;
+	mensaje->posPokemones->y = 100;
+}
+
+void borrar_datos_catch(Catch* mensaje){
+	mensaje->ID = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+	mensaje->posPokemon.x = 100;
+	mensaje->posPokemon.y = 100;
+}
+
+void borrar_datos_caught(Caught* mensaje){
+	mensaje->ID = -10;
+	mensaje->corrID = -10;
+	mensaje->largoNombre = 100;
+	mensaje->nombrePokemon = "aca no hay nada papu";
+	mensaje->pudoAtrapar = -100;
 }
 
 // avanza en la cola de mensajes hasta encontrar el mensaje con el id deseado, despues busca en la lista de

@@ -246,3 +246,14 @@
 [INFO] 20:47:16:393 Broker/(5400:5409): estoy mandando mensajes
 [INFO] 20:47:18:569 Broker/(5400:5411): estoy mandando mensajes
 [INFO] 20:47:18:570 Broker/(5400:5411): Se suscribio a la cola New
+[INFO] 12:04:26:826 Broker/(4989:4996): estoy mandando mensajes
+[INFO] 12:04:30:984 Broker/(4989:5000): estoy mandando mensajes
+[INFO] 12:04:33:615 Broker/(4989:5002): estoy mandando mensajes
+[INFO] 12:04:33:615 Broker/(4989:5002): Se suscribio a la cola New
+[INFO] 12:04:52:326 Broker/(4989:5005): estoy mandando mensajes
+[INFO] 12:06:15:449 Broker/(5086:5095): estoy mandando mensajes
+[INFO] 12:06:16:659 Broker/(5086:5097): estoy mandando mensajes
+[INFO] 12:06:31:683 Broker/(5107:5116): estoy mandando mensajes
+[INFO] 12:06:37:805 Broker/(5107:5118): estoy mandando mensajes
+[INFO] 12:06:41:206 Broker/(5107:5120): estoy mandando mensajes
+[INFO] 12:06:41:206 Broker/(5107:5120): Se suscribio a la cola New

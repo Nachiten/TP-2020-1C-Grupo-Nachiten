@@ -374,15 +374,20 @@ int main(int cantArg, char* arg[]) {
 
 
 						uint32_t sizeMensaje = 0;
+						pthread_t hilo;
 						New* mensajeNew = malloc(sizeof(New));
 						codigo_operacion cod_op;
 						bytesRecibidos(recv(socket, &cod_op, sizeof(codigo_operacion),MSG_WAITALL));
-						recibir_mensaje(mensajeNew,cod_op,socket, &sizeMensaje);
-
-
+						Hilo estructura;
+						estructura.cod_op = cod_op;
+						estructura.conexion = socket;
+						estructura.mensaje = mensajeNew;
+						estructura.size = sizeMensaje;
+						pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
 
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 						sleep(cambia_a_int(arg[3]));
+						pthread_detach(hilo);
 
 						//mandamos el mensaje pidiendo dessuscribirse a la cola
 						mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
@@ -419,4 +424,10 @@ int main(int cantArg, char* arg[]) {
 	matarPrograma(logger, config, socket);
 
 	return EXIT_SUCCESS;
+}
+
+void hilo_recibir_mensajes(Hilo* estructura){
+	while(1){
+		recibir_mensaje(estructura->mensaje,estructura->cod_op,estructura->conexion, &estructura->size);
+	}
 }

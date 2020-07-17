@@ -1222,12 +1222,14 @@ void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
 
 	//uint32_t mostrar_numero = 0;
-	char* mostrar_texto = malloc(10);
+	//char* mostrar_texto = malloc(60);
 
 	//memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
 	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
 	desplazamiento += sizeof(estructura->largoNombre);
 	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	char* mostrar_texto = malloc(estructura->largoNombre+1);
 
 	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
 	//memcpy(estructura->nombrePokemon, CACHE + desplazamiento, estructura->largoNombre+1);

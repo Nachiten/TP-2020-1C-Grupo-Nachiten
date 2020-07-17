@@ -373,57 +373,25 @@ int main(int cantArg, char* arg[]) {
 						log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
 
-						//listen(socket, SOMAXCONN);
+//hacer switch para distintos tipos de mensaje ToDo
 
 
+						uint32_t sizeMensaje = 0;
+						pthread_t hilo;
 						New* mensajeNew = malloc(sizeof(New));
+						Hilo estructura;
+						estructura.conexion = socket;
+						estructura.mensaje = mensajeNew;
+						estructura.size = sizeMensaje;
 
-						int32_t tamanioRecibido = 1;
-						codigo_operacion paraRecibir;
-						uint32_t size = 1;
-
-//						tamanioRecibido = recv(socket, &paraRecibir, sizeof(codigo_operacion),MSG_WAITALL);
-//						bytesRecibidos(tamanioRecibido);
-						while(tamanioRecibido != 0 || size != 0)
-						{
-						tamanioRecibido = recv(socket, &paraRecibir, sizeof(codigo_operacion),MSG_WAITALL);
-						bytesRecibidos(tamanioRecibido);
-
-						recibir_mensaje(mensajeNew,paraRecibir,socket, &size);
-
-
-
-
-
-							//codigo_operacion cod_op;
-							//tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
-
-							//bytesRecibidos(tamanioRecibido);
-
-							//recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
-							sleep(5);
-						}
-						puts("me sali del while");
-
-
-
-//						uint32_t sizeMensaje = 0;
-//						pthread_t hilo;
-//						New* mensajeNew = malloc(sizeof(New));
-//						Hilo estructura;
-//						estructura.conexion = socket;
-//						estructura.mensaje = mensajeNew;
-//						estructura.size = sizeMensaje;
-
-						//pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-						//pthread_join(hilo,NULL);
+						pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+						pthread_detach(hilo);
 
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-						//sleep(cambia_a_int(arg[3]));
-						//pthread_detach(hilo);
+						sleep(cambia_a_int(arg[3]));
 
 						//mandamos el mensaje pidiendo dessuscribirse a la cola
-						//mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+						mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
 
 						//libero las estructuras que acabo de crear
 						free(estructuraSuscribirse);
@@ -446,19 +414,16 @@ int main(int cantArg, char* arg[]) {
 }
 
 void hilo_recibir_mensajes(Hilo* estructura){
-	uint32_t control = 1;
-	int32_t tamanioRecibido = 0;
+	uint32_t size = 1;
+	int32_t tamanioRecibido = 1;
+	codigo_operacion cod_op;
 
-	while(control == 1 || tamanioRecibido != 0)
+	while(tamanioRecibido != 0 || size != 0)
 	{
-		control = 0;
-		codigo_operacion cod_op;
-
 		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
 		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
-		sleep(5);
+		//sleep(5);
 	}
-	puts("me sali del while");
 }

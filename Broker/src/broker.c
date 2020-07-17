@@ -498,8 +498,9 @@ void mandar_mensajes_broker(t_cola* cola){
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 //			if(1/*funcionComparar(mensaje, cola); //si la ID de mensaje es != a la de mensaje->mensaje devuelve 0, sino 1*/) toDo
 //			{
-//				sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 //			}
+			//agregar IF en caso de que la cola este vacia ToDo
 			for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
 				t_sub* sub = malloc(sizeof(t_sub));
 				sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
@@ -507,7 +508,7 @@ void mandar_mensajes_broker(t_cola* cola){
 					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 				}
 			}
-//			borrar_datos(cola,mensaje);
+			borrar_datos(cola,mensaje);
 		}
 	}
 }
@@ -536,12 +537,12 @@ void borrar_datos(t_cola* cola, t_mensaje* mensaje){
 }
 
 void borrar_datos_new(New* mensaje){
-	mensaje->cantPokemon = -10;
+	mensaje->cantPokemon = 0;
 	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
-	mensaje->posPokemon.x = 100;
-	mensaje->posPokemon.y = 100;
+	mensaje->posPokemon.x = 0;
+	mensaje->posPokemon.y = 0;
 }
 
 void borrar_datos_appeared(Appeared* mensaje){

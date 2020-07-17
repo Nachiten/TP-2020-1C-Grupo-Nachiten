@@ -103,7 +103,6 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 
 	printf("Voy a mandar un mensaje del tipo %i\n", tipoMensaje);
 
-	//ToDo cambiar la manera en que funciona esto?
 	//preparo el paquete para mandar
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 

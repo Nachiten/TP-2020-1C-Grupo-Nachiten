@@ -992,26 +992,55 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 	}
 }
 
-void leerSemaforosLista(){
+// TODO Falta testear [Bucle infinito]
+void abrirArchivoPokemon(char* pokemon){
+	char* metadataBin = "/Metadata.bin";
 
-	int i;
+	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
 
-	for (i=0 ; i<list_size(listaSemPokemon) ; i++){
-		semPokemon* structSemaforoActual = list_get(listaSemPokemon, i);
+	char* pathMetadataPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
 
-		int* valorSemaforo = malloc(sizeof(int));
+	strcpy(pathMetadataPokemon, pathFiles);
+	strcat(pathMetadataPokemon, "/");
+	strcat(pathMetadataPokemon, pokemon);
+	strcat(pathMetadataPokemon, metadataBin);
 
-		sem_getvalue(structSemaforoActual->semaforo, valorSemaforo);
+	int pudeAbrir = 0;
 
-		printf("Valor semaforo: %i es: %i\n", i, *valorSemaforo);
-	}
+	do{
 
+		waitSemaforoPokemon(pokemon);
+
+		t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+		if (datosMetadata == NULL){
+			printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
+			exit(6);
+		}
+
+		char* estaAbierto = config_get_string_value(datosMetadata, "BLOCKS");
+
+		if (strcmp(estaAbierto, "N") == 0){
+			config_set_value(datosMetadata, "OPEN", "Y");
+			config_save(datosMetadata);
+
+			signalSemaforoPokemon(pokemon);
+			printf("El archivo fue abierto correctamente");
+			break;
+		}
+
+		signalSemaforoPokemon(pokemon);
+
+		printf("No pude abrir el archivo, entrando en tiempo de espera");
+
+		sleep(TIEM_REIN_OPERACION);
+
+	} while(pudeAbrir == 0);
 }
 
 int main(void) {
 	t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
-	int TIEM_REIN_OPERACION;
 	char* PUNTO_MONTAJE;
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
@@ -1115,6 +1144,10 @@ int main(void) {
 	char* bulbasaur = "Bulbasaur";
 	char* jorge = "Jorge";
 	char* fruta = "Fruta";
+
+	crearPokemonSiNoExiste(pikachu);
+
+	abrirArchivoPokemon(pikachu);
 
 	// Testing semaforos
 //	crearPokemonSiNoExiste(pikachu);

@@ -12,6 +12,7 @@
 void crearSemaforoPokemon(char*);
 void waitSemaforoPokemon(char*);
 void signalSemaforoPokemon(char*);
+void leerSemaforosLista();
 
 
 #endif /* SRC_SEMAFOROS_H_ */

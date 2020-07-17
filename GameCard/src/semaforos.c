@@ -48,3 +48,21 @@ void signalSemaforoPokemon(char* pokemon){
 	}
 	printf("No se encontro el semaforo deseado");
 }
+
+void leerSemaforosLista(){
+
+	int i;
+
+	for (i=0 ; i<list_size(listaSemPokemon) ; i++){
+		semPokemon* structSemaforoActual = list_get(listaSemPokemon, i);
+
+		int* valorSemaforo = malloc(sizeof(int));
+
+		sem_getvalue(structSemaforoActual->semaforo, valorSemaforo);
+
+		printf("Valor semaforo: %i es: %i\n", i, *valorSemaforo);
+	}
+
+}
+
+

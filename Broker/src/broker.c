@@ -507,7 +507,7 @@ void mandar_mensajes_broker(t_cola* cola){
 					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 				}
 			}
-			borrar_datos(cola,mensaje);
+//			borrar_datos(cola,mensaje);
 		}
 	}
 }

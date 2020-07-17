@@ -376,15 +376,46 @@ int main(int cantArg, char* arg[]) {
 						//listen(socket, SOMAXCONN);
 
 
-						uint32_t sizeMensaje = 0;
-						pthread_t hilo;
 						New* mensajeNew = malloc(sizeof(New));
-						Hilo estructura;
-						estructura.conexion = socket;
-						estructura.mensaje = mensajeNew;
-						estructura.size = sizeMensaje;
 
-						pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+						int32_t tamanioRecibido = 1;
+						codigo_operacion paraRecibir;
+						uint32_t size = 1;
+
+//						tamanioRecibido = recv(socket, &paraRecibir, sizeof(codigo_operacion),MSG_WAITALL);
+//						bytesRecibidos(tamanioRecibido);
+						while(tamanioRecibido != 0 || size != 0)
+						{
+						tamanioRecibido = recv(socket, &paraRecibir, sizeof(codigo_operacion),MSG_WAITALL);
+						bytesRecibidos(tamanioRecibido);
+
+						recibir_mensaje(mensajeNew,paraRecibir,socket, &size);
+
+
+
+
+
+							//codigo_operacion cod_op;
+							//tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
+
+							//bytesRecibidos(tamanioRecibido);
+
+							//recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
+							sleep(5);
+						}
+						puts("me sali del while");
+
+
+
+//						uint32_t sizeMensaje = 0;
+//						pthread_t hilo;
+//						New* mensajeNew = malloc(sizeof(New));
+//						Hilo estructura;
+//						estructura.conexion = socket;
+//						estructura.mensaje = mensajeNew;
+//						estructura.size = sizeMensaje;
+
+						//pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
 						//pthread_join(hilo,NULL);
 
 						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
@@ -429,5 +460,5 @@ void hilo_recibir_mensajes(Hilo* estructura){
 		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
 		sleep(5);
 	}
-
+	puts("me sali del while");
 }

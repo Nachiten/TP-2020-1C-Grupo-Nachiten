@@ -294,3 +294,9 @@
 [INFO] 20:51:53:197 Broker/(19480:19498): estoy mandando mensajes
 [INFO] 20:52:28:666 Broker/(19519:19531): estoy mandando mensajes
 [INFO] 20:52:31:510 Broker/(19519:19533): estoy mandando mensajes
+[INFO] 19:03:45:714 Broker/(4956:17783): estoy mandando mensajes
+[INFO] 19:07:35:894 Broker/(17994:18001): estoy mandando mensajes
+[INFO] 19:07:42:576 Broker/(17994:18006): estoy mandando mensajes
+[INFO] 19:07:42:578 Broker/(17994:18006): Se suscribio a la cola New
+[INFO] 19:08:15:194 Broker/(17994:18099): estoy mandando mensajes
+[INFO] 19:08:55:74 Broker/(17994:18114): estoy mandando mensajes

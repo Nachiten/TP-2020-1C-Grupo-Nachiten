@@ -15,6 +15,7 @@ void crearBloquesEn(char* ,int );
 void inicializarFileSystem(char*, char*, char*, int);
 int existeFilesystem(char* );
 char* crearCarpetaEn(char* ,char* );
+t_list* escanearPokemonsExistenes();
 
 
 #endif /* SRC_INICIARFS_H_ */

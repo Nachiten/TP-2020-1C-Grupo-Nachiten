@@ -13,6 +13,8 @@ void crearSemaforoPokemon(char*);
 void waitSemaforoPokemon(char*);
 void signalSemaforoPokemon(char*);
 void leerSemaforosLista();
+void printearSemaforosExistentes();
+void crearSemaforosDePokemonesExistentes();
 
 
 #endif /* SRC_SEMAFOROS_H_ */

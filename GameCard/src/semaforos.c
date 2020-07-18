@@ -21,9 +21,9 @@ void waitSemaforoPokemon(char* pokemon){
 
 		if (strcmp(pokemon, semaforoActual->nombrePokemon) == 0){
 
-			printf("Se encontro el pokemon: %s en la posicion: %i\n", pokemon, i);
-
 			sem_wait(semaforoActual->semaforo);
+
+			printf("WAIT | %s\n", pokemon);
 
 			return;
 		}
@@ -39,9 +39,9 @@ void signalSemaforoPokemon(char* pokemon){
 
 		if (strcmp(pokemon, semaforoActual->nombrePokemon) == 0){
 
-			printf("Se encontro el pokemon: %s en la posicion: %i\n", pokemon, i);
-
 			sem_post(semaforoActual->semaforo);
+
+			printf("SIGNAL | %s\n", pokemon);
 
 			return;
 		}
@@ -64,5 +64,35 @@ void leerSemaforosLista(){
 	}
 
 }
+
+void printearSemaforosExistentes(){
+
+	int i;
+
+	for (i=0 ; i<list_size(listaSemPokemon) ; i++){
+		semPokemon* structSemaforoActual = list_get(listaSemPokemon, i);
+
+		char* nombreActual = structSemaforoActual->nombrePokemon;
+
+		printf("Semaforo: %s\n", nombreActual);
+
+	}
+
+}
+
+void crearSemaforosDePokemonesExistentes()
+{
+	t_list* listaPokemons = escanearPokemonsExistenes();
+
+	int i;
+
+	for(i= 0; i <list_size(listaPokemons); i++)
+	{
+		char* unPokemon = list_get(listaPokemons, i);
+
+		crearSemaforoPokemon(unPokemon);
+	}
+}
+
 
 

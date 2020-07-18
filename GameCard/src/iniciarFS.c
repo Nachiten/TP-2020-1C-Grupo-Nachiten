@@ -108,3 +108,36 @@ void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadat
 	// Lo guardo en archivo
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 }
+
+t_list* escanearPokemonsExistenes(){
+	struct dirent *archivoLeido;
+
+	t_list* listaPokemonsExistentes = list_create();
+
+	// Retorna un puntero al directorio | {puntoMontaje}/Files
+	DIR *dr = opendir(pathFiles);
+
+	if (dr == NULL)
+	{
+		printf("No se pudo abrir el directorio actual" );
+	}
+
+	while ((archivoLeido = readdir(dr)) != NULL)
+	{
+		// Nombre del archivo leido dentro del directorio
+		char* punteroANombre = &(archivoLeido->d_name);
+
+		// Si el archivo es . .. o Metadata.bin es ignorado
+		if (strcmp(punteroANombre, ".") == 0 || strcmp(punteroANombre, "..") == 0 || strcmp(punteroANombre, "Metadata.bin") == 0){
+			continue;
+		}
+
+		// Si es una carpeta pokemon lo agrego a la lista
+		list_add(listaPokemonsExistentes, punteroANombre);
+	}
+
+	closedir(dr);
+
+	return listaPokemonsExistentes;
+
+}

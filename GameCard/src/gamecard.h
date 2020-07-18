@@ -21,6 +21,7 @@
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
 #include <semaphore.h> // para los semaforos
+#include <dirent.h> // Para poder escanear carpetas
 
 // Header files mios
 #include "bitarray.h"
@@ -48,9 +49,16 @@ typedef struct datosHiloBroker{
 	t_log* logger;
 }datosHiloBroker;
 
+// Conexiones
 void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
 void esperar_conexiones(int32_t socket_servidor);
+// Hilos de escucha
+void comenzarEscuchaGameBoy();
+void comenzarConexionConBroker(datosHiloBroker*);
 
+// Leer bloques pokemon
+char* leerContenidoBloquesPokemon(char**, int);
+char* leerContenidoDeUnBloque(char*, int);
 
 void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);
@@ -65,10 +73,12 @@ void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
 
 int cantidadDeBloquesQueOcupa(int);
+int cantidadDeElementosEnArray(char** array);
 int encontrarCoords(int , int, char* );
 int existeCarpetaPokemon(char* );
 int hayAlgunBloque(char* , char*);
 
+char* agregarNuevoPokemonALineas(int, int, int, char*);
 char* crearStringArrayBloques(t_list*);
 char* generarLineaCoordsPokemon(int, int, int);
 char* separarCoord(char* );
@@ -76,5 +86,9 @@ char* separarCoord(char* );
 char** leerBloques(char*);
 
 t_list* separarStringEnBloques(char*, int);
+
+// Apertura archivos
+void abrirArchivoPokemon(char*);
+void cerrarArchivoPokemon(char*);
 
 #endif /* SRC_GAMECARD_H_ */

@@ -742,10 +742,10 @@ t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 	return miLista;
 }
 
-char* leerContenidoDeUnBloque(char* pathACarpetaBloques, char* bloqueALeer, int cantBytesALeer){
+char* leerContenidoDeUnBloque(char* bloqueALeer, int cantBytesALeer){
 
-	char* pathDeArchivos = malloc(strlen(pathACarpetaBloques) + strlen(bloqueALeer) + 6); // 1 del /, 4 del .bin, 1 del fin de string
-	strcpy(pathDeArchivos, pathACarpetaBloques);
+	char* pathDeArchivos = malloc(strlen(pathBloques) + strlen(bloqueALeer) + 6); // 1 del /, 4 del .bin, 1 del fin de string
+	strcpy(pathDeArchivos, pathBloques);
 	strcat(pathDeArchivos, "/");
 	strcat(pathDeArchivos, bloqueALeer);
 	strcat(pathDeArchivos, ".bin");
@@ -778,7 +778,7 @@ int cantidadDeElementosEnArray(char** array){
 }
 
 // bloquesALeer = BLOCKS cantidadALeerEnBytes = SIZE (del metadata.bin)
-char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALeer, int cantidadALeerEnBytes, int BLOCK_SIZE) {
+char* leerContenidoBloquesPokemon(char** bloquesALeer, int cantidadALeerEnBytes) {
 
 	char* stringARetornar = malloc(cantidadALeerEnBytes + 1);
 
@@ -798,7 +798,7 @@ char* leerContenidoBloquesPokemon(char* pathACarpetaBloques , char** bloquesALee
 			cantidadDeBytesALeer = cantidadALeerEnBytes - bytesLeidos;
 		}
 
-		char* aux = leerContenidoDeUnBloque(pathACarpetaBloques, bloquesALeer[i], cantidadDeBytesALeer);
+		char* aux = leerContenidoDeUnBloque( bloquesALeer[i], cantidadDeBytesALeer);
 
 		if(i == 0){
 			strcpy(stringARetornar, aux);
@@ -886,6 +886,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 	crearPokemonSiNoExiste(pokemon);
 
 	// Realizar lo que corresponde para abrir el archivo metadata (marcarlo open=y)
+	abrirArchivoPokemon(pokemon);
 
 	if (hayAlgunBloque(pathFiles, pokemon)){
 		printf("Ya habia bloques, leyendo...\n");
@@ -894,7 +895,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 
 		int cantidadBytesALeer = leerSizePokemon(pokemon);
 
-		char* lineasLeidas = leerContenidoBloquesPokemon(pathBloques, bloques, cantidadBytesALeer, BLOCK_SIZE);
+		char* lineasLeidas = leerContenidoBloquesPokemon(bloques, cantidadBytesALeer);
 
 		// Si no se encuentra la linea buscada entonces se debe agregar al final
 
@@ -971,10 +972,10 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 			// Se debe sumar el numero dado en "cantidad" en la linea que corresponde
 
 			// Retorna la linea donde esta las coordenadas
-			int lineaDePos = encontrarCoords(posX, posY, lineasLeidas);
-
-			// Genera la linea tipo 3-4=2\n
-			char* lineaGenerada = generarLineaCoordsPokemon(posX, posY, cantidad);
+//			int lineaDePos = encontrarCoords(posX, posY, lineasLeidas);
+//
+//			// Genera la linea tipo 3-4=2\n
+//			char* lineaGenerada = generarLineaCoordsPokemon(posX, posY, cantidad);
 
 			/*
 			    1- alocas memoria a un nuevo string que tenga el tamaño adecuado
@@ -990,9 +991,11 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, t_list* listaBl
 		printf("No habia bloques... generando de 0");
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 	}
+
+	cerrarArchivoPokemon(pokemon);
 }
 
-// TODO Falta testear [Bucle infinito]
+// Abrir un archivo de un pokemon existente
 void abrirArchivoPokemon(char* pokemon){
 	char* metadataBin = "/Metadata.bin";
 
@@ -1005,9 +1008,7 @@ void abrirArchivoPokemon(char* pokemon){
 	strcat(pathMetadataPokemon, pokemon);
 	strcat(pathMetadataPokemon, metadataBin);
 
-	int pudeAbrir = 0;
-
-	do{
+	while(1){
 
 		waitSemaforoPokemon(pokemon);
 
@@ -1018,25 +1019,109 @@ void abrirArchivoPokemon(char* pokemon){
 			exit(6);
 		}
 
-		char* estaAbierto = config_get_string_value(datosMetadata, "BLOCKS");
+		char* estaAbierto = config_get_string_value(datosMetadata, "OPEN");
 
 		if (strcmp(estaAbierto, "N") == 0){
 			config_set_value(datosMetadata, "OPEN", "Y");
 			config_save(datosMetadata);
 
+			printf("El archivo fue abierto correctamente\n");
 			signalSemaforoPokemon(pokemon);
-			printf("El archivo fue abierto correctamente");
+
+			config_destroy(datosMetadata);
 			break;
 		}
 
 		signalSemaforoPokemon(pokemon);
+		config_destroy(datosMetadata);
 
-		printf("No pude abrir el archivo, entrando en tiempo de espera");
+		printf("No pude abrir el archivo, entrando en tiempo de espera\n");
 
 		sleep(TIEM_REIN_OPERACION);
 
-	} while(pudeAbrir == 0);
+	}
+
 }
+
+void cerrarArchivoPokemon(char* pokemon){
+	char* metadataBin = "/Metadata.bin";
+
+	// Path esperado: {pathMetadata}/Files/Pikachu/Metadata.bin
+
+	char* pathMetadataPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
+
+	strcpy(pathMetadataPokemon, pathFiles);
+	strcat(pathMetadataPokemon, "/");
+	strcat(pathMetadataPokemon, pokemon);
+	strcat(pathMetadataPokemon, metadataBin);
+
+	waitSemaforoPokemon(pokemon);
+
+	t_config* datosMetadata = config_create(pathMetadataPokemon);
+
+	if (datosMetadata == NULL){
+		printf("No se ha podido leer los bloques del pokemon: %s\n", pokemon);
+		exit(6);
+	}
+
+	config_set_value(datosMetadata, "OPEN", "N");
+	config_save(datosMetadata);
+
+	printf("El archivo fue cerrado correctamente\n");
+	signalSemaforoPokemon(pokemon);
+
+	config_destroy(datosMetadata);
+
+}
+
+// Testing semaforos pokemon
+//void abrirArchivo1(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 1 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 1\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 1 cerro el archivo pikachu\n");
+//}
+//
+//void abrirArchivo2(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 2 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 2\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 2 cerro el archivo pikachu\n");
+//}
+//
+//void abrirArchivo3(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 3 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 3\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 3 cerro el archivo pikachu\n");
+//}
+
+
+
 
 int main(void) {
 	t_config* config = NULL;
@@ -1060,8 +1145,7 @@ int main(void) {
 
 	// Inicializacion del logger... todavia no es necesario
 
-	t_log* logger;
-	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+	t_log* logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	// puntoMontaje/Blocks
 	pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -1092,7 +1176,11 @@ int main(void) {
 		inicializarFileSystem(pathBloques, pathFiles, pathMetadata, BLOCKS);
 	} else {
 		printf("El filesystem ya existe. No se debe inicializar.\n");
+
 		// Escanear pokemones existentes para crear semaforos
+		crearSemaforosDePokemonesExistentes();
+
+		printearSemaforosExistentes();
 	}
 
 	// -- Desde aca el filesystem ya está inicializado --
@@ -1140,14 +1228,33 @@ int main(void) {
 //	mensajeNew("Jorge", 34,7,3, listaBloques, bloquesExtraPedidos);
 
 	// Testing semaforos pokemon
-	char* pikachu = "Pikachu";
-	char* bulbasaur = "Bulbasaur";
-	char* jorge = "Jorge";
-	char* fruta = "Fruta";
+//	char* pikachu = "Pikachu";
+//	char* bulbasaur = "Bulbasaur";
+//	char* jorge = "Jorge";
+//	char* fruta = "Fruta";
+//
+//	crearPokemonSiNoExiste(pikachu);
+//	crearPokemonSiNoExiste(bulbasaur);
+//	crearPokemonSiNoExiste(jorge);
+//	crearPokemonSiNoExiste(fruta);
+//
+//	printearSemaforosExistentes();
 
-	crearPokemonSiNoExiste(pikachu);
 
-	abrirArchivoPokemon(pikachu);
+
+//	pthread_t hiloTesting1;
+//	pthread_t hiloTesting2;
+//	pthread_t hiloTesting3;
+//
+//	pthread_create(&hiloTesting1, NULL, (void*)abrirArchivo1, NULL);
+//	pthread_create(&hiloTesting2, NULL, (void*)abrirArchivo2, NULL);
+//	pthread_create(&hiloTesting3, NULL, (void*)abrirArchivo3, NULL);
+//
+//	pthread_join(hiloTesting1, NULL);
+//	pthread_join(hiloTesting2, NULL);
+//	pthread_join(hiloTesting3, NULL);
+
+	// Crear 3 hilos
 
 	// Testing semaforos
 //	crearPokemonSiNoExiste(pikachu);

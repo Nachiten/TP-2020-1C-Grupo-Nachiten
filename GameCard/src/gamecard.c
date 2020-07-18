@@ -345,7 +345,7 @@ void fijarSizeA(char* pokemon, int sizeEnBytes){
 	strcat(pathMetadataPokemon, pokemon);
 	strcat(pathMetadataPokemon, metadataBin);
 
-	printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
+	//printf("Path Metadata Pokemon: %s\n", pathMetadataPokemon);
 
 	t_config* datosMetadata = config_create(pathMetadataPokemon);
 
@@ -378,7 +378,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 		// El tamanio del numero a insertar
 		tamanioTotalBytes+= strlen(numeroEnString);
 
-		printf("El string es: %s\n", numeroEnString);
+		//printf("El string es: %s\n", numeroEnString);
 	}
 
 	// La cantidad de comas
@@ -435,7 +435,7 @@ char* generarLineaCoordsPokemon(int posX, int posY, int cantidad){
 
 	asprintf(&stringAEscribir, "%i-%i=%i\n", posX, posY, cantidad);
 
-	printf("String a escribir: %s", stringAEscribir);
+	//printf("String a escribir: %s", stringAEscribir);
 
 	return stringAEscribir;
 }
@@ -520,7 +520,7 @@ void escribirLineasEnBloques(t_list* listaBloquesAOcupar, t_list* listaDatosBloq
 	for (i = 0 ; i < list_size(listaBloquesAOcupar) ; i++){
 		char* datoAEscribir = list_get(listaDatosBloques, i);
 		int* bloqueAOcupar = list_get(listaBloquesAOcupar, i);
-		printf("En el bloque %i se escribira el dato:\n%s\n", *bloqueAOcupar , datoAEscribir );
+		//printf("En el bloque %i se escribira el dato:\n%s\n", *bloqueAOcupar , datoAEscribir );
 
 		escribirDatoEnBloque(datoAEscribir, *bloqueAOcupar);
 
@@ -765,13 +765,13 @@ char* leerContenidoDeUnBloque(char* bloqueALeer, int cantBytesALeer){
 
 	FILE* myFile = fopen(pathDeArchivos, "r");
 
-	printf("Bytes a leer: %i\n", cantBytesALeer);
+	//printf("Bytes a leer: %i\n", cantBytesALeer);
 
 	fread(datosLeidos, cantBytesALeer + 1, 1, myFile);
 
 	fclose(myFile);
 
-	printf("Linea leida:\n %s\n", datosLeidos);
+	//printf("Linea leida:\n %s\n", datosLeidos);
 
 	return datosLeidos;
 
@@ -871,7 +871,7 @@ char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas)
 	strcpy(lineaARetornar, lineas);
 	strcat(lineaARetornar, lineaParaAgregar);
 
-	printf("LineaARetornar: %s", lineaARetornar);
+	//printf("LineaARetornar: %s", lineaARetornar);
 
 	return lineaARetornar;
 }
@@ -894,7 +894,16 @@ void printearListaDeEnteros(t_list* lista){
 
 }
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
+void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
+	printf("Se enviara el siguiente mensaje al broker (cola appeared):\n");
+	printf("Pokemon: %s\n", pokemon);
+	printf("PosX: %i\n", posX);
+	printf("PosY: %i\n", posY);
+	printf("ID Mensaje: %i\n", IDMensaje);
+}
+
+
+void mensajeNew(char* pokemon, int posX, int posY, int cantidad){ // FALTA AGREGAR EL ID DEL MENSAJE
 
 	// Checkeo de variables
 	if (pokemon == NULL){
@@ -1018,6 +1027,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 
 	// Cerrar el archivo luego de usarlo
 	cerrarArchivoPokemon(pokemon);
+
+	enviarMensajeAppeared(pokemon, posX, posY, 3); // TODO Num 3 HARDCODEADO | En realidad toma el ID como parametro esta funcion
 }
 
 // Abrir un archivo de un pokemon existente
@@ -1218,9 +1229,9 @@ int main(void) {
 	//printearBitArray(pathMetadata, BLOCKS);
 
 	char* pikachu = "Pikachu";
-	char* bulbasaur = "Bulbasaur";
 	char* jorge = "Jorge";
 	char* fruta = "Fruta";
+	char* bulbasaur = "Bulbasaur";
 
 	mensajeNew(jorge, 1,15,3);
 	mensajeNew(jorge, 1,14,3);
@@ -1241,6 +1252,26 @@ int main(void) {
 	mensajeNew(pikachu, 1,3,3);
 	mensajeNew(pikachu, 1,7,3);
 	mensajeNew(pikachu, 32,5,3);
+
+	mensajeNew(fruta, 1,15,3);
+	mensajeNew(fruta, 1,14,3);
+	mensajeNew(fruta, 1,20,3);
+	mensajeNew(fruta, 1,21,3);
+	mensajeNew(fruta, 1,23,3);
+	mensajeNew(fruta, 1,5,3);
+	mensajeNew(fruta, 1,3,3);
+	mensajeNew(fruta, 1,7,3);
+	mensajeNew(fruta, 32,5,3);
+
+	mensajeNew(bulbasaur, 1,15,3);
+	mensajeNew(bulbasaur, 1,14,3);
+	mensajeNew(bulbasaur, 1,20,3);
+	mensajeNew(bulbasaur, 1,21,3);
+	mensajeNew(bulbasaur, 1,23,3);
+	mensajeNew(bulbasaur, 1,5,3);
+	mensajeNew(bulbasaur, 1,3,3);
+	mensajeNew(bulbasaur, 1,7,3);
+	mensajeNew(bulbasaur, 32,5,3);
 
 	mensajeNew(jorge, 33,3,3);
 	mensajeNew(jorge, 34,7,3);
@@ -1275,6 +1306,40 @@ int main(void) {
 	mensajeNew(pikachu, 1000,7,3);
 	mensajeNew(pikachu, 10000,700,300);
 	mensajeNew(pikachu, 100000,700,300);
+
+	mensajeNew(fruta, 33,3,3);
+	mensajeNew(fruta, 34,7,3);
+	mensajeNew(fruta, 35,7,3);
+	mensajeNew(fruta, 36,7,3);
+	mensajeNew(fruta, 37,3,3);
+	mensajeNew(fruta, 38,7,3);
+	mensajeNew(fruta, 40,7,3);
+	mensajeNew(fruta, 43,7,3);
+	mensajeNew(fruta, 55,3,3);
+	mensajeNew(fruta, 60,7,3);
+	mensajeNew(fruta, 130,7,3);
+	mensajeNew(fruta, 200,7,3);
+	mensajeNew(fruta, 5001,3,3);
+	mensajeNew(fruta, 1000,7,3);
+	mensajeNew(fruta, 10000,700,300);
+	mensajeNew(fruta, 100000,700,300);
+
+	mensajeNew(bulbasaur, 33,3,3);
+	mensajeNew(bulbasaur, 34,7,3);
+	mensajeNew(bulbasaur, 35,7,3);
+	mensajeNew(bulbasaur, 36,7,3);
+	mensajeNew(bulbasaur, 37,3,3);
+	mensajeNew(bulbasaur, 38,7,3);
+	mensajeNew(bulbasaur, 40,7,3);
+	mensajeNew(bulbasaur, 43,7,3);
+	mensajeNew(bulbasaur, 55,3,3);
+	mensajeNew(bulbasaur, 60,7,3);
+	mensajeNew(bulbasaur, 130,7,3);
+	mensajeNew(bulbasaur, 200,7,3);
+	mensajeNew(bulbasaur, 5001,3,3);
+	mensajeNew(bulbasaur, 1000,7,3);
+	mensajeNew(bulbasaur, 10000,700,300);
+	mensajeNew(bulbasaur, 100000,700,300);
 
 
 	// Testing semaforos pokemon

@@ -738,8 +738,15 @@ t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 
 	while (listaDeChars[cantidadNumeros] != NULL){
 		//printf("lista de chars: %s \n", listaDeChars[cantidadNumeros]);
-		int charConvertido = atoi(listaDeChars[cantidadNumeros]);
-		list_add(miLista, &charConvertido);
+
+		// Al hacer malloc me aseguro que esta direccion de memoria no va a ser pisada
+		int* charConvertido = malloc(sizeof(int));
+
+		int nombre = atoi(listaDeChars[cantidadNumeros]);
+
+		memcpy(charConvertido, &nombre, sizeof(int));
+
+		list_add(miLista, charConvertido);
 		cantidadNumeros++;
 	}
 
@@ -870,18 +877,11 @@ char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas)
 }
 
 // Retorna una lista con la lista anterior mas los bloques nuevos pedidos
-t_list* generarListaConBloquesExtra(t_list* listaBloques, int cantidadBloquesExtra){
-
-	t_list* listaMasBloquesExtra = list_create();
-
-	list_add_all(listaMasBloquesExtra, listaBloques);
+void suamarBloquesExtraALista(t_list* listaBloques, int cantidadBloquesExtra){
 
 	t_list* bloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
 
-	list_add_all(listaMasBloquesExtra, bloquesExtraPedidos);
-
-	return listaMasBloquesExtra;
-
+	list_add_all(listaBloques, bloquesExtraPedidos);
 }
 
 void printearListaDeEnteros(t_list* lista){
@@ -972,16 +972,16 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 //				t_list* listaBloquesExtraPedidos = list_create();
 //				listaBloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
 
-				t_list* listaMasBloquesExtra = generarListaConBloquesExtra(listaBloques, cantidadBloquesExtra);
+				suamarBloquesExtraALista(listaBloques, cantidadBloquesExtra);
 
 				// Generar lista con los datos a escribir en los bloques
 				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
 
 				// Escribir los datos en los bloques correspondientes
-				escribirLineasEnBloques(listaMasBloquesExtra, listaDatos);
+				escribirLineasEnBloques(listaBloques, listaDatos);
 
 				// la listaMasBloquesExtra rompe (magicamente) aca
-				fijarBloquesA(pokemon, listaMasBloquesExtra);
+				fijarBloquesA(pokemon, listaBloques);
 
 				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
@@ -1217,25 +1217,68 @@ int main(void) {
 	//printf("Bitarray antes: \n");
 	//printearBitArray(pathMetadata, BLOCKS);
 
-	mensajeNew("Jorge", 1,15,3);
-	mensajeNew("Jorge", 1,14,3);
-	mensajeNew("Jorge", 1,20,3);
-	mensajeNew("Jorge", 1,21,3);
-	mensajeNew("Jorge", 1,23,3);
-	mensajeNew("Jorge", 1,5,3);
-	mensajeNew("Jorge", 1,3,3);
-	mensajeNew("Jorge", 1,7,3);
-	mensajeNew("Jorge", 32,5,3);
+	char* pikachu = "Pikachu";
+	char* bulbasaur = "Bulbasaur";
+	char* jorge = "Jorge";
+	char* fruta = "Fruta";
 
+	mensajeNew(jorge, 1,15,3);
+	mensajeNew(jorge, 1,14,3);
+	mensajeNew(jorge, 1,20,3);
+	mensajeNew(jorge, 1,21,3);
+	mensajeNew(jorge, 1,23,3);
+	mensajeNew(jorge, 1,5,3);
+	mensajeNew(jorge, 1,3,3);
+	mensajeNew(jorge, 1,7,3);
+	mensajeNew(jorge, 32,5,3);
 
-	mensajeNew("Jorge", 33,3,3);
-	//mensajeNew("Jorge", 34,7,3);
+	mensajeNew(pikachu, 1,15,3);
+	mensajeNew(pikachu, 1,14,3);
+	mensajeNew(pikachu, 1,20,3);
+	mensajeNew(pikachu, 1,21,3);
+	mensajeNew(pikachu, 1,23,3);
+	mensajeNew(pikachu, 1,5,3);
+	mensajeNew(pikachu, 1,3,3);
+	mensajeNew(pikachu, 1,7,3);
+	mensajeNew(pikachu, 32,5,3);
+
+	mensajeNew(jorge, 33,3,3);
+	mensajeNew(jorge, 34,7,3);
+	mensajeNew(jorge, 35,7,3);
+	mensajeNew(jorge, 36,7,3);
+	mensajeNew(jorge, 37,3,3);
+	mensajeNew(jorge, 38,7,3);
+	mensajeNew(jorge, 40,7,3);
+	mensajeNew(jorge, 43,7,3);
+	mensajeNew(jorge, 55,3,3);
+	mensajeNew(jorge, 60,7,3);
+	mensajeNew(jorge, 130,7,3);
+	mensajeNew(jorge, 200,7,3);
+	mensajeNew(jorge, 5001,3,3);
+	mensajeNew(jorge, 1000,7,3);
+	mensajeNew(jorge, 10000,700,300);
+	mensajeNew(jorge, 100000,700,300);
+
+	mensajeNew(pikachu, 33,3,3);
+	mensajeNew(pikachu, 34,7,3);
+	mensajeNew(pikachu, 35,7,3);
+	mensajeNew(pikachu, 36,7,3);
+	mensajeNew(pikachu, 37,3,3);
+	mensajeNew(pikachu, 38,7,3);
+	mensajeNew(pikachu, 40,7,3);
+	mensajeNew(pikachu, 43,7,3);
+	mensajeNew(pikachu, 55,3,3);
+	mensajeNew(pikachu, 60,7,3);
+	mensajeNew(pikachu, 130,7,3);
+	mensajeNew(pikachu, 200,7,3);
+	mensajeNew(pikachu, 5001,3,3);
+	mensajeNew(pikachu, 1000,7,3);
+	mensajeNew(pikachu, 10000,700,300);
+	mensajeNew(pikachu, 100000,700,300);
+
 
 	// Testing semaforos pokemon
-//	char* pikachu = "Pikachu";
-//	char* bulbasaur = "Bulbasaur";
-//	char* jorge = "Jorge";
-//	char* fruta = "Fruta";
+//
 //
 //	crearPokemonSiNoExiste(pikachu);
 //	crearPokemonSiNoExiste(bulbasaur);

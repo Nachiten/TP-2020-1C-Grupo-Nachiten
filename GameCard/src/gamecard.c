@@ -998,12 +998,15 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				// La cantidad se mantiene igual, solo escribir los bloques
 				printf("No se necesitan bloques extra... solo escribir\n");
 
-				char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
+				// Generar lista con los datos a escribir en los bloques
+				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
 
 				// Escribir los datos en los bloques correspondientes
-				// escribirLineasEnBloques(listaBloques, listaDatos);
+				escribirLineasEnBloques(listaBloques, listaDatos);
 
-				// fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+				// Fijo el SIZE=60
+				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+
 
 			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
 
@@ -1012,7 +1015,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				// Cantidad de bloques extra que se deben pedir
 				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
 
-				// Sumar los bloques extra que necesito a la lista original
+				// Sumo los bloques extra a la listaBloques original
 				suamarBloquesExtraALista(listaBloques, cantidadBloquesExtra);
 
 				// Generar lista con los datos a escribir en los bloques
@@ -1021,9 +1024,10 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				// Escribir los datos en los bloques correspondientes
 				escribirLineasEnBloques(listaBloques, listaDatos);
 
-				// la listaMasBloquesExtra rompe (magicamente) aca
+				// Fijo el string BLOCKS=[1,2,3]
 				fijarBloquesA(pokemon, listaBloques);
 
+				// Fijo el SIZE=60
 				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
 
@@ -1037,6 +1041,9 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		} else {
 			printf("La linea fue encontrada, se la debe modificar...");
 
+			char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
+
+			printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
 		}
 
@@ -1264,35 +1271,35 @@ int main(void) {
 	mensajeNew(jorge, 1,7,3);
 	mensajeNew(jorge, 32,5,3);
 
-	mensajeNew(pikachu, 1,15,3);
-	mensajeNew(pikachu, 1,14,3);
-	mensajeNew(pikachu, 1,20,3);
-	mensajeNew(pikachu, 1,21,3);
-	mensajeNew(pikachu, 1,23,3);
-	mensajeNew(pikachu, 1,5,3);
-	mensajeNew(pikachu, 1,3,3);
-	mensajeNew(pikachu, 1,7,3);
-	mensajeNew(pikachu, 32,5,3);
-
-	mensajeNew(fruta, 1,15,3);
-	mensajeNew(fruta, 1,14,3);
-	mensajeNew(fruta, 1,20,3);
-	mensajeNew(fruta, 1,21,3);
-	mensajeNew(fruta, 1,23,3);
-	mensajeNew(fruta, 1,5,3);
-	mensajeNew(fruta, 1,3,3);
-	mensajeNew(fruta, 1,7,3);
-	mensajeNew(fruta, 32,5,3);
-
-	mensajeNew(bulbasaur, 1,15,3);
-	mensajeNew(bulbasaur, 1,14,3);
-	mensajeNew(bulbasaur, 1,20,3);
-	mensajeNew(bulbasaur, 1,21,3);
-	mensajeNew(bulbasaur, 1,23,3);
-	mensajeNew(bulbasaur, 1,5,3);
-	mensajeNew(bulbasaur, 1,3,3);
-	mensajeNew(bulbasaur, 1,7,3);
-	mensajeNew(bulbasaur, 32,5,3);
+//	mensajeNew(pikachu, 1,15,3);
+//	mensajeNew(pikachu, 1,14,3);
+//	mensajeNew(pikachu, 1,20,3);
+//	mensajeNew(pikachu, 1,21,3);
+//	mensajeNew(pikachu, 1,23,3);
+//	mensajeNew(pikachu, 1,5,3);
+//	mensajeNew(pikachu, 1,3,3);
+//	mensajeNew(pikachu, 1,7,3);
+//	mensajeNew(pikachu, 32,5,3);
+//
+//	mensajeNew(fruta, 1,15,3);
+//	mensajeNew(fruta, 1,14,3);
+//	mensajeNew(fruta, 1,20,3);
+//	mensajeNew(fruta, 1,21,3);
+//	mensajeNew(fruta, 1,23,3);
+//	mensajeNew(fruta, 1,5,3);
+//	mensajeNew(fruta, 1,3,3);
+//	mensajeNew(fruta, 1,7,3);
+//	mensajeNew(fruta, 32,5,3);
+//
+//	mensajeNew(bulbasaur, 1,15,3);
+//	mensajeNew(bulbasaur, 1,14,3);
+//	mensajeNew(bulbasaur, 1,20,3);
+//	mensajeNew(bulbasaur, 1,21,3);
+//	mensajeNew(bulbasaur, 1,23,3);
+//	mensajeNew(bulbasaur, 1,5,3);
+//	mensajeNew(bulbasaur, 1,3,3);
+//	mensajeNew(bulbasaur, 1,7,3);
+//	mensajeNew(bulbasaur, 32,5,3);
 
 	mensajeNew(jorge, 33,3,3);
 	mensajeNew(jorge, 34,7,3);
@@ -1311,56 +1318,56 @@ int main(void) {
 	mensajeNew(jorge, 10000,700,300);
 	mensajeNew(jorge, 100000,700,300);
 
-	mensajeNew(pikachu, 33,3,3);
-	mensajeNew(pikachu, 34,7,3);
-	mensajeNew(pikachu, 35,7,3);
-	mensajeNew(pikachu, 36,7,3);
-	mensajeNew(pikachu, 37,3,3);
-	mensajeNew(pikachu, 38,7,3);
-	mensajeNew(pikachu, 40,7,3);
-	mensajeNew(pikachu, 43,7,3);
-	mensajeNew(pikachu, 55,3,3);
-	mensajeNew(pikachu, 60,7,3);
-	mensajeNew(pikachu, 130,7,3);
-	mensajeNew(pikachu, 200,7,3);
-	mensajeNew(pikachu, 5001,3,3);
-	mensajeNew(pikachu, 1000,7,3);
-	mensajeNew(pikachu, 10000,700,300);
-	mensajeNew(pikachu, 100000,700,300);
-
-	mensajeNew(fruta, 33,3,3);
-	mensajeNew(fruta, 34,7,3);
-	mensajeNew(fruta, 35,7,3);
-	mensajeNew(fruta, 36,7,3);
-	mensajeNew(fruta, 37,3,3);
-	mensajeNew(fruta, 38,7,3);
-	mensajeNew(fruta, 40,7,3);
-	mensajeNew(fruta, 43,7,3);
-	mensajeNew(fruta, 55,3,3);
-	mensajeNew(fruta, 60,7,3);
-	mensajeNew(fruta, 130,7,3);
-	mensajeNew(fruta, 200,7,3);
-	mensajeNew(fruta, 5001,3,3);
-	mensajeNew(fruta, 1000,7,3);
-	mensajeNew(fruta, 10000,700,300);
-	mensajeNew(fruta, 100000,700,300);
-
-	mensajeNew(bulbasaur, 33,3,3);
-	mensajeNew(bulbasaur, 34,7,3);
-	mensajeNew(bulbasaur, 35,7,3);
-	mensajeNew(bulbasaur, 36,7,3);
-	mensajeNew(bulbasaur, 37,3,3);
-	mensajeNew(bulbasaur, 38,7,3);
-	mensajeNew(bulbasaur, 40,7,3);
-	mensajeNew(bulbasaur, 43,7,3);
-	mensajeNew(bulbasaur, 55,3,3);
-	mensajeNew(bulbasaur, 60,7,3);
-	mensajeNew(bulbasaur, 130,7,3);
-	mensajeNew(bulbasaur, 200,7,3);
-	mensajeNew(bulbasaur, 5001,3,3);
-	mensajeNew(bulbasaur, 1000,7,3);
-	mensajeNew(bulbasaur, 10000,700,300);
-	mensajeNew(bulbasaur, 100000,700,300);
+//	mensajeNew(pikachu, 33,3,3);
+//	mensajeNew(pikachu, 34,7,3);
+//	mensajeNew(pikachu, 35,7,3);
+//	mensajeNew(pikachu, 36,7,3);
+//	mensajeNew(pikachu, 37,3,3);
+//	mensajeNew(pikachu, 38,7,3);
+//	mensajeNew(pikachu, 40,7,3);
+//	mensajeNew(pikachu, 43,7,3);
+//	mensajeNew(pikachu, 55,3,3);
+//	mensajeNew(pikachu, 60,7,3);
+//	mensajeNew(pikachu, 130,7,3);
+//	mensajeNew(pikachu, 200,7,3);
+//	mensajeNew(pikachu, 5001,3,3);
+//	mensajeNew(pikachu, 1000,7,3);
+//	mensajeNew(pikachu, 10000,700,300);
+//	mensajeNew(pikachu, 100000,700,300);
+//
+//	mensajeNew(fruta, 33,3,3);
+//	mensajeNew(fruta, 34,7,3);
+//	mensajeNew(fruta, 35,7,3);
+//	mensajeNew(fruta, 36,7,3);
+//	mensajeNew(fruta, 37,3,3);
+//	mensajeNew(fruta, 38,7,3);
+//	mensajeNew(fruta, 40,7,3);
+//	mensajeNew(fruta, 43,7,3);
+//	mensajeNew(fruta, 55,3,3);
+//	mensajeNew(fruta, 60,7,3);
+//	mensajeNew(fruta, 130,7,3);
+//	mensajeNew(fruta, 200,7,3);
+//	mensajeNew(fruta, 5001,3,3);
+//	mensajeNew(fruta, 1000,7,3);
+//	mensajeNew(fruta, 10000,700,300);
+//	mensajeNew(fruta, 100000,700,300);
+//
+//	mensajeNew(bulbasaur, 33,3,3);
+//	mensajeNew(bulbasaur, 34,7,3);
+//	mensajeNew(bulbasaur, 35,7,3);
+//	mensajeNew(bulbasaur, 36,7,3);
+//	mensajeNew(bulbasaur, 37,3,3);
+//	mensajeNew(bulbasaur, 38,7,3);
+//	mensajeNew(bulbasaur, 40,7,3);
+//	mensajeNew(bulbasaur, 43,7,3);
+//	mensajeNew(bulbasaur, 55,3,3);
+//	mensajeNew(bulbasaur, 60,7,3);
+//	mensajeNew(bulbasaur, 130,7,3);
+//	mensajeNew(bulbasaur, 200,7,3);
+//	mensajeNew(bulbasaur, 5001,3,3);
+//	mensajeNew(bulbasaur, 1000,7,3);
+//	mensajeNew(bulbasaur, 10000,700,300);
+//	mensajeNew(bulbasaur, 100000,700,300);
 
 
 	// Testing semaforos pokemon

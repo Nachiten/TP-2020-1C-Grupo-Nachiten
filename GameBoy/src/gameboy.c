@@ -352,51 +352,142 @@ int main(int cantArg, char* arg[]) {
 				}
 				else
 				{
-					IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-					PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-					socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-					resultado_de_conexion(socket, logger, "BROKER");
-
-					if(socket != -1)//si y solo si se puedo conectar
+					if((cambia_a_int(arg[2]) > 0) && (cambia_a_int(arg[2]) <= 6))
 					{
-						//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
-						Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-						Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
+						IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+						PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+						socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+						resultado_de_conexion(socket, logger, "BROKER");
 
-						estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
-						estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+						if(socket != -1)//si y solo si se puedo conectar
+						{
+							//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
+							Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
+							Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
 
-						//mandamos el mensaje pidiendo suscribirse a la cola
-						mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 
-						//logueamos la suscripcion a la cola de mensajes
-						log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
+							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
+							uint32_t sizeMensaje = 0;
+							pthread_t hilo;
+							Hilo estructura;
+							estructura.conexion = socket;
+							estructura.size = sizeMensaje;
 
+							//mandamos el mensaje pidiendo suscribirse a la cola
+							mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
-//hacer switch para distintos tipos de mensaje ToDo
+							//logueamos la suscripcion a la cola de mensajes
+							log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
+							switch(cambia_a_int(arg[2]))
+							{
+								case NEW:;
+									New* estructuraNew = malloc(sizeof(New));
+									estructura.mensaje = estructuraNew;
 
-						uint32_t sizeMensaje = 0;
-						pthread_t hilo;
-						New* mensajeNew = malloc(sizeof(New));
-						Hilo estructura;
-						estructura.conexion = socket;
-						estructura.mensaje = mensajeNew;
-						estructura.size = sizeMensaje;
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
 
-						pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-						pthread_detach(hilo);
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraNew);
+									break;
 
-						//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-						sleep(cambia_a_int(arg[3]));
+								case APPEARED:;
+									Appeared* estructuraAppeared = malloc(sizeof(Appeared));
+									estructura.mensaje = estructuraAppeared;
 
-						//mandamos el mensaje pidiendo dessuscribirse a la cola
-						mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
 
-						//libero las estructuras que acabo de crear
-						free(estructuraSuscribirse);
-						free(estructuraDessuscribirse);
-						free(mensajeNew);
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraAppeared);
+									break;
+
+								case GET:;
+									Get* estructuraGet = malloc(sizeof(Get));
+									estructura.mensaje = estructuraGet;
+
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
+
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraGet);
+									break;
+
+								case LOCALIZED:;
+									Localized* estructuraLocalized = malloc(sizeof(Localized));
+									estructura.mensaje = estructuraLocalized;
+
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
+
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraLocalized);
+									break;
+
+								case CATCH:;
+									Catch* estructuraCatch = malloc(sizeof(Catch));
+									estructura.mensaje = estructuraCatch;
+
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
+
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraCatch);
+									break;
+
+								case CAUGHT:;
+									Caught* estructuraCaught = malloc(sizeof(Caught));
+									estructura.mensaje = estructuraCaught;
+
+									//nos ponemos a escuchar los mensajes que haya en esa cola
+									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+									pthread_detach(hilo);
+
+									//por ultimo liberamos la estructura para recibir mensajes
+									free(estructuraCaught);
+									break;
+
+								case TEST: //Estos 6 están solo para que no sale el WARNING, no sirven para nada aca
+									break;
+
+								case SUSCRIPCION:
+									break;
+
+								case DESSUSCRIPCION:
+									break;
+
+								case DESCONEXION:
+									break;
+
+								case ERROR:
+									break;
+
+								case CONFIRMACION:
+									break;
+							}
+							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
+							sleep(cambia_a_int(arg[3]));
+
+							//mandamos el mensaje pidiendo dessuscribirse a la cola
+							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+
+							//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
+							free(estructuraSuscribirse);
+							free(estructuraDessuscribirse);
+						}
+					}
+					else
+					{
+						puts("Las colas de mensajes son de 1 a 6. Por favor ingrese un número de cola válido.");
+						socket = establecer_conexion("127.0.0.1","99999");
 					}
 				}
 				break;

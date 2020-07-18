@@ -119,12 +119,12 @@ int main(void) {
 	codigo_operacion codigoPrueba5 = 5;
 	codigo_operacion codigoPrueba6 = 6;
 
-	uint32_t sizeDelMensajeNew = 32;
-	uint32_t sizeDelMensajeAppeared = 28;
-	uint32_t sizeDelMensajeGet = 23;
-	uint32_t sizeDelMensajeLocalized = 35;
-	uint32_t sizeDelMensajeCatch = 37;
-	uint32_t sizeDelMensajeCaught = 23;
+	uint32_t sizeDelMensajeNew = 0;
+	uint32_t sizeDelMensajeAppeared = 0;
+	uint32_t sizeDelMensajeGet = 0;
+	uint32_t sizeDelMensajeLocalized = 0;
+	uint32_t sizeDelMensajeCatch = 0;
+	uint32_t sizeDelMensajeCaught = 0;
 
 	New* pokemonNew = malloc(sizeof(New));
 
@@ -155,14 +155,14 @@ int main(void) {
 
 	Localized* pokemonLocalized = malloc(sizeof(Localized));
 	pokemonLocalized->nombrePokemon = "Charmander";
-	pokemonLocalized->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonLocalized->largoNombre = strlen(pokemonLocalized->nombrePokemon);
 	pokemonLocalized->cantPosciciones = 1;
 	pokemonLocalized->ID = 12;
 	pokemonLocalized->corrID = 12;
 
 	Catch* pokemonCatch = malloc(sizeof(Catch));
 	pokemonCatch->nombrePokemon = "unnumeromayora32";
-	pokemonCatch->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonCatch->largoNombre = strlen(pokemonCatch->nombrePokemon);
 	pokemonCatch->posPokemon.x = 1;
 	pokemonCatch->posPokemon.y = 1;
 	pokemonCatch->ID = 102;
@@ -170,7 +170,7 @@ int main(void) {
 
 	Caught* pokemonCaught = malloc(sizeof(Caught));
 	pokemonCaught->nombrePokemon = "Catch";
-	pokemonCaught->largoNombre = strlen(pokemonGet->nombrePokemon);
+	pokemonCaught->largoNombre = strlen(pokemonCaught->nombrePokemon);
 	pokemonCaught->pudoAtrapar = 1;
 	pokemonCaught->ID = 22;
 	pokemonCaught->corrID = 12;
@@ -207,23 +207,31 @@ int main(void) {
 	mensajePrueba6->mensaje = pokemonCaught;
 	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
 
+	//para calcular el tamaño que va a tener que guardar agregar mensaje
+	sizeDelMensajeNew = calcular_bytes_utiles_de_mensaje(mensajePrueba->mensaje, codigoPrueba);
+	sizeDelMensajeAppeared = calcular_bytes_utiles_de_mensaje(mensajePrueba2->mensaje, codigoPrueba2);
+	sizeDelMensajeGet = calcular_bytes_utiles_de_mensaje(mensajePrueba3->mensaje, codigoPrueba3);
+	sizeDelMensajeLocalized = calcular_bytes_utiles_de_mensaje(mensajePrueba4->mensaje, codigoPrueba4);
+	sizeDelMensajeCatch = calcular_bytes_utiles_de_mensaje(mensajePrueba5->mensaje, codigoPrueba5);
+	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
+
 	//pesa 32
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, mensajePrueba->tamanioMensaje, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 28
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, mensajePrueba2->tamanioMensaje, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 23
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, mensajePrueba3->tamanioMensaje, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//ESTE ES LOCALIZED, NO USAR
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, mensajePrueba4->tamanioMensaje, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 37
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, mensajePrueba5->tamanioMensaje, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 23
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, mensajePrueba6->tamanioMensaje, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de borrado
 //	lista_particiones* particion0 = hoja_de_particiones;
@@ -239,11 +247,15 @@ int main(void) {
 //	borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de lectura
-	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, pokemonNew, pokemonNew->ID, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 
 	//para ver como quedan las particiones luego de "manosearlas"
-	//revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
-
+	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 
 	// *************************************************
 
@@ -726,7 +738,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			mensajeNew  = malloc(sizeof(New));
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semNew);
-			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);//ToDo cambiar esto, lo tiene que meter a memoria mas tarde
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 			//borrar_datos_new(mensajeNew);

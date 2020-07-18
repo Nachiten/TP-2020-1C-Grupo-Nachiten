@@ -364,3 +364,36 @@
 [INFO] 22:53:03:856 Broker/(31023:31034): estoy mandando mensajes
 [INFO] 22:53:12:570 Broker/(31023:31036): estoy mandando mensajes
 [INFO] 22:53:19:43 Broker/(31023:31038): estoy mandando mensajes
+[INFO] 14:28:26:634 Broker/(2839:2845): estoy mandando mensajes
+[INFO] 14:28:29:350 Broker/(2839:2847): estoy mandando mensajes
+[INFO] 14:28:29:350 Broker/(2839:2847): Se suscribio a la cola New
+[INFO] 14:40:23:16 Broker/(3395:3411): estoy mandando mensajes
+[INFO] 14:40:23:16 Broker/(3395:3411): Se suscribio a la cola New
+[INFO] 14:40:39:119 Broker/(3395:3417): estoy mandando mensajes
+[INFO] 14:40:39:119 Broker/(3395:3417): Se suscribio a la cola Appeared
+[INFO] 14:40:47:392 Broker/(3395:3423): estoy mandando mensajes
+[INFO] 14:40:47:392 Broker/(3395:3423): Se suscribio a la cola Get
+[INFO] 14:41:00:632 Broker/(3395:3429): estoy mandando mensajes
+[INFO] 14:41:00:632 Broker/(3395:3429): Se suscribio a la cola Localized
+[INFO] 14:41:11:960 Broker/(3395:3432): estoy mandando mensajes
+[INFO] 14:41:11:961 Broker/(3395:3432): Se suscribio a la cola Catch
+[INFO] 14:41:18:937 Broker/(3395:3437): estoy mandando mensajes
+[INFO] 14:41:18:937 Broker/(3395:3437): Se suscribio a la cola Caught
+[INFO] 14:46:14:328 Broker/(3702:3708): estoy mandando mensajes
+[INFO] 14:46:14:328 Broker/(3702:3708): Se suscribio a la cola New
+[INFO] 14:49:48:868 Broker/(3702:3831): estoy mandando mensajes
+[INFO] 14:49:48:868 Broker/(3702:3831): Se suscribio a la cola New
+[INFO] 14:52:00:606 Broker/(3924:3948): estoy mandando mensajes
+[INFO] 14:52:00:606 Broker/(3924:3948): Se suscribio a la cola Caught
+[INFO] 15:01:18:18 Broker/(4167:4187): estoy mandando mensajes
+[INFO] 15:01:18:18 Broker/(4167:4187): Se suscribio a la cola New
+[INFO] 15:01:24:598 Broker/(4167:4190): estoy mandando mensajes
+[INFO] 15:01:24:598 Broker/(4167:4190): Se suscribio a la cola Appeared
+[INFO] 15:01:31:78 Broker/(4167:4193): estoy mandando mensajes
+[INFO] 15:01:31:78 Broker/(4167:4193): Se suscribio a la cola Get
+[INFO] 15:01:36:822 Broker/(4167:4196): estoy mandando mensajes
+[INFO] 15:01:36:823 Broker/(4167:4196): Se suscribio a la cola Localized
+[INFO] 15:01:41:950 Broker/(4167:4199): estoy mandando mensajes
+[INFO] 15:01:41:950 Broker/(4167:4199): Se suscribio a la cola Catch
+[INFO] 15:01:46:758 Broker/(4167:4202): estoy mandando mensajes
+[INFO] 15:01:46:758 Broker/(4167:4202): Se suscribio a la cola Caught

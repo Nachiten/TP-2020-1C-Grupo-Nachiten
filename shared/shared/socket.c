@@ -488,7 +488,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 			desserializar_get(estructura, socket_cliente);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
+		case LOCALIZED://ToDo esto no lo puedo hacer todavia porque la estructura no esta completa
 			break;
 
 		case CATCH:

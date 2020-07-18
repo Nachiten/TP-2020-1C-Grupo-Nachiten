@@ -903,7 +903,44 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 }
 
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad){ // FALTA AGREGAR EL ID DEL MENSAJE
+char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
+
+	char* stringAEncontrar;
+	char* stringAEscribir;
+	asprintf(&stringAEncontrar, "%i-%i=", posX, posY);
+    asprintf(&stringAEscribir, "%i-%i=%i", posX, posY, cantidad);
+
+	char* aux = strstr(texto, stringAEncontrar);
+
+	int posicionDeInicioDeLineaAModificar = aux - texto;
+
+
+	//primera mitad del string
+	char* primeraMitadDelString = malloc(sizeof(char)*posicionDeInicioDeLineaAModificar + 1);
+	strncpy(primeraMitadDelString, texto, posicionDeInicioDeLineaAModificar);
+
+
+	//segunda mitad del string
+
+	char* segundaMitadDelString = strstr(aux, "\n");
+
+
+	//los pego juntos
+
+	char* stringARetornar = malloc(strlen(primeraMitadDelString) + strlen(stringAEscribir) + strlen(segundaMitadDelString) + 1);
+	strcpy(stringARetornar, primeraMitadDelString);
+	strcat(stringARetornar, stringAEscribir);
+	strcat(stringARetornar, segundaMitadDelString);
+
+
+	free(stringAEscribir);
+	free(stringAEncontrar);
+	free(primeraMitadDelString);
+
+	return stringARetornar;
+}
+
+void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 
 	// Checkeo de variables
 	if (pokemon == NULL){
@@ -961,26 +998,21 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){ // FALTA AGREG
 				// La cantidad se mantiene igual, solo escribir los bloques
 				printf("No se necesitan bloques extra... solo escribir\n");
 
-				// Generar lista con los datos a escribir en los bloques
-				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
+				char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
 
 				// Escribir los datos en los bloques correspondientes
-				escribirLineasEnBloques(listaBloques, listaDatos);
+				// escribirLineasEnBloques(listaBloques, listaDatos);
 
-				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+				// fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
 			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
-			// FALLO EN LISTA PISADA MAGICAMENTE
 
 				printf("Se necesitan mas bloques... pidiendo\n");
 
 				// Cantidad de bloques extra que se deben pedir
 				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
 
-				// Lista con los bloques extra que necesito | Al declarar esta lista explota la otra
-//				t_list* listaBloquesExtraPedidos = list_create();
-//				listaBloquesExtraPedidos = obtenerPrimerosLibresDeBitmap(cantidadBloquesExtra);
-
+				// Sumar los bloques extra que necesito a la lista original
 				suamarBloquesExtraALista(listaBloques, cantidadBloquesExtra);
 
 				// Generar lista con los datos a escribir en los bloques
@@ -1000,23 +1032,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){ // FALTA AGREG
 			}
 
 
+
+
 		} else {
 			printf("La linea fue encontrada, se la debe modificar...");
-			// Se debe sumar el numero dado en "cantidad" en la linea que corresponde
 
-			// Retorna la linea donde esta las coordenadas
-//			int lineaDePos = encontrarCoords(posX, posY, lineasLeidas);
-//
-//			// Genera la linea tipo 3-4=2\n
-//			char* lineaGenerada = generarLineaCoordsPokemon(posX, posY, cantidad);
 
-			/*
-			    1- alocas memoria a un nuevo string que tenga el tamaño adecuado
-				2- usas strstr (o cual sea el nombre) para buscar la posicion (osea el puntero a memoria) de donde esta esa cosita en el string
-				3- creas un nuevo string desde el inicio hasta esa posicion de la cosita (en este caso,  hasta el = justo antes del nro), y le haces memcopy al string previamente creado
-				4- le haces concat al nuevo string del nro que necesitas
-				5- creas un nuevo string desde el /n hasta el fin, y le haces concat
-			 */
 		}
 
 

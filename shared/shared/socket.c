@@ -482,12 +482,10 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 
 		case APPEARED:
 			desserializar_appeared(estructura, socket_cliente);
-			free(estructura);
 			break;
 
 		case GET:
 			desserializar_get(estructura, socket_cliente);
-			free(estructura);
 			break;
 
 		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
@@ -495,7 +493,6 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 
 		case CATCH:
 			desserializar_catch(estructura, socket_cliente);
-			free(estructura);
 			break;
 
 		case CAUGHT:
@@ -562,7 +559,6 @@ void desserializar_appeared(Appeared* estructura, int32_t socket_cliente)
 {
 	//saco el largo del nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->largoNombre), sizeof(estructura->largoNombre), MSG_WAITALL));
-	printf("el largo del nombre del pokemon es: %i\n", estructura->largoNombre);
 
 	estructura->nombrePokemon = malloc(estructura->largoNombre+1);
 
@@ -581,7 +577,7 @@ void desserializar_appeared(Appeared* estructura, int32_t socket_cliente)
 	//saco ID CORRELATIVO del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
 
-	printf("el largo del nombre del pokemon es: %i\n", estructura->largoNombre);
+	printf("el largo del nombre del pokemon es: %u\n", estructura->largoNombre);
 	printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
 	printf("la pos X es: %u\n", estructura->posPokemon.x);
 	printf("la pos Y es: %u\n", estructura->posPokemon.y);

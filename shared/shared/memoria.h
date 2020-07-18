@@ -55,7 +55,21 @@ lista_particiones* buscarLaParticionDelMensaje(lista_particiones* laLista, int32
 //saca los datos de la particion que le dice buscarLaParticionDelMensaje
 void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
 void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje, New* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Appeared* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Get* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Localized* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Catch* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Caught* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
 
-void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO);
+
+//deben ser las funciones mas idiotas que hice en este TP
+uint32_t calcular_bytes_utiles_de_mensaje(void* mensaje, codigo_operacion tipoMensaje);
+uint32_t calcular_bytes_utiles_de_mensaje_new(New* estructura);
+uint32_t calcular_bytes_utiles_de_mensaje_appeared(Appeared* estructura);
+uint32_t calcular_bytes_utiles_de_mensaje_get(Get* estructura);
+uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura);
+uint32_t calcular_bytes_utiles_de_mensaje_catch(Catch* estructura);
+uint32_t calcular_bytes_utiles_de_mensaje_caught(Caught* estructura);
 
 #endif /* SHARED_MEMORIA_H_ */

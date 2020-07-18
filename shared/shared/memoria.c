@@ -871,20 +871,13 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	memcpy(CACHE + desplazamiento, &(estructura->cantPokemon), sizeof(estructura->cantPokemon));
 	desplazamiento += sizeof(estructura->cantPokemon);
 
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	//aumento su numero de victima
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
@@ -912,19 +905,14 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
 
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -942,19 +930,14 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
 	desplazamiento += estructura->largoNombre+1;
 
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -976,21 +959,17 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
 	desplazamiento += sizeof(estructura->cantPosciciones);
 
+	//ToDo
 	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
-
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -1016,19 +995,14 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.y), sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
 
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -1050,19 +1024,14 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	memcpy(CACHE + desplazamiento, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar));
 	desplazamiento += sizeof(estructura->pudoAtrapar);
 
-	//meto ID del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->ID), sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-
-	//meto ID Correlativa del mensaje en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->corrID), sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
+
+	//me guardo a QUE ID pertenecen estos datos
+	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
@@ -1218,46 +1187,41 @@ void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, voi
 
 void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje, New* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
 {
-	//PARA PROBAR LECTURA DE CACHE
+	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
 
-	//uint32_t mostrar_numero = 0;
-	//char* mostrar_texto = malloc(60);
+	char* referenciaTexto;
 
-	//memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	//saco el largo del nombre del pokemon de CACHE
 	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
 	desplazamiento += sizeof(estructura->largoNombre);
 	printf("largo nombre: %u\n", estructura->largoNombre);
 
-	char* mostrar_texto = malloc(estructura->largoNombre+1);
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
 
-	memcpy(mostrar_texto, CACHE + desplazamiento, estructura->largoNombre+1);
-	//memcpy(estructura->nombrePokemon, CACHE + desplazamiento, estructura->largoNombre+1);
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
 
-	estructura->nombrePokemon = mostrar_texto;
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
 	desplazamiento += estructura->largoNombre+1;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
-	//memcpy(&mostrar_numero, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	//saco coordenada X del pokemon de CACHE
 	memcpy(&estructura->posPokemon.x, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
 	desplazamiento += sizeof(estructura->posPokemon.x);
 	printf("pos X: %u\n", estructura->posPokemon.x);
 
+	//saco coordenada Y del pokemon de CACHE
 	memcpy(&estructura->posPokemon.y, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
 	desplazamiento += sizeof(estructura->posPokemon.y);
 	printf("pos Y: %u\n", estructura->posPokemon.y);
 
+	//saco cantidad de pokemones de CACHE
 	memcpy(&estructura->cantPokemon, CACHE + desplazamiento, sizeof(estructura->cantPokemon));
 	desplazamiento += sizeof(estructura->cantPokemon);
 	printf("cantidad: %u\n", estructura->cantPokemon);
-
-	memcpy(&estructura->ID, CACHE + desplazamiento, sizeof(estructura->ID));
-	desplazamiento += sizeof(estructura->ID);
-	printf("ID: %u\n", estructura->ID);
-
-	memcpy(&estructura->corrID, CACHE + desplazamiento, sizeof(estructura->corrID));
-	desplazamiento += sizeof(estructura->corrID);
-	printf("ID CORR: %i\n", estructura->corrID);
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
@@ -1266,7 +1230,190 @@ void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 	}
 }
 
-void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Appeared* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//hago que empiece a leer al principio de la particion
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	char* referenciaTexto;
+
+	//saco el largo del nombre del pokemon de CACHE
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
+
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
+	desplazamiento += estructura->largoNombre+1;
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+
+	//saco coordenada X del pokemon de CACHE
+	memcpy(&estructura->posPokemon.x, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+	printf("pos X: %u\n", estructura->posPokemon.x);
+
+	//saco coordenada Y del pokemon de CACHE
+	memcpy(&estructura->posPokemon.y, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+	printf("pos Y: %u\n", estructura->posPokemon.y);
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Get* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//hago que empiece a leer al principio de la particion
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	char* referenciaTexto;
+
+	//saco el largo del nombre del pokemon de CACHE
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
+
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
+	desplazamiento += estructura->largoNombre+1;
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Localized* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//hago que empiece a leer al principio de la particion
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	char* referenciaTexto;
+
+	//saco el largo del nombre del pokemon de CACHE
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
+
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
+	desplazamiento += estructura->largoNombre+1;
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+
+	//saco la cantidad de lugares donde se encuentra el pokemon, de CACHE
+	memcpy(&estructura->cantPosciciones, CACHE + desplazamiento, sizeof(estructura->cantPosciciones));
+	desplazamiento += sizeof(estructura->cantPosciciones);
+	printf("cantidad pos: %u\n", estructura->cantPosciciones);
+
+	//ToDo
+	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Catch* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//hago que empiece a leer al principio de la particion
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	char* referenciaTexto;
+
+	//saco el largo del nombre del pokemon de CACHE
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
+
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
+	desplazamiento += estructura->largoNombre+1;
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+
+	//saco coordenada X del pokemon de CACHE
+	memcpy(&estructura->posPokemon.x, CACHE + desplazamiento, sizeof(estructura->posPokemon.x));
+	desplazamiento += sizeof(estructura->posPokemon.x);
+	printf("pos X: %u\n", estructura->posPokemon.x);
+
+	//saco coordenada Y del pokemon de CACHE
+	memcpy(&estructura->posPokemon.y, CACHE + desplazamiento, sizeof(estructura->posPokemon.y));
+	desplazamiento += sizeof(estructura->posPokemon.y);
+	printf("pos Y: %u\n", estructura->posPokemon.y);
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Caught* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+{
+	//hago que empiece a leer al principio de la particion
+	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
+
+	char* referenciaTexto;
+
+	//saco el largo del nombre del pokemon de CACHE
+	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+	desplazamiento += sizeof(estructura->largoNombre);
+	printf("largo nombre: %u\n", estructura->largoNombre);
+
+	//preparo un espacio para almacenar el nombre del pokemon
+	referenciaTexto = malloc(estructura->largoNombre+1);
+
+	//saco el nombre del pokemon de CACHE
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+
+	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+	estructura->nombrePokemon = referenciaTexto;
+	desplazamiento += estructura->largoNombre+1;
+	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+
+	//saco el resultado del intento de CATCH de CACHE
+	memcpy(&estructura->pudoAtrapar, CACHE + desplazamiento, sizeof(estructura->pudoAtrapar));
+	desplazamiento += sizeof(estructura->pudoAtrapar);
+	printf("pudo atrapar?: %u\n", estructura->pudoAtrapar);
+
+	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
+	{
+		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
+	}
+}
+
+uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
 {
 	lista_particiones* particionDelMensaje;
 	int32_t particionEncontrada = -1;
@@ -1282,9 +1429,129 @@ void sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estru
 	else
 	{
 		puts("Los datos del mensaje ya no se encuentran en CACHE.");
-		//devolver 0 si no esta en memoria, 1 si la encontro
+		particionEncontrada = 0;
 	}
+	return particionEncontrada;
 }
 
+uint32_t calcular_bytes_utiles_de_mensaje(void* mensaje, codigo_operacion tipoMensaje)
+{
+	uint32_t totalAAsignar = 0;
 
+	switch(tipoMensaje){
+		case NEW:
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_new(mensaje);
+			break;
 
+		case APPEARED:
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_appeared(mensaje);
+			break;
+
+		case GET:
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_get(mensaje);
+			break;
+
+		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa ToDo
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_localized(mensaje);
+			break;
+
+		case CATCH:
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_catch(mensaje);
+			break;
+
+		case CAUGHT:
+				totalAAsignar = calcular_bytes_utiles_de_mensaje_caught(mensaje);
+			break;
+
+		case TEST:
+			//Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+			break;
+
+		case SUSCRIPCION:
+			break;
+
+		case DESSUSCRIPCION:
+			break;
+
+		case DESCONEXION:
+			break;
+
+		case ERROR:
+			break;
+
+		case CONFIRMACION:
+			break;
+	}
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_new(New* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += sizeof(estructura->posPokemon.x);
+	totalAAsignar += sizeof(estructura->posPokemon.y);
+	totalAAsignar += sizeof(estructura->cantPokemon);
+
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_appeared(Appeared* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += sizeof(estructura->posPokemon.x);
+	totalAAsignar += sizeof(estructura->posPokemon.y);
+
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_get(Get* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += sizeof(estructura->cantPosciciones);
+	//ToDo
+	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_catch(Catch* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += sizeof(estructura->posPokemon.x);
+	totalAAsignar += sizeof(estructura->posPokemon.y);
+
+	return totalAAsignar;
+}
+
+uint32_t calcular_bytes_utiles_de_mensaje_caught(Caught* estructura)
+{
+	uint32_t totalAAsignar = 0;
+
+	totalAAsignar += sizeof(estructura->largoNombre);
+	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += sizeof(estructura->pudoAtrapar);
+
+	return totalAAsignar;
+}

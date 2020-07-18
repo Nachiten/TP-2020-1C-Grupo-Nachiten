@@ -496,10 +496,10 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-//			if(1/*funcionComparar(mensaje, cola); //si la ID de mensaje es != a la de mensaje->mensaje devuelve 0, sino 1*/) toDo
-//			{
-				sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//			}
+			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO))
+			{
+				puts("Nico acordate de ponerle la logica que necesites a esto, devuelve 1 si encontro los datos, 0 si ya no estan en cache");//ToDo
+			}
 			//agregar IF en caso de que la cola este vacia ToDo
 			for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
 				t_sub* sub = malloc(sizeof(t_sub));
@@ -538,7 +538,6 @@ void borrar_datos(t_cola* cola, t_mensaje* mensaje){
 
 void borrar_datos_new(New* mensaje){
 	mensaje->cantPokemon = 0;
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 	mensaje->posPokemon.x = 0;
@@ -546,7 +545,6 @@ void borrar_datos_new(New* mensaje){
 }
 
 void borrar_datos_appeared(Appeared* mensaje){
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 	mensaje->posPokemon.x = 100;
@@ -554,13 +552,11 @@ void borrar_datos_appeared(Appeared* mensaje){
 }
 
 void borrar_datos_get(Get* mensaje){
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 }
 
 void borrar_datos_localized(Localized* mensaje){
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 	mensaje->posPokemones->x = 100;
@@ -568,7 +564,6 @@ void borrar_datos_localized(Localized* mensaje){
 }
 
 void borrar_datos_catch(Catch* mensaje){
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 	mensaje->posPokemon.x = 100;
@@ -576,7 +571,6 @@ void borrar_datos_catch(Catch* mensaje){
 }
 
 void borrar_datos_caught(Caught* mensaje){
-	mensaje->corrID = -10;
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 	mensaje->pudoAtrapar = -100;
@@ -720,6 +714,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	char* aLogear;
 	void* mensaje;
 	uint32_t sizeMensaje;
+	uint32_t sizeMensajeParaCache;
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
 	Get* mensajeGet;
@@ -729,24 +724,22 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		switch (cod_op) {
 		case NEW:
 			mensajeNew  = malloc(sizeof(New));
-
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semNew);
-			//todo tamaño = funcionQueCalculaElTamañoDelMensaje(mensajeNew); //mandar ese tamaño a agregar_mensaje_a_Cache()
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensaje, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 			//borrar_datos_new(mensajeNew);
 			//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajeNew, mensajeNew->ID, cod_op, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-
-
 			agregar_mensaje_new(mensajeNew,sizeMensaje);
 			sem_post(semNew);
 			break;
 		case APPEARED:
 			mensajeAppeared = malloc(sizeof(Appeared));
 			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente, &sizeMensaje);
-			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semAppeared);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeAppeared, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_appeared(mensajeAppeared,sizeMensaje);
 			sem_post(semAppeared);
 			break;
@@ -754,31 +747,35 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			mensajeGet = malloc(sizeof(Get));
 			recibir_mensaje(mensajeGet, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semGet);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeGet, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_get(mensajeGet,sizeMensaje);
-			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semGet);
 			break;
 		case LOCALIZED:
 			mensajeLocalized = malloc(sizeof(Localized));
 			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semLocalized);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_localized(mensajeLocalized,sizeMensaje);
-			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_post(semLocalized);
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente, &sizeMensaje);
-			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semCatch);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_catch(mensajeCatch,sizeMensaje);
 			sem_post(semCatch);
 			break;
 		case CAUGHT:
 			mensajeCaught = malloc(sizeof(Caught));
 			recibir_mensaje(mensajeCaught, cod_op, socket_cliente, &sizeMensaje);
-			puts("Sali de recibir mensaje"); //agregado para ver si completaba recibir mensaje correctamente
 			sem_wait(semCaught);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCaught, cod_op);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_caught(mensajeCaught,sizeMensaje);
 			sem_post(semCaught);
 			break;

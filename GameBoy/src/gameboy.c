@@ -424,6 +424,5 @@ void hilo_recibir_mensajes(Hilo* estructura){
 		bytesRecibidos(tamanioRecibido);
 
 		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
-		//sleep(5);
 	}
 }

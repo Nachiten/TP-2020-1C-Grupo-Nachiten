@@ -23,7 +23,7 @@ void waitSemaforoPokemon(char* pokemon){
 
 			sem_wait(semaforoActual->semaforo);
 
-			printf("WAIT | %s\n", pokemon);
+			//printf("WAIT | %s\n", pokemon);
 
 			return;
 		}
@@ -41,7 +41,7 @@ void signalSemaforoPokemon(char* pokemon){
 
 			sem_post(semaforoActual->semaforo);
 
-			printf("SIGNAL | %s\n", pokemon);
+			//printf("SIGNAL | %s\n", pokemon);
 
 			return;
 		}

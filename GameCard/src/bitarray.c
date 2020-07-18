@@ -40,8 +40,6 @@ void leerBitArrayDeArchivo(char* pathMetadata, char** bitArray, int BLOCKS){
 	// Pego el path de bitmap
 	strcat(pathCompleto, pathBitmap);
 
-	// VA UN SEMAFORO ACA !!!
-
 	FILE* bitmapArchivo = fopen( pathCompleto , "r" );
 
 	// Me muevo al principio del archivo
@@ -79,7 +77,7 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 
-	// Se hace el signal luego dde guardar el bitarray en archivo
+	// Se hace el signal luego de guardar el bitarray en archivo
 	sem_post(semBitmap);
 
 }
@@ -133,7 +131,7 @@ t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY_ARCHIVO, BLOCKS);
 
-	// Se hace el signal luego dde guardar el bitarray en archivo
+	// Se hace el signal luego de guardar el bitarray en archivo
 	sem_post(semBitmap);
 
 	return listaNums;

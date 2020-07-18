@@ -894,6 +894,44 @@ void printearListaDeEnteros(t_list* lista){
 
 }
 
+char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
+
+	char* stringAEncontrar;
+	char* stringAEscribir;
+	asprintf(&stringAEncontrar, "%i-%i=", posX, posY);
+    asprintf(&stringAEscribir, "%i-%i=%i", posX, posY, cantidad);
+
+
+	char* aux = strstr(texto, stringAEncontrar);
+
+	int posicionDeInicioDeLineaAModificar = aux - texto;
+
+
+	//primera mitad del string
+	char* primeraMitadDelString = malloc(sizeof(char)*posicionDeInicioDeLineaAModificar + 1);
+	strncpy(primeraMitadDelString, texto, posicionDeInicioDeLineaAModificar);
+
+
+	//segunda mitad del string
+
+	char* segundaMitadDelString = strstr(aux, "\n");
+
+
+	//los pego juntos
+
+	char* stringARetornar = malloc(strlen(primeraMitadDelString) + strlen(stringAEscribir) + strlen(segundaMitadDelString) + 1);
+	strcpy(stringARetornar, primeraMitadDelString);
+	strcat(stringARetornar, stringAEscribir);
+	strcat(stringARetornar, segundaMitadDelString);
+
+
+	free(stringAEscribir);
+	free(stringAEncontrar);
+	free(primeraMitadDelString);
+
+	return stringARetornar;
+}
+
 void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 
 	// Checkeo de variables
@@ -952,13 +990,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				// La cantidad se mantiene igual, solo escribir los bloques
 				printf("No se necesitan bloques extra... solo escribir\n");
 
-				// Generar lista con los datos a escribir en los bloques
-				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
+				char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
 
 				// Escribir los datos en los bloques correspondientes
-				escribirLineasEnBloques(listaBloques, listaDatos);
+				// escribirLineasEnBloques(listaBloques, listaDatos);
 
-				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+				// fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
 			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
 			// FALLO EN LISTA PISADA MAGICAMENTE

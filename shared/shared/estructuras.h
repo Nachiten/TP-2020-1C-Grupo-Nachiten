@@ -143,6 +143,18 @@ typedef struct LocalizedPokemon // INCOMPLETO
 
 	int32_t ID;
 	int32_t corrID;//si no tienen ninguno pongan -2
+}LocalizedViejo;
+
+typedef struct Localized {
+
+	uint32_t largoNombre;
+	char* nombrePokemon;
+
+    int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
+
+	uint32_t cantPosciciones;
+	uint32_t coords[];
 }Localized;
 
 typedef struct GetPokemon

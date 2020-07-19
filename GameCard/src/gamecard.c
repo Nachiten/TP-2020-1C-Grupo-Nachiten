@@ -955,21 +955,51 @@ char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
 	char* stringAEncontrar;
 	char* stringAEscribir;
 	asprintf(&stringAEncontrar, "%i-%i=", posX, posY);
-    asprintf(&stringAEscribir, "%i-%i=%i", posX, posY, cantidad);
 
+    // Un puntero al lugar donde comienza el string buscado
 	char* aux = strstr(texto, stringAEncontrar);
 
 	int posicionDeInicioDeLineaAModificar = aux - texto;
 
+	// Segunda mitad del string
+	char* segundaMitadDelString = strstr(aux, "\n");
+
+	// Mover el puntero aux para lle
+	char* aux2 = aux + strlen(stringAEncontrar);
+
+	//printf("Aux 2: %s", aux2);
+
+	// Separar el string restante para obtener la cantidad
+	char** stringsSeparados = string_split(aux2, "\n");
+
+	// Cantidad de la linea actual
+	char* cantidadActual = stringsSeparados[0];
+
+	// Al hacer malloc me aseguro que esta direccion de memoria no va a ser pisada
+	int* charConvertido = malloc(sizeof(int));
+
+	int nombre = atoi(cantidadActual);
+
+	memcpy(charConvertido, &nombre, sizeof(int));
+
+	// Debo sumar cantidadActual (hecho int) + cantidad
+
+	//char* cantidadActual = strsep(&aux2, "\n");
+
+	printf("Cantidad actual: %s\n", cantidadActual);
+
+	// Se debe modificar para que pise con la suma no con la cantidad
+	asprintf(&stringAEscribir, "%i-%i=%i", posX, posY, cantidad);
+
 
 	//primera mitad del string
-	char* primeraMitadDelString = malloc(sizeof(char)*posicionDeInicioDeLineaAModificar + 1);
-	strncpy(primeraMitadDelString, texto, posicionDeInicioDeLineaAModificar);
+	char* primeraMitadDelString = malloc(posicionDeInicioDeLineaAModificar + 1);
+	memcpy(primeraMitadDelString, texto, posicionDeInicioDeLineaAModificar);
+
+	primeraMitadDelString[posicionDeInicioDeLineaAModificar] = '\0';
 
 
-	//segunda mitad del string
 
-	char* segundaMitadDelString = strstr(aux, "\n");
 
 
 	//los pego juntos
@@ -1082,7 +1112,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		} else {
 			printf("La linea fue encontrada, se la debe modificar... [No hecho todavia]");
 
-			//char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
+
 
 			//printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
@@ -1434,17 +1464,53 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(jorge, 1,15,3);
-	mensajeNew(jorge, 2,14,3);
-	mensajeNew(jorge, 3,20,3);
-	mensajeNew(jorge, 4,21,3);
-	mensajeNew(jorge, 10,23,3);
-	mensajeNew(jorge, 11,5,3);
-	mensajeNew(jorge, 12,3,3);
-	mensajeNew(jorge, 13,7,3);
-	mensajeNew(jorge, 32,5,3);
+//	mensajeNew(jorge, 1,15,3);
+//	mensajeNew(jorge, 2,14,3);
+//	mensajeNew(jorge, 3,20,3);
+//	mensajeNew(jorge, 4,21,3);
+//	mensajeNew(jorge, 10,23,3);
+//	mensajeNew(jorge, 11,5,3);
+//	mensajeNew(jorge, 12,3,3);
+//	mensajeNew(jorge, 13,7,3);
+//	mensajeNew(jorge, 32,5,3);
+//
+//	mensajeGet(jorge);
 
-	mensajeGet(jorge);
+	char* lineasLeidas = "33-4=532\n35-7=4\n30-10=4\n10-14=4\n"; // Linea 1 = 35-7=7
+
+	printf("Lineas Antes:\n%s\n", lineasLeidas);
+
+	char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, 33, 4, 300);
+
+	printf("Lineas Despues:\n%s\n", lineasConLineaReemplazada);
+
+	// Segunda linea no funciona, tercera linea funciona bien
+
+
+
+	int posX1 = 3;
+	int posX2 = 4;
+
+	int posY1 = 5;
+	int posY2 = 10;
+
+	int cantidadCoords = 2;
+
+	int tamanioArray = cantidadCoords * 2;
+
+	Localized* my_array = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pikachu) + 1);
+
+	my_array->cantPosciciones = cantidadCoords;
+
+	my_array->coords[0] = posX1;
+	my_array->coords[1] = posX2;
+	my_array->coords[2] = posY1;
+	my_array->coords[3] = posY2;
+
+	my_array->largoNombre = strlen(pikachu);
+
+	my_array->nombrePokemon = pikachu;
+
 
 	//mensajeCatch(jorge, 1, 15);
 

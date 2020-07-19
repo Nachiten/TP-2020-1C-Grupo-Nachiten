@@ -49,15 +49,6 @@ typedef struct datosHiloBroker{
 	t_log* logger;
 }datosHiloBroker;
 
-typedef struct Localized {
-
-	uint32_t largoNombrePokemon;
-	char* nombrePokemon;
-
-    uint32_t cantidadPokemons;
-    uint32_t coords[];
-}Localized;
-
 // Conexiones
 void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
 void esperar_conexiones(int32_t socket_servidor);

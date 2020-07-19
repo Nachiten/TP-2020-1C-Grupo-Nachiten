@@ -363,7 +363,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 	uint32_t control = 1;
 
 	puts("Realizando control del estado de memoria y particiones...");
-	puts("------------------------------------");
+	puts("------------------------------------------");
 
 
 	//recorro las particiones hasta la ultima
@@ -387,7 +387,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 		{
 			printf("En esta partición se guardan los datos del mensaje ID: %i.\n", auxiliar->ID_MENSAJE_GUARDADO);
 		}
-		puts("------------------------------------");
+		puts("------------------------------------------");
 
 		//avanzo
 		if(auxiliar->sig_particion != NULL)

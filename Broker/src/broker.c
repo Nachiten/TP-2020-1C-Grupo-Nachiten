@@ -233,30 +233,30 @@ int main(void) {
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de borrado
-	lista_particiones* particion0 = hoja_de_particiones;
-	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
-	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
+//	lista_particiones* particion0 = hoja_de_particiones;
+//	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
+//	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
 //	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
 //	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
 
-	borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS);
-	borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS);
-	borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS);
-//	borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
 
-	compactacion(CACHE, hoja_de_particiones);
+//	compactacion(CACHE, hoja_de_particiones);
 
 	//para pruebas de lectura
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba2, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba3, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba5, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba6, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba2, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba3, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba5, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba6, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 
 	//para ver como quedan las particiones luego de "manosearlas"
-	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
+	//revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 
 	// *************************************************
 
@@ -977,7 +977,6 @@ void mostrameMemoria(int32_t senial)
 {
 	if(senial == SIGUSR1 || senial == SIGUSR2)
 	{
-		puts("funcion llamada correctamente");
 		revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 	}
 	else

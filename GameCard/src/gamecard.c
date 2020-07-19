@@ -951,7 +951,6 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 
 
 char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
-// TODO : No funciona
 	char* stringAEncontrar;
 	char* stringAEscribir;
 	asprintf(&stringAEncontrar, "%i-%i=", posX, posY);
@@ -975,35 +974,24 @@ char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
 	// Cantidad de la linea actual
 	char* cantidadActual = stringsSeparados[0];
 
-	// Al hacer malloc me aseguro que esta direccion de memoria no va a ser pisada
+	// Convierto la cantidad actual a entero
 	int* charConvertido = malloc(sizeof(int));
+	int cantidadActualEntero = atoi(cantidadActual);
+	memcpy(charConvertido, &cantidadActualEntero, sizeof(int));
 
-	int nombre = atoi(cantidadActual);
+	// Sumo a la cantidad que tiene que quedar
+	cantidad+= cantidadActualEntero;
 
-	memcpy(charConvertido, &nombre, sizeof(int));
-
-	// Debo sumar cantidadActual (hecho int) + cantidad
-
-	//char* cantidadActual = strsep(&aux2, "\n");
-
-	printf("Cantidad actual: %s\n", cantidadActual);
-
-	// Se debe modificar para que pise con la suma no con la cantidad
 	asprintf(&stringAEscribir, "%i-%i=%i", posX, posY, cantidad);
 
-
-	//primera mitad del string
+	// Primera mitad del string
 	char* primeraMitadDelString = malloc(posicionDeInicioDeLineaAModificar + 1);
 	memcpy(primeraMitadDelString, texto, posicionDeInicioDeLineaAModificar);
 
+	// Pego un \0 al final del string
 	primeraMitadDelString[posicionDeInicioDeLineaAModificar] = '\0';
 
-
-
-
-
-	//los pego juntos
-
+	// Pegar lo obtenido junto
 	char* stringARetornar = malloc(strlen(primeraMitadDelString) + strlen(stringAEscribir) + strlen(segundaMitadDelString) + 1);
 	strcpy(stringARetornar, primeraMitadDelString);
 	strcat(stringARetornar, stringAEscribir);
@@ -1480,9 +1468,15 @@ int main(void) {
 
 	printf("Lineas Antes:\n%s\n", lineasLeidas);
 
-	char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, 33, 4, 300);
+	char* lineasLeidas1 = reemplazarLineaDePokemon(lineasLeidas, 33, 4, 20);
 
-	printf("Lineas Despues:\n%s\n", lineasConLineaReemplazada);
+	char* lineasLeidas2 = reemplazarLineaDePokemon(lineasLeidas1, 35, 7, 50);
+
+	char* lineasLeidas3 = reemplazarLineaDePokemon(lineasLeidas2, 30, 10, 10510);
+
+	char* lineasLeidas4 = reemplazarLineaDePokemon(lineasLeidas3, 10, 14, 1);
+
+	printf("Lineas Despues:\n%s\n", lineasLeidas4);
 
 	// Segunda linea no funciona, tercera linea funciona bien
 

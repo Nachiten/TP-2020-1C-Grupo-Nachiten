@@ -951,7 +951,7 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 
 
 char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
-
+// TODO : No funciona
 	char* stringAEncontrar;
 	char* stringAEscribir;
 	asprintf(&stringAEncontrar, "%i-%i=", posX, posY);
@@ -1022,13 +1022,11 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		// Si no se encuentra la linea buscada entonces se debe agregar al final
 
 		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
-			// TODO Fixear :)
 
 			printf("La linea NO fue encontrada... pegando al final\n");
 
 			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
 
-			// TODO Esta lista de bloques queda rota al leer por alguna razon D:
 			t_list* listaBloques = list_create();
 			listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
 
@@ -1040,7 +1038,6 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
 
 			if (cantidadBloquesRequeridos == cantidadBloquesActual){
-			// FUNCIONA BIEN
 
 				// La cantidad se mantiene igual, solo escribir los bloques
 				printf("No se necesitan bloques extra... solo escribir\n");
@@ -1082,15 +1079,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 				printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
 			}
 
-
-
-
 		} else {
-			printf("La linea fue encontrada, se la debe modificar...");
+			printf("La linea fue encontrada, se la debe modificar... [No hecho todavia]");
 
-			char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
+			//char* lineasConLineaReemplazada = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
 
-			printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
+			//printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
 		}
 
@@ -1136,7 +1130,7 @@ void abrirArchivoPokemon(char* pokemon){
 			config_set_value(datosMetadata, "OPEN", "Y");
 			config_save(datosMetadata);
 
-			printf("El archivo fue abierto correctamente\n");
+			printf("El archivo %s fue abierto correctamente\n", pokemon);
 			signalSemaforoPokemon(pokemon);
 
 			config_destroy(datosMetadata);
@@ -1146,7 +1140,7 @@ void abrirArchivoPokemon(char* pokemon){
 		signalSemaforoPokemon(pokemon);
 		config_destroy(datosMetadata);
 
-		printf("No pude abrir el archivo, entrando en tiempo de espera\n");
+		printf("No pude abrir el archivo %s, entrando en tiempo de espera\n", pokemon);
 
 		sleep(TIEM_REIN_OPERACION);
 
@@ -1186,6 +1180,7 @@ void cerrarArchivoPokemon(char* pokemon){
 }
 
 void mensajeCatch(char* pokemon, int posX, int posY){
+// TODO | Falta terminar
 
 	int resultado = 0;
 
@@ -1257,6 +1252,111 @@ char* restarPokemonALinea(char* lineasArchivo, int numeroLinea){
 	printf("Linea a modificar: %s", lineaAModificar);
 
 	return "";
+
+}
+
+t_list* convertirAListaDeCoords(char* lineas){
+	t_list* lista = list_create();
+
+	// Devuelve un array donde cada string es: 3-20=50
+	char** lineasSeparadas = string_split(lineas, "\n");
+
+	/* Recorro las lineas separadas y para cada una:
+	 * 1) Obtengo coordX y CoordY
+	 * 2) Los paso a entero con ATOI
+	 * 3) Meto las coordenadas en la lista
+	 * 4) Devuelvo la lista
+	 */
+
+	// Variable iterativa para el while
+	int cantLineas = 0;
+
+	char* lineaActual;
+
+	while ( (lineaActual = lineasSeparadas[cantLineas]) != NULL){
+
+		// Devuelve dos elementos: 33(posX) y 3=20
+		char** lineaSeparada = string_split(lineaActual, "-");
+
+		// Obtengo la posicionX como char
+		char* posX = lineaSeparada[0];
+
+		// Devuelve dos elementos 3(posY) y 20
+		char** coordMasCantidad = string_split(lineaSeparada[1], "=");
+
+		// Obtengo la posicion Y como char
+		char* posY = coordMasCantidad[0];
+
+		// Convierto el char de posX a un entero
+		int* posXConvertido = malloc(sizeof(int));
+		int posXEntero = atoi(posX);
+		memcpy(posXConvertido, &posXEntero, sizeof(int));
+
+		// Convierto el char de posY a un entero
+		int* posYConvertido = malloc(sizeof(int));
+		int posYEntero = atoi(posY);
+		memcpy(posYConvertido, &posYEntero, sizeof(int));
+
+		list_add(lista, posXConvertido);
+		list_add(lista, posYConvertido);
+
+		cantLineas++;
+	}
+
+	if ( list_size(lista) % 2 != 0){
+		printf("ERROR | Se cargo una cantidad impar de coordenads en la lista, esto no es posible");
+	}
+
+
+	return lista;
+}
+
+Localized generarStructLocalized(char* pokemon, t_list* listaCoords){
+	// TODO | Generar la estructura con los datos y devolverla
+}
+
+
+
+void mensajeGet(char* pokemon){
+
+	t_list* listaCoords = list_create();
+
+	if (existeCarpetaPokemon(pokemon)){
+
+		abrirArchivoPokemon(pokemon);
+
+		char** bloquesLeidos = leerBloques(pokemon);
+
+		int cantBytes = leerSizePokemon(pokemon);
+
+		char* lineasLeidas = leerContenidoBloquesPokemon(bloquesLeidos, cantBytes);
+
+		listaCoords = convertirAListaDeCoords(lineasLeidas);
+
+		int i;
+
+		for (i = 0; i< list_size(listaCoords); i+=2){
+
+			int* coordX = list_get(listaCoords, i);
+			int* coordY = list_get(listaCoords, i+1);
+
+			printf("Coord X: %i ", *coordX);
+			printf("Coord Y: %i\n", *coordY);
+		}
+
+		printf("Cant de coords es %i", list_size(listaCoords) / 2);
+
+		cerrarArchivoPokemon(pokemon);
+
+	} else {
+		printf("El pokemon no existe");
+	}
+
+	if (list_size(listaCoords) == 0){
+		printf("No hay ninguna coordenada (se debe mandar mensaje vacio)");
+	} else {
+		Localized miStruct = generarStructLocalized(pokemon, listaCoords);
+	}
 
 }
 
@@ -1334,17 +1434,21 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeCatch(jorge, 1, 15);
+	mensajeNew(jorge, 1,15,3);
+	mensajeNew(jorge, 2,14,3);
+	mensajeNew(jorge, 3,20,3);
+	mensajeNew(jorge, 4,21,3);
+	mensajeNew(jorge, 10,23,3);
+	mensajeNew(jorge, 11,5,3);
+	mensajeNew(jorge, 12,3,3);
+	mensajeNew(jorge, 13,7,3);
+	mensajeNew(jorge, 32,5,3);
 
-//	mensajeNew(jorge, 1,15,3);
-//	mensajeNew(jorge, 1,14,3);
-//	mensajeNew(jorge, 1,20,3);
-//	mensajeNew(jorge, 1,21,3);
-//	mensajeNew(jorge, 1,23,3);
-//	mensajeNew(jorge, 1,5,3);
-//	mensajeNew(jorge, 1,3,3);
-//	mensajeNew(jorge, 1,7,3);
-//	mensajeNew(jorge, 32,5,3);
+	mensajeGet(jorge);
+
+	//mensajeCatch(jorge, 1, 15);
+
+
 
 //	mensajeNew(pikachu, 1,15,3);
 //	mensajeNew(pikachu, 1,14,3);
@@ -1392,6 +1496,8 @@ int main(void) {
 //	mensajeNew(jorge, 1000,7,3);
 //	mensajeNew(jorge, 10000,700,300);
 //	mensajeNew(jorge, 100000,700,300);
+
+	// 25
 
 //	mensajeNew(pikachu, 33,3,3);
 //	mensajeNew(pikachu, 34,7,3);

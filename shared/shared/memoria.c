@@ -256,6 +256,7 @@ void compactacion(void* CACHE, lista_particiones* laLista)
 	lista_particiones* auxilio = laLista;
 	uint32_t posicionAEscribir = 0;
 	uint32_t tamanioACopiar = 0;
+	uint32_t particionMovida = 0;
 
 	puts("Compactando...");
 
@@ -269,7 +270,7 @@ void compactacion(void* CACHE, lista_particiones* laLista)
 			//me paro en la particion libre porque las particiones ocupadas anteriores a esa no me importan
 			particionOcupada = particionLibre;
 			//avanzo hasta la primera particion ocupada
-			while(particionOcupada != NULL)
+			while(particionOcupada != NULL && particionMovida == 0)
 			{
 				//si la particion no esta ocupada, no me interesa
 				 if(particionOcupada->laParticion.estaLibre == 0)
@@ -278,21 +279,33 @@ void compactacion(void* CACHE, lista_particiones* laLista)
 
 					 memcpy(CACHE + posicionAEscribir, (CACHE + particionOcupada->laParticion.limiteInferior),tamanioACopiar);
 
+					 //ahora la particion que estaba libre tiene los datos de la particion que movi
 					 particionLibre->laParticion.estaLibre = 0;
 					 particionLibre->laParticion.limiteSuperior = particionLibre->laParticion.limiteInferior + tamanioACopiar;
+					 particionLibre->ID_MENSAJE_GUARDADO = particionOcupada->ID_MENSAJE_GUARDADO;
 
-					 posicionAEscribir = particionLibre->laParticion.limiteSuperior;
+					 //la particion que movi, ya no tiene los datos de ningun mensaje
+					 particionOcupada->ID_MENSAJE_GUARDADO = -1;
 
 					 auxilio = particionOcupada->anter_particion;
 					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno);
 					 particionOcupada = auxilio;
+					 particionOcupada->sig_particion->laParticion.limiteInferior = particionOcupada->laParticion.limiteSuperior;
+					 particionMovida = 1;
 				 }
-				particionOcupada = particionOcupada->sig_particion;
+				 if(particionMovida == 0)
+				 {
+					particionOcupada = particionOcupada->sig_particion;
+				 }
 			}
+			particionOcupada = particionLibre;
+			particionMovida = 0;
 		}
 		particionLibre = particionLibre->sig_particion;
 	}
 
+//	auxilio = laLista;
+//	auxilio->numero_de_particion = 0;
 	//arreglar numeros de particiones
 }
 

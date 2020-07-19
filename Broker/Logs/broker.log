@@ -398,3 +398,22 @@
 [INFO] 15:01:46:758 Broker/(4167:4202): estoy mandando mensajes
 [INFO] 15:01:46:758 Broker/(4167:4202): Se suscribio a la cola Caught
 [INFO] 20:45:28:705 Broker/(12383:25231): estoy mandando mensajes
+[INFO] 11:05:32:17 Broker/(4957:4965): estoy mandando mensajes
+[INFO] 11:05:37:372 Broker/(4957:4967): estoy mandando mensajes
+[INFO] 11:05:42:571 Broker/(4957:4969): estoy mandando mensajes
+[INFO] 11:05:42:571 Broker/(4957:4969): Se suscribio a la cola New
+[INFO] 11:06:00:277 Broker/(4957:4978): estoy mandando mensajes
+[INFO] 11:11:22:157 Broker/(5107:5120): estoy mandando mensajes
+[INFO] 11:11:29:375 Broker/(5107:5122): estoy mandando mensajes
+[INFO] 11:11:35:862 Broker/(5107:5124): estoy mandando mensajes
+[INFO] 11:12:22:590 Broker/(5107:5297): estoy mandando mensajes
+[INFO] 11:22:19:185 Broker/(5477:5485): estoy mandando mensajes
+[INFO] 11:22:21:369 Broker/(5477:5487): estoy mandando mensajes
+[INFO] 11:22:26:721 Broker/(5477:5489): estoy mandando mensajes
+[INFO] 11:22:30:25 Broker/(5477:5491): estoy mandando mensajes
+[INFO] 11:22:30:25 Broker/(5477:5491): Se suscribio a la cola New
+[INFO] 11:22:32:487 Broker/(5477:5494): estoy mandando mensajes
+[INFO] 11:22:32:488 Broker/(5477:5494): Se suscribio a la cola Appeared
+[INFO] 11:22:34:730 Broker/(5477:5497): estoy mandando mensajes
+[INFO] 11:22:34:730 Broker/(5477:5497): Se suscribio a la cola Get
+[INFO] 11:22:46:199 Broker/(5477:5500): estoy mandando mensajes

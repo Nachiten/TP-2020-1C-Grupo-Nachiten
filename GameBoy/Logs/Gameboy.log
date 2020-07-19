@@ -1158,3 +1158,25 @@
 [INFO] 15:01:46:757 Gameboy/(4201:4201): Conexión establecida con socket de BROKER
 [INFO] 15:01:46:758 Gameboy/(4201:4201): Suscripto a la cola de mensajes: 6
 [INFO] 20:45:28:676 Gameboy/(25230:25230): Conexión establecida con socket de BROKER
+[INFO] 11:05:32:15 Gameboy/(4964:4964): Conexión establecida con socket de BROKER
+[INFO] 11:05:37:370 Gameboy/(4966:4966): Conexión establecida con socket de BROKER
+[INFO] 11:05:42:570 Gameboy/(4968:4968): Conexión establecida con socket de BROKER
+[INFO] 11:05:42:571 Gameboy/(4968:4968): Suscripto a la cola de mensajes: 1
+[INFO] 11:06:00:275 Gameboy/(4977:4977): Conexión establecida con socket de BROKER
+[WARNING] 11:06:26:82 Gameboy/(4988:4988): Conexión fallida con socket de BROKER
+[INFO] 11:11:22:155 Gameboy/(5119:5119): Conexión establecida con socket de BROKER
+[INFO] 11:11:29:374 Gameboy/(5121:5121): Conexión establecida con socket de BROKER
+[INFO] 11:11:35:860 Gameboy/(5123:5123): Conexión establecida con socket de BROKER
+[INFO] 11:12:22:589 Gameboy/(5296:5296): Conexión establecida con socket de BROKER
+[INFO] 11:12:22:589 Gameboy/(5296:5296): Suscripto a la cola de mensajes: 1
+[WARNING] 11:12:31:732 Gameboy/(5300:5300): Conexión fallida con socket de BROKER
+[INFO] 11:22:19:183 Gameboy/(5484:5484): Conexión establecida con socket de BROKER
+[INFO] 11:22:21:367 Gameboy/(5486:5486): Conexión establecida con socket de BROKER
+[INFO] 11:22:26:720 Gameboy/(5488:5488): Conexión establecida con socket de BROKER
+[INFO] 11:22:30:24 Gameboy/(5490:5490): Conexión establecida con socket de BROKER
+[INFO] 11:22:30:25 Gameboy/(5490:5490): Suscripto a la cola de mensajes: 1
+[INFO] 11:22:32:481 Gameboy/(5493:5493): Conexión establecida con socket de BROKER
+[INFO] 11:22:32:481 Gameboy/(5493:5493): Suscripto a la cola de mensajes: 2
+[INFO] 11:22:34:729 Gameboy/(5496:5496): Conexión establecida con socket de BROKER
+[INFO] 11:22:34:730 Gameboy/(5496:5496): Suscripto a la cola de mensajes: 3
+[INFO] 11:22:46:194 Gameboy/(5499:5499): Conexión establecida con socket de BROKER

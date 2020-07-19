@@ -1037,73 +1037,78 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 
 		char* lineasLeidas = leerContenidoBloquesPokemon(bloques, cantidadBytesALeer);
 
-		// Si no se encuentra la linea buscada entonces se debe agregar al final
+		// Lineas incluyendo la linea nueva
+		char* lineasNuevasMasPokemon;
 
+		// Cantidad de bloques finales luego de agregar la linea
+		int cantidadBloquesRequeridos;
+
+		// Cantidad de bloques anterior
+		int cantidadBloquesActual;
+
+		t_list* listaBloques = list_create();
+
+		listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
+
+		// La linea buscada no es encontrada dentro del archivo, se debe agregar una linea nueva
 		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
 
 			printf("La linea NO fue encontrada... pegando al final\n");
 
-			char* lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
-
-			t_list* listaBloques = list_create();
-			listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
-
-			//printf("Printeando lista de bloques:");
-			//printearListaDeEnteros(listaBloques);
-
-			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon));
-
-			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
-
-			if (cantidadBloquesRequeridos == cantidadBloquesActual){
-
-				// La cantidad se mantiene igual, solo escribir los bloques
-				printf("No se necesitan bloques extra... solo escribir\n");
-
-				// Generar lista con los datos a escribir en los bloques
-				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
-
-				// Escribir los datos en los bloques correspondientes
-				escribirLineasEnBloques(listaBloques, listaDatos);
-
-				// Fijo el SIZE=60
-				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
-
-
-			} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
-
-				printf("Se necesitan mas bloques... pidiendo\n");
-
-				// Cantidad de bloques extra que se deben pedir
-				int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
-
-				// Sumo los bloques extra a la listaBloques original
-				suamarBloquesExtraALista(listaBloques, cantidadBloquesExtra);
-
-				// Generar lista con los datos a escribir en los bloques
-				t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
-
-				// Escribir los datos en los bloques correspondientes
-				escribirLineasEnBloques(listaBloques, listaDatos);
-
-				// Fijo el string BLOCKS=[1,2,3]
-				fijarBloquesA(pokemon, listaBloques);
-
-				// Fijo el SIZE=60
-				fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
-
-
-			} else {
-				printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
-			}
+			lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
 
 		} else {
 			printf("La linea fue encontrada, se la debe modificar... [No hecho todavia]");
-
-
-
 			//printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
+			lineasNuevasMasPokemon = reemplazarLineaDePokemon(lineasLeidas, posX, posY, cantidad);
+		}
+
+		cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon));
+
+		cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
+
+		// No necesito bloques extra. solo escribir los que hay
+		if (cantidadBloquesRequeridos == cantidadBloquesActual){
+
+			// La cantidad se mantiene igual, solo escribir los bloques
+			printf("No se necesitan bloques extra... solo escribir\n");
+
+			// Generar lista con los datos a escribir en los bloques
+			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
+
+			// Escribir los datos en los bloques correspondientes
+			escribirLineasEnBloques(listaBloques, listaDatos);
+
+			// Fijo el SIZE=60
+			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+
+		// Debo pedir bloques nuevos
+		} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
+
+			printf("Se necesitan mas bloques... pidiendo\n");
+
+			// Cantidad de bloques extra que se deben pedir
+			int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
+
+			// Sumo los bloques extra a la listaBloques original
+			suamarBloquesExtraALista(listaBloques, cantidadBloquesExtra);
+
+			// Generar lista con los datos a escribir en los bloques
+			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
+
+			// Escribir los datos en los bloques correspondientes
+			escribirLineasEnBloques(listaBloques, listaDatos);
+
+			// Fijo el string BLOCKS=[1,2,3]
+			fijarBloquesA(pokemon, listaBloques);
+
+			// Fijo el SIZE=60
+			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
+
+
+		} else {
+			printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
 		}
 
 
@@ -1329,11 +1334,11 @@ t_list* convertirAListaDeCoords(char* lineas){
 	return lista;
 }
 
-Localized generarStructLocalized(char* pokemon, t_list* listaCoords){
+void generarStructLocalized(char* pokemon, t_list* listaCoords){
 	// TODO | Generar la estructura con los datos y devolverla
+
+	// Debe retornar Localized
 }
-
-
 
 void mensajeGet(char* pokemon){
 
@@ -1373,7 +1378,7 @@ void mensajeGet(char* pokemon){
 	if (list_size(listaCoords) == 0){
 		printf("No hay ninguna coordenada (se debe mandar mensaje vacio)");
 	} else {
-		Localized miStruct = generarStructLocalized(pokemon, listaCoords);
+		//Localized miStruct = generarStructLocalized(pokemon, listaCoords);
 	}
 
 }
@@ -1452,58 +1457,87 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-//	mensajeNew(jorge, 1,15,3);
-//	mensajeNew(jorge, 2,14,3);
-//	mensajeNew(jorge, 3,20,3);
-//	mensajeNew(jorge, 4,21,3);
-//	mensajeNew(jorge, 10,23,3);
-//	mensajeNew(jorge, 11,5,3);
-//	mensajeNew(jorge, 12,3,3);
-//	mensajeNew(jorge, 13,7,3);
-//	mensajeNew(jorge, 32,5,3);
+	mensajeNew(fruta, 1,15,3);
+	mensajeNew(fruta, 1,14,4);
+	mensajeNew(fruta, 1,20,5);
+	mensajeNew(fruta, 1,21,6);
+	mensajeNew(fruta, 1,23,7);
+	mensajeNew(fruta, 1,5,8);
+	mensajeNew(fruta, 1,3,9);
+	mensajeNew(fruta, 1,7,10);
+	mensajeNew(fruta, 32,5,11);
+
+	sleep(15);
+
+	mensajeNew(fruta, 1,15,12);
+	mensajeNew(fruta, 1,14,13);
+	mensajeNew(fruta, 1,20,14);
+	mensajeNew(fruta, 1,21,15);
+	mensajeNew(fruta, 1,23,16);
+	mensajeNew(fruta, 1,5,17);
+	mensajeNew(fruta, 1,3,18);
+	mensajeNew(fruta, 1,7,19);
+	mensajeNew(fruta, 32,5,20);
+
+	sleep(15);
+
+	mensajeNew(fruta, 1,15,21);
+	mensajeNew(fruta, 1,14,22);
+	mensajeNew(fruta, 1,20,23);
+	mensajeNew(fruta, 1,21,24);
+	mensajeNew(fruta, 1,23,25);
+	mensajeNew(fruta, 1,5,26);
+	mensajeNew(fruta, 1,3,27);
+	mensajeNew(fruta, 1,7,28);
+	mensajeNew(fruta, 32,5,29);
+
+
+
+	// 3 + 3 + 8 + 25 = 32-5=39
+
 //
 //	mensajeGet(jorge);
 
-	char* lineasLeidas = "33-4=532\n35-7=4\n30-10=4\n10-14=4\n"; // Linea 1 = 35-7=7
-
-	printf("Lineas Antes:\n%s\n", lineasLeidas);
-
-	char* lineasLeidas1 = reemplazarLineaDePokemon(lineasLeidas, 33, 4, 20);
-
-	char* lineasLeidas2 = reemplazarLineaDePokemon(lineasLeidas1, 35, 7, 50);
-
-	char* lineasLeidas3 = reemplazarLineaDePokemon(lineasLeidas2, 30, 10, 10510);
-
-	char* lineasLeidas4 = reemplazarLineaDePokemon(lineasLeidas3, 10, 14, 1);
-
-	printf("Lineas Despues:\n%s\n", lineasLeidas4);
+//	char* lineasLeidas = "33-4=532\n35-7=4\n30-10=4\n10-14=4\n"; // Linea 1 = 35-7=7
+//
+//	printf("Lineas Antes:\n%s\n", lineasLeidas);
+//
+//	char* lineasLeidas1 = reemplazarLineaDePokemon(lineasLeidas, 33, 4, 20);
+//
+//	char* lineasLeidas2 = reemplazarLineaDePokemon(lineasLeidas1, 35, 7, 50);
+//
+//	char* lineasLeidas3 = reemplazarLineaDePokemon(lineasLeidas2, 30, 10, 10510);
+//
+//	char* lineasLeidas4 = reemplazarLineaDePokemon(lineasLeidas3, 10, 14, 1);
+//
+//	printf("Lineas Despues:\n%s\n", lineasLeidas4);
 
 	// Segunda linea no funciona, tercera linea funciona bien
 
 
 
-	int posX1 = 3;
-	int posX2 = 4;
-
-	int posY1 = 5;
-	int posY2 = 10;
-
-	int cantidadCoords = 2;
-
-	int tamanioArray = cantidadCoords * 2;
-
-	Localized* my_array = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pikachu) + 1);
-
-	my_array->cantPosciciones = cantidadCoords;
-
-	my_array->coords[0] = posX1;
-	my_array->coords[1] = posX2;
-	my_array->coords[2] = posY1;
-	my_array->coords[3] = posY2;
-
-	my_array->largoNombre = strlen(pikachu);
-
-	my_array->nombrePokemon = pikachu;
+//	int posX1 = 3;
+//	int posX2 = 4;
+//
+//	int posY1 = 5;
+//	int posY2 = 10;
+//
+//	int cantidadCoords = 2;
+//
+//	int tamanioArray = cantidadCoords * 2;
+//
+//	Localized* my_array = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pikachu) + 1);
+//
+//	my_array->cantPosciciones = cantidadCoords;
+//
+//	my_array->coords[0] = posX1;
+//	my_array->coords[1] = posX2;
+//	my_array->coords[2] = posY1;
+//	my_array->coords[3] = posY2;
+//
+//	my_array->largoNombre = strlen(pikachu);
+//
+//	my_array->nombrePokemon = pikachu;
 
 
 	//mensajeCatch(jorge, 1, 15);

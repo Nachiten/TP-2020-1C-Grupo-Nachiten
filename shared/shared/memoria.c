@@ -17,6 +17,8 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 		laLista->numero_de_particion = 0;
 		laLista->anter_particion = NULL;
 		laLista->sig_particion = NULL;
+		laLista->numero_de_victima = 0;
+		laLista->ID_MENSAJE_GUARDADO = -1;
 	}
 	else
 	{
@@ -28,6 +30,8 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 			laLista->numero_de_particion = 0;
 			laLista->anter_particion = NULL;
 			laLista->sig_particion = NULL;
+			laLista->numero_de_victima = 0;
+			laLista->ID_MENSAJE_GUARDADO = -1;
 		}
 		else
 		{
@@ -63,6 +67,8 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 			particionACrear->laParticion.estaLibre = 0;
 			particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
 			particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos);
+			particionACrear->numero_de_victima = 0;
+			particionACrear->ID_MENSAJE_GUARDADO = -1;
 			return particionACrear;
 		}
 	}
@@ -86,6 +92,8 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 			particionACrear->anter_particion = laLista;
 			particionACrear->laParticion.estaLibre = 1;
 			particionACrear->laParticion.limiteInferior = mitad;
+			particionACrear->numero_de_victima = 0;
+			particionACrear->ID_MENSAJE_GUARDADO = -1;
 
 //			if(laLista->anter_particion != NULL)
 //			{
@@ -94,22 +102,26 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 
 			printf("limite sup: %u\n",laLista->laParticion.limiteSuperior);
 		}
-		corregirNumerosParticiones(laLista, numeroParticionOriginal);
+		corregirNumerosYParticiones(laLista, numeroParticionOriginal);
 		return laLista;
 	}
 }
 
-void corregirNumerosParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal)
+void corregirNumerosYParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal)
 {
+	lista_particiones* particionActual = particionOriginal;
+
 	while(particionOriginal->sig_particion != NULL)
 	{
 		particionOriginal = particionOriginal->sig_particion;
+		particionOriginal->anter_particion = particionActual;
+		particionActual = particionOriginal;
 		numeroParticionOriginal++;
 		particionOriginal->numero_de_particion = numeroParticionOriginal;
 	}
 }
 
-void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
+void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* particionABorrar = laLista;
 	uint32_t masViejoUsado = particionABorrar->numero_de_victima;
@@ -141,7 +153,7 @@ void seleccionDeVictima(lista_particiones* laLista, uint32_t FRECUEN_COMPACT, ui
 	//Y SI Y SOLO SI NO SE ESTA USANDO Bullshit System
 	if(((FRECUEN_COMPACT == -1) || (FRECUEN_COMPACT == 0) || (FRECUEN_COMPACT == 1) || (FRECUEN_COMPACT == *PARTICIONES_ELIMINADAS)) && (strcmp(ADMIN_MEMORIA,"BS") != 0))
 	{
-		compactacion();
+		compactacion(CACHE, laLista);
 		*PARTICIONES_ELIMINADAS = 0;
 	}
 }
@@ -219,26 +231,6 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 			//apunto a la siguiente de mi siguiente
 			auxiliame->sig_particion = particionABorrar->sig_particion;
 
-
-
-
-			//expando el tamaño de la particion siguiente
-			//particionABorrar->sig_particion->laParticion.limiteInferior = particionABorrar->laParticion.limiteInferior;
-			//particionABorrar->sig_particion->numero_de_particion = particionABorrar->numero_de_particion;
-
-			//resultado = particionABorrar->numero_de_particion;
-
-			//si la particion que estoy borrando no "viene de" NULL, entonces hago que la siguiente apunte a su anterior y viceversa
-//			if(particionABorrar->anter_particion != NULL)
-//			{
-//				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
-//				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
-//			}
-//			else
-//			{
-//				particionABorrar->sig_particion->anter_particion = NULL;
-//			}
-
 			consolidado = 1;
 			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
 		}
@@ -256,10 +248,52 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 	}
 }
 
-void compactacion()
+void compactacion(void* CACHE, lista_particiones* laLista)
 {
-	puts("todavia no hago un zorongo, asi q bye bye");
-	abort();
+	uint32_t variableDeAdorno = 0;
+	lista_particiones* particionLibre = laLista;
+	lista_particiones* particionOcupada = laLista;
+	lista_particiones* auxilio = laLista;
+	uint32_t posicionAEscribir = 0;
+	uint32_t tamanioACopiar = 0;
+
+	puts("Compactando...");
+
+	//avanzo hasta la primera particion libre, si llego al final, se acabo
+	while(particionLibre != NULL)
+	{
+		//si la particion no esta libre, no me interesa
+		if(particionLibre->laParticion.estaLibre == 1)
+		{
+			posicionAEscribir = particionLibre->laParticion.limiteInferior;
+			//me paro en la particion libre porque las particiones ocupadas anteriores a esa no me importan
+			particionOcupada = particionLibre;
+			//avanzo hasta la primera particion ocupada
+			while(particionOcupada != NULL)
+			{
+				//si la particion no esta ocupada, no me interesa
+				 if(particionOcupada->laParticion.estaLibre == 0)
+				 {
+					 tamanioACopiar = particionOcupada->laParticion.limiteSuperior - particionOcupada->laParticion.limiteInferior;
+
+					 memcpy(CACHE + posicionAEscribir, (CACHE + particionOcupada->laParticion.limiteInferior),tamanioACopiar);
+
+					 particionLibre->laParticion.estaLibre = 0;
+					 particionLibre->laParticion.limiteSuperior = particionLibre->laParticion.limiteInferior + tamanioACopiar;
+
+					 posicionAEscribir = particionLibre->laParticion.limiteSuperior;
+
+					 auxilio = particionOcupada->anter_particion;
+					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno);
+					 particionOcupada = auxilio;
+				 }
+				particionOcupada = particionOcupada->sig_particion;
+			}
+		}
+		particionLibre = particionLibre->sig_particion;
+	}
+
+	//arreglar numeros de particiones
 }
 
 void matar_lista_particiones(lista_particiones* laLista)
@@ -336,6 +370,10 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 		printf("Número de víctima: %u.\n", auxiliar->numero_de_victima);
 		printf("Límite inferior de la partición: %u.\n", auxiliar->laParticion.limiteInferior);
 		printf("Límite superior de la partición: %u.\n", auxiliar->laParticion.limiteSuperior);
+		if(auxiliar->ID_MENSAJE_GUARDADO != -1)
+		{
+			printf("En esta partición se guardan los datos del mensaje ID: %i.\n", auxiliar->ID_MENSAJE_GUARDADO);
+		}
 		puts("------------------------------------");
 
 		//avanzo
@@ -355,7 +393,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 	puts("---No se tuvo en cuenta la fragmentación interna durante el checkeo---\n");
 }
 
-lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
+lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
@@ -408,8 +446,8 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				if((tenemosEspacio(&auxiliar,&particionElegida,tamanioMemoria, size) == 0))//devuelve 1 si SI, 0 si NO
 				{
 					//hay que fletar una particion
-					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-					particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					seleccionDeVictima(CACHE, laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					particionElegida = seleccionar_particion_First_Fit(CACHE, tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 			//no esta libre, hay que crear una particion nueva
@@ -426,8 +464,8 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 				else
 				{
 					//hay que fletar una particion
-					seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-					particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					seleccionDeVictima(CACHE, laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+					particionElegida = seleccionar_particion_First_Fit(CACHE, tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 				}
 			}
 		}
@@ -441,7 +479,7 @@ lista_particiones* seleccionar_particion_First_Fit(uint32_t tamanioMemoria, list
 	return particionElegida;
 }
 
-lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
+lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
@@ -545,8 +583,8 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 			else
 			{
 				//hay que fletar una particion
-				seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+				seleccionDeVictima(CACHE, laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+				particionElegida = seleccionar_particion_Best_Fit(CACHE, tamanioMemoria, laLista, size, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 		}
 	}
@@ -557,7 +595,7 @@ lista_particiones* seleccionar_particion_Best_Fit(uint32_t tamanioMemoria, lista
 	return particionElegida;
 }
 
-lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion)
+lista_particiones* seleccionar_particion_Buddy_System(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	lista_particiones* auxiliar = laLista;
 	lista_particiones* particionElegida = NULL;
@@ -620,11 +658,8 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 			//no me sirve ninguna particion?
 			if(encontreUnaParticionUtil != 1)
 			{
-				//ToDo time to call grim Reaper
 				//hay que fletar una particion
-				//seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-				puts("eliminar no implementado");
-				abort();
+				seleccionDeVictima(CACHE, laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 		}
 
@@ -691,11 +726,8 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 			//nop, no sirve nada
 			else
 			{
-				//ToDo time to call grim Reaper
 				//hay que fletar una particion
-				//seleccionDeVictima(laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-				puts("eliminar no implementado");
-				abort();
+				seleccionDeVictima(CACHE, laLista, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 		}
 	}//esta llave es el cierre de "la primera esta en uso, revisar las otras..."
@@ -704,7 +736,7 @@ lista_particiones* seleccionar_particion_Buddy_System(uint32_t tamanioMemoria, l
 	if(particionElegida == NULL)
 	{
 		//por lo que llamamos a buddy system de nuevo
-		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, size, algoritmoAsignacion);
+		particionElegida = seleccionar_particion_Buddy_System(CACHE, tamanioMemoria, laLista, size, algoritmoAsignacion, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 	}
 
 	//libero el espacio para la lista de particiones candidatas
@@ -791,38 +823,28 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	{
 			case NEW:
 				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);//esto me causaria problemas? parece que no...
 				break;
 
 			case APPEARED:
-				//estructura = malloc (sizeof(Appeared));
 				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);
 				break;
 
 			case GET:
-				//estructura = malloc (sizeof(Get));
 				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);
 				break;
 
 			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
-				/*estructura = malloc (sizeof(Localized));
+				/*
 				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);
 				*/
 				break;
 
 			case CATCH:
-				//estructura = malloc (sizeof(Catch));
 				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);
 				break;
 
 			case CAUGHT:
-				//estructura = malloc (sizeof(Caught));
 				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				//free(estructura);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -959,7 +981,7 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
 	desplazamiento += sizeof(estructura->cantPosciciones);
 
-	//ToDo
+	//ToDo Localized
 	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
@@ -1058,7 +1080,7 @@ void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionS
 void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tamanioMinParticion, char* ADMIN_MEMORIA, lista_particiones* laLista, char* algoritmoAsignacion, void* estructuraMensaje, uint32_t sizeDelMensaje, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS)
 {
 	lista_particiones* particionElegida;
-	uint32_t tamanioAAsignar = 0;
+	uint32_t tamanioAAsignar = tamanioMinParticion;
 	uint32_t iterador = 0;
 
 	puts("Agregando mensaje a Cache...\n");
@@ -1066,8 +1088,6 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	//se administra con Particiones Dinamicas
 	if(strcmp(ADMIN_MEMORIA, "PD") == 0)
 	{
-		tamanioAAsignar =tamanioMinParticion;
-
 		//si el tamanio de los datos del mensaje es mayor al tamaño min de particion, se asigna el tamanio del mensaje
 		if(tamanioMinParticion < sizeDelMensaje)
 		{
@@ -1077,13 +1097,13 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 		//para poder meter el mensaje en Cache, primero hay que buscarle una particion
 		if(strcmp(algoritmoAsignacion,"FF") == 0)
 		{
-			particionElegida = seleccionar_particion_First_Fit(tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+			particionElegida = seleccionar_particion_First_Fit(CACHE, tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 		}
 		else
 		{
 			if(strcmp(algoritmoAsignacion,"BF") == 0)
 			{
-				particionElegida = seleccionar_particion_Best_Fit(tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+				particionElegida = seleccionar_particion_Best_Fit(CACHE, tamanioMemoria, laLista, tamanioAAsignar, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 			}
 			else
 			{
@@ -1101,7 +1121,7 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 			tamanioAAsignar = elevar_a(2, iterador);
 			iterador++;
 		}
-		particionElegida = seleccionar_particion_Buddy_System(tamanioMemoria, laLista, tamanioAAsignar, algoritmoAsignacion);
+		particionElegida = seleccionar_particion_Buddy_System(CACHE, tamanioMemoria, laLista, tamanioAAsignar, algoritmoAsignacion, FRECUEN_COMPACT, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 	}
 
 	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
@@ -1140,29 +1160,26 @@ void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, voi
 				break;
 
 			case APPEARED:
-				//estructura = malloc (sizeof(Appeared));
-				//poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				sacar_APPEARED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				break;
 
 			case GET:
-				//estructura = malloc (sizeof(Get));
-				//poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				sacar_GET_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				break;
 
 			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
-				/*estructura = malloc (sizeof(Localized));
-				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				/*
+				sacar_LOCALIZED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				*/
+				puts("Localized todavia no anda");
 				break;
 
 			case CATCH:
-				//estructura = malloc (sizeof(Catch));
-				//poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				sacar_CATCH_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				break;
 
 			case CAUGHT:
-				//estructura = malloc (sizeof(Caught));
-				//poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				sacar_CAUGHT_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca

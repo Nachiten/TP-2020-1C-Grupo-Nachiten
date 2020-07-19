@@ -215,22 +215,23 @@ int main(void) {
 	sizeDelMensajeCatch = calcular_bytes_utiles_de_mensaje(mensajePrueba5->mensaje, codigoPrueba5);
 	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
 
-	//pesa 32
+	//pesa 24
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
-	//pesa 28
+	//pesa 21
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
-	//pesa 23
+	//pesa 15
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//ESTE ES LOCALIZED, NO USAR
+	//pesa 19
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
-	//pesa 37
+	//pesa 29
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
-	//pesa 23
+	//pesa 14
 	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de borrado
@@ -247,12 +248,12 @@ int main(void) {
 //	borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de lectura
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba2, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba3, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba5, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba6, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 
 	//para ver como quedan las particiones luego de "manosearlas"
 	revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);

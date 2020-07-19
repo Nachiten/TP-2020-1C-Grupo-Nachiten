@@ -397,3 +397,4 @@
 [INFO] 15:01:41:950 Broker/(4167:4199): Se suscribio a la cola Catch
 [INFO] 15:01:46:758 Broker/(4167:4202): estoy mandando mensajes
 [INFO] 15:01:46:758 Broker/(4167:4202): Se suscribio a la cola Caught
+[INFO] 20:45:28:705 Broker/(12383:25231): estoy mandando mensajes

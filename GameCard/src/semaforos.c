@@ -28,7 +28,7 @@ void waitSemaforoPokemon(char* pokemon){
 			return;
 		}
 	}
-	printf("No se encontro el semaforo deseado");
+	//printf("No se encontro el semaforo deseado\n");
 }
 
 void signalSemaforoPokemon(char* pokemon){
@@ -46,7 +46,7 @@ void signalSemaforoPokemon(char* pokemon){
 			return;
 		}
 	}
-	printf("No se encontro el semaforo deseado");
+	//printf("No se encontro el semaforo deseado\n");
 }
 
 void leerSemaforosLista(){

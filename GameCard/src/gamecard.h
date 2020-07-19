@@ -60,6 +60,12 @@ void comenzarConexionConBroker(datosHiloBroker*);
 char* leerContenidoBloquesPokemon(char**, int);
 char* leerContenidoDeUnBloque(char*, int);
 
+// Procesar mensajes
+void mensajeCatch(char*, int, int);
+void mensajeNew(char*, int, int, int);
+
+char* restarPokemonALinea(char*, int);
+
 void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);
 void crearMetadataPokemon(char*);

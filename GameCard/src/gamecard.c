@@ -1,5 +1,51 @@
 #include "gamecard.h"
 
+// Testing semaforos pokemon
+//void abrirArchivo1(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 1 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 1\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 1 cerro el archivo pikachu\n");
+//}
+//
+//void abrirArchivo2(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 2 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 2\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 2 cerro el archivo pikachu\n");
+//}
+//
+//void abrirArchivo3(){
+//	char* pikachu = "Pikachu";
+//
+//	abrirArchivoPokemon(pikachu);
+//
+//	printf("Hilo 3 abrio el archivo pikachu\n");
+//
+//	printf("SLEEP 5 SEGUNDOS HILO 3\n");
+//	sleep(5);
+//
+//	cerrarArchivoPokemon(pikachu);
+//
+//	printf("Hilo 3 cerro el archivo pikachu\n");
+//}
+
 void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER, t_config* config){
 
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
@@ -101,6 +147,7 @@ void leerUnPokemon(char* pathFiles, char* pokemon){
 }
 
 // Checkear si existe un determinado pokemon dentro de la carpeta Files/
+// Retorna 1 si la carpeta existe, 0 si no existe
 int existeCarpetaPokemon(char* pokemon){
 
 	char* pathCarpetaPokemon = malloc(strlen(pathFiles) + strlen(pokemon) + 2);
@@ -228,8 +275,8 @@ char* separarCoord(char* unString){
 }
 
 // Retorna el numero de linea donde se encontro el pokemon, en caso de no encontrarlo devuelve -1
+// Primera linea = 0
 int encontrarCoords(int posX, int posY, char* lineaABuscar){
-	// Primera linea = 0
 
 	//char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
 
@@ -1138,54 +1185,80 @@ void cerrarArchivoPokemon(char* pokemon){
 
 }
 
-// Testing semaforos pokemon
-//void abrirArchivo1(){
-//	char* pikachu = "Pikachu";
-//
-//	abrirArchivoPokemon(pikachu);
-//
-//	printf("Hilo 1 abrio el archivo pikachu\n");
-//
-//	printf("SLEEP 5 SEGUNDOS HILO 1\n");
-//	sleep(5);
-//
-//	cerrarArchivoPokemon(pikachu);
-//
-//	printf("Hilo 1 cerro el archivo pikachu\n");
-//}
-//
-//void abrirArchivo2(){
-//	char* pikachu = "Pikachu";
-//
-//	abrirArchivoPokemon(pikachu);
-//
-//	printf("Hilo 2 abrio el archivo pikachu\n");
-//
-//	printf("SLEEP 5 SEGUNDOS HILO 2\n");
-//	sleep(5);
-//
-//	cerrarArchivoPokemon(pikachu);
-//
-//	printf("Hilo 2 cerro el archivo pikachu\n");
-//}
-//
-//void abrirArchivo3(){
-//	char* pikachu = "Pikachu";
-//
-//	abrirArchivoPokemon(pikachu);
-//
-//	printf("Hilo 3 abrio el archivo pikachu\n");
-//
-//	printf("SLEEP 5 SEGUNDOS HILO 3\n");
-//	sleep(5);
-//
-//	cerrarArchivoPokemon(pikachu);
-//
-//	printf("Hilo 3 cerro el archivo pikachu\n");
-//}
+void mensajeCatch(char* pokemon, int posX, int posY){
+
+	int resultado = 0;
+
+	if (existeCarpetaPokemon(pokemon) == 1){
+		// Abrir el archivo
+
+		abrirArchivoPokemon(pokemon);
+
+		char** bloques = leerBloques(pokemon);
+
+		int pesoEnBytes = leerSizePokemon(pokemon);
+
+		char* lineasLeidas = leerContenidoBloquesPokemon(bloques, pesoEnBytes);
+
+		int lineaEncontrada = encontrarCoords(posX, posY, lineasLeidas);
+
+		if (lineaEncontrada != -1){
+			printf("Se encontro la linea\n");
+
+			char* lineasModificadas = restarPokemonALinea(lineasLeidas, lineaEncontrada);
+
+			resultado = 1;
+		} else {
+			printf("Las coordenadas buscadas no existen dentro del archivo\n");
+		}
+
+		cerrarArchivoPokemon(pokemon);
+	} else {
+		printf("No existe el pokemon buscado\n");
+	}
 
 
+}
 
+t_list* convertirAListaDeStringsDesdeChars(char** lineas){
+	t_list* listaStrings = list_create();
+
+	int cantStrings;
+
+	// Valgrind dice que explota aca no capto bien :P
+	while (lineas[cantStrings] != NULL){
+
+		char* lineaActual = malloc(strlen(lineas[cantStrings]));
+
+		memcpy(lineaActual, lineas[cantStrings], strlen(lineas[cantStrings]));
+
+		list_add(listaStrings, lineaActual);
+
+		cantStrings++;
+	}
+
+	return listaStrings;
+}
+
+// Dada un conjunto de lineas de un archivo debe retornar el mismo conjunto de lineas con la linea modificada
+char* restarPokemonALinea(char* lineasArchivo, int numeroLinea){
+
+	/*
+	 * Si el numero queda 0 => Eliminar la linea
+	 * Caso contrario devolver con la linea cantidad - 1
+	 */
+
+	char** lineasSeparadas = string_split(lineasArchivo, "\n");
+
+	t_list* listaLineas = convertirAListaDeStringsDesdeChars(lineasSeparadas);
+
+	char* lineaAModificar = list_get(listaLineas, numeroLinea);
+
+	printf("Linea a modificar: %s", lineaAModificar);
+
+	return "";
+
+}
 
 int main(void) {
 	t_config* config = NULL;
@@ -1261,15 +1334,17 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(jorge, 1,15,3);
-	mensajeNew(jorge, 1,14,3);
-	mensajeNew(jorge, 1,20,3);
-	mensajeNew(jorge, 1,21,3);
-	mensajeNew(jorge, 1,23,3);
-	mensajeNew(jorge, 1,5,3);
-	mensajeNew(jorge, 1,3,3);
-	mensajeNew(jorge, 1,7,3);
-	mensajeNew(jorge, 32,5,3);
+	mensajeCatch(jorge, 1, 15);
+
+//	mensajeNew(jorge, 1,15,3);
+//	mensajeNew(jorge, 1,14,3);
+//	mensajeNew(jorge, 1,20,3);
+//	mensajeNew(jorge, 1,21,3);
+//	mensajeNew(jorge, 1,23,3);
+//	mensajeNew(jorge, 1,5,3);
+//	mensajeNew(jorge, 1,3,3);
+//	mensajeNew(jorge, 1,7,3);
+//	mensajeNew(jorge, 32,5,3);
 
 //	mensajeNew(pikachu, 1,15,3);
 //	mensajeNew(pikachu, 1,14,3);

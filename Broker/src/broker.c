@@ -957,6 +957,7 @@ void mostrameMemoria(int32_t senial)
 	if(senial == SIGUSR1 || senial == SIGUSR2)
 	{
 		puts("funcion llamada correctamente");
+		revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
 	}
 	else
 	{

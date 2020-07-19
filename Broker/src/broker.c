@@ -394,7 +394,6 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
-		mandar_mensajes_broker(colaNew);
 	}
 }
 
@@ -413,7 +412,6 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaAppeared->subs;
 		list_add(colaAppeared->mensajes,new);
-		mandar_mensajes_broker(colaAppeared);
 	}
 }
 
@@ -432,7 +430,6 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaGet->subs;
 		list_add(colaGet->mensajes,new);
-		mandar_mensajes_broker(colaGet);
 	}
 }
 
@@ -451,7 +448,6 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaLocalized->subs;
 		list_add(colaLocalized->mensajes,new);
-		mandar_mensajes_broker(colaGet);
 	}
 }
 
@@ -470,7 +466,6 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCatch->subs;
 		list_add(colaCatch->mensajes,new);
-		mandar_mensajes_broker(colaCatch);
 	}
 }
 
@@ -490,7 +485,6 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCaught->subs;
 		list_add(colaCaught->mensajes,new);
-		mandar_mensajes_broker(colaCaught);
 	}
 }
 
@@ -509,19 +503,20 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO))
-			{
-				puts("Nico acordate de ponerle la logica que necesites a esto, devuelve 1 si encontro los datos, 0 si ya no estan en cache");//ToDo
-			}
-			//agregar IF en caso de que la cola este vacia ToDo
-			for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
-				t_sub* sub = malloc(sizeof(t_sub));
-				sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
-				if(sub->recibido != 1 && sub->suscripto == 1){
-					mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
+//			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO))
+//			{
+//				puts("Nico acordate de ponerle la logica que necesites a esto, devuelve 1 si encontro los datos, 0 si ya no estan en cache");//ToDo
+//			}
+			if(mensaje->subs != NULL){
+				for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
+					t_sub* sub = malloc(sizeof(t_sub));
+					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
+					if(sub->recibido != 1 && sub->suscripto == 1){
+						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
+					}
 				}
+				//borrar_datos(cola,mensaje);
 			}
-			borrar_datos(cola,mensaje);
 		}
 	}
 }
@@ -545,6 +540,18 @@ void borrar_datos(t_cola* cola, t_mensaje* mensaje){
 		break;
 	case CAUGHT:
 		borrar_datos_caught(mensaje->mensaje);
+		break;
+	case TEST: //Estos 6 están solo para que no sale el WARNING, no sirven para nada aca
+		break;
+	case SUSCRIPCION:
+		break;
+	case DESSUSCRIPCION:
+		break;
+	case DESCONEXION:
+		break;
+	case ERROR:
+		break;
+	case CONFIRMACION:
 		break;
 	}
 }
@@ -660,7 +667,7 @@ int32_t a_desuscribir(Dessuscripcion* mensaje){
 }
 
 // revisar cuando hay que borrar un mensaje
-
+// todo rehacer borrar mensajes
 void borrar_mensajes(t_cola* cola){
 	int32_t subsTotales = 0, yaRecibido = 0;
 	t_mensaje* borrado;
@@ -739,12 +746,10 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			mensajeNew  = malloc(sizeof(New));
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semNew);
-			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);//ToDo cambiar esto, lo tiene que meter a memoria mas tarde
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
-
-			//borrar_datos_new(mensajeNew);
-			//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajeNew, mensajeNew->ID, cod_op, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
 			agregar_mensaje_new(mensajeNew,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaNew);
 			sem_post(semNew);
 			break;
 		case APPEARED:
@@ -754,6 +759,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeAppeared, cod_op);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_appeared(mensajeAppeared,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaAppeared);
 			sem_post(semAppeared);
 			break;
 		case GET:
@@ -763,6 +770,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeGet, cod_op);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_get(mensajeGet,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaGet);
 			sem_post(semGet);
 			break;
 		case LOCALIZED:
@@ -772,6 +781,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_localized(mensajeLocalized,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaLocalized);
 			sem_post(semLocalized);
 			break;
 		case CATCH:
@@ -781,6 +792,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_catch(mensajeCatch,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
 			break;
 		case CAUGHT:
@@ -790,6 +803,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCaught, cod_op);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_caught(mensajeCaught,sizeMensaje);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			mandar_mensajes_broker(colaCaught);
 			sem_post(semCaught);
 			break;
 		case SUSCRIPCION:
@@ -855,31 +870,37 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 				sem_wait(semNew);
 				desuscribir(socket_cliente, colaNew);
 				sem_post(semNew);
+				log_info(logger, "Se desuscribio a la cola New");
 				break;
 			case APPEARED:
 				sem_wait(semAppeared);
 				desuscribir(socket_cliente, colaAppeared);
 				sem_post(semAppeared);
+				log_info(logger, "Se desuscribio a la cola Appeared");
 				break;
 			case GET:
 				sem_wait(semGet);
 				desuscribir(socket_cliente, colaGet);
 				sem_post(semGet);
+				log_info(logger, "Se desuscribio a la cola Get");
 				break;
 			case LOCALIZED:
 				sem_wait(semLocalized);
 				desuscribir(socket_cliente, colaLocalized);
 				sem_post(semLocalized);
+				log_info(logger, "Se desuscribio a la cola Localized");
 				break;
 			case CATCH:
 				sem_wait(semCatch);
 				desuscribir(socket_cliente, colaCatch);
 				sem_post(semCatch);
+				log_info(logger, "Se desuscribio a la cola Catch");
 				break;
 			case CAUGHT:
 				sem_wait(semCaught);
 				desuscribir(socket_cliente, colaCaught);
 				sem_post(semCaught);
+				log_info(logger, "Se desuscribio a la cola Caught");
 				break;
 			}
 			free(mensaje);

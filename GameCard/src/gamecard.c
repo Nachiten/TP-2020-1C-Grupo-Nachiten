@@ -623,10 +623,13 @@ void suscribirseAColas(int32_t socket){
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
+	sleep(5);
+
 	estructuraSuscribirse->numeroCola = GET;
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
+	sleep(5);
 
 	estructuraSuscribirse->numeroCola = CATCH;
 	//mandamos el mensaje pidiendo suscribirse a la cola
@@ -679,8 +682,36 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	switch (cod_op)
 	{
 	 	case NEW: ;
-			New* mensajeNew = malloc(sizeof(New));
-			recibir_mensaje(mensajeNew, cod_op, socket, &tamanioDatos);
+			New* mensajeNewRecibido = malloc(sizeof(New));
+			recibir_mensaje(mensajeNewRecibido, cod_op, socket, &tamanioDatos);
+
+			printf("Termine de recibir mensaje new sin explotar");
+
+			// cola = 1;
+
+//			typedef struct {
+//				int32_t id_mensaje;
+//				int colaMensajes;
+//			}confirmacionMensaje;
+
+			confirmacionMensaje* ackBroker = malloc(sizeof(confirmacionMensaje));
+
+			ackBroker->colaMensajes = NEW;
+			ackBroker->id_mensaje = mensajeNewRecibido->ID;
+
+			// TODO : Explota al tratar de mandar este mensaje
+			mandar_mensaje(ackBroker, CONFIRMACION, socketBroker);
+
+			printf("Termine de mandar ack sin explotar");
+
+			char* pokemon = mensajeNewRecibido->nombrePokemon;
+			int posX = mensajeNewRecibido->posPokemon.x;
+			int posY = mensajeNewRecibido->posPokemon.y;
+			int cantidad = mensajeNewRecibido->cantPokemon;
+
+			int IDMensaje = mensajeNewRecibido->ID;
+
+			mensajeNew( pokemon , posX, posY, cantidad, IDMensaje );
 
 			break;
 		case GET: ;
@@ -883,8 +914,6 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 
 	t_log* logger = datos->logger;
 
-	int socketBroker = -1;
-
 	socketBroker = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 
 	while (socketBroker == -1){
@@ -946,21 +975,25 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	printf("Pokemon: %s\n", pokemon);
 	printf("PosX: %i\n", posX);
 	printf("PosY: %i\n", posY);
-	printf("ID Mensaje: %i\n", IDMensaje);
+	printf("ID Corrlativo: %i\n", IDMensaje);
 
 	Appeared* structAEnviar = malloc(sizeof(Appeared) + strlen(pokemon) + 1);
 
-	structAEnviar->ID = IDMensaje;
-	structAEnviar->corrID = -2;
+	structAEnviar->ID = 0;
+	structAEnviar->corrID = IDMensaje;
 
 	structAEnviar->largoNombre = strlen(pokemon);
 	structAEnviar->nombrePokemon = pokemon;
 
-	structAEnviar->posPokemon->x = posX;
-	structAEnviar->posPokemon->y = posY;
+	structAEnviar->posPokemon.x = posX;
+	structAEnviar->posPokemon.y = posY;
+
+	mandar_mensaje(structAEnviar, APPEARED, socketBroker);
+
+
 }
 
-void enviarMensajeLocalized(char* pokemon, Localized structAEnviar, int IDMensaje){
+void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensaje){
 	printf("Se enviara el siguiente mensaje al broker (cola appeared):\n");
 	printf("Pokemon: %s\n", pokemon);
 	printf("ID Mensaje: %i\n", IDMensaje);
@@ -976,8 +1009,6 @@ void enviarMensajeLocalized(char* pokemon, Localized structAEnviar, int IDMensaj
 		printf("Coord X: %i ", coordX);
 		printf("Coord Y: %i\n", coordY);
 	}
-
-
 }
 
 
@@ -1441,6 +1472,8 @@ int main(void) {
 	char* IP_BROKER;
 	char* PUERTO_BROKER;
 
+	socketBroker = -1;
+
 	semBitmap = malloc(sizeof(sem_t));
 
 	// Inicializar semaforo bitmap
@@ -1509,11 +1542,11 @@ int main(void) {
 	char* bulbasaur = "Bulbasaur";
 
 	mensajeNew(bulbasaur, 1,15,3, 1);
-	mensajeNew(bulbasaur, 1,14,4, 1);
-	mensajeNew(bulbasaur, 1,20,5, 1);
-	mensajeNew(bulbasaur, 1,21,6, 1);
-
-	mensajeGet(bulbasaur, 1);
+//	mensajeNew(bulbasaur, 1,14,4, 1);
+//	mensajeNew(bulbasaur, 1,20,5, 1);
+//	mensajeNew(bulbasaur, 1,21,6, 1);
+//
+//	mensajeGet(bulbasaur, 1);
 
 //	char* lineasLeidas = "33-4=532\n35-7=4\n30-10=4\n10-14=4\n"; // Linea 1 = 35-7=7
 //
@@ -1717,11 +1750,11 @@ int main(void) {
 	// ****************************************************************
 
 	// Levanto hilo para escuchar broker
-//	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
-//
-//	pthread_t hiloBroker;
-//
-//	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+
+	pthread_t hiloBroker;
+
+	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
@@ -1731,7 +1764,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-//	//pthread_join(hiloBroker, NULL);
+	pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

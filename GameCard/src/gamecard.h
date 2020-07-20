@@ -35,6 +35,8 @@ int BLOCKS;
 int BLOCK_SIZE;
 int TIEM_REIN_OPERACION;
 
+int socketBroker;
+
 typedef struct semaforoPokemon{
 	sem_t* semaforo;
 	char* nombrePokemon;

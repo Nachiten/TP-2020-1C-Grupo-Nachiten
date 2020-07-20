@@ -138,7 +138,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
-				paquete->buffer->stream = malloc(sizeof(Localized) + 26); //+ 25 posiciones para el nombre + el \n ToDo
+				paquete->buffer->stream = malloc(sizeof(Localized) + 126); //+ 100 espacios para las posibles coordenadas + 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_localized(paquete, mensaje);
 			break;
 
@@ -318,7 +318,47 @@ uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon)
 
 uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 {
-	return 0; //ToDo
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+	uint32_t paresDeCoordenadas = 2 * pokemon->cantPosciciones;
+	uint32_t iterador = 0;
+
+	//meto el largo del nombre del pokemon
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->largoNombre), sizeof(pokemon->largoNombre));
+	desplazamiento += sizeof(pokemon->largoNombre);
+
+	//meto nombre del pokemon en buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, pokemon->nombrePokemon, pokemon->largoNombre+1);
+	desplazamiento += pokemon->largoNombre+1;
+
+	//meto cantidad de posiciones donde hay pokemons en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->cantPosciciones), sizeof(pokemon->cantPosciciones));
+	desplazamiento += sizeof(pokemon->cantPosciciones);
+
+	//meto pares de coordenadas donde hay pokemons en el buffer del paquete
+	while(iterador <= (paresDeCoordenadas - 1))
+	{
+		memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[iterador]), sizeof(pokemon->coords[iterador]));
+		desplazamiento += sizeof(pokemon->coords[iterador]);
+		iterador++;
+	}
+
+	//meto la ID de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->ID), sizeof(pokemon->ID));
+	desplazamiento += sizeof(pokemon->ID);
+
+	//meto la ID CORRELATIVA de mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
+	desplazamiento += sizeof(pokemon->corrID);
+
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->cantPosciciones) + (sizeof(pokemon->coords[0]) * 2 * pokemon->cantPosciciones) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
 }
 
 uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)

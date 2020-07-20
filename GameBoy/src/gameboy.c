@@ -385,98 +385,10 @@ int main(int cantArg, char* arg[]) {
 
 							//logueamos la suscripcion a la cola de mensajes
 							log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
-							switch(cambia_a_int(arg[2]))
-							{
-								case NEW:;
-									New* estructuraNew = malloc(sizeof(New));
-									estructura.mensaje = estructuraNew;
 
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
+							pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+							pthread_detach(hilo);
 
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraNew);
-									break;
-
-								case APPEARED:;
-									Appeared* estructuraAppeared = malloc(sizeof(Appeared));
-									estructura.mensaje = estructuraAppeared;
-
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
-
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraAppeared);
-									break;
-
-								case GET:;
-									Get* estructuraGet = malloc(sizeof(Get));
-									estructura.mensaje = estructuraGet;
-
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
-
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraGet);
-									break;
-
-								case LOCALIZED:;
-									Localized* estructuraLocalized = malloc(sizeof(Localized));
-									estructura.mensaje = estructuraLocalized;
-
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
-
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraLocalized);
-									break;
-
-								case CATCH:;
-									Catch* estructuraCatch = malloc(sizeof(Catch));
-									estructura.mensaje = estructuraCatch;
-
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
-
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraCatch);
-									break;
-
-								case CAUGHT:;
-									Caught* estructuraCaught = malloc(sizeof(Caught));
-									estructura.mensaje = estructuraCaught;
-
-									//nos ponemos a escuchar los mensajes que haya en esa cola
-									pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-									pthread_detach(hilo);
-
-									//por ultimo liberamos la estructura para recibir mensajes
-									free(estructuraCaught);
-									break;
-
-								case TEST: //Estos 6 están solo para que no sale el WARNING, no sirven para nada aca
-									break;
-
-								case SUSCRIPCION:
-									break;
-
-								case DESSUSCRIPCION:
-									break;
-
-								case DESCONEXION:
-									break;
-
-								case ERROR:
-									break;
-
-								case CONFIRMACION:
-									break;
-							}
 							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 							sleep(cambia_a_int(arg[3]));
 
@@ -487,22 +399,16 @@ int main(int cantArg, char* arg[]) {
 							free(estructuraSuscribirse);
 							free(estructuraDessuscribirse);
 
-							//liberamos la lista de IDs recibidas ToDo ver
+							//liberamos la lista de IDs recibidas
 							mensajesRecibidos* auxiliar = listaRecibidos;
-
-
-							free(listaRecibidos);
-//							while(auxiliar != NULL)
-//							{
-//								while(auxiliar->siguiente != NULL)
-//								{
-//									auxiliar = auxiliar->siguiente;
-//								}
-//								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-//								free(auxiliar);
-//								auxiliar = listaRecibidos;
-//								puts("vuelta");
-//							}
+							while(listaRecibidos->siguiente != NULL)
+							{
+								listaRecibidos = listaRecibidos->siguiente;
+								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+								free(auxiliar);
+								auxiliar = listaRecibidos;
+							}
+							free(auxiliar);
 						}
 					}
 					else
@@ -535,37 +441,66 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 	uint32_t match = 0;
 	mensajesRecibidos* auxiliar = estructura->listaRecibidos;
 
+	New* mensajeNew;
+	Appeared* mensajeAppeared;
+	Get* mensajeGet;
+	Localized* mensajeLocalized;
+	Catch* mensajeCatch;
+	Caught* mensajeCaught;
+
 	while(tamanioRecibido != 0 || size != 0)
 	{
 		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
-		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
-
 		//tomo la ID del mensaje para saber si llego uno nuevo
 		switch(cod_op){
-			case NEW:
-				IDMensajeRecibido = sacarIdDeMensajeNew(estructura->mensaje);
+			case NEW:;
+				mensajeNew = malloc(sizeof(New));
+				recibir_mensaje(mensajeNew,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeNew->ID;
+				free(mensajeNew->nombrePokemon);
+				free(mensajeNew);
 				break;
 
 			case APPEARED:
-				IDMensajeRecibido = sacarIdDeMensajeAppeared(estructura->mensaje);
+				mensajeAppeared = malloc(sizeof(Appeared));
+				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeAppeared->ID;
+				free(mensajeAppeared->nombrePokemon);
+				free(mensajeAppeared);
 				break;
 
 			case GET:
-				IDMensajeRecibido = sacarIdDeMensajeGet(estructura->mensaje);
+				mensajeGet = malloc(sizeof(Get));
+				recibir_mensaje(mensajeGet,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeGet->ID;
+				free(mensajeGet->nombrePokemon);
+				free(mensajeGet);
 				break;
 
 			case LOCALIZED:
-				IDMensajeRecibido = sacarIdDeMensajeLocalized(estructura->mensaje);
+				mensajeLocalized = malloc(sizeof(Localized));
+				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeLocalized->ID;
+				free(mensajeLocalized->nombrePokemon);
+				free(mensajeLocalized);
 				break;
 
 			case CATCH:
-				IDMensajeRecibido = sacarIdDeMensajeCatch(estructura->mensaje);
+				mensajeCatch = malloc(sizeof(Catch));
+				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeCatch->ID;
+				free(mensajeCatch->nombrePokemon);
+				free(mensajeCatch);
 				break;
 
 			case CAUGHT:
-				IDMensajeRecibido = sacarIdDeMensajeCaught(estructura->mensaje);
+				mensajeCaught = malloc(sizeof(Caught));
+				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion, &estructura->size);
+				IDMensajeRecibido = mensajeCaught->ID;
+				free(mensajeCaught->nombrePokemon);
+				free(mensajeCaught);
 				break;
 
 			case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -586,11 +521,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 			case CONFIRMACION:
 				break;
 		}
+
 		//siempre que me haya llegado un mensaje
 		if(IDMensajeRecibido != -1)
 		{
 			//recorro la lista de IDs de mensajes recibidos a ver si ya me llego
-			while(auxiliar != NULL)
+			while(auxiliar != NULL && match != 0)
 			{
 				if(IDMensajeRecibido == auxiliar->ID_MENSAJE_RECIBIDO)//comparo las IDs para ver si ya habia llegado
 				{
@@ -598,11 +534,11 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 				}
 				auxiliar = auxiliar->siguiente;
 			}
+			auxiliar = estructura->listaRecibidos;
 
 			//si no hubo un match lo tengo que loguear y agregar a la lista
 			if(match != 1)
 			{
-				auxiliar = estructura->listaRecibidos;
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				//avanzo hasta el ultimo elemento
 				while(auxiliar->siguiente != NULL)
@@ -620,7 +556,6 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 					auxiliar->siguiente = malloc(sizeof(mensajesRecibidos));
 					auxiliar->siguiente->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
 				}
-				printf("me llego este mensaje: %i\n",IDMensajeRecibido);
 			}
 			auxiliar = estructura->listaRecibidos;
 			match = 0;

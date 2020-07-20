@@ -23,7 +23,6 @@ typedef struct mensajesRecibidos{
 }mensajesRecibidos;
 
 typedef struct {
-	void* mensaje;
 	int32_t conexion;
 	uint32_t size;
 	t_log* log;

@@ -303,10 +303,6 @@ void compactacion(void* CACHE, lista_particiones* laLista)
 		}
 		particionLibre = particionLibre->sig_particion;
 	}
-
-//	auxilio = laLista;
-//	auxilio->numero_de_particion = 0;
-	//arreglar numeros de particiones
 }
 
 void matar_lista_particiones(lista_particiones* laLista)
@@ -327,10 +323,18 @@ void matar_lista_particiones(lista_particiones* laLista)
 		printf("Borrando referencia a particion de memoria Nº %u \n", particionABorrar->numero_de_particion);
 		free(particionABorrar);
 		particionABorrar = anteriorABorrar;
+		particionABorrar->sig_particion = NULL;
+		if(anteriorABorrar->anter_particion != NULL)
+		{
+			anteriorABorrar = anteriorABorrar->anter_particion;
+		}
 	}
 
 	//una vez llego al principio de la lista, libero la particion original
 	printf("Borrando referencia a particion de memoria original, Nº %u\n", particionABorrar->numero_de_particion);
+	particionABorrar->laParticion.estaLibre = 1;
+	particionABorrar->numero_de_victima = 0;
+	particionABorrar->ID_MENSAJE_GUARDADO = 0;
 	free(particionABorrar);
 }
 

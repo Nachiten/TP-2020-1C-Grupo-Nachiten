@@ -62,7 +62,7 @@ void vaciarBitArray(t_bitarray* bitArray, int BLOCKS){
 	}
 }
 
-void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
+void liberarUnBloque(int index){
 
 	char* BITARRAY = malloc(BLOCKS / 8);
 
@@ -138,7 +138,7 @@ t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 }
 
 // Printea el bitarray completo, funciona
-void printearBitArray(char* pathMetadata, int BLOCKS){
+void printearBitArray(){
 
 	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
 

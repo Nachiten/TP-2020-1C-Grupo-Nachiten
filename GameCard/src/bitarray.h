@@ -12,11 +12,11 @@
 sem_t* semBitmap;
 
 // BITARRAY
-void printearBitArray(char*, int);
+void printearBitArray();
 void guardarBitArrayEnArchivo(char* , char* , int );
 void leerBitArrayDeArchivo(char* , char** , int );
 void vaciarBitArray(t_bitarray* , int );
-void liberarUnBloque(char* , int , int );
+void liberarUnBloque(int);
 t_list* obtenerPrimerosLibresDeBitmap(int);
 t_bitarray* crearBitArray(char* , int );
 

@@ -136,6 +136,15 @@ typedef struct NewPokemon
 	int32_t corrID; //si no tienen ninguno pongan -2
 }New;
 
+typedef struct LocalizedViejo {
+
+	uint32_t largoNombre;
+	char* nombrePokemon;
+
+    int32_t ID;
+	int32_t corrID;//si no tienen ninguno pongan -2
+}LocalizedViejo;
+
 typedef struct Localized {
 
 	uint32_t largoNombre;

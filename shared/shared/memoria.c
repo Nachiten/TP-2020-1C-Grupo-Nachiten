@@ -913,6 +913,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+
 	//aumento su numero de victima
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;

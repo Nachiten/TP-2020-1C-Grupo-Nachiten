@@ -15,44 +15,87 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <pthread.h>
 #include <commons/bitarray.h>
 #include"shared/socket.h"
 #include"shared/cargador.h"
 #include"shared/terminarPrograma.h"
+#include <semaphore.h> // para los semaforos
+#include <dirent.h> // Para poder escanear carpetas
 
 // Header files mios
 #include "bitarray.h"
 #include "iniciarFS.h"
+#include "semaforos.h"
 
-typedef struct PosicionPokemon{
-	int posX;
-	int posY;
-	int cantidad;
-}posPokemon;
+char* pathBloques;
+char* pathMetadata;
+char* pathFiles;
+int BLOCKS;
+int BLOCK_SIZE;
+int TIEM_REIN_OPERACION;
 
-void crearCarpetaPokemon(char*, char*);
+typedef struct semaforoPokemon{
+	sem_t* semaforo;
+	char* nombrePokemon;
+}semPokemon;
+
+t_list* listaSemPokemon;
+
+typedef struct datosHiloBroker{
+	char* IP_BROKER;
+	char* PUERTO_BROKER;
+	int TIEM_REIN_CONEXION;
+	t_log* logger;
+}datosHiloBroker;
+
+// Conexiones
+void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
+void esperar_conexiones(int32_t socket_servidor);
+// Hilos de escucha
+void comenzarEscuchaGameBoy();
+void comenzarConexionConBroker(datosHiloBroker*);
+
+// Leer bloques pokemon
+char* leerContenidoBloquesPokemon(char**, int);
+char* leerContenidoDeUnBloque(char*, int);
+
+// Procesar mensajes
+void mensajeNew(char*, int, int, int, int);
+void mensajeCatch(char*, int, int);
+void mensajeGet(char*, int);
+
+char* restarPokemonALinea(char*, int);
+
+void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);
-void crearMetadataPokemon(char*, char*);
-void crearPokemonSiNoExiste(char* , char* );
-void escribirDatoEnBloque(char*, int, char*);
-void escribirLineaNuevaPokemon(char*, int, int, int, int, int, char*, char*, char*);
-void escribirLineasEnBloques(t_list*, t_list*, int, char*);
-void fijarBloquesA(char*, char*, t_list*);
+void crearMetadataPokemon(char*);
+void crearPokemonSiNoExiste(char* );
+void escribirDatoEnBloque(char*, int);
+void escribirLineaNuevaPokemon(char*, int, int, int);
+void escribirLineasEnBloques(t_list*, t_list*);
+void fijarBloquesA(char*, t_list*);
 void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
 
-int cantidadDeBloquesQueOcupa(int, int);
-int encontrarCoords(int , int );
-int existeCarpetaPokemon(char* , char* );
+int cantidadDeBloquesQueOcupa(int);
+int cantidadDeElementosEnArray(char** array);
+int encontrarCoords(int , int, char* );
+int existeCarpetaPokemon(char* );
 int hayAlgunBloque(char* , char*);
 
+char* agregarNuevoPokemonALineas(int, int, int, char*);
 char* crearStringArrayBloques(t_list*);
 char* generarLineaCoordsPokemon(int, int, int);
 char* separarCoord(char* );
 
-char** leerBloques(char* , char*);
+char** leerBloques(char*);
 
-t_list* separarStringEnBloques(char*, int, int);
+t_list* separarStringEnBloques(char*, int);
+
+// Apertura archivos
+void abrirArchivoPokemon(char*);
+void cerrarArchivoPokemon(char*);
 
 #endif /* SRC_GAMECARD_H_ */

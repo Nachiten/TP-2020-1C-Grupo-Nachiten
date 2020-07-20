@@ -37,22 +37,6 @@ int32_t reservarSocket(char* miPuerto)
 	return miSocket;
 }
 
-void escuchoSocket(int32_t miSocket)
-{
-	//acepto conexiones entrantes
-	struct sockaddr_in direccionConexionEntrante;
-	uint32_t tamanioConexionEntrante;
-	int32_t conexionEntrante = accept(miSocket, (void*) &direccionConexionEntrante, &tamanioConexionEntrante);
-	printf ("me llego una conexion: %i", conexionEntrante);
-
-	 while(1)
-	 {
-		//me quedo rascando eternamente
-	 }
-}
-
-
-
 int32_t establecer_conexion(char* ip, char* puerto)
 {
 	struct addrinfo hints;
@@ -513,6 +497,7 @@ void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t soc
 	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
 
 	printf("Tamaño de lo que sigue en el buffer: %u.\n", size);
+
 	*sizeDeLosDatos = size;//Quizas te creas muy inteligente y pienses que esto está al pedo y podriamos pisar el valor de sizeDeLosDatos directamente. No sos tan inteligente y no esta al pedo
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);

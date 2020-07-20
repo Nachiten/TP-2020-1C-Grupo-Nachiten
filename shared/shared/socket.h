@@ -26,9 +26,9 @@
 #include"utilidades.h"
 
 pthread_t thread;
+pthread_t threadGamecard;
 
 int32_t reservarSocket(char* miPuerto); //me reserva un socket (pasarle la key que sacamos de nuestro config)
-void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
 
 int32_t establecer_conexion(char* ip, char* puerto);//se le da una IP y un PUERTO y establece la conexion
 //dice el resultado de intentar conectarse a un modulo

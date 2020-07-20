@@ -40,8 +40,6 @@ void leerBitArrayDeArchivo(char* pathMetadata, char** bitArray, int BLOCKS){
 	// Pego el path de bitmap
 	strcat(pathCompleto, pathBitmap);
 
-	// VA UN SEMAFORO ACA !!!
-
 	FILE* bitmapArchivo = fopen( pathCompleto , "r" );
 
 	// Me muevo al principio del archivo
@@ -68,6 +66,9 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 
 	char* BITARRAY = malloc(BLOCKS / 8);
 
+	// Se espera el semaforo antes de leer el bitarray
+	sem_wait(semBitmap);
+
 	leerBitArrayDeArchivo(pathMetadata, &BITARRAY, BLOCKS);
 
 	t_bitarray* bitArrayBloques = crearBitArray(BITARRAY, BLOCKS);
@@ -76,15 +77,21 @@ void liberarUnBloque(char* pathMetadata, int index, int BLOCKS){
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
 
+	// Se hace el signal luego de guardar el bitarray en archivo
+	sem_post(semBitmap);
+
 }
 
 // Obtiene "cantidad" de bloques libres (bits = 0) del bitmap
-t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantidad){
+t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 	// Al meter un puntero en una lista si ese puntero cambia entonces cambia la lista. Porque guarda una referencia no una copia
 
 	t_list * listaNums = list_create();
 
 	char* BITARRAY_ARCHIVO = malloc(BLOCKS / 8);
+
+	// Se espera el semaforo antes de leer el bitarray
+	sem_wait(semBitmap);
 
 	leerBitArrayDeArchivo(pathMetadata, &BITARRAY_ARCHIVO, BLOCKS);
 
@@ -104,7 +111,8 @@ t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantid
 
 			*numeroBloqueCopiado = numeroBloque;
 
-			//printf("Encontre el bit numero: %i\n", numeroBloque);
+			printf("Encontre el bit numero: %i\n", numeroBloque);
+
 			list_add(listaNums, numeroBloqueCopiado);
 
 			cantidad--;
@@ -123,16 +131,8 @@ t_list* obtenerPrimerosLibresDeBitmap(char* pathMetadata, int BLOCKS, int cantid
 
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY_ARCHIVO, BLOCKS);
 
-//	t_list* miLista = list_create();
-//
-//	int num = 5;
-//	int num2 = 7;
-//
-//	list_add(miLista, &num);
-//	list_add(miLista, &num2);
-
-	// WHAT. Todos quedan como 129 por alguna razon mistica
-
+	// Se hace el signal luego de guardar el bitarray en archivo
+	sem_post(semBitmap);
 
 	return listaNums;
 }

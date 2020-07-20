@@ -778,7 +778,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			sem_post(semGet);
 			break;
 		case LOCALIZED:
-			mensajeLocalized = malloc(sizeof(Localized));
+			mensajeLocalized = malloc(sizeof(Localized) + 100);//Todo ver con Nico y Nacho
 			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semLocalized);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);

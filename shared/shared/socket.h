@@ -62,6 +62,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 void desserializar_new(New* estructura, int32_t socket_cliente);
 void desserializar_appeared(Appeared* estructura, int32_t socket_cliente);
 void desserializar_get(Get* estructura, int32_t socket_cliente);
+void desserializar_localized(Localized* estructura, int32_t socket_cliente);
 void desserializar_catch(Catch* estructura, int32_t socket_cliente);
 void desserializar_caught(Caught* estructura, int32_t socket_cliente);
 void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente);

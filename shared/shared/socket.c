@@ -138,7 +138,8 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
-			paquete->buffer->stream = malloc(sizeof(Localized) + 26); //+ 25 posiciones para el nombre + el \n
+				paquete->buffer->stream = malloc(sizeof(Localized) + 26); //+ 25 posiciones para el nombre + el \n ToDo
+				size_ya_armado = serializar_paquete_localized(paquete, mensaje);
 			break;
 
 		case CATCH:
@@ -313,6 +314,11 @@ uint32_t serializar_paquete_get(t_paquete* paquete, Get* pokemon)
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
+}
+
+uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
+{
+	return 0; //ToDo
 }
 
 uint32_t serializar_paquete_catch(t_paquete* paquete, Catch* pokemon)

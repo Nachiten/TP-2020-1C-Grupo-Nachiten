@@ -79,3 +79,33 @@ void bytesEnviados (int32_t cantidad)
 {
 	printf("Envié %d bytes sin crashear (Todavía).\n",cantidad);
 }
+
+int32_t sacarIdDeMensajeNew(New* estructura)
+{
+	return estructura->ID;
+}
+
+int32_t sacarIdDeMensajeAppeared(Appeared* estructura)
+{
+	return estructura->ID;
+}
+
+int32_t sacarIdDeMensajeGet(Get* estructura)
+{
+	return estructura->ID;
+}
+
+int32_t sacarIdDeMensajeLocalized(Localized* estructura)
+{
+	return estructura->ID;
+}
+
+int32_t sacarIdDeMensajeCatch(Catch* estructura)
+{
+	return estructura->ID;
+}
+
+int32_t sacarIdDeMensajeCaught(Caught* estructura)
+{
+	return estructura->ID;
+}

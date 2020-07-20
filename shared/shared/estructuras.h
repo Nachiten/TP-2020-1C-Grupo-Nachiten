@@ -136,16 +136,28 @@ typedef struct NewPokemon
 	int32_t corrID; //si no tienen ninguno pongan -2
 }New;
 
-typedef struct LocalizedPokemon // INCOMPLETO
-{
+//typedef struct LocalizedPokemon // INCOMPLETO
+//{
+//	uint32_t largoNombre;
+//	char* nombrePokemon;
+//
+//	uint32_t cantPosciciones;
+//	Coords* posPokemones; //esto tiene que ser una lista/array o algo, no podemos mandar un puntero ToDo
+//
+//	int32_t ID;
+//	int32_t corrID;//si no tienen ninguno pongan -2
+//}Localized;
+
+typedef struct Localized {
+
 	uint32_t largoNombre;
 	char* nombrePokemon;
 
-	uint32_t cantPosciciones;
-	Coords* posPokemones; //esto tiene que ser una lista/array o algo, no podemos mandar un puntero ToDo
-
-	int32_t ID;
+    int32_t ID;
 	int32_t corrID;//si no tienen ninguno pongan -2
+
+	uint32_t cantPosciciones;
+	uint32_t coords[];
 }Localized;
 
 typedef struct GetPokemon

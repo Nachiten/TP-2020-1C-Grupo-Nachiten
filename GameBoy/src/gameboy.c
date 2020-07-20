@@ -8,7 +8,6 @@ int main(int cantArg, char* arg[]) {
 	char* IP;
 	char* PUERTO;
 	char* LOG_PATH;
-	//char* mensaje_recibido; //no implementado todavia
 	uint32_t switcher = DEFAULT; //para usar el switch case.
 
 	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios.
@@ -23,7 +22,6 @@ int main(int cantArg, char* arg[]) {
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(LOG_PATH, "Gameboy");
 
-	//NOTA: no usar arg[0] es el: "./GameBoy"
 	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
@@ -368,19 +366,25 @@ int main(int cantArg, char* arg[]) {
 							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 
+							//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
+							mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
+							listaRecibidos->siguiente = NULL;
+
 							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
 							uint32_t sizeMensaje = 0;
 							pthread_t hilo;
-							Hilo estructura;
+							HiloGameboy estructura;
 							estructura.conexion = socket;
 							estructura.size = sizeMensaje;
+							estructura.log = logger;
+							estructura.listaRecibidos = listaRecibidos;
+							estructura.cola = cambia_a_int(arg[2]);
 
 							//mandamos el mensaje pidiendo suscribirse a la cola
 							mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
 							//logueamos la suscripcion a la cola de mensajes
 							log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
-
 							switch(cambia_a_int(arg[2]))
 							{
 								case NEW:;
@@ -482,6 +486,23 @@ int main(int cantArg, char* arg[]) {
 							//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
 							free(estructuraSuscribirse);
 							free(estructuraDessuscribirse);
+
+							//liberamos la lista de IDs recibidas ToDo ver
+							mensajesRecibidos* auxiliar = listaRecibidos;
+
+
+							free(listaRecibidos);
+//							while(auxiliar != NULL)
+//							{
+//								while(auxiliar->siguiente != NULL)
+//								{
+//									auxiliar = auxiliar->siguiente;
+//								}
+//								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+//								free(auxiliar);
+//								auxiliar = listaRecibidos;
+//								puts("vuelta");
+//							}
 						}
 					}
 					else
@@ -504,10 +525,15 @@ int main(int cantArg, char* arg[]) {
 	return EXIT_SUCCESS;
 }
 
-void hilo_recibir_mensajes(Hilo* estructura){
+void hilo_recibir_mensajes(HiloGameboy* estructura){
 	uint32_t size = 1;
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
+
+	//para ver si hay que loguear un mensaje nuevo o no
+	int32_t IDMensajeRecibido = -1;
+	uint32_t match = 0;
+	mensajesRecibidos* auxiliar = estructura->listaRecibidos;
 
 	while(tamanioRecibido != 0 || size != 0)
 	{
@@ -515,5 +541,89 @@ void hilo_recibir_mensajes(Hilo* estructura){
 		bytesRecibidos(tamanioRecibido);
 
 		recibir_mensaje(estructura->mensaje,cod_op,estructura->conexion, &estructura->size);
+
+		//tomo la ID del mensaje para saber si llego uno nuevo
+		switch(cod_op){
+			case NEW:
+				IDMensajeRecibido = sacarIdDeMensajeNew(estructura->mensaje);
+				break;
+
+			case APPEARED:
+				IDMensajeRecibido = sacarIdDeMensajeAppeared(estructura->mensaje);
+				break;
+
+			case GET:
+				IDMensajeRecibido = sacarIdDeMensajeGet(estructura->mensaje);
+				break;
+
+			case LOCALIZED:
+				IDMensajeRecibido = sacarIdDeMensajeLocalized(estructura->mensaje);
+				break;
+
+			case CATCH:
+				IDMensajeRecibido = sacarIdDeMensajeCatch(estructura->mensaje);
+				break;
+
+			case CAUGHT:
+				IDMensajeRecibido = sacarIdDeMensajeCaught(estructura->mensaje);
+				break;
+
+			case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+				break;
+
+			case SUSCRIPCION:
+				break;
+
+			case DESSUSCRIPCION:
+				break;
+
+			case DESCONEXION:
+				break;
+
+			case ERROR:
+				break;
+
+			case CONFIRMACION:
+				break;
+		}
+		//siempre que me haya llegado un mensaje
+		if(IDMensajeRecibido != -1)
+		{
+			//recorro la lista de IDs de mensajes recibidos a ver si ya me llego
+			while(auxiliar != NULL)
+			{
+				if(IDMensajeRecibido == auxiliar->ID_MENSAJE_RECIBIDO)//comparo las IDs para ver si ya habia llegado
+				{
+					match = 1;//hubo un match
+				}
+				auxiliar = auxiliar->siguiente;
+			}
+
+			//si no hubo un match lo tengo que loguear y agregar a la lista
+			if(match != 1)
+			{
+				auxiliar = estructura->listaRecibidos;
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				//avanzo hasta el ultimo elemento
+				while(auxiliar->siguiente != NULL)
+				{
+					auxiliar = auxiliar->siguiente;
+				}
+				//si estoy en la primera posicion
+				if(auxiliar == estructura->listaRecibidos)
+				{	//escribo la ID
+					auxiliar->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
+				}
+				//ya hay elementos en la lista
+				else
+				{	//creo un elemento nuevo y escribo la ID
+					auxiliar->siguiente = malloc(sizeof(mensajesRecibidos));
+					auxiliar->siguiente->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
+				}
+				printf("me llego este mensaje: %i\n",IDMensajeRecibido);
+			}
+			auxiliar = estructura->listaRecibidos;
+			match = 0;
+		}
 	}
 }

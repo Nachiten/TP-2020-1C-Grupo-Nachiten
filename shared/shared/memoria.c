@@ -361,10 +361,12 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 	uint32_t espacioLibre = 0;
 	uint32_t espacioOcupado = 0;
 	uint32_t control = 1;
+//	time_t fecha;
+//	time();
 
 	puts("Realizando control del estado de memoria y particiones...");
-	puts("------------------------------------------");
-
+	puts("----------------------------------------------------------");
+	printf("Dump solicitado a las: HS%s.\n",temporal_get_string_time());
 
 	//recorro las particiones hasta la ultima
 	while(control == 1)
@@ -387,7 +389,7 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 		{
 			printf("En esta partición se guardan los datos del mensaje ID: %i.\n", auxiliar->ID_MENSAJE_GUARDADO);
 		}
-		puts("------------------------------------------");
+		puts("----------------------------------------------------------");
 
 		//avanzo
 		if(auxiliar->sig_particion != NULL)
@@ -846,10 +848,8 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
 				break;
 
-			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
-				/*
+			case LOCALIZED:
 				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
-				*/
 				break;
 
 			case CATCH:

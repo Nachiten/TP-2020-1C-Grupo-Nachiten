@@ -51,4 +51,11 @@ void bytesRecibidos (int32_t cantidad);
 //muestra por pantalla los bytes enviados de SEND
 void bytesEnviados (int32_t cantidad);
 
+int32_t sacarIdDeMensajeNew(New* estructura);
+int32_t sacarIdDeMensajeAppeared(Appeared* estructura);
+int32_t sacarIdDeMensajeGet(Get* estructura);
+int32_t sacarIdDeMensajeLocalized(Localized* estructura);
+int32_t sacarIdDeMensajeCatch(Catch* estructura);
+int32_t sacarIdDeMensajeCaught(Caught* estructura);
+
 #endif /* SHARED_UTILIDADES_H_ */

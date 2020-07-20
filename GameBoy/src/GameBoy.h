@@ -17,6 +17,20 @@
 #include"shared/estructuras.h"
 #include"shared/utilidades.h"
 
-void hilo_recibir_mensajes(Hilo* estructura);
+typedef struct mensajesRecibidos{
+	int32_t ID_MENSAJE_RECIBIDO;
+	struct mensajesRecibidos* siguiente;
+}mensajesRecibidos;
+
+typedef struct {
+	void* mensaje;
+	int32_t conexion;
+	uint32_t size;
+	t_log* log;
+	mensajesRecibidos* listaRecibidos;
+	uint32_t cola;
+} HiloGameboy;
+
+void hilo_recibir_mensajes(HiloGameboy* estructura);
 
 #endif /* SRC_GAMEBOY_H_ */

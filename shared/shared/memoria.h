@@ -15,6 +15,7 @@
 #include<unistd.h>
 #include<string.h>
 #include"estructuras.h"
+#include <time.h>
 
 //para manejo de la lista de las particiones existentes en CACHE
 void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo

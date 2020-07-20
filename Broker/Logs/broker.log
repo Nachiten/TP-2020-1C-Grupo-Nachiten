@@ -417,3 +417,91 @@
 [INFO] 11:22:34:730 Broker/(5477:5497): estoy mandando mensajes
 [INFO] 11:22:34:730 Broker/(5477:5497): Se suscribio a la cola Get
 [INFO] 11:22:46:199 Broker/(5477:5500): estoy mandando mensajes
+[INFO] 20:47:07:480 Broker/(12690:12740): estoy mandando mensajes
+[INFO] 20:47:07:502 Broker/(12690:12740): Se suscribio a la cola Caught
+[INFO] 20:51:07:168 Broker/(12951:12959): estoy mandando mensajes
+[INFO] 20:51:07:169 Broker/(12951:12959): Se suscribio a la cola Caught
+[INFO] 20:51:32:907 Broker/(12951:13008): estoy mandando mensajes
+[INFO] 20:51:32:907 Broker/(12951:13008): Se suscribio a la cola Caught
+[INFO] 21:10:09:407 Broker/(14069:14938): estoy mandando mensajes
+[INFO] 21:10:09:407 Broker/(14069:14938): Se suscribio a la cola New
+[INFO] 21:10:56:876 Broker/(14069:15010): estoy mandando mensajes
+[INFO] 21:10:56:876 Broker/(14069:15010): Se suscribio a la cola New
+[INFO] 21:12:59:614 Broker/(14069:15086): estoy mandando mensajes
+[INFO] 21:13:05:862 Broker/(14069:15091): estoy mandando mensajes
+[INFO] 21:14:32:176 Broker/(15175:15183): estoy mandando mensajes
+[INFO] 21:14:44:691 Broker/(15175:15188): estoy mandando mensajes
+[INFO] 21:14:44:698 Broker/(15175:15188): Se suscribio a la cola New
+[INFO] 21:15:14:26 Broker/(15175:15202): estoy mandando mensajes
+[INFO] 21:15:41:574 Broker/(15231:15237): estoy mandando mensajes
+[INFO] 21:15:45:859 Broker/(15231:15242): estoy mandando mensajes
+[INFO] 21:15:49:141 Broker/(15231:15245): estoy mandando mensajes
+[INFO] 21:16:07:801 Broker/(15231:15255): estoy mandando mensajes
+[INFO] 21:16:07:810 Broker/(15231:15255): Se suscribio a la cola New
+[INFO] 21:18:36:967 Broker/(15320:15338): estoy mandando mensajes
+[INFO] 21:18:38:488 Broker/(15320:15342): estoy mandando mensajes
+[INFO] 21:18:41:887 Broker/(15320:15345): estoy mandando mensajes
+[INFO] 21:19:26:293 Broker/(15320:15353): estoy mandando mensajes
+[INFO] 21:19:26:300 Broker/(15320:15353): Se suscribio a la cola New
+[INFO] 21:21:44:54 Broker/(15320:15476): estoy mandando mensajes
+[INFO] 21:22:07:842 Broker/(15501:15507): estoy mandando mensajes
+[INFO] 21:22:12:11 Broker/(15501:15512): estoy mandando mensajes
+[INFO] 21:22:14:641 Broker/(15501:15515): estoy mandando mensajes
+[INFO] 21:22:14:647 Broker/(15501:15515): Se suscribio a la cola New
+[INFO] 21:24:36:566 Broker/(15501:15547): estoy mandando mensajes
+[INFO] 21:25:08:454 Broker/(15574:15582): estoy mandando mensajes
+[INFO] 21:25:08:454 Broker/(15574:15582): Se suscribio a la cola New
+[INFO] 21:25:11:720 Broker/(15574:15587): estoy mandando mensajes
+[INFO] 21:25:12:798 Broker/(15574:15591): estoy mandando mensajes
+[INFO] 21:32:03:780 Broker/(15814:15826): estoy mandando mensajes
+[INFO] 21:32:05:201 Broker/(15814:15830): estoy mandando mensajes
+[INFO] 21:32:08:938 Broker/(15814:15833): estoy mandando mensajes
+[INFO] 21:32:08:945 Broker/(15814:15833): Se suscribio a la cola New
+[INFO] 21:33:34:565 Broker/(15866:15872): estoy mandando mensajes
+[INFO] 21:33:37:269 Broker/(15866:15877): estoy mandando mensajes
+[INFO] 21:33:37:269 Broker/(15866:15877): Se suscribio a la cola New
+[INFO] 21:34:37:186 Broker/(15866:15932): estoy mandando mensajes
+[INFO] 21:35:03:777 Broker/(15958:15966): estoy mandando mensajes
+[INFO] 21:35:07:211 Broker/(15958:15970): estoy mandando mensajes
+[INFO] 21:35:07:216 Broker/(15958:15970): Se suscribio a la cola New
+[INFO] 21:36:40:730 Broker/(15958:16054): estoy mandando mensajes
+[INFO] 21:37:10:756 Broker/(16080:16087): estoy mandando mensajes
+[INFO] 21:37:22:255 Broker/(16080:16093): estoy mandando mensajes
+[INFO] 21:38:54:93 Broker/(16080:16113): estoy mandando mensajes
+[INFO] 21:38:54:104 Broker/(16080:16113): Se suscribio a la cola New
+[INFO] 21:42:47:30 Broker/(16080:16234): estoy mandando mensajes
+[INFO] 21:43:05:598 Broker/(16255:16261): estoy mandando mensajes
+[INFO] 21:43:09:163 Broker/(16255:16268): estoy mandando mensajes
+[INFO] 21:43:09:168 Broker/(16255:16268): Se suscribio a la cola New
+[INFO] 21:44:03:151 Broker/(16308:16315): estoy mandando mensajes
+[INFO] 21:44:04:183 Broker/(16308:16319): estoy mandando mensajes
+[INFO] 21:44:19:767 Broker/(16308:16324): estoy mandando mensajes
+[INFO] 21:44:33:693 Broker/(16308:16344): estoy mandando mensajes
+[INFO] 21:44:33:702 Broker/(16308:16344): Se suscribio a la cola New
+[INFO] 21:46:09:21 Broker/(16399:16407): estoy mandando mensajes
+[INFO] 21:46:15:841 Broker/(16399:16411): estoy mandando mensajes
+[INFO] 21:46:22:401 Broker/(16399:16418): estoy mandando mensajes
+[INFO] 21:46:28:711 Broker/(16399:16421): estoy mandando mensajes
+[INFO] 21:46:28:718 Broker/(16399:16421): Se suscribio a la cola New
+[INFO] 21:49:32:562 Broker/(16470:16518): estoy mandando mensajes
+[INFO] 21:49:32:562 Broker/(16470:16518): Se suscribio a la cola New
+[INFO] 21:49:34:878 Broker/(16470:16524): estoy mandando mensajes
+[INFO] 21:49:35:821 Broker/(16470:16527): estoy mandando mensajes
+[INFO] 21:49:36:665 Broker/(16470:16530): estoy mandando mensajes
+[INFO] 21:49:38:30 Broker/(16470:16533): estoy mandando mensajes
+[INFO] 21:49:41:270 Broker/(16470:16538): estoy mandando mensajes
+[INFO] 21:50:42:588 Broker/(16566:16572): estoy mandando mensajes
+[INFO] 21:50:44:578 Broker/(16566:16576): estoy mandando mensajes
+[INFO] 21:50:46:814 Broker/(16566:16580): estoy mandando mensajes
+[INFO] 21:50:50:615 Broker/(16566:16583): estoy mandando mensajes
+[INFO] 21:50:50:624 Broker/(16566:16583): Se suscribio a la cola New
+[INFO] 21:51:38:991 Broker/(16622:16629): estoy mandando mensajes
+[INFO] 21:51:38:991 Broker/(16622:16629): Se suscribio a la cola New
+[INFO] 21:51:42:447 Broker/(16622:16634): estoy mandando mensajes
+[INFO] 21:51:43:408 Broker/(16622:16637): estoy mandando mensajes
+[INFO] 21:51:45:621 Broker/(16622:16640): estoy mandando mensajes
+[INFO] 21:52:51:273 Broker/(16682:16689): estoy mandando mensajes
+[INFO] 21:52:51:273 Broker/(16682:16689): Se suscribio a la cola New
+[INFO] 21:52:53:721 Broker/(16682:16694): estoy mandando mensajes
+[INFO] 21:52:54:767 Broker/(16682:16697): estoy mandando mensajes
+[INFO] 21:52:56:859 Broker/(16682:16700): estoy mandando mensajes

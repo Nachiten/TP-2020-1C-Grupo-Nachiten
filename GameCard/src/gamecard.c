@@ -1179,7 +1179,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 	}
 
-	sleep(TIEM_REIN_OPERACION);
+	//sleep(TIEM_REIN_OPERACION);
 
 	// Cerrar el archivo luego de usarlo
 	cerrarArchivoPokemon(pokemon);
@@ -1266,8 +1266,21 @@ void cerrarArchivoPokemon(char* pokemon){
 
 }
 
-void mensajeCatch(char* pokemon, int posX, int posY){
-// TODO | Falta terminar
+void liberarNBloques(t_list* listaBloques, int cantidad){
+
+	// Devuelvo una nueva lista con todos los elementos menos los que debo quitar
+	t_list* bloquesALiberar = list_take_and_remove(listaBloques, list_size(listaBloques) - cantidad);
+
+	int i;
+	for (i= 0; i<list_size(bloquesALiberar) ; i++){
+		int* bloqueALiberar = list_get(bloquesALiberar, i);
+
+		liberarUnBloque(*bloqueALiberar - 1);
+	}
+}
+
+void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
+
 
 	int resultado = 0;
 
@@ -1287,7 +1300,48 @@ void mensajeCatch(char* pokemon, int posX, int posY){
 		if (lineaEncontrada != -1){
 			printf("Se encontro la linea\n");
 
-			//char* lineasModificadas = restarPokemonALinea()(lineasLeidas, );
+			char* lineasModificadas = restarALineaPokemon(lineasLeidas, posX, posY);
+
+			int cantidadBloquesActual = cantidadDeElementosEnArray(bloques);
+
+			int cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasModificadas));
+
+			// Importante: Strlen de "" es 0
+
+			t_list* listaBloques = convertirAListaDeEnterosDesdeChars(bloques);
+
+			printf("Printeando lista antes de liberar:");
+			printearListaDeEnteros(listaBloques);
+
+			// No debo liberar ningun bloque, ocupa lo mismo
+			if (cantidadBloquesActual == cantidadBloquesRequeridos){
+				printf("La cantidad de bloques se mantiene igual");
+
+
+			} else if (cantidadBloquesRequeridos < cantidadBloquesActual){
+				// TODO | Terminar
+				/* Luego de liberar los bloques y modificar la lista se debe
+				 * 1) Separar el array en bloques
+				 * 2) Escribir los datos de bloques
+				 * 3) Escribir el size en metadata.bin
+				 * 4) Escribir los nuevos bloques en metadata.bin
+				 */
+				printf(" Se deben liberar bloques");
+
+				int cantidadDeBloquesALiberar = cantidadBloquesActual - cantidadBloquesRequeridos;
+
+				//liberarNBloques(listaBloques, cantidadDeBloquesALiberar);
+
+				// Tamanio: 2 | BloquesALiberar: 1
+
+				liberarNBloques(listaBloques, cantidadDeBloquesALiberar);
+
+				printf("Printeando lista despues de liberar:");
+				printearListaDeEnteros(listaBloques);
+
+			} else {
+				printf("ERROR | La cantidad de bloques al caputrar un pokemon no puede ser mayor a la anterior");
+			}
 
 			resultado = 1;
 		} else {
@@ -1382,8 +1436,6 @@ char* restarALineaPokemon(char* texto, int posX, int posY) {
 		strcat(stringARetornar, segundaMitadDelString);
 
 	}
-
-
 
 	free(stringAEscribir);
 	free(stringAEncontrar);
@@ -1588,36 +1640,59 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	//mensajeCatch(pikachu, 3, 4);
+	mensajeNew(bulbasaur, 1,15,3, 1);
+	mensajeNew(bulbasaur, 1,16,4, 1);
+	mensajeNew(bulbasaur, 1,17,5, 1);
+	mensajeNew(bulbasaur, 1,18,6, 1);
+	mensajeNew(bulbasaur, 1,19,3, 1);
+	mensajeNew(bulbasaur, 1,20,4, 1);
+	mensajeNew(bulbasaur, 1,21,5, 1);
+	mensajeNew(bulbasaur, 1,22,6, 1);
+	mensajeNew(bulbasaur, 1,23,3, 1);
+	mensajeNew(bulbasaur, 1,24,1, 1);
+	mensajeNew(bulbasaur, 1,15,3, 1);
+	mensajeNew(bulbasaur, 1,16,4, 1);
+	mensajeNew(bulbasaur, 1,17,5, 1);
+	mensajeNew(bulbasaur, 1,18,6, 1);
+	mensajeNew(bulbasaur, 1,19,3, 1);
+	mensajeNew(bulbasaur, 1,20,4, 1);
+	mensajeNew(bulbasaur, 1,21,5, 1);
+	mensajeNew(bulbasaur, 1,22,6, 1);
+	mensajeNew(bulbasaur, 1,23,3, 1);
+	mensajeNew(bulbasaur, 1,24,1, 1);
 
 
+	printearBitArray();
 
-//	mensajeNew(bulbasaur, 1,15,3, 1);
-//	mensajeNew(bulbasaur, 1,14,4, 1);
-//	mensajeNew(bulbasaur, 1,20,5, 1);
-//	mensajeNew(bulbasaur, 1,21,6, 1);
+	mensajeCatch(bulbasaur, 1, 24, 1);
+
+	printearBitArray();
+
+	//printf("Cosa: %i", strlen(""));
+
+
 //
 //	mensajeGet(bulbasaur, 1);
 
-	char* lineasLeidas = "33-4=1\n35-7=1\n30-10=1\n10-14=1\n"; // Linea 1 = 35-7=7
-
-	printf("Lineas Antes:\n%s\n", lineasLeidas);
-
-	char* lineasDespues1 = restarALineaPokemon(lineasLeidas, 33, 4);
-
-	printf("Lineas Despues1:\n%s\n", lineasDespues1);
-
-	char* lineasDespues2 = restarALineaPokemon(lineasDespues1, 35, 7);
-
-	printf("Lineas Despues2:\n%s\n", lineasDespues2);
-
-	char* lineasDespues3 = restarALineaPokemon(lineasDespues2, 30, 10);
-
-	printf("Lineas Despues3:\n%s\n", lineasDespues3);
-
-	char* lineasDespues4 = restarALineaPokemon(lineasDespues3, 10, 14);
-
-	printf("Lineas Despues4:\n%s\n", lineasDespues4);
+//	char* lineasLeidas = "33-4=1\n35-7=1\n30-10=1\n10-14=1\n"; // Linea 1 = 35-7=7
+//
+//	printf("Lineas Antes:\n%s\n", lineasLeidas);
+//
+//	char* lineasDespues1 = restarALineaPokemon(lineasLeidas, 33, 4);
+//
+//	printf("Lineas Despues1:\n%s\n", lineasDespues1);
+//
+//	char* lineasDespues2 = restarALineaPokemon(lineasDespues1, 35, 7);
+//
+//	printf("Lineas Despues2:\n%s\n", lineasDespues2);
+//
+//	char* lineasDespues3 = restarALineaPokemon(lineasDespues2, 30, 10);
+//
+//	printf("Lineas Despues3:\n%s\n", lineasDespues3);
+//
+//	char* lineasDespues4 = restarALineaPokemon(lineasDespues3, 10, 14);
+//
+//	printf("Lineas Despues4:\n%s\n", lineasDespues4);
 
 //	int posX1 = 3;
 //	int posX2 = 4;

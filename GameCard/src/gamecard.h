@@ -67,7 +67,8 @@ void mensajeNew(char*, int, int, int, int);
 void mensajeCatch(char*, int, int);
 void mensajeGet(char*, int);
 
-char* restarPokemonALinea(char*, int);
+char* sumarALineaPokemon(char*, int, int, int);
+char* restarALineaPokemon(char*, int, int);
 
 void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);

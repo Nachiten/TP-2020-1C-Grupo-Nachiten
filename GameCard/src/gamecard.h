@@ -61,8 +61,9 @@ char* leerContenidoBloquesPokemon(char**, int);
 char* leerContenidoDeUnBloque(char*, int);
 
 // Procesar mensajes
+void mensajeNew(char*, int, int, int, int);
 void mensajeCatch(char*, int, int);
-void mensajeNew(char*, int, int, int);
+void mensajeGet(char*, int);
 
 char* restarPokemonALinea(char*, int);
 

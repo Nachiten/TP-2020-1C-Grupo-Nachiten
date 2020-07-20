@@ -947,6 +947,37 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	printf("PosX: %i\n", posX);
 	printf("PosY: %i\n", posY);
 	printf("ID Mensaje: %i\n", IDMensaje);
+
+	Appeared* structAEnviar = malloc(sizeof(Appeared) + strlen(pokemon) + 1);
+
+	structAEnviar->ID = IDMensaje;
+	structAEnviar->corrID = -2;
+
+	structAEnviar->largoNombre = strlen(pokemon);
+	structAEnviar->nombrePokemon = pokemon;
+
+	structAEnviar->posPokemon->x = posX;
+	structAEnviar->posPokemon->y = posY;
+}
+
+void enviarMensajeLocalized(char* pokemon, Localized structAEnviar, int IDMensaje){
+	printf("Se enviara el siguiente mensaje al broker (cola appeared):\n");
+	printf("Pokemon: %s\n", pokemon);
+	printf("ID Mensaje: %i\n", IDMensaje);
+
+	int i;
+	//Mostrar la lista coords del struct
+	printf ("ListaCoords:\n");
+	for (i = 0; i < structAEnviar->cantPosciciones * 2; i+=2){
+
+		int coordX = structAEnviar->coords[i];
+		int coordY = structAEnviar->coords[i+1];
+
+		printf("Coord X: %i ", coordX);
+		printf("Coord Y: %i\n", coordY);
+	}
+
+
 }
 
 
@@ -1005,7 +1036,7 @@ char* reemplazarLineaDePokemon(char* texto, int posX, int posY, int cantidad) {
 	return stringARetornar;
 }
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
+void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 	// Checkeo de variables
 	if (pokemon == NULL){
@@ -1117,10 +1148,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad){
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 	}
 
+	sleep(TIEM_REIN_OPERACION);
+
 	// Cerrar el archivo luego de usarlo
 	cerrarArchivoPokemon(pokemon);
 
-	enviarMensajeAppeared(pokemon, posX, posY, 3); // TODO Num 3 HARDCODEADO | En realidad toma el ID como parametro esta funcion
+	enviarMensajeAppeared(pokemon, posX, posY, IDMensaje); // TODO Num 3 HARDCODEADO | En realidad toma el ID como parametro esta funcion
 }
 
 // Abrir un archivo de un pokemon existente
@@ -1334,13 +1367,40 @@ t_list* convertirAListaDeCoords(char* lineas){
 	return lista;
 }
 
-void generarStructLocalized(char* pokemon, t_list* listaCoords){
+Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){
 	// TODO | Generar la estructura con los datos y devolverla
 
 	// Debe retornar Localized
+
+	int cantidadCoords =  list_size(listaCoords) / 2;
+	int tamanioArray = list_size(listaCoords);
+
+	Localized* structLocalized = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pokemon) + 1);
+
+	int i;
+
+	for (i = 0; i< list_size(listaCoords); i++){
+
+		int* coordenadaActual = list_get(listaCoords, i);
+
+		structLocalized->coords[i] = *coordenadaActual;
+
+	}
+
+	structLocalized->cantPosciciones = cantidadCoords;
+
+	structLocalized->largoNombre = strlen(pokemon);
+	structLocalized->nombrePokemon = pokemon;
+
+	structLocalized->ID = IDMensaje;
+	structLocalized->corrID = -2;
+
+	return structLocalized;
+
+
 }
 
-void mensajeGet(char* pokemon){
+void mensajeGet(char* pokemon, int IDMensaje){
 
 	t_list* listaCoords = list_create();
 
@@ -1352,22 +1412,11 @@ void mensajeGet(char* pokemon){
 
 		int cantBytes = leerSizePokemon(pokemon);
 
+		// Leer lineas del archivo
 		char* lineasLeidas = leerContenidoBloquesPokemon(bloquesLeidos, cantBytes);
 
+		// Generar una lista con todas las coordenadas del archivo
 		listaCoords = convertirAListaDeCoords(lineasLeidas);
-
-		int i;
-
-		for (i = 0; i< list_size(listaCoords); i+=2){
-
-			int* coordX = list_get(listaCoords, i);
-			int* coordY = list_get(listaCoords, i+1);
-
-			printf("Coord X: %i ", *coordX);
-			printf("Coord Y: %i\n", *coordY);
-		}
-
-		printf("Cant de coords es %i", list_size(listaCoords) / 2);
 
 		cerrarArchivoPokemon(pokemon);
 
@@ -1378,7 +1427,9 @@ void mensajeGet(char* pokemon){
 	if (list_size(listaCoords) == 0){
 		printf("No hay ninguna coordenada (se debe mandar mensaje vacio)");
 	} else {
-		//Localized miStruct = generarStructLocalized(pokemon, listaCoords);
+		Localized* miStruct = generarStructLocalized(pokemon, listaCoords, IDMensaje);
+
+		enviarMensajeLocalized(pokemon, miStruct, IDMensaje);
 	}
 
 }
@@ -1457,46 +1508,12 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(fruta, 1,15,3);
-	mensajeNew(fruta, 1,14,4);
-	mensajeNew(fruta, 1,20,5);
-	mensajeNew(fruta, 1,21,6);
-	mensajeNew(fruta, 1,23,7);
-	mensajeNew(fruta, 1,5,8);
-	mensajeNew(fruta, 1,3,9);
-	mensajeNew(fruta, 1,7,10);
-	mensajeNew(fruta, 32,5,11);
+	mensajeNew(bulbasaur, 1,15,3, 1);
+	mensajeNew(bulbasaur, 1,14,4, 1);
+	mensajeNew(bulbasaur, 1,20,5, 1);
+	mensajeNew(bulbasaur, 1,21,6, 1);
 
-	sleep(15);
-
-	mensajeNew(fruta, 1,15,12);
-	mensajeNew(fruta, 1,14,13);
-	mensajeNew(fruta, 1,20,14);
-	mensajeNew(fruta, 1,21,15);
-	mensajeNew(fruta, 1,23,16);
-	mensajeNew(fruta, 1,5,17);
-	mensajeNew(fruta, 1,3,18);
-	mensajeNew(fruta, 1,7,19);
-	mensajeNew(fruta, 32,5,20);
-
-	sleep(15);
-
-	mensajeNew(fruta, 1,15,21);
-	mensajeNew(fruta, 1,14,22);
-	mensajeNew(fruta, 1,20,23);
-	mensajeNew(fruta, 1,21,24);
-	mensajeNew(fruta, 1,23,25);
-	mensajeNew(fruta, 1,5,26);
-	mensajeNew(fruta, 1,3,27);
-	mensajeNew(fruta, 1,7,28);
-	mensajeNew(fruta, 32,5,29);
-
-
-
-	// 3 + 3 + 8 + 25 = 32-5=39
-
-//
-//	mensajeGet(jorge);
+	mensajeGet(bulbasaur, 1);
 
 //	char* lineasLeidas = "33-4=532\n35-7=4\n30-10=4\n10-14=4\n"; // Linea 1 = 35-7=7
 //

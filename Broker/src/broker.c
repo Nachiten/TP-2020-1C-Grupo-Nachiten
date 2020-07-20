@@ -762,7 +762,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semAppeared);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeAppeared, cod_op);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_appeared(mensajeAppeared,sizeMensaje);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaAppeared);
@@ -773,7 +772,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeGet, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semGet);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeGet, cod_op);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_get(mensajeGet,sizeMensaje);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaGet);
@@ -784,7 +782,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semLocalized);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_localized(mensajeLocalized,sizeMensaje);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaLocalized);
@@ -795,7 +792,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_catch(mensajeCatch,sizeMensaje);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaCatch);
@@ -806,7 +802,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			recibir_mensaje(mensajeCaught, cod_op, socket_cliente, &sizeMensaje);
 			sem_wait(semCaught);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCaught, cod_op);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			agregar_mensaje_caught(mensajeCaught,sizeMensaje);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaCaught);
@@ -860,6 +855,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 				aLogear = "Se suscribio a la cola Caught";
 				log_info(logger, aLogear);
 				break;
+			default:
+				break;
 			}
 			free(mensaje);
 			break;
@@ -907,6 +904,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 				sem_post(semCaught);
 				log_info(logger, "Se desuscribio a la cola Caught");
 				break;
+			default:
+				break;
 			}
 			free(mensaje);
 			break;
@@ -921,6 +920,8 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			pthread_exit(NULL);
 		case ERROR:
 			pthread_exit(NULL);
+		default:
+			break;
 		}
 }
 

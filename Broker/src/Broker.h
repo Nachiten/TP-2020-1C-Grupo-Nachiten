@@ -68,7 +68,7 @@ void inicializar_colas();
 void inicializar_semaforos();
 void llenar_listaColas();
 t_sub crear_sub(int32_t socket);
-t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje);
+t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje);
 void suscribir(t_sub* sub,t_cola* cola);
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje);

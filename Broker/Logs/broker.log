@@ -8,3 +8,17 @@
 [INFO] 19:51:16:156 Broker/(15891:15946): estoy mandando mensajes
 [INFO] 09:43:42:525 Broker/(30805:30813): estoy mandando mensajes
 [INFO] 09:45:05:57 Broker/(30852:30868): estoy mandando mensajes
+[INFO] 18:54:12:493 Broker/(9052:9061): estoy mandando mensajes
+[INFO] 18:54:23:825 Broker/(9052:9065): estoy mandando mensajes
+[INFO] 18:54:30:990 Broker/(9052:9071): estoy mandando mensajes
+[INFO] 18:54:30:994 Broker/(9052:9071): Se suscribio a la cola New
+[INFO] 18:54:40:989 Broker/(9052:9070): llege a desuscribirme
+[INFO] 18:54:40:989 Broker/(9052:9070): Se desuscribio a la cola New
+[INFO] 18:56:57:338 Broker/(9118:9165): estoy mandando mensajes
+[INFO] 18:56:57:338 Broker/(9118:9165): Se suscribio a la cola New
+[INFO] 18:57:00:230 Broker/(9118:9169): estoy mandando mensajes
+[INFO] 18:57:02:255 Broker/(9118:9171): estoy mandando mensajes
+[INFO] 18:57:05:774 Broker/(9118:9179): estoy mandando mensajes
+[INFO] 18:57:46:863 Broker/(9118:9191): estoy mandando mensajes
+[INFO] 19:00:06:619 Broker/(9244:9269): estoy mandando mensajes
+[INFO] 19:16:58:494 Broker/(10066:10089): estoy mandando mensajes

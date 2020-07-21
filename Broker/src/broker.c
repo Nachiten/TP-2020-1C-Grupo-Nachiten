@@ -348,13 +348,13 @@ t_sub crear_sub(int32_t socket){
 	return nuevo;
 }
 
-t_mensaje crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje){
-	t_mensaje nuevo;
-	nuevo.id = id;
-	nuevo.id_correlativo = id_correlativo;
-	nuevo.mensaje = mensaje;
-	nuevo.tamanioMensaje = sizeDeMensaje;
-	nuevo.subs = list_create();
+t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje){
+	t_mensaje* nuevo = malloc(sizeof(t_mensaje));
+	nuevo->id = id;
+	nuevo->id_correlativo = id_correlativo;
+	nuevo->mensaje = mensaje;
+	nuevo->tamanioMensaje = sizeDeMensaje;
+	nuevo->subs = list_create();
 	return nuevo;
 }
 
@@ -386,7 +386,8 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 // crea un mensaje con los datos que le pasan y lo agrega a la cola, el mensajes tiene los mismos suscriptores que la cola
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaNew) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		//t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id();
 		int32_t idCorr;
 		if(mensaje->corrID == -2){
@@ -397,15 +398,17 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaNew);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		//*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
+		printf("elemen\n");
 	}
 }
 
 void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaAppeared) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id(),idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
@@ -415,7 +418,7 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaAppeared);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaAppeared->subs;
 		list_add(colaAppeared->mensajes,new);
 	}
@@ -423,7 +426,7 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 
 void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaGet) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id(),idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
@@ -433,7 +436,7 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaGet);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaGet->subs;
 		list_add(colaGet->mensajes,new);
 	}
@@ -441,7 +444,7 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 
 void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaLocalized) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id(),idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
@@ -451,7 +454,7 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaLocalized);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaLocalized->subs;
 		list_add(colaLocalized->mensajes,new);
 	}
@@ -459,7 +462,7 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 
 void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaCatch) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id(),idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
@@ -469,7 +472,7 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaCatch);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCatch->subs;
 		list_add(colaCatch->mensajes,new);
 	}
@@ -477,7 +480,7 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaCaught) != -1){
-		t_mensaje* new = malloc(sizeof(t_mensaje));
+		t_mensaje* new;
 		int32_t id = crear_id(),idCorr;
 		if(mensaje->corrID == -2){
 			idCorr = id;
@@ -488,7 +491,7 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaCaught);
-		*new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
+		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCaught->subs;
 		list_add(colaCaught->mensajes,new);
 	}

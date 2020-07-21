@@ -24,10 +24,10 @@ int main(int cantArg, char* arg[]) {
 
 
 	//para prueba de localized y ack****************************************************************************
-	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-	resultado_de_conexion(socket, logger, "BROKER");
+//	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+//	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+//	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+//	resultado_de_conexion(socket, logger, "BROKER");
 
 //	uint32_t cantPosiciones = 3;
 //	uint32_t coordenadas[cantPosiciones*2];
@@ -57,17 +57,12 @@ int main(int cantArg, char* arg[]) {
 //
 //	mandar_mensaje(estructura, LOCALIZED, socket);
 
-	Acknowledge* estructura2 = malloc(sizeof(Acknowledge));
-	estructura2->ID = 25;
-	estructura2->numeroCola = 2;
 
-	mandar_mensaje(estructura2, CONFIRMACION, socket);
-
-	switcher = 45;
+	//switcher = 45;
 
 	//************************************************************************************************************
 
-	//switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
+	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{

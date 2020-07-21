@@ -27,6 +27,8 @@
 #include "bitarray.h"
 #include "iniciarFS.h"
 #include "semaforos.h"
+#include "mensajes.h"
+#include "conexiones.h"
 
 char* pathBloques;
 char* pathMetadata;
@@ -44,31 +46,17 @@ typedef struct semaforoPokemon{
 
 t_list* listaSemPokemon;
 
-typedef struct datosHiloBroker{
-	char* IP_BROKER;
-	char* PUERTO_BROKER;
-	int TIEM_REIN_CONEXION;
-	t_log* logger;
-}datosHiloBroker;
-
-// Conexiones
-void escuchoSocket(int32_t miSocket); //necesario para recibir cosas desde ESE socket
-void esperar_conexiones(int32_t socket_servidor);
-// Hilos de escucha
-void comenzarEscuchaGameBoy();
-void comenzarConexionConBroker(datosHiloBroker*);
-
 // Leer bloques pokemon
 char* leerContenidoBloquesPokemon(char**, int);
 char* leerContenidoDeUnBloque(char*, int);
 
-// Procesar mensajes
-void mensajeNew(char*, int, int, int, int);
-void mensajeCatch(char*, int, int, int);
-void mensajeGet(char*, int);
-
+// Funciones usadas por los mensajes
 char* sumarALineaPokemon(char*, int, int, int);
 char* restarALineaPokemon(char*, int, int);
+void sumarBloquesExtraALista(t_list*, int);
+void liberarNBloques(t_list*, int);
+t_list* convertirAListaDeCoords(char*);
+t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars);
 
 void crearCarpetaPokemon(char*);
 void crearMetadataCarpeta(char*);
@@ -77,7 +65,6 @@ void crearPokemonSiNoExiste(char* );
 void escribirDatoEnBloque(char*, int);
 void escribirLineaNuevaPokemon(char*, int, int, int);
 void escribirLineasEnBloques(t_list*, t_list*);
-void fijarBloquesA(char*, t_list*);
 void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
 void leerMetadataBin(char*, int* , int* , char**, t_config*);
 void leerUnPokemon(char*, char*);
@@ -93,7 +80,12 @@ char* crearStringArrayBloques(t_list*);
 char* generarLineaCoordsPokemon(int, int, int);
 char* separarCoord(char* );
 
-char** leerBloques(char*);
+// Leer y escribir datos del matadata.bin de un pokemon
+char** leerBloquesPokemon(char*);
+int leerSizePokemon(char*);
+
+void fijarSizeA(char*, int);
+void fijarBloquesA(char*, t_list*);
 
 t_list* separarStringEnBloques(char*, int);
 

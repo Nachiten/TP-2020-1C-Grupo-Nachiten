@@ -22,3 +22,13 @@
 [INFO] 18:57:46:863 Broker/(9118:9191): estoy mandando mensajes
 [INFO] 19:00:06:619 Broker/(9244:9269): estoy mandando mensajes
 [INFO] 19:16:58:494 Broker/(10066:10089): estoy mandando mensajes
+[INFO] 19:30:50:779 Broker/(10801:10817): estoy mandando mensajes
+[INFO] 19:33:45:760 Broker/(10927:10941): estoy mandando mensajes
+[INFO] 19:33:47:908 Broker/(10927:10943): estoy mandando mensajes
+[INFO] 19:33:54:272 Broker/(10927:10946): estoy mandando mensajes
+[INFO] 19:33:54:274 Broker/(10927:10946): Se suscribio a la cola New
+[INFO] 19:36:41:700 Broker/(10927:10989): estoy mandando mensajes
+[INFO] 19:38:33:168 Broker/(11030:11078): estoy mandando mensajes
+[INFO] 19:39:49:538 Broker/(11030:11096): estoy mandando mensajes
+[INFO] 19:40:20:979 Broker/(11030:11146): estoy mandando mensajes
+[INFO] 19:40:20:998 Broker/(11030:11146): Se suscribio a la cola Localized

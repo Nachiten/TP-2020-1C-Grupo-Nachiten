@@ -24,45 +24,44 @@ int main(int cantArg, char* arg[]) {
 
 
 	//para prueba de localized y ack****************************************************************************
-//	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-//	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-//	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-//	resultado_de_conexion(socket, logger, "BROKER");
+	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+	resultado_de_conexion(socket, logger, "BROKER");
 
-//	uint32_t cantPosiciones = 3;
-//	uint32_t coordenadas[cantPosiciones*2];
-//	char* nombrePokemon = "asdasd";
-//
-//	coordenadas[0] = 1;
-//	coordenadas[1] = 2;
-//	coordenadas[2] = 3;
-//	coordenadas[3] = 4;
-//	coordenadas[4] = 5;
-//	coordenadas[5] = 6;
-//
-//	Localized* estructura = malloc(sizeof(struct Localized) + (cantPosiciones*2) * sizeof(uint32_t) + strlen(nombrePokemon) + 1);
-//
-//	estructura->largoNombre = strlen(nombrePokemon);
-//	estructura->nombrePokemon = nombrePokemon;
-//	estructura->ID = 0;
-//	estructura->corrID = -2;
-//	estructura->cantPosciciones = cantPosiciones;
-//	estructura->coords[0] = coordenadas[0];
-//	estructura->coords[1] = coordenadas[1];
-//	estructura->coords[2] = coordenadas[2];
-//	estructura->coords[3] = coordenadas[3];
-//	estructura->coords[4] = coordenadas[4];
-//	estructura->coords[5] = coordenadas[5];
-//
-//
-//	mandar_mensaje(estructura, LOCALIZED, socket);
+	uint32_t cantPosiciones = 3;
+	uint32_t coordenadas[cantPosiciones*2];
+	char* nombrePokemon = "asdasd";
+
+	coordenadas[0] = 1;
+	coordenadas[1] = 2;
+	coordenadas[2] = 3;
+	coordenadas[3] = 4;
+	coordenadas[4] = 5;
+	coordenadas[5] = 6;
+
+	Localized* estructura = malloc(sizeof(struct Localized) + (cantPosiciones*2) * sizeof(uint32_t) + strlen(nombrePokemon) + 1);
+
+	estructura->largoNombre = strlen(nombrePokemon);
+	estructura->nombrePokemon = nombrePokemon;
+	estructura->ID = 0;
+	estructura->corrID = -2;
+	estructura->cantPosciciones = cantPosiciones;
+	estructura->coords[0] = coordenadas[0];
+	estructura->coords[1] = coordenadas[1];
+	estructura->coords[2] = coordenadas[2];
+	estructura->coords[3] = coordenadas[3];
+	estructura->coords[4] = coordenadas[4];
+	estructura->coords[5] = coordenadas[5];
+
+	mandar_mensaje(estructura, LOCALIZED, socket);
 
 
-	//switcher = 45;
+	switcher = 45;
 
 	//************************************************************************************************************
 
-	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
+	//switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{
@@ -499,6 +498,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 				mensajeNew = malloc(sizeof(New));
 				recibir_mensaje(mensajeNew,cod_op,estructura->conexion, &estructura->size);
 				IDMensajeRecibido = mensajeNew->ID;
+				//mandarte el ACK
 				free(mensajeNew->nombrePokemon);
 				free(mensajeNew);
 				break;

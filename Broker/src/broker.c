@@ -561,7 +561,7 @@ void agregar_mensajes_viejos(int32_t socket, t_cola* cola){
 }
 
 // busca los mensajes de la lista de descartes que no se hayan mandado al suscriptor y los agrega a la cola
-void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola descarte){
+void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
 	if(descarte->mensajes != NULL){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));

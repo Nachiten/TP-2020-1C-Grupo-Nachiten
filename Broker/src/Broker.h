@@ -95,7 +95,7 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
 
 void agregar_descarte (t_cola* cola, t_mensaje* descarte);
 void agregar_mensajes_viejos(int32_t socket, t_cola* cola);
-void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola descarte);
+void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte);
 
 // ***********borrar***********
 

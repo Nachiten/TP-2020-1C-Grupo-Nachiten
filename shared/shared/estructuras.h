@@ -136,15 +136,6 @@ typedef struct NewPokemon
 	int32_t corrID; //si no tienen ninguno pongan -2
 }New;
 
-typedef struct LocalizedViejo {
-
-	uint32_t largoNombre;
-	char* nombrePokemon;
-
-    int32_t ID;
-	int32_t corrID;//si no tienen ninguno pongan -2
-}LocalizedViejo;
-
 typedef struct Localized {
 
 	uint32_t largoNombre;
@@ -188,7 +179,7 @@ typedef struct CatchPokemon
 	int32_t corrID;//si no tienen ninguno pongan -2
 }Catch;
 
-typedef struct CaughtPokemon // por hacer
+typedef struct CaughtPokemon
 {
 	uint32_t largoNombre;
 	char* nombrePokemon;
@@ -198,6 +189,12 @@ typedef struct CaughtPokemon // por hacer
 	int32_t ID;
 	int32_t corrID;//si no tienen ninguno pongan -2
 }Caught;
+
+typedef struct Acknowledge
+{
+	codigo_operacion tipoDeCola;
+	int32_t ID;
+}Acknowledge;
 
 // Firmas de Funciones
 t_log* iniciar_logger(void);

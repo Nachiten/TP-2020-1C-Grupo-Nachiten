@@ -284,6 +284,37 @@ int main(void) {
 // *************************************************
 
 void inicializar_colas(){
+
+	colaDescartesNew = malloc(sizeof(t_cola));
+	colaDescartesNew->tipoCola = NEW;
+	colaDescartesNew->mensajes = list_create();
+	colaDescartesNew->subs = list_create();
+
+	colaDescartesAppeared = malloc(sizeof(t_cola));
+	colaDescartesAppeared->tipoCola = NEW;
+	colaDescartesAppeared->mensajes = list_create();
+	colaDescartesAppeared->subs = list_create();
+
+	colaDescartesGet = malloc(sizeof(t_cola));
+	colaDescartesGet->tipoCola = NEW;
+	colaDescartesGet->mensajes = list_create();
+	colaDescartesGet->subs = list_create();
+
+	colaDescartesLocalized = malloc(sizeof(t_cola));
+	colaDescartesLocalized->tipoCola = NEW;
+	colaDescartesLocalized->mensajes = list_create();
+	colaDescartesLocalized->subs = list_create();
+
+	colaDescartesCatch = malloc(sizeof(t_cola));
+	colaDescartesCatch->tipoCola = NEW;
+	colaDescartesCatch->mensajes = list_create();
+	colaDescartesCatch->subs = list_create();
+
+	colaDescartesCaught = malloc(sizeof(t_cola));
+	colaDescartesCaught->tipoCola = NEW;
+	colaDescartesCaught->mensajes = list_create();
+	colaDescartesCaught->subs = list_create();
+
 	colaNew = malloc(sizeof(t_cola));
 	colaNew->tipoCola = NEW;
 	colaNew->mensajes = list_create();
@@ -498,8 +529,69 @@ void agregar_sub(int32_t socket, t_cola* cola){
 	t_sub* new = malloc(sizeof(t_sub));
 	*new = crear_sub(socket);
 	list_add(cola->subs,new);
+	agregar_mensajes_viejos(socket,cola);
 	suscribir(new,cola);
 	mandar_mensajes_broker(cola);
+}
+
+//todo agregar semaforos
+void agregar_mensajes_viejos(int32_t socket, t_cola* cola){
+	switch(cola->tipoCola){
+	case NEW:
+		buscar_mensajes_descarte(socket, cola, colaDescartesNew);
+		break;
+	case APPEARED:
+		buscar_mensajes_descarte(socket, cola, colaDescartesAppeared);
+		break;
+	case GET:
+		buscar_mensajes_descarte(socket, cola, colaDescartesGet);
+		break;
+	case LOCALIZED:
+		buscar_mensajes_descarte(socket, cola, colaDescartesLocalized);
+		break;
+	case CATCH:
+		buscar_mensajes_descarte(socket, cola, colaDescartesCatch);
+		break;
+	case CAUGHT:
+		buscar_mensajes_descarte(socket, cola, colaDescartesCaught);
+		break;
+	default:
+		break;
+	}
+}
+
+// busca los mensajes de la lista de descartes que no se hayan mandado al suscriptor y los agrega a la cola
+void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola descarte){
+	if(descarte->mensajes != NULL){
+		for(int i = 0; i < descarte->mensajes->elements_count; i++){
+			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+			mensaje = list_get(colaDescartesNew->mensajes,i);
+			if(mensaje->subs != NULL){
+				for(int j = 0; j < mensaje->subs->elements_count; j++){
+					t_sub* sub = malloc(sizeof(t_sub));
+					sub = list_get(mensaje->subs,j);
+					if(sub_presente(socket, mensaje) == 0){
+						t_mensaje* mensajeViejo = malloc(sizeof(t_mensaje));
+						mensajeViejo = list_remove(descarte->mensajes, i);
+						list_add(cola->mensajes, mensajeViejo);
+					}
+				}
+			}
+		}
+	}
+}
+
+int sub_presente(int32_t socketCliente, t_mensaje* mensaje){
+	if(mensaje->subs != NULL){
+		for(int j = 0; j < mensaje->subs->elements_count; j++){
+			t_sub* sub = malloc(sizeof(t_sub));
+			sub = list_get(mensaje->subs,j);
+			if(sub->socket == socketCliente){
+				return 1;
+			}
+		}
+	}
+	return 0;
 }
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
@@ -527,6 +619,7 @@ void mandar_mensajes_broker(t_cola* cola){
 	}
 }
 
+//todo poner semaforos
 void borrar_datos(t_cola* cola, t_mensaje* mensaje){
 	switch(cola->tipoCola){
 	case NEW:
@@ -666,48 +759,58 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 	}
 }
 
-// te devuelve el numero de cola al que se quiere suscribir el cliente
-int32_t a_suscribir(Suscripcion* mensaje){
-	return mensaje->numeroCola;
-}
-
-// te devuelve el numero de cola al que se quiere desuscribir el cliente
-int32_t a_desuscribir(Dessuscripcion* mensaje){
-	return mensaje->numeroCola;
-	printf("Me des suscribi de la cola %i", mensaje->numeroCola);
-}
-
 // revisar cuando hay que borrar un mensaje
 // todo rehacer borrar mensajes
 void borrar_mensajes(t_cola* cola){
 	int32_t subsTotales = 0, yaRecibido = 0;
-	t_mensaje* borrado;
 		if(cola->mensajes != NULL){
 			for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 				mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-				for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
-					t_sub* sub = malloc(sizeof(t_sub));
-					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
-					if(sub->recibido == 1){
-						yaRecibido++;
+				if(mensaje->subs != NULL){
+					for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
+						t_sub* sub = malloc(sizeof(t_sub));
+						sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
+						if(sub->recibido == 1){
+							yaRecibido++;
+						}
+						subsTotales++;
 					}
-					subsTotales++;
-					//free(sub);
 				}
-				if(subsTotales == yaRecibido){
-					// cuando este agregado memoria el mensaje eliminado deberia agregarse ahi
-					borrado = malloc(sizeof(t_mensaje));
-					borrado = list_remove(cola->mensajes, i);
-					//probar
-					//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, hoja_de_particiones, ALGOR_ASIGN_PARTICION, borrado->mensaje, borrado->tamanioMensaje, cola->tipoCola);
-					//free(mensaje);
+				if(subsTotales == yaRecibido && subsTotales != 0 && yaRecibido != 0){
+					t_mensaje* mensajeBorrado = malloc(sizeof(t_mensaje));
+					mensajeBorrado = list_remove(cola->mensajes, i);
+					agregar_descarte(cola,mensajeBorrado);
 				}
-				//free(mensaje);
 			}
 		}
 }
 
+//todo poner semaforos
+void agregar_descarte (t_cola* cola, t_mensaje* descarte){
+	switch(cola->tipoCola){
+	case NEW:
+		list_add(colaDescartesNew->mensajes,descarte);
+		break;
+	case APPEARED:
+		list_add(colaDescartesAppeared->mensajes,descarte);
+		break;
+	case GET:
+		list_add(colaDescartesGet->mensajes,descarte);
+		break;
+	case LOCALIZED:
+		list_add(colaDescartesLocalized->mensajes,descarte);
+		break;
+	case CATCH:
+		list_add(colaDescartesCatch->mensajes,descarte);
+		break;
+	case CAUGHT:
+		list_add(colaDescartesCaught->mensajes,descarte);
+		break;
+	default:
+		break;
+	}
+}
 
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
@@ -732,6 +835,17 @@ void desuscribir(int32_t socket, t_cola* cola){
 	}
 }
 
+// te devuelve el numero de cola al que se quiere suscribir el cliente
+int32_t a_suscribir(Suscripcion* mensaje){
+	return mensaje->numeroCola;
+}
+
+// te devuelve el numero de cola al que se quiere desuscribir el cliente
+int32_t a_desuscribir(Dessuscripcion* mensaje){
+	return mensaje->numeroCola;
+	printf("Me des suscribi de la cola %i", mensaje->numeroCola);
+}
+
 //esto es para que arranque el server y se quede escuchando mensajes.
 
 /* dependiendo del codigo de operacion hace diferentes cosas
@@ -739,7 +853,6 @@ void desuscribir(int32_t socket, t_cola* cola){
  * si es un tipo SUSCRIPCION te suscribe a la cola que se desea
  */
 
-//todo /agregar un desuscribir despues
 void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	int32_t numeroCola;
 	char* aLogear;

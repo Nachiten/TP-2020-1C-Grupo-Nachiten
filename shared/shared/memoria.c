@@ -1486,7 +1486,7 @@ uint32_t calcular_bytes_utiles_de_mensaje(void* mensaje, codigo_operacion tipoMe
 				totalAAsignar = calcular_bytes_utiles_de_mensaje_get(mensaje);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa ToDo
+		case LOCALIZED:
 				totalAAsignar = calcular_bytes_utiles_de_mensaje_localized(mensaje);
 			break;
 
@@ -1562,8 +1562,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura)
 	totalAAsignar += sizeof(estructura->largoNombre);
 	totalAAsignar += estructura->largoNombre + 1;
 	totalAAsignar += sizeof(estructura->cantPosciciones);
-	//ToDo
-	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+	totalAAsignar += sizeof(estructura->coords[0]) * 2 * estructura->cantPosciciones;
 
 	return totalAAsignar;
 }

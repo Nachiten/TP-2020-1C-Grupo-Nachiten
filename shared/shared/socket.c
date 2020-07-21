@@ -102,7 +102,6 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 {
 	uint32_t size_ya_armado = 0;
 	paquete->codigo_op = tipoMensaje;
-	printf("cod op: %i",paquete->codigo_op);
 
 	void* buffer_serializar;//aca se va a guardar el choclo ya armado
 
@@ -151,13 +150,15 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			size_ya_armado = serializar_paquete_dessuscripcion(paquete, mensaje);
 			break;
 
-		case DESCONEXION://Estos 3 están solo para que no salga el WARNING, no sirven para nada aca
+		case DESCONEXION://Estos 2 están solo para que no salga el WARNING, no sirven para nada aca
 			break;
 
 		case ERROR:
 			break;
 
 		case CONFIRMACION:
+			paquete->buffer->stream = malloc(sizeof(Acknowledge));
+			size_ya_armado = serializar_paquete_confirmacion(paquete, mensaje);
 			break;
 	}
 
@@ -428,7 +429,6 @@ uint32_t serializar_paquete_caught(t_paquete* paquete, Caught* pokemon)
 //	printf("la ID correlativa del mensaje es: %i\n", pokemon->corrID);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->corrID) + sizeof(pokemon->pudoAtrapar);
 	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->pudoAtrapar) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
@@ -456,7 +456,6 @@ uint32_t serializar_paquete_prueba (t_paquete* paquete, char* mensaje)
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
 }
-
 
 uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
 {
@@ -488,6 +487,28 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(cola->numeroCola);
+
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
+uint32_t serializar_paquete_confirmacion(t_paquete* paquete, Acknowledge* confirma)
+{
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto la COLA a la que quiero mandar el ACK en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->numeroCola), sizeof(confirma->numeroCola));
+	desplazamiento += sizeof(confirma->numeroCola);
+
+	//meto la ID del mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->ID), sizeof(confirma->ID));
+
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(confirma->numeroCola) + sizeof(confirma->ID);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
@@ -561,7 +582,7 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 			break;
 
 		case CONFIRMACION:
-
+			desserializar_confirmacion(estructura, socket_cliente);
 			break;
 	}
 }
@@ -741,8 +762,8 @@ void desserializar_caught(Caught* estructura, int32_t socket_cliente)
 	//saco el resultado del intento de atrapar al pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar), MSG_WAITALL));
 
-	//saco ID CORRELATIVO del mensaje
-	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
+	//saco ID del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
 
 	//saco ID CORRELATIVO del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->corrID), sizeof(estructura->corrID), MSG_WAITALL));
@@ -762,7 +783,19 @@ void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente)
 
 void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente)
 {
-	//saco la COLA dela que dessuscribirse del mensaje
+	//saco la COLA de la que dessuscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+}
+
+void desserializar_confirmacion(Acknowledge* estructura, int32_t socket_cliente)
+{
+	//saco la COLA de la confirmacion del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+
+	//saco ID del mensaje que confirmo
+	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
+
+	printf("la cola del mensaje es: %i\n", estructura->numeroCola);
+	printf("la ID del mensaje que confirmo es: %u\n", estructura->ID);
 }
 

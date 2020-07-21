@@ -834,8 +834,6 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 	return resultado;
 }
 
-
-//ToDo Hay que agregar LOCALIZED
 void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA)
 {
 	switch(tipoMensaje)
@@ -984,6 +982,7 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 
 void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA)
 {
+	uint32_t iterador = 0;
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
@@ -999,8 +998,13 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
 	desplazamiento += sizeof(estructura->cantPosciciones);
 
-	//ToDo Localized
-	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+	//meto pares de coordenadas donde hay pokemons en CACHE
+	while(iterador <= (estructura->cantPosciciones * 2) - 1)
+	{
+		memcpy(CACHE + desplazamiento, &(estructura->coords[iterador]), sizeof(estructura->coords[iterador]));
+		desplazamiento += sizeof(estructura->coords[iterador]);
+		iterador++;
+	}
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
@@ -1185,11 +1189,8 @@ void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, voi
 				sacar_GET_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 				break;
 
-			case LOCALIZED://esto no lo puedo hacer todavia porque la estructura esta INCOMPLETA
-				/*
+			case LOCALIZED:
 				sacar_LOCALIZED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-				*/
-				puts("Localized todavia no anda");
 				break;
 
 			case CATCH:
@@ -1341,6 +1342,7 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
 
 	char* referenciaTexto;
+	uint32_t iterador = 0;
 
 	//saco el largo del nombre del pokemon de CACHE
 	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
@@ -1363,8 +1365,15 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 	desplazamiento += sizeof(estructura->cantPosciciones);
 	printf("cantidad pos: %u\n", estructura->cantPosciciones);
 
-	//ToDo
-	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+	//saco pares de coordenadas donde hay pokemons en CACHE
+	while(iterador <= (estructura->cantPosciciones * 2) - 1)
+	{
+		memcpy(&estructura->coords[iterador], CACHE + desplazamiento, sizeof(estructura->coords[iterador]));
+		desplazamiento += sizeof(estructura->coords[iterador]);
+
+		printf("coordenada: %u\n", estructura->coords[iterador]);
+		iterador++;
+	}
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
@@ -1486,7 +1495,7 @@ uint32_t calcular_bytes_utiles_de_mensaje(void* mensaje, codigo_operacion tipoMe
 				totalAAsignar = calcular_bytes_utiles_de_mensaje_get(mensaje);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa ToDo
+		case LOCALIZED:
 				totalAAsignar = calcular_bytes_utiles_de_mensaje_localized(mensaje);
 			break;
 
@@ -1562,8 +1571,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura)
 	totalAAsignar += sizeof(estructura->largoNombre);
 	totalAAsignar += estructura->largoNombre + 1;
 	totalAAsignar += sizeof(estructura->cantPosciciones);
-	//ToDo
-	//ESTRUCTURA INCOMPLETA <------------------------------------------------------------------------------------------------------------------------
+	totalAAsignar += sizeof(estructura->coords[0]) * 2 * estructura->cantPosciciones;
 
 	return totalAAsignar;
 }

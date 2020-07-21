@@ -192,7 +192,7 @@ typedef struct CaughtPokemon
 
 typedef struct Acknowledge
 {
-	codigo_operacion tipoDeCola;
+	codigo_operacion numeroCola;
 	int32_t ID;
 }Acknowledge;
 

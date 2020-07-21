@@ -154,7 +154,13 @@ int main(void) {
 	Localized* pokemonLocalized = malloc(sizeof(Localized));
 	pokemonLocalized->nombrePokemon = "Charmander";
 	pokemonLocalized->largoNombre = strlen(pokemonLocalized->nombrePokemon);
-	pokemonLocalized->cantPosciciones = 1;
+	pokemonLocalized->cantPosciciones = 3;
+	pokemonLocalized->coords[0] = 0;
+	pokemonLocalized->coords[1] = 1;
+	pokemonLocalized->coords[2] = 2;
+	pokemonLocalized->coords[3] = 3;
+	pokemonLocalized->coords[4] = 4;
+	pokemonLocalized->coords[5] = 5;
 	pokemonLocalized->ID = 12;
 	pokemonLocalized->corrID = 12;
 
@@ -222,7 +228,7 @@ int main(void) {
 	//pesa 15
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
-	//ESTE ES LOCALIZED, NO USAR
+	//ESTE ES LOCALIZED
 	//pesa 19
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
@@ -251,7 +257,7 @@ int main(void) {
 //	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 //	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba2, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 //	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba3, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	//sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 //	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba5, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 //	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba6, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
 

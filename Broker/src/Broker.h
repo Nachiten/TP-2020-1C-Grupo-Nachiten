@@ -34,6 +34,13 @@ sem_t* semCatch;
 sem_t* semCaught;
 sem_t* semId;
 
+t_cola* colaDescartesNew;
+t_cola* colaDescartesAppeared;
+t_cola* colaDescartesGet;
+t_cola* colaDescartesLocalized;
+t_cola* colaDescartesCatch;
+t_cola* colaDescartesCaught;
+
 t_cola* colaNew;
 t_cola* colaAppeared;
 t_cola* colaGet;
@@ -70,14 +77,28 @@ void llenar_listaColas();
 t_sub crear_sub(int32_t socket);
 t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje);
 void suscribir(t_sub* sub,t_cola* cola);
+void agregar_sub(int32_t socket, t_cola* cola);
+void mandar_mensajes_broker(t_cola* cola);
+void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
+void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
+int32_t a_suscribir(Suscripcion* mensaje);
+int32_t a_desuscribir(Dessuscripcion* mensaje);
+void desuscribir(int32_t socket, t_cola* cola);
+
+// ***********agregar a colas***********
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
-void agregar_sub(int32_t socket, t_cola* cola);
-void mandar_mensajes_broker(t_cola* cola);
+
+void agregar_descarte (t_cola* cola, t_mensaje* descarte);
+void agregar_mensajes_viejos(int32_t socket, t_cola* cola);
+void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte);
+
+// ***********borrar***********
+
 void borrar_datos(t_cola* cola, t_mensaje* mensaje);
 void borrar_datos_new(New* mensaje);
 void borrar_datos_appeared(Appeared* mensaje);
@@ -85,11 +106,7 @@ void borrar_datos_get(Get* mensaje);
 void borrar_datos_localized(Localized* mensaje);
 void borrar_datos_catch(Catch* mensaje);
 void borrar_datos_caught(Caught* mensaje);
-void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
-void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
-int32_t a_suscribir(Suscripcion* mensaje);
-int32_t a_desuscribir(Dessuscripcion* mensaje);
+
 void borrar_mensajes(t_cola* cola);
-void desuscribir(int32_t socket, t_cola* cola);
 
 #endif /* SRC_BROKER_H_ */

@@ -207,6 +207,9 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 void mensajeGet(char* pokemon, int IDMensaje){
 
+	printf("Pokemon buscado: %s\n", pokemon);
+	printf("Id Mensaje: %i", IDMensaje);
+
 	t_list* listaCoords = list_create();
 
 	if (existeCarpetaPokemon(pokemon)){
@@ -254,7 +257,7 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	structAEnviar->posPokemon.x = posX;
 	structAEnviar->posPokemon.y = posY;
 
-	mandar_mensaje(structAEnviar, APPEARED, socketBroker);
+	//mandar_mensaje(structAEnviar, APPEARED, );
 
 
 }
@@ -290,6 +293,13 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 		printf("Coord X: %i ", coordX);
 		printf("Coord Y: %i\n", coordY);
 	}
+
+	//Todo | falta enviar el mensaje
+
+	int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+	mandar_mensaje(structAEnviar, LOCALIZED , socketLocalized );
+
 }
 
 Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){

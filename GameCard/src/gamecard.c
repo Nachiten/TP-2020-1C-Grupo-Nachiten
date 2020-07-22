@@ -1046,10 +1046,10 @@ int main(void) {
 	t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
 	char* PUNTO_MONTAJE;
-	char* IP_BROKER;
-	char* PUERTO_BROKER;
 
-	socketBroker = -1;
+	socketNew = -1;
+	socketCatch = -1;
+	socketGet = -1;
 
 	semBitmap = malloc(sizeof(sem_t));
 
@@ -1115,22 +1115,22 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(bulbasaur, 1, 15, 1, 1);
-
-	printf("Sleep antes de catch\n");
-	//sleep(10);
-
-	mensajeCatch(bulbasaur, 1, 15, 1);
-
+//	mensajeNew(bulbasaur, 1, 15, 1, 1);
+//
+//	printf("Sleep antes de catch\n");
+//	//sleep(10);
+//
+//	mensajeCatch(bulbasaur, 1, 15, 1);
+//
 	mensajeNew(pikachu, 1, 15, 1, 1);
-
-	mensajeCatch(pikachu, 1, 15, 1);
-
-	printearBitArray();
-
-	mensajeGet(pikachu, 1);
-
-	mensajeCatch(jorge, 1, 24, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	printearBitArray();
+//
+//	mensajeGet(pikachu, 1);
+//
+//	mensajeCatch(jorge, 1, 24, 1);
 
 
 
@@ -1146,16 +1146,16 @@ int main(void) {
 
 
 
-//	mensajeNew(pikachu, 1,15,3, 1);
-//	mensajeNew(pikachu, 1,16,4, 1);
-//	mensajeNew(pikachu, 1,17,5, 1);
-//	mensajeNew(pikachu, 1,18,6, 1);
-//	mensajeNew(pikachu, 1,19,3, 1);
-//	mensajeNew(pikachu, 1,20,4, 1);
-//	mensajeNew(pikachu, 1,21,5, 1);
-//	mensajeNew(pikachu, 1,22,6, 1);
-//	mensajeNew(pikachu, 1,23,3, 1);
-//	mensajeNew(pikachu, 1,24,1, 1);
+//	mensajeNew(jorge, 1,15,3, 1);
+//	mensajeNew(jorge, 1,16,4, 1);
+//	mensajeNew(jorge, 1,17,5, 1);
+//	mensajeNew(jorge, 1,18,6, 1);
+//	mensajeNew(jorge, 1,19,3, 1);
+//	mensajeNew(jorge, 1,20,4, 1);
+//	mensajeNew(jorge, 1,21,5, 1);
+//	mensajeNew(jorge, 1,22,6, 1);
+//	mensajeNew(jorge, 1,23,3, 1);
+//	mensajeNew(jorge, 1,24,1, 1);
 //
 //	mensajeCatch(pikachu, 1, 24, 1);
 //

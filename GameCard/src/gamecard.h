@@ -36,8 +36,12 @@ char* pathFiles;
 int BLOCKS;
 int BLOCK_SIZE;
 int TIEM_REIN_OPERACION;
+char* IP_BROKER;
+char* PUERTO_BROKER;
 
-int socketBroker;
+int socketNew;
+int socketGet;
+int socketCatch;
 
 typedef struct semaforoPokemon{
 	sem_t* semaforo;

@@ -84,13 +84,11 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 		}
 	}
 
-	uint32_t tamanioDatos;
-
 	switch (cod_op)
 	{
 	 	case NEW: ;
 			New* mensajeNewRecibido = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeNewRecibido, cod_op, socket, &tamanioDatos);
+			recibir_mensaje(mensajeNewRecibido, cod_op, socket);
 
 			printf("Termine de recibir mensaje new sin explotar");
 
@@ -123,12 +121,12 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 			break;
 		case GET: ;
 			Get* mensajeGet = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeGet, cod_op, socket, &tamanioDatos);
+			recibir_mensaje(mensajeGet, cod_op, socket);
 
 			break;
 		case CATCH: ;
 			Catch* mensajeCatch = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeCatch, cod_op, socket, &tamanioDatos);
+			recibir_mensaje(mensajeCatch, cod_op, socket);
 
 			break;
 		default:
@@ -184,7 +182,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 		switch (cod_op) {
 		case NEW:
 			mensajeNew  = malloc(sizeof(New));
-			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &tamanioDatos);
+			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 
 			//ya te llegaron los datos y llamas a tus funciones
 
@@ -193,7 +191,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case GET:
 			mensajeGet = malloc(sizeof(Get));
-			recibir_mensaje(mensajeGet, cod_op, socket_cliente, &tamanioDatos);
+			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			printf("Termine de recibir un mensaje GET\n");
 
 			//ya te llegaron los datos y llamas a tus funciones
@@ -201,7 +199,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeof(Catch));
-			recibir_mensaje(mensajeCatch, cod_op, socket_cliente, &tamanioDatos);
+			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 
 			printf("Termine de recibir un mensaje CATCH\n");
 

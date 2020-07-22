@@ -157,7 +157,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			break;
 
 		case CONFIRMACION:
-			paquete->buffer->stream = malloc(sizeof(Acknowledge));
+			paquete->buffer->stream = malloc(sizeof(confirmacionMensaje));
 			size_ya_armado = serializar_paquete_confirmacion(paquete, mensaje);
 			break;
 	}
@@ -495,20 +495,20 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 	return size;
 }
 
-uint32_t serializar_paquete_confirmacion(t_paquete* paquete, Acknowledge* confirma)
+uint32_t serializar_paquete_confirmacion(t_paquete* paquete, confirmacionMensaje* confirma)
 {
 	uint32_t size = 0;
 	uint32_t desplazamiento = 0;
 
 	//meto la COLA a la que quiero mandar el ACK en el buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->numeroCola), sizeof(confirma->numeroCola));
-	desplazamiento += sizeof(confirma->numeroCola);
+	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->colaMensajes), sizeof(confirma->colaMensajes));
+	desplazamiento += sizeof(confirma->colaMensajes);
 
 	//meto la ID del mensaje en el buffer del paquete
-	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->ID), sizeof(confirma->ID));
+	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->id_mensaje), sizeof(confirma->id_mensaje));
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(confirma->numeroCola) + sizeof(confirma->ID);
+	paquete->buffer->size = sizeof(confirma->colaMensajes) + sizeof(confirma->id_mensaje);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
@@ -524,14 +524,15 @@ void eliminar_paquete(t_paquete* paquete)
 	free(paquete);
 }
 
-void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* sizeDeLosDatos)
+//void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente, uint32_t* sizeDeLosDatos)
+void recibir_mensaje(void* estructura, codigo_operacion tipoMensaje, int32_t socket_cliente)
 {
-	int32_t size;
-	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
-
-	printf("Tamaño de lo que sigue en el buffer: %u.\n", size);
-
-	*sizeDeLosDatos = size;//Quizas te creas muy inteligente y pienses que esto está al pedo y podriamos pisar el valor de sizeDeLosDatos directamente. No sos tan inteligente y no esta al pedo
+//	int32_t size;
+//	bytesRecibidos(recv(socket_cliente, &size, sizeof(size), MSG_WAITALL)); //saca el tamaño de lo que sigue en el buffer
+//
+//	printf("Tamaño de lo que sigue en el buffer: %u.\n", size);
+//
+//	*sizeDeLosDatos = size;
 
 	desserializar_mensaje(estructura, tipoMensaje, socket_cliente);
 }
@@ -787,15 +788,15 @@ void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cli
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
 }
 
-void desserializar_confirmacion(Acknowledge* estructura, int32_t socket_cliente)
+void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_cliente)
 {
 	//saco la COLA de la confirmacion del mensaje
-	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+	bytesRecibidos(recv(socket_cliente, &(estructura->colaMensajes), sizeof(estructura->colaMensajes), MSG_WAITALL));
 
 	//saco ID del mensaje que confirmo
-	bytesRecibidos(recv(socket_cliente, &(estructura->ID), sizeof(estructura->ID), MSG_WAITALL));
+	bytesRecibidos(recv(socket_cliente, &(estructura->id_mensaje), sizeof(estructura->id_mensaje), MSG_WAITALL));
 
-	printf("la cola del mensaje es: %i\n", estructura->numeroCola);
-	printf("la ID del mensaje que confirmo es: %u\n", estructura->ID);
+	printf("la cola del mensaje es: %i\n", estructura->colaMensajes);
+	printf("la ID del mensaje que confirmo es: %u\n", estructura->id_mensaje);
 }
 

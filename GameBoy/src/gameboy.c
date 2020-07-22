@@ -22,46 +22,7 @@ int main(int cantArg, char* arg[]) {
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(LOG_PATH, "Gameboy");
 
-
-	//para prueba de localized y ack****************************************************************************
-	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-	resultado_de_conexion(socket, logger, "BROKER");
-
-	uint32_t cantPosiciones = 3;
-	uint32_t coordenadas[cantPosiciones*2];
-	char* nombrePokemon = "asdasd";
-
-	coordenadas[0] = 1;
-	coordenadas[1] = 2;
-	coordenadas[2] = 3;
-	coordenadas[3] = 4;
-	coordenadas[4] = 5;
-	coordenadas[5] = 6;
-
-	Localized* estructura = malloc(sizeof(struct Localized) + (cantPosiciones*2) * sizeof(uint32_t) + strlen(nombrePokemon) + 1);
-
-	estructura->largoNombre = strlen(nombrePokemon);
-	estructura->nombrePokemon = nombrePokemon;
-	estructura->ID = 0;
-	estructura->corrID = -2;
-	estructura->cantPosciciones = cantPosiciones;
-	estructura->coords[0] = coordenadas[0];
-	estructura->coords[1] = coordenadas[1];
-	estructura->coords[2] = coordenadas[2];
-	estructura->coords[3] = coordenadas[3];
-	estructura->coords[4] = coordenadas[4];
-	estructura->coords[5] = coordenadas[5];
-
-	mandar_mensaje(estructura, LOCALIZED, socket);
-
-
-	switcher = 45;
-
-	//************************************************************************************************************
-
-	//switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
+	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{
@@ -414,7 +375,6 @@ int main(int cantArg, char* arg[]) {
 							pthread_t hilo;
 							HiloGameboy estructura;
 							estructura.conexion = socket;
-							estructura.size = sizeMensaje;
 							estructura.log = logger;
 							estructura.listaRecibidos = listaRecibidos;
 							estructura.cola = cambia_a_int(arg[2]);
@@ -425,11 +385,16 @@ int main(int cantArg, char* arg[]) {
 							//logueamos la suscripcion a la cola de mensajes
 							log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
 
+							//hilo para recibir mensajes
 							pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
 							pthread_detach(hilo);
 
 							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 							sleep(cambia_a_int(arg[3]));
+
+
+							cerrar_conexion(socket);
+							socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
 
 							//mandamos el mensaje pidiendo dessuscribirse a la cola
 							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
@@ -496,7 +461,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 		switch(cod_op){
 			case NEW:;
 				mensajeNew = malloc(sizeof(New));
-				recibir_mensaje(mensajeNew,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeNew->ID;
 				//mandarte el ACK
 				free(mensajeNew->nombrePokemon);
@@ -505,7 +470,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 
 			case APPEARED:
 				mensajeAppeared = malloc(sizeof(Appeared));
-				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeAppeared->ID;
 				free(mensajeAppeared->nombrePokemon);
 				free(mensajeAppeared);
@@ -513,7 +478,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 
 			case GET:
 				mensajeGet = malloc(sizeof(Get));
-				recibir_mensaje(mensajeGet,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeGet->ID;
 				free(mensajeGet->nombrePokemon);
 				free(mensajeGet);
@@ -521,7 +486,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 
 			case LOCALIZED:
 				mensajeLocalized = malloc(sizeof(Localized));
-				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeLocalized->ID;
 				free(mensajeLocalized->nombrePokemon);
 				free(mensajeLocalized);
@@ -529,7 +494,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 
 			case CATCH:
 				mensajeCatch = malloc(sizeof(Catch));
-				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeCatch->ID;
 				free(mensajeCatch->nombrePokemon);
 				free(mensajeCatch);
@@ -537,7 +502,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 
 			case CAUGHT:
 				mensajeCaught = malloc(sizeof(Caught));
-				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion, &estructura->size);
+				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeCaught->ID;
 				free(mensajeCaught->nombrePokemon);
 				free(mensajeCaught);

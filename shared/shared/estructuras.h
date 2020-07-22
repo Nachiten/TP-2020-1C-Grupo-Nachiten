@@ -106,7 +106,7 @@ typedef struct particionesCandidatas{
 
 typedef struct {
 	int32_t id_mensaje;
-	int colaMensajes;
+	codigo_operacion colaMensajes;
 }confirmacionMensaje;
 
 // se tiene que mandar al broker para que sepa a que cola suscribir o desuscribir al cliente
@@ -189,12 +189,6 @@ typedef struct CaughtPokemon
 	int32_t ID;
 	int32_t corrID;//si no tienen ninguno pongan -2
 }Caught;
-
-typedef struct Acknowledge
-{
-	codigo_operacion numeroCola;
-	int32_t ID;
-}Acknowledge;
 
 // Firmas de Funciones
 t_log* iniciar_logger(void);

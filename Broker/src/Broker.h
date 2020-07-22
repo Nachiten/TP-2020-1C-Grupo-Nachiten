@@ -34,6 +34,9 @@ sem_t* semCatch;
 sem_t* semCaught;
 sem_t* semId;
 
+sem_t* semCache;
+sem_t* semParticiones;
+
 t_cola* colaDescartesNew;
 t_cola* colaDescartesAppeared;
 t_cola* colaDescartesGet;
@@ -68,7 +71,7 @@ void iniciar_server(char* ip, char* puerto); //sacar IP y PUERTO de los archivos
 //Esta funcion recibe el socket que preparó iniciar_server y se queda escuchando a la espera de que lleguen mensajes
 void esperar_cliente(int32_t);
 void serve_client(int32_t *socket);//Está atento a si llega un mensaje o el socket falla?
-void process_request(codigo_operacion cod_op, int32_t cliente_fd);//esta cosa administra segun el tipo de mensaje que llegó, a quien llama para que lo abra.
+void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t sizeAAllocar);//esta cosa administra segun el tipo de mensaje que llegó, a quien llama para que lo abra.
 
 // ***********funciones de broker***********
 void inicializar_colas();
@@ -96,7 +99,7 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
 void agregar_descarte (t_cola* cola, t_mensaje* descarte);
 void agregar_mensajes_viejos(int32_t socket, t_cola* cola);
 void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte);
-
+int sub_presente(int32_t socketCliente, t_mensaje* mensaje);
 // ***********borrar***********
 
 void borrar_datos(t_cola* cola, t_mensaje* mensaje);

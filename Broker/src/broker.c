@@ -109,7 +109,6 @@ int main(void) {
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA, TAMANIO_MEM);
 
-
 	// *************************************************
 	//TESTING AGREGAR MENSAJES A CACHE
 	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
@@ -355,6 +354,9 @@ void inicializar_semaforos(){
 	semCaught = malloc(sizeof(sem_t));
 	semId = malloc(sizeof(sem_t));
 
+	semCache = malloc(sizeof(sem_t));
+	semParticiones = malloc(sizeof(sem_t));
+
 	sem_init(semNew, 0, 1);
 	sem_init(semAppeared, 0, 1);
 	sem_init(semGet, 0, 1);
@@ -362,6 +364,9 @@ void inicializar_semaforos(){
 	sem_init(semCatch, 0, 1);
 	sem_init(semCaught, 0, 1);
 	sem_init(semId, 0, 1);
+
+	sem_init(semCache, 0, 1);
+	sem_init(semParticiones, 0, 1);
 }
 
 int32_t crear_id(){
@@ -433,7 +438,6 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
-		printf("elemen\n");
 	}
 }
 
@@ -569,16 +573,16 @@ void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(colaDescartesNew->mensajes,i);
-			if(mensaje->subs != NULL){
-				for(int j = 0; j < mensaje->subs->elements_count; j++){
-					t_sub* sub = malloc(sizeof(t_sub));
-					sub = list_get(mensaje->subs,j);
+//			if(mensaje->subs != NULL){
+//				for(int j = 0; j < mensaje->subs->elements_count; j++){
+//					t_sub* sub = malloc(sizeof(t_sub));
+//					sub = list_get(mensaje->subs,j);
 					if(sub_presente(socket, mensaje) == 0){
 						t_mensaje* mensajeViejo = malloc(sizeof(t_mensaje));
 						mensajeViejo = list_remove(descarte->mensajes, i);
 						list_add(cola->mensajes, mensajeViejo);
-					}
-				}
+//					}
+//				}
 			}
 		}
 	}
@@ -599,8 +603,8 @@ int sub_presente(int32_t socketCliente, t_mensaje* mensaje){
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensajes_broker(t_cola* cola){
-	log_info(logger,"estoy mandando mensajes");
-	if(cola->mensajes != NULL){
+	if(cola->mensajes->head != NULL && cola->subs->head != NULL){
+		log_info(logger,"estoy mandando mensajes");
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
@@ -856,11 +860,9 @@ int32_t a_desuscribir(Dessuscripcion* mensaje){
  * si es un tipo SUSCRIPCION te suscribe a la cola que se desea
  */
 
-void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
-	int32_t numeroCola;
+void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t sizeAAllocar) {
+	//int32_t numeroCola;
 	char* aLogear;
-	void* mensaje;
-	uint32_t sizeMensaje;
 	uint32_t sizeMensajeParaCache;
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
@@ -868,73 +870,76 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 	Localized* mensajeLocalized;
 	Catch* mensajeCatch;
 	Caught* mensajeCaught;
+	Suscripcion* mensajeSuscrip;
+	Dessuscripcion* mensajeDessuscrip;
+	confirmacionMensaje* mensajeConfirmacion;
 		switch (cod_op) {
 		case NEW:
-			mensajeNew  = malloc(sizeof(New));
-			recibir_mensaje(mensajeNew, cod_op, socket_cliente, &sizeMensaje);
+			mensajeNew = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 			sem_wait(semNew);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
-			agregar_mensaje_new(mensajeNew,sizeMensaje);
+			agregar_mensaje_new(mensajeNew,sizeAAllocar);//toDo ver que hace este SIZE
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaNew);
 			sem_post(semNew);
 			break;
 		case APPEARED:
-			mensajeAppeared = malloc(sizeof(Appeared));
-			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente, &sizeMensaje);
+			mensajeAppeared = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeAppeared, cod_op, socket_cliente);
 			sem_wait(semAppeared);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeAppeared, cod_op);
-			agregar_mensaje_appeared(mensajeAppeared,sizeMensaje);
+			agregar_mensaje_appeared(mensajeAppeared,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaAppeared);
 			sem_post(semAppeared);
 			break;
 		case GET:
-			mensajeGet = malloc(sizeof(Get));
-			recibir_mensaje(mensajeGet, cod_op, socket_cliente, &sizeMensaje);
+			mensajeGet = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			sem_wait(semGet);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeGet, cod_op);
-			agregar_mensaje_get(mensajeGet,sizeMensaje);
+			agregar_mensaje_get(mensajeGet,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaGet);
 			sem_post(semGet);
 			break;
 		case LOCALIZED:
-			mensajeLocalized = malloc(sizeof(Localized) + 100);//Todo ver con Nico y Nacho
-			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente, &sizeMensaje);
+			mensajeLocalized = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeLocalized, cod_op, socket_cliente);
 			sem_wait(semLocalized);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);
-			agregar_mensaje_localized(mensajeLocalized,sizeMensaje);
+			agregar_mensaje_localized(mensajeLocalized,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaLocalized);
 			sem_post(semLocalized);
 			break;
 		case CATCH:
-			mensajeCatch = malloc(sizeof(Catch));
-			recibir_mensaje(mensajeCatch, cod_op, socket_cliente, &sizeMensaje);
+			mensajeCatch = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
-			agregar_mensaje_catch(mensajeCatch,sizeMensaje);
+			agregar_mensaje_catch(mensajeCatch,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
 			break;
 		case CAUGHT:
-			mensajeCaught = malloc(sizeof(Caught));
-			recibir_mensaje(mensajeCaught, cod_op, socket_cliente, &sizeMensaje);
+			mensajeCaught = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeCaught, cod_op, socket_cliente);
 			sem_wait(semCaught);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCaught, cod_op);
-			agregar_mensaje_caught(mensajeCaught,sizeMensaje);
+			agregar_mensaje_caught(mensajeCaught,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaCaught);
 			sem_post(semCaught);
 			break;
 		case SUSCRIPCION:
-			mensaje = malloc(sizeof(Suscripcion));
-			recibir_mensaje(mensaje, cod_op, socket_cliente, &sizeMensaje);
-			numeroCola = a_suscribir(mensaje);
+			mensajeSuscrip= malloc(sizeAAllocar);
+			recibir_mensaje(mensajeSuscrip, cod_op, socket_cliente);
+			//numeroCola = a_suscribir(mensajeSuscrip);
 
-			switch(numeroCola){
+			switch(mensajeSuscrip->numeroCola){
 			case NEW:
 				sem_wait(semNew);
 				agregar_sub(socket_cliente, colaNew);
@@ -980,16 +985,16 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			default:
 				break;
 			}
-			free(mensaje);
+			free(mensajeSuscrip);
 			break;
 		case DESSUSCRIPCION:
 			log_info(logger, "llege a desuscribirme");
-			mensaje = malloc(sizeof(Dessuscripcion));
-			recibir_mensaje(mensaje, cod_op, socket_cliente, &sizeMensaje);
+			mensajeDessuscrip = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeDessuscrip, cod_op, socket_cliente);
 
-			numeroCola = a_desuscribir(mensaje);
+			//numeroCola = a_desuscribir(mensaje);
 
-			switch(numeroCola){
+			switch(mensajeDessuscrip->numeroCola){
 			case NEW:
 				sem_wait(semNew);
 				desuscribir(socket_cliente, colaNew);
@@ -1029,12 +1034,12 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 			default:
 				break;
 			}
-			free(mensaje);
+			free(mensajeDessuscrip);
 			break;
 		case CONFIRMACION:
-			mensaje = malloc(sizeof(confirmacionMensaje));
-			recibir_mensaje(mensaje, cod_op, socket_cliente, &sizeMensaje);
-			confirmar_mensaje(socket_cliente, mensaje);// los semaforos estan aca
+			mensajeConfirmacion = malloc(sizeAAllocar);
+			recibir_mensaje(mensajeConfirmacion, cod_op, socket_cliente);
+			confirmar_mensaje(socket_cliente, mensajeConfirmacion);// los semaforos estan aca
 			break;
 		case TEST:
 			break;
@@ -1049,13 +1054,22 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 void serve_client(int32_t* socket)
 {
+	int32_t sizeAAllocar;
 	codigo_operacion cod_op;
+
 	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 	bytesRecibidos(recibidos);
-	if(recibidos == -1)
-		cod_op = -1;
 
-	process_request(cod_op, *socket);
+	int32_t recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+	bytesRecibidos(recibidosSize);
+	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+
+	if(recibidos == -1 || recibidosSize == -1)
+	{
+		cod_op = -1;
+	}
+
+	process_request(cod_op, *socket, sizeAAllocar);
 }
 
 void esperar_cliente(int32_t socket_servidor)

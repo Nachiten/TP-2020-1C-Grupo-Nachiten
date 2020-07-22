@@ -1149,7 +1149,9 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	printf("Particion %u elegida exitosamente.\n", particionElegida->numero_de_particion); //borrar en el futuro?
 
 	//ahora que tenemos la particion, metemos los datos
+	//sem_wait(semCache); ToDO
 	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA);
+	//sem_post(semCache);
 
 //PASO 3: profit?
 }

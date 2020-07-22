@@ -52,19 +52,35 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	codigo_operacion cod_op;
 	uint32_t desconexion = 1;
 
-	int32_t recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-	bytesRecibidos(recibidos);
+	int32_t recibidosCodOP = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+	bytesRecibidos(recibidosCodOP);
 
+	int32_t sizeAAllocar;
+	int32_t recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+	bytesRecibidos(recibidosSize);
 
-	while((recibidos == -1) || (desconexion == -1))
+	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
+	//en caso de que haya fallado la conexion del COD OP
+	while((recibidosCodOP == -1) || (desconexion == -1))
 	{
 		sleep(TIEM_REIN_CONEXION);
 		desconexion = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
 		if(desconexion != -1)
 		{
-			recibidos = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-			bytesRecibidos(recibidos);
+			recibidosCodOP = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+			bytesRecibidos(recibidosCodOP);
+		}
+	}
+	//en caso de que haya fallado la conexion de la variable SIZE
+	while((recibidosSize == -1) || (desconexion == -1))
+	{
+		sleep(TIEM_REIN_CONEXION);
+		desconexion = conectarseABroker(IP_BROKER, PUERTO_BROKER, logger);
+		if(desconexion != -1)
+		{
+			recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+			bytesRecibidos(recibidosSize);
 		}
 	}
 
@@ -73,7 +89,7 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	switch (cod_op)
 	{
 	 	case NEW: ;
-			New* mensajeNewRecibido = malloc(sizeof(New));
+			New* mensajeNewRecibido = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeNewRecibido, cod_op, socket, &tamanioDatos);
 
 			printf("Termine de recibir mensaje new sin explotar");
@@ -85,7 +101,7 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 //				int colaMensajes;
 //			}confirmacionMensaje;
 
-			confirmacionMensaje* ackBroker = malloc(sizeof(confirmacionMensaje));
+			confirmacionMensaje* ackBroker = malloc(sizeAAllocar);
 
 			ackBroker->colaMensajes = NEW;
 			ackBroker->id_mensaje = mensajeNewRecibido->ID;
@@ -106,12 +122,12 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 
 			break;
 		case GET: ;
-			Get* mensajeGet = malloc(sizeof(Get));
+			Get* mensajeGet = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeGet, cod_op, socket, &tamanioDatos);
 
 			break;
 		case CATCH: ;
-			Catch* mensajeCatch = malloc(sizeof(Catch));
+			Catch* mensajeCatch = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeCatch, cod_op, socket, &tamanioDatos);
 
 			break;

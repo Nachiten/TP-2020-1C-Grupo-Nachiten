@@ -24,7 +24,6 @@ typedef struct mensajesRecibidos{
 
 typedef struct {
 	int32_t conexion;
-	uint32_t size;
 	t_log* log;
 	mensajesRecibidos* listaRecibidos;
 	uint32_t cola;

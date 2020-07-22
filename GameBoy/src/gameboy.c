@@ -10,11 +10,11 @@ int main(int cantArg, char* arg[]) {
 	char* LOG_PATH;
 	uint32_t switcher = DEFAULT; //para usar el switch case.
 
-	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios.
-	{
-		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
-		return EXIT_FAILURE;
-	}
+//	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios. ToDo descomentar
+//	{
+//		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
+//		return EXIT_FAILURE;
+//	}
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameBoy.config");
@@ -22,7 +22,91 @@ int main(int cantArg, char* arg[]) {
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(LOG_PATH, "Gameboy");
 
-	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
+
+
+
+
+	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+	resultado_de_conexion(socket, logger, "BROKER");
+
+	if(socket != -1)//si y solo si se puedo conectar
+	{
+		//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
+		Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
+		Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
+
+		estructuraSuscribirse->numeroCola = 1; //cambiamos el string a int
+		estructuraDessuscribirse->numeroCola = 1; //cambiamos el string a int
+
+		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
+		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
+		listaRecibidos->siguiente = NULL;
+
+		//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
+		pthread_t hilo;
+		HiloGameboy estructura;
+		estructura.conexion = socket;
+		estructura.log = logger;
+		estructura.listaRecibidos = listaRecibidos;
+		estructura.cola = 1;
+
+		//mandamos el mensaje pidiendo suscribirse a la cola
+		mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+
+		//logueamos la suscripcion a la cola de mensajes
+		log_info(logger, "Suscripto a la cola de mensajes: %i", 1);
+
+		//hilo para recibir mensajes
+		pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+		pthread_detach(hilo);
+
+		//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
+		sleep(1000);
+
+
+		cerrar_conexion(socket);
+		socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+
+		//mandamos el mensaje pidiendo dessuscribirse a la cola
+		mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+
+		//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
+		free(estructuraSuscribirse);
+		free(estructuraDessuscribirse);
+
+		//liberamos la lista de IDs recibidas
+		mensajesRecibidos* auxiliar = listaRecibidos;
+		while(listaRecibidos->siguiente != NULL)
+		{
+			listaRecibidos = listaRecibidos->siguiente;
+			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+			free(auxiliar);
+			auxiliar = listaRecibidos;
+		}
+		free(auxiliar);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//sacar
+	switcher = 45;
+
+
+	//switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{

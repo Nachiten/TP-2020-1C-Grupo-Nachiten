@@ -396,7 +396,7 @@ t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint
 
 //agrega el sub a todos los mensajes de la cola, si no hay mensajes no hace nada
 void suscribir(t_sub* sub,t_cola* cola){
-	if(cola->mensajes != NULL){
+	if(cola->mensajes->head != NULL){
 		for(int i = 0;i < cola->mensajes->elements_count; i++) {
 			t_mensaje* aux = malloc(sizeof(t_mensaje));
 			aux = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
@@ -423,7 +423,7 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaNew) != -1){
 		//t_mensaje* new = malloc(sizeof(t_mensaje));
-		t_mensaje* new;
+		t_mensaje* new;//ToDo seguro que en esto no va un malloc? osea va a terminar siendo un elemento de una lista, la funcion no devuelve sus datos
 		int32_t id = crear_id();
 		int32_t idCorr;
 		if(mensaje->corrID == -2){
@@ -612,7 +612,7 @@ void mandar_mensajes_broker(t_cola* cola){
 //			{
 //				puts("Nico acordate de ponerle la logica que necesites a esto, devuelve 1 si encontro los datos, 0 si ya no estan en cache");//ToDo
 //			}
-			if(mensaje->subs != NULL){
+			if(mensaje->subs->head != NULL){
 				for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
 					t_sub* sub = malloc(sizeof(t_sub));
 					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
@@ -770,7 +770,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 // todo rehacer borrar mensajes
 void borrar_mensajes(t_cola* cola){
 	int32_t subsTotales = 0, yaRecibido = 0;
-		if(cola->mensajes != NULL){
+		if(cola->mensajes->head != NULL){
 			for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 				mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes

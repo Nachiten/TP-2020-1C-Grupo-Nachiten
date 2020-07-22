@@ -616,38 +616,7 @@ void escribirDatoEnBloque(char* dato, int numBloque){
 
 }
 
-void suscribirseAColas(int32_t socket){
 
-	//Uso una estructura para guardar el numero de cola al que me quiero subscribir y mandarlo a la funcion mandar_mensaje
-	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-
-	estructuraSuscribirse->numeroCola = NEW;
-
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	sleep(5);
-
-	estructuraSuscribirse->numeroCola = GET;
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	sleep(5);
-
-	estructuraSuscribirse->numeroCola = CATCH;
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	free(estructuraSuscribirse);
-}
-
-int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger){
-	int socket = establecer_conexion(IP_GAMECARD, PUERTO_GAMECARD);//creo conexión con el Broker.
-
-	resultado_de_conexion(socket, logger, "SOCKET_ESCUCHA");
-
-	return socket;
-}
 
 t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 	int cantidadNumeros = 0;
@@ -1317,7 +1286,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-  pthread_join(hiloBroker, NULL);
+    pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

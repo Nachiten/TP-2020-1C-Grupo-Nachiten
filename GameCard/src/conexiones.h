@@ -28,6 +28,8 @@ void esperar_conexiones(int32_t);
 
 int conectarseABroker(char*, char*, t_log*);
 void process_request(codigo_operacion, int32_t);
+void suscribirseAColas(int32_t socket);
+int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger);
 
 
 #endif /* SRC_CONEXIONES_H_ */

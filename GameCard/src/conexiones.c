@@ -64,10 +64,6 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 	bytesRecibidos(recibidosCodOP);
 
 	int32_t sizeAAllocar;
-	int32_t recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
-	bytesRecibidos(recibidosSize);
-
-	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
 	//en caso de que haya fallado la conexion del COD OP
 	while( (recibidosCodOP == -1) || (desconexion == -1) )
@@ -80,6 +76,12 @@ void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* lo
 			bytesRecibidos(recibidosCodOP);
 		}
 	}
+
+	int32_t recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+	bytesRecibidos(recibidosSize);
+
+	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+
 	//en caso de que haya fallado la conexion de la variable SIZE
 	while((recibidosSize == -1) || (desconexion == -1))
 	{

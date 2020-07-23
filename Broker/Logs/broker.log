@@ -99,3 +99,31 @@
 [INFO] 20:23:46:377 Broker/(18184:18186): Se suscribio a la cola New
 [INFO] 11:43:16:485 Broker/(8401:8413): llege a desuscribirme
 [INFO] 11:44:21:752 Broker/(8401:8517): llege a desuscribirme
+[INFO] 11:58:33:793 Broker/(8626:8827): llege a desuscribirme
+[INFO] 11:59:10:408 Broker/(8837:8847): llege a desuscribirme
+[INFO] 12:00:21:662 Broker/(8891:8898): llegue a suscribir
+[INFO] 12:00:24:664 Broker/(8891:8900): llege a desuscribirme
+[INFO] 12:01:33:573 Broker/(8939:8951): llegue a suscribir
+[INFO] 12:19:34:423 Broker/(21836:21858): llegue a suscribir
+[INFO] 12:30:07:314 Broker/(22083:22083): Un porceso se conecto
+[INFO] 12:30:07:315 Broker/(22083:22090): Se suscribio a la cola New
+[INFO] 12:30:19:315 Broker/(22083:22083): Un porceso se conecto
+[INFO] 12:30:19:317 Broker/(22083:22094): Se desuscribio a la cola New
+[INFO] 12:33:29:736 Broker/(22218:22218): Un proceso se conecto
+[INFO] 12:33:29:739 Broker/(22218:22225): Se agrego un mensaje a la cola New
+[INFO] 12:33:38:94 Broker/(22218:22218): Un proceso se conecto
+[INFO] 12:33:38:95 Broker/(22218:22227): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:38:95 Broker/(22218:22227): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:38:95 Broker/(22218:22227): Se suscribio a la cola New
+[INFO] 12:33:42:69 Broker/(22218:22218): Un proceso se conecto
+[INFO] 12:33:42:71 Broker/(22218:22230): Se agrego un mensaje a la cola New
+[INFO] 12:33:42:73 Broker/(22218:22230): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:42:76 Broker/(22218:22230): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:42:77 Broker/(22218:22230): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:42:77 Broker/(22218:22230): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:50:95 Broker/(22218:22218): Un proceso se conecto
+[INFO] 12:33:50:97 Broker/(22218:22231): Se desuscribio a la cola New
+[INFO] 12:33:53:786 Broker/(22218:22218): Un proceso se conecto
+[INFO] 12:33:53:789 Broker/(22218:22233): Se agrego un mensaje a la cola New
+[INFO] 12:33:53:789 Broker/(22218:22233): Envio un mensaje a uno de los suscriptores
+[INFO] 12:33:53:789 Broker/(22218:22233): Envio un mensaje a uno de los suscriptores

@@ -353,7 +353,7 @@ void inicializar_semaforos(){
 	semCatch = malloc(sizeof(sem_t));
 	semCaught = malloc(sizeof(sem_t));
 	semId = malloc(sizeof(sem_t));
-
+	semLog = malloc(sizeof(sem_t));
 	semCache = malloc(sizeof(sem_t));
 	semParticiones = malloc(sizeof(sem_t));
 
@@ -364,9 +364,11 @@ void inicializar_semaforos(){
 	sem_init(semCatch, 0, 1);
 	sem_init(semCaught, 0, 1);
 	sem_init(semId, 0, 1);
-
+	sem_init(semLog, 0, 1);
 	sem_init(semCache, 0, 1);
 	sem_init(semParticiones, 0, 1);
+
+
 }
 
 int32_t crear_id(){
@@ -376,11 +378,11 @@ int32_t crear_id(){
 	return id_inicial;
 }
 
-t_sub crear_sub(int32_t socket){
-	t_sub nuevo;
-	nuevo.socket = socket;
-	nuevo.recibido = 0;
-	nuevo.suscripto = 1;
+t_sub* crear_sub(int32_t socket){
+	t_sub* nuevo = malloc(sizeof(t_sub));
+	nuevo->socket = socket;
+	nuevo->recibido = 0;
+	nuevo->suscripto = 1;
 	return nuevo;
 }
 
@@ -395,12 +397,32 @@ t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint
 }
 
 //agrega el sub a todos los mensajes de la cola, si no hay mensajes no hace nada
-void suscribir(t_sub* sub,t_cola* cola){
-	if(cola->mensajes->head != NULL){
-		for(int i = 0;i < cola->mensajes->elements_count; i++) {
-			t_mensaje* aux = malloc(sizeof(t_mensaje));
-			aux = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-			list_add(aux->subs,sub);
+void suscribir(t_sub* sub,t_cola* cola)
+{
+	int32_t control = 0;
+	if(cola->mensajes->head != NULL)
+	{
+		for(int i = 0;i < cola->mensajes->elements_count; i++)
+		{
+			t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
+			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
+
+			if(mensaje->subs->head != NULL)
+			{
+				for(int j = 0;j < mensaje->subs->elements_count; j++)
+				{
+					t_sub* subDelMensaje;// = malloc(sizeof(t_sub));
+					subDelMensaje = list_get(mensaje->subs,j);
+					if((subDelMensaje->recibido == sub->recibido) && (subDelMensaje->socket == sub->socket) && (subDelMensaje->suscripto == sub->suscripto))
+					{
+						control++;
+					}
+				}
+			}
+			if(control == 0)
+			{
+				list_add(mensaje->subs,sub);
+			}
 		}
 	}
 }
@@ -422,8 +444,7 @@ int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 // crea un mensaje con los datos que le pasan y lo agrega a la cola, el mensajes tiene los mismos suscriptores que la cola
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaNew) != -1){
-		//t_mensaje* new = malloc(sizeof(t_mensaje));
-		t_mensaje* new;//ToDo seguro que en esto no va un malloc? osea va a terminar siendo un elemento de una lista, la funcion no devuelve sus datos
+		t_mensaje* new;
 		int32_t id = crear_id();
 		int32_t idCorr;
 		if(mensaje->corrID == -2){
@@ -437,7 +458,9 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaNew->subs;
 		list_add(colaNew->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola New");
+		sem_post(semLog);
 	}
 }
 
@@ -456,7 +479,9 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaAppeared->subs;
 		list_add(colaAppeared->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Appeared");
+		sem_post(semLog);
 	}
 }
 
@@ -475,7 +500,9 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaGet->subs;
 		list_add(colaGet->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Get");
+		sem_post(semLog);
 	}
 }
 
@@ -494,7 +521,9 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaLocalized->subs;
 		list_add(colaLocalized->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Localized");
+		sem_post(semLog);
 	}
 }
 
@@ -513,7 +542,9 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCatch->subs;
 		list_add(colaCatch->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Catch");
+		sem_post(semLog);
 	}
 }
 
@@ -533,13 +564,15 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		new->subs = colaCaught->subs;
 		list_add(colaCaught->mensajes,new);
+		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Caught");
+		sem_post(semLog);
 	}
 }
 
 void agregar_sub(int32_t socket, t_cola* cola){
-	t_sub* new = malloc(sizeof(t_sub));
-	*new = crear_sub(socket);
+	t_sub* new; //= malloc(sizeof(t_sub));//de mas?
+	new = crear_sub(socket);
 	list_add(cola->subs,new);
 	agregar_mensajes_viejos(socket,cola);
 	suscribir(new,cola);
@@ -602,24 +635,40 @@ int sub_presente(int32_t socketCliente, t_mensaje* mensaje){
 
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensajes_broker(t_cola* cola){
+	t_sub* sub;
+	int s = 0;
 	if(cola->mensajes->head != NULL && cola->subs->head != NULL){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
-			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-//			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO))
-//			{
-//				puts("Nico acordate de ponerle la logica que necesites a esto, devuelve 1 si encontro los datos, 0 si ya no estan en cache");//ToDo
-//			}
+			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO) == 0)//cambiar!!!ToDo
+			{
+				mensaje = list_remove(cola->mensajes,i);
+				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
+
+				while(mensaje->subs->elements_count > s)
+				{
+					s++;
+				}
+				s--;
+				for(; s > 0;s--)
+				{
+					sub = list_remove(mensaje->subs,s); // busca el S elemento de la lista subs
+					free(sub);
+				}
+				free(mensaje);
+			}
 			if(mensaje->subs->head != NULL){
 				for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
-					t_sub* sub = malloc(sizeof(t_sub));
 					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
 					if(sub->recibido != 1 && sub->suscripto == 1){
+						sem_wait(semLog);
 						log_info(logger, "Envio un mensaje a uno de los suscriptores");
+						sem_post(semLog);
 						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
 					}
 				}
-				//borrar_datos(cola,mensaje);
+			borrar_datos(cola,mensaje);
 			}
 		}
 	}
@@ -736,37 +785,49 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 	case NEW:
 		sem_wait(semNew);
 		modificar_cola(colaNew,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola New");
+		sem_post(semLog);
 		sem_post(semNew);
 		break;
 	case APPEARED:
 		sem_wait(semAppeared);
 		modificar_cola(colaAppeared,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Appeared");
+		sem_post(semLog);
 		sem_post(semAppeared);
 		break;
 	case GET:
 		sem_wait(semGet);
 		modificar_cola(colaGet,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Get");
+		sem_post(semLog);
 		sem_post(semGet);
 		break;
 	case LOCALIZED:
 		sem_wait(semLocalized);
 		modificar_cola(colaLocalized,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Localized");
+		sem_post(semLog);
 		sem_post(semLocalized);
 		break;
 	case CATCH:
 		sem_wait(semCatch);
 		modificar_cola(colaCatch,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Catch");
+		sem_post(semLog);
 		sem_post(semCatch);
 		break;
 	case CAUGHT:
 		sem_wait(semCaught);
 		modificar_cola(colaCaught,mensaje->id_mensaje,socket);
+		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Caught");
+		sem_post(semLog);
 		sem_post(semCaught);
 		break;
 	case TEST: //Estos 6 están solo para que no sale el WARNING, no sirven para nada aca
@@ -789,21 +850,27 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 // revisar cuando hay que borrar un mensaje
 void borrar_mensajes(t_cola* cola){
 	int32_t subsTotales = 0, yaRecibido = 0;
-		if(cola->mensajes->head != NULL){
-			for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
+		if(cola->mensajes->head != NULL)
+		{
+			for(int i = 0; i < cola->mensajes->elements_count; i++)
+			{ //avanza hasta el final de la cola de mensajes
 				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
 				mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-				if(mensaje->subs->head != NULL){
-					for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
+				if(mensaje->subs->head != NULL)
+				{
+					for(int j = 0; j < mensaje->subs->elements_count; j++)
+					{ //avanza hasta el final de la cola de subs
 						t_sub* sub = malloc(sizeof(t_sub));
 						sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
-						if(sub->recibido == 1){
+						if(sub->recibido == 1)
+						{
 							yaRecibido++;
 						}
 						subsTotales++;
 					}
 				}
-				if(subsTotales == yaRecibido && subsTotales != 0 && yaRecibido != 0){
+				if((subsTotales == yaRecibido) && (subsTotales != 0) && (yaRecibido != 0))
+				{
 					t_mensaje* mensajeBorrado = malloc(sizeof(t_mensaje));
 					mensajeBorrado = list_remove(cola->mensajes, i);
 					agregar_descarte(cola,mensajeBorrado);
@@ -945,40 +1012,52 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			recibir_mensaje(mensajeSuscrip, cod_op, socket_cliente);
 			switch(mensajeSuscrip->numeroCola){
 			case NEW:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola New");
+				sem_post(semLog);
 				sem_wait(semNew);
 				agregar_sub(socket_cliente, colaNew);
 				sem_post(semNew);
-				log_info(logger, "Se suscribio a la cola New");
 				break;
 			case APPEARED:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola Appeared");
+				sem_post(semLog);
 				sem_wait(semAppeared);
 				agregar_sub(socket_cliente, colaAppeared);
 				sem_post(semAppeared);
-				log_info(logger, "Se suscribio a la cola Appeared");
 				break;
 			case GET:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola Get");
+				sem_post(semLog);
 				sem_wait(semGet);
 				agregar_sub(socket_cliente, colaGet);
 				sem_post(semGet);
-				log_info(logger, "Se suscribio a la cola Get");
 				break;
 			case LOCALIZED:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola Localized");
+				sem_post(semLog);
 				sem_wait(semLocalized);
 				agregar_sub(socket_cliente, colaLocalized);
 				sem_post(semLocalized);
-				log_info(logger, "Se suscribio a la cola Localized");
 				break;
 			case CATCH:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola Catch");
+				sem_post(semLog);
 				sem_wait(semCatch);
 				agregar_sub(socket_cliente, colaCatch);
 				sem_post(semCatch);
-				log_info(logger, "Se suscribio a la cola Catch");
 				break;
 			case CAUGHT:
+				sem_wait(semLog);
+				log_info(logger, "Se suscribio a la cola Caught");
+				sem_post(semLog);
 				sem_wait(semCaught);
 				agregar_sub(socket_cliente, colaCaught);
 				sem_post(semCaught);
-				log_info(logger, "Se suscribio a la cola Caught");
 				break;
 			default:
 				break;
@@ -994,37 +1073,49 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				sem_wait(semNew);
 				desuscribir(socket_cliente, colaNew);
 				sem_post(semNew);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola New");
+				sem_post(semLog);
 				break;
 			case APPEARED:
 				sem_wait(semAppeared);
 				desuscribir(socket_cliente, colaAppeared);
 				sem_post(semAppeared);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Appeared");
+				sem_post(semLog);
 				break;
 			case GET:
 				sem_wait(semGet);
 				desuscribir(socket_cliente, colaGet);
 				sem_post(semGet);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Get");
+				sem_post(semLog);
 				break;
 			case LOCALIZED:
 				sem_wait(semLocalized);
 				desuscribir(socket_cliente, colaLocalized);
 				sem_post(semLocalized);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Localized");
+				sem_post(semLog);
 				break;
 			case CATCH:
 				sem_wait(semCatch);
 				desuscribir(socket_cliente, colaCatch);
 				sem_post(semCatch);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Catch");
+				sem_post(semLog);
 				break;
 			case CAUGHT:
 				sem_wait(semCaught);
 				desuscribir(socket_cliente, colaCaught);
 				sem_post(semCaught);
+				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Caught");
+				sem_post(semLog);
 				break;
 			default:
 				break;
@@ -1074,7 +1165,9 @@ void esperar_cliente(int32_t socket_servidor)
 	socklen_t tam_direccion = sizeof(struct sockaddr_in);
 
 	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
+	sem_wait(semLog);
 	log_info(logger, "Un proceso se conecto");
+	sem_post(semLog);
 
 	pthread_create(&thread,NULL,(void*)serve_client,&socket_cliente);
 	pthread_detach(thread);

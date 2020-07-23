@@ -109,3 +109,89 @@ int32_t sacarIdDeMensajeCaught(Caught* estructura)
 {
 	return estructura->ID;
 }
+
+void liberar_estructuras(void* mensaje, codigo_operacion tipoMensaje)
+{
+	switch(tipoMensaje)
+	{
+		case NEW:
+			libero_estructura_New(mensaje);
+			break;
+
+		case APPEARED:
+			libero_estructura_appeared(mensaje);
+			break;
+
+		case GET:
+			libero_estructura_Get(mensaje);
+			break;
+
+		case LOCALIZED:
+			libero_estructura_Localized(mensaje);
+			break;
+
+		case CATCH:
+			libero_estructura_Catch(mensaje);
+			break;
+
+		case CAUGHT:
+			libero_estructura_Caught(mensaje);
+			break;
+
+		case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+			break;
+
+		case SUSCRIPCION:
+			break;
+
+		case DESSUSCRIPCION:
+
+			break;
+
+		case DESCONEXION:
+			break;
+
+		case ERROR:
+			break;
+
+		case CONFIRMACION:
+			break;
+	}
+}
+
+//volvieron en forma de fichas!!
+void libero_estructura_appeared(Appeared* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_New(New* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_Catch(Catch* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_Caught(Caught* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_Get(Get* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}
+
+void libero_estructura_Localized(Localized* estructura)
+{
+	free(estructura->nombrePokemon);
+	free(estructura);
+}

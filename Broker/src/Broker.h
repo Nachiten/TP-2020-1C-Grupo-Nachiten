@@ -33,7 +33,7 @@ sem_t* semLocalized;
 sem_t* semCatch;
 sem_t* semCaught;
 sem_t* semId;
-
+sem_t* semLog;
 sem_t* semCache;
 sem_t* semParticiones;
 
@@ -77,7 +77,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 void inicializar_colas();
 void inicializar_semaforos();
 void llenar_listaColas();
-t_sub crear_sub(int32_t socket);
+t_sub* crear_sub(int32_t socket);
 t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje);
 void suscribir(t_sub* sub,t_cola* cola);
 void agregar_sub(int32_t socket, t_cola* cola);

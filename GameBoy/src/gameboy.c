@@ -455,7 +455,6 @@ int main(int cantArg, char* arg[]) {
 							listaRecibidos->siguiente = NULL;
 
 							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
-							uint32_t sizeMensaje = 0;
 							pthread_t hilo;
 							HiloGameboy estructura;
 							estructura.conexion = socket;
@@ -475,7 +474,6 @@ int main(int cantArg, char* arg[]) {
 
 							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 							sleep(cambia_a_int(arg[3]));
-
 
 							cerrar_conexion(socket);
 							socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.

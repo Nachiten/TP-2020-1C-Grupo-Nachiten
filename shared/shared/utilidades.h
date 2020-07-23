@@ -58,4 +58,13 @@ int32_t sacarIdDeMensajeLocalized(Localized* estructura);
 int32_t sacarIdDeMensajeCatch(Catch* estructura);
 int32_t sacarIdDeMensajeCaught(Caught* estructura);
 
+
+void liberar_estructuras(void* mensaje, codigo_operacion tipoMensaje);
+void libero_estructura_appeared(Appeared* estructura);
+void libero_estructura_New(New* estructura);
+void libero_estructura_Catch(Catch* estructura);
+void libero_estructura_Caught(Caught* estructura);
+void libero_estructura_Get(Get* estructura);
+void libero_estructura_Localized(Localized* estructura);
+
 #endif /* SHARED_UTILIDADES_H_ */

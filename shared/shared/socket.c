@@ -121,7 +121,7 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 				size_ya_armado = serializar_paquete_get(paquete, mensaje);
 			break;
 
-		case LOCALIZED://esto no lo puedo hacer todavia porque la estructura no esta completa
+		case LOCALIZED:
 				paquete->buffer->stream = malloc(sizeof(Localized) + 126); //+ 100 espacios para las posibles coordenadas + 25 posiciones para el nombre + el \n
 				size_ya_armado = serializar_paquete_localized(paquete, mensaje);
 			break;

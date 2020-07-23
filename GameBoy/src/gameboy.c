@@ -26,67 +26,67 @@ int main(int cantArg, char* arg[]) {
 
 
 
-	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-	resultado_de_conexion(socket, logger, "BROKER");
-
-	if(socket != -1)//si y solo si se puedo conectar
-	{
-		//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
-		Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-		Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
-
-		estructuraSuscribirse->numeroCola = 1; //cambiamos el string a int
-		estructuraDessuscribirse->numeroCola = 1; //cambiamos el string a int
-
-		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
-		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
-		listaRecibidos->siguiente = NULL;
-
-		//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
-		pthread_t hilo;
-		HiloGameboy estructura;
-		estructura.conexion = socket;
-		estructura.log = logger;
-		estructura.listaRecibidos = listaRecibidos;
-		estructura.cola = 1;
-
-		//mandamos el mensaje pidiendo suscribirse a la cola
-		mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-		//logueamos la suscripcion a la cola de mensajes
-		log_info(logger, "Suscripto a la cola de mensajes: %i", 1);
-
-		//hilo para recibir mensajes
-		pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-		pthread_detach(hilo);
-
-		//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-		sleep(1000);
-
-
-		cerrar_conexion(socket);
-		socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-
-		//mandamos el mensaje pidiendo dessuscribirse a la cola
-		mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
-
-		//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
-		free(estructuraSuscribirse);
-		free(estructuraDessuscribirse);
-
-		//liberamos la lista de IDs recibidas
-		mensajesRecibidos* auxiliar = listaRecibidos;
-		while(listaRecibidos->siguiente != NULL)
-		{
-			listaRecibidos = listaRecibidos->siguiente;
-			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-			free(auxiliar);
-			auxiliar = listaRecibidos;
-		}
-		free(auxiliar);
-	}
+//	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
+//	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
+//	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+//	resultado_de_conexion(socket, logger, "BROKER");
+//
+//	if(socket != -1)//si y solo si se puedo conectar
+//	{
+//		//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
+//		Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
+//		Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
+//
+//		estructuraSuscribirse->numeroCola = 1; //cambiamos el string a int
+//		estructuraDessuscribirse->numeroCola = 1; //cambiamos el string a int
+//
+//		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
+//		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
+//		listaRecibidos->siguiente = NULL;
+//
+//		//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
+//		pthread_t hilo;
+//		HiloGameboy estructura;
+//		estructura.conexion = socket;
+//		estructura.log = logger;
+//		estructura.listaRecibidos = listaRecibidos;
+//		estructura.cola = 1;
+//
+//		//mandamos el mensaje pidiendo suscribirse a la cola
+//		mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+//
+//		//logueamos la suscripcion a la cola de mensajes
+//		log_info(logger, "Suscripto a la cola de mensajes: %i", 1);
+//
+//		//hilo para recibir mensajes
+//		pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
+//		pthread_detach(hilo);
+//
+//		//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
+//		sleep(1000);
+//
+//
+//		cerrar_conexion(socket);
+//		socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+//
+//		//mandamos el mensaje pidiendo dessuscribirse a la cola
+//		mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+//
+//		//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
+//		free(estructuraSuscribirse);
+//		free(estructuraDessuscribirse);
+//
+//		//liberamos la lista de IDs recibidas
+//		mensajesRecibidos* auxiliar = listaRecibidos;
+//		while(listaRecibidos->siguiente != NULL)
+//		{
+//			listaRecibidos = listaRecibidos->siguiente;
+//			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+//			free(auxiliar);
+//			auxiliar = listaRecibidos;
+//		}
+//		free(auxiliar);
+//	}
 
 
 
@@ -103,10 +103,10 @@ int main(int cantArg, char* arg[]) {
 
 
 	//sacar
-	switcher = 45;
+	//switcher = 45;
 
 
-	//switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
+	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
 	switch(switcher)
 	{
@@ -520,7 +520,7 @@ int main(int cantArg, char* arg[]) {
 }
 
 void hilo_recibir_mensajes(HiloGameboy* estructura){
-	uint32_t size = 1;
+	int32_t size = 1;
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
 
@@ -539,6 +539,9 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 	while(tamanioRecibido != 0 || size != 0)
 	{
 		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
+		bytesRecibidos(tamanioRecibido);
+
+		tamanioRecibido = recv(estructura->conexion, &size, sizeof(int32_t),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
 		//tomo la ID del mensaje para saber si llego uno nuevo

@@ -97,3 +97,5 @@
 [INFO] 20:20:43:463 Broker/(17763:18076): Se suscribio a la cola New
 [INFO] 20:22:27:170 Broker/(18118:18161): Se suscribio a la cola New
 [INFO] 20:23:46:377 Broker/(18184:18186): Se suscribio a la cola New
+[INFO] 11:43:16:485 Broker/(8401:8413): llege a desuscribirme
+[INFO] 11:44:21:752 Broker/(8401:8517): llege a desuscribirme

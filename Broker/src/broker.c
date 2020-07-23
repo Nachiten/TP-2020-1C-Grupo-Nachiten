@@ -641,7 +641,7 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO) == 0)//cambiar!!!ToDo
+			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO) == 0)
 			{
 				mensaje = list_remove(cola->mensajes,i);
 				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
@@ -760,14 +760,13 @@ void borrar_datos_caught(Caught* mensaje){
 // suscriptores de ese mensaje hasta encontrar el socket adecuado y pone en visto el mensaje
 void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 	for(int i = 0; i < cola->mensajes->elements_count; i++){
-//todo revisar con lucas
-		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i);
 
 		if(mensaje->id == id_mensaje){
 			for(int j = 0; j < mensaje->subs->elements_count; j++){
 
-				t_sub* sub = malloc(sizeof(t_sub));
+				t_sub* sub;// = malloc(sizeof(t_sub));
 				sub = list_get(mensaje->subs,j);
 
 				if(sub->socket == socket){
@@ -904,15 +903,15 @@ void agregar_descarte (t_cola* cola, t_mensaje* descarte){
 		break;
 	}
 }
-//todo revisar con lucas
+
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
 void desuscribir(int32_t socket, t_cola* cola){
+	t_sub* sub;// = malloc(sizeof(t_sub));
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
-		t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 		for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
-			t_sub* sub = malloc(sizeof(t_sub));
 			sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
 			if(sub->socket == socket){
 				sub->suscripto = 0;
@@ -920,7 +919,6 @@ void desuscribir(int32_t socket, t_cola* cola){
 		}
 	}
 	for(int j = 0; j < cola->subs->elements_count; j++ ){ //avanza hasta el final de la cola subs
-		t_sub* sub = malloc(sizeof(t_sub));
 		sub = list_get(cola->subs,j); // busca el j elemento de la lista subs
 		if(sub->socket == socket){
 			sub->suscripto = 0;
@@ -952,7 +950,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 			sem_wait(semNew);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
-			agregar_mensaje_new(mensajeNew,sizeAAllocar);//toDo ver que hace este SIZE
+			agregar_mensaje_new(mensajeNew,sizeAAllocar);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaNew);
 			sem_post(semNew);

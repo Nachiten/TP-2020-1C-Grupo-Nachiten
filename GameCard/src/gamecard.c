@@ -1169,101 +1169,6 @@ int main(void) {
 	 */
 
 
-
-//	mensajeNew(bulbasaur, 1,16,4, 1);
-//	mensajeNew(bulbasaur, 1,17,5, 1);
-//	mensajeNew(bulbasaur, 1,18,6, 1);
-//	mensajeNew(bulbasaur, 1,19,3, 1);
-//	mensajeNew(bulbasaur, 1,20,4, 1);
-//	mensajeNew(bulbasaur, 1,21,5, 1);
-//	mensajeNew(bulbasaur, 1,22,6, 1);
-//	mensajeNew(bulbasaur, 1,23,3, 1);
-//	mensajeNew(bulbasaur, 1,24,1, 1);
-
-
-
-//	mensajeNew(jorge, 1,15,3, 1);
-//	mensajeNew(jorge, 1,16,4, 1);
-//	mensajeNew(jorge, 1,17,5, 1);
-//	mensajeNew(jorge, 1,18,6, 1);
-//	mensajeNew(jorge, 1,19,3, 1);
-//	mensajeNew(jorge, 1,20,4, 1);
-//	mensajeNew(jorge, 1,21,5, 1);
-//	mensajeNew(jorge, 1,22,6, 1);
-//	mensajeNew(jorge, 1,23,3, 1);
-//	mensajeNew(jorge, 1,24,1, 1);
-//
-//	mensajeCatch(pikachu, 1, 24, 1);
-//
-//	mensajeNew(jorge, 1,15,3, 1);
-//	mensajeNew(jorge, 1,16,4, 1);
-//	mensajeNew(jorge, 1,17,5, 1);
-//	mensajeNew(jorge, 1,18,6, 1);
-//	mensajeNew(jorge, 1,19,3, 1);
-//	mensajeNew(jorge, 1,20,4, 1);
-//	mensajeNew(jorge, 1,21,5, 1);
-//	mensajeNew(jorge, 1,22,6, 1);
-//	mensajeNew(jorge, 1,23,3, 1);
-//	mensajeNew(jorge, 1,24,1, 1);
-//
-
-
-
-
-
-	//printf("Cosa: %i", strlen(""));
-
-
-//
-//	mensajeGet(bulbasaur, 1);
-
-//	char* lineasLeidas = "33-4=1\n35-7=1\n30-10=1\n10-14=1\n"; // Linea 1 = 35-7=7
-//
-//	printf("Lineas Antes:\n%s\n", lineasLeidas);
-//
-//	char* lineasDespues1 = restarALineaPokemon(lineasLeidas, 33, 4);
-//
-//	printf("Lineas Despues1:\n%s\n", lineasDespues1);
-//
-//	char* lineasDespues2 = restarALineaPokemon(lineasDespues1, 35, 7);
-//
-//	printf("Lineas Despues2:\n%s\n", lineasDespues2);
-//
-//	char* lineasDespues3 = restarALineaPokemon(lineasDespues2, 30, 10);
-//
-//	printf("Lineas Despues3:\n%s\n", lineasDespues3);
-//
-//	char* lineasDespues4 = restarALineaPokemon(lineasDespues3, 10, 14);
-//
-//	printf("Lineas Despues4:\n%s\n", lineasDespues4);
-
-//	int posX1 = 3;
-//	int posX2 = 4;
-//
-//	int posY1 = 5;
-//	int posY2 = 10;
-//
-//	int cantidadCoords = 2;
-//
-//	int tamanioArray = cantidadCoords * 2;
-//
-//	Localized* my_array = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pikachu) + 1);
-//
-//	my_array->cantPosciciones = cantidadCoords;
-//
-//	my_array->coords[0] = posX1;
-//	my_array->coords[1] = posX2;
-//	my_array->coords[2] = posY1;
-//	my_array->coords[3] = posY2;
-//
-//	my_array->largoNombre = strlen(pikachu);
-//
-//	my_array->nombrePokemon = pikachu;
-
-
-	//mensajeCatch(jorge, 1, 15);
-
-
 	// Hilos de prueba
 //	pthread_t hiloTesting1;
 //	pthread_t hiloTesting2;
@@ -1299,11 +1204,6 @@ int main(void) {
 //	leerSemaforosLista();
 
 
-//	char* bloque1 = "1";
-//
-//	char* bloqueLeido = leerContenidoDeUnBloque(pathBloques, bloque1, 8);
-//
-//	printf("Bloque leido: %s", bloqueLeido);
 
 	// ****************************************************************
 
@@ -1322,7 +1222,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-//    pthread_join(hiloBroker, NULL);
+//  pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

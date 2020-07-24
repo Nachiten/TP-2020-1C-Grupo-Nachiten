@@ -33,7 +33,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		char* lineasLeidas = leerContenidoBloquesPokemon(bloques, cantidadBytesALeer);
 
 		// Lineas incluyendo la linea nueva
-		char* lineasNuevasMasPokemon;
+		char* lineasNuevasMasPokemon = NULL;
 
 		// Cantidad de bloques finales luego de agregar la linea
 		int cantidadBloquesRequeridos;
@@ -114,11 +114,15 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 		list_destroy(listaBloques);
 
+		if (lineasNuevasMasPokemon != NULL) free(lineasNuevasMasPokemon);
+
 
 	} else {
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 		log_info(logger, "NEW | Escribiendo nueva linea %i-%i=%i en pokemon vacio %s", posX, posY, cantidad, pokemon);
 	}
+
+
 
 	//sleep(TIEM_REIN_OPERACION);
 
@@ -210,6 +214,8 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 		}
 
 		cerrarArchivoPokemon(pokemon);
+
+		free(lineasLeidas);
 	} else {
 		//printf("CATCH | No existe el pokemon buscado\n");
 		log_warning(logger, "CATCH | El pokemon %s no existe", pokemon);

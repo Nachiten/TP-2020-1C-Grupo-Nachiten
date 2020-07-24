@@ -303,6 +303,7 @@ char** leerBloquesPokemon(char* pokemon){
 	char** arrayBloques = config_get_array_value(datosMetadata, "BLOCKS");
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 
 	return arrayBloques;
 }
@@ -332,6 +333,7 @@ int leerSizePokemon(char* pokemon){
 	int valorSize = config_get_int_value(datosMetadata, "SIZE");
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 
 	return valorSize;
 }
@@ -360,6 +362,7 @@ void fijarBloquesA(char* pokemon, t_list* listaBloques){
 	config_save(datosMetadata);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 }
 
 void fijarSizeA(char* pokemon, int sizeEnBytes){
@@ -387,6 +390,7 @@ void fijarSizeA(char* pokemon, int sizeEnBytes){
 	config_save(datosMetadata);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 }
 
 // Generar un array de la forma [1,2,3,4] con la lista de bloques
@@ -598,10 +602,8 @@ void escribirDatoEnBloque(char* dato, int numBloque){
 	fwrite(dato, strlen(dato) + 1, 1, bloque);
 
 	fclose(bloque);
-
-	//printf("Path bloque: %s", pathBloque);
-
-
+	free(nombreArchivo);
+	free(pathBloque);
 }
 
 
@@ -872,6 +874,7 @@ void cerrarArchivoPokemon(char* pokemon){
 	signalSemaforoPokemon(pokemon);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 
 }
 

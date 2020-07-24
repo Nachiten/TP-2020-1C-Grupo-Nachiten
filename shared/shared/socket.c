@@ -66,7 +66,8 @@ void resultado_de_conexion(int32_t socket, t_log* logger, char* modulo)
 {
 	if(socket == -1)
 	{
-	log_warning(logger, "Conexión fallida con socket de %s", modulo);
+		printf("Conexión fallida con socket de %s!!!", modulo);
+	//log_warning(logger, "Conexión fallida con socket de %s", modulo);
 	}
 	else
 	{

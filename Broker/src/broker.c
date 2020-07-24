@@ -40,16 +40,19 @@ int main(void) {
 
 	// Leer path del log
 	char* pathLogs = config_get_string_value(config,"LOG_FILE");
+	//leer path del dump de la cache
+	char* pathDump = config_get_string_value(config,"RUTA_DUMP_FILE");
 
-	if (pathLogs == NULL){
+	if (pathLogs == NULL || pathDump == NULL){
 		printf("No se pudo leer el path del log de la config\n");
 		return EXIT_FAILURE;
 	} else {
 		printf("El path del log fue leido correctamente\n");
 	}
 
-	//Dejo cargado un logger para loguear los eventos.
+	//Dejo cargado un logger para loguear los eventos y otro para el Dump de la CACHE.
 	logger = cargarUnLog(pathLogs, "Broker");
+	dumpCache = cargarUnLog(pathDump, "CACHE");
 
 	IP_BROKER = config_get_string_value(config,"IP_BROKER");
 
@@ -145,6 +148,7 @@ int main(void) {
 	pokemonAppeared->corrID = 4;
 
 	Get* pokemonGet = malloc(sizeof(Get));
+	pokemonGet->nombrePokemon = malloc(11);
 	pokemonGet->nombrePokemon = "Charmander";
 	pokemonGet->largoNombre = strlen(pokemonGet->nombrePokemon);
 	pokemonGet->ID = 11;
@@ -219,23 +223,23 @@ int main(void) {
 	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
 
 	//pesa 24
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 21
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 15
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//ESTE ES LOCALIZED
 	//pesa 19
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 29
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 14
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//para pruebas de borrado
 	//lista_particiones* particion0 = hoja_de_particiones;
@@ -367,8 +371,6 @@ void inicializar_semaforos(){
 	sem_init(semLog, 0, 1);
 	sem_init(semCache, 0, 1);
 	sem_init(semParticiones, 0, 1);
-
-
 }
 
 int32_t crear_id(){
@@ -951,7 +953,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semNew);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeNew, cod_op);
 			agregar_mensaje_new(mensajeNew,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeNew, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaNew);
 			sem_post(semNew);
 			break;
@@ -961,7 +963,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semAppeared);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeAppeared, cod_op);
 			agregar_mensaje_appeared(mensajeAppeared,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeAppeared, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaAppeared);
 			sem_post(semAppeared);
 			break;
@@ -971,7 +973,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semGet);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeGet, cod_op);
 			agregar_mensaje_get(mensajeGet,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeGet, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaGet);
 			sem_post(semGet);
 			break;
@@ -981,7 +983,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semLocalized);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeLocalized, cod_op);
 			agregar_mensaje_localized(mensajeLocalized,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeLocalized, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaLocalized);
 			sem_post(semLocalized);
 			break;
@@ -991,7 +993,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
 			agregar_mensaje_catch(mensajeCatch,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
 			puts("termine mi case Catch");
@@ -1002,7 +1004,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			sem_wait(semCaught);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCaught, cod_op);
 			agregar_mensaje_caught(mensajeCaught,sizeAAllocar);
-			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCaught, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 			mandar_mensajes_broker(colaCaught);
 			sem_post(semCaught);
 			break;
@@ -1211,7 +1213,10 @@ void mostrameMemoria(int32_t senial)
 {
 	if(senial == SIGUSR1 || senial == SIGUSR2)
 	{
-		revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
+		sem_wait(semLog);
+		log_info(logger, "Dump de la Cache solicitada\n");
+		sem_post(semLog);
+		revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM, dumpCache);
 	}
 	else
 	{

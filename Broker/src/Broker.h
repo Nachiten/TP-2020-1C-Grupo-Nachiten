@@ -25,6 +25,7 @@
 //#include<commons/collections/list.h>
 
 t_log* logger;
+t_log* dumpCache;
 
 sem_t* semNew;
 sem_t* semAppeared;
@@ -36,6 +37,8 @@ sem_t* semId;
 sem_t* semLog;
 sem_t* semCache;
 sem_t* semParticiones;
+sem_t* semNumeroVictima;
+sem_t* semParticionesEliminadas;
 
 t_cola* colaDescartesNew;
 t_cola* colaDescartesAppeared;

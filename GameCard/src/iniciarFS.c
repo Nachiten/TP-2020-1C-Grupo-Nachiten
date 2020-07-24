@@ -125,7 +125,7 @@ t_list* escanearPokemonsExistenes(){
 	while ((archivoLeido = readdir(dr)) != NULL)
 	{
 		// Nombre del archivo leido dentro del directorio
-		char* punteroANombre = &(archivoLeido->d_name);
+		char* punteroANombre = archivoLeido->d_name;
 
 		// Si el archivo es . .. o Metadata.bin es ignorado
 		if (strcmp(punteroANombre, ".") == 0 || strcmp(punteroANombre, "..") == 0 || strcmp(punteroANombre, "Metadata.bin") == 0){

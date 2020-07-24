@@ -21,19 +21,6 @@ void destroy_mutex(pthread_mutex_t* mutex){
 }
 
 ///////////////////-HILOS-/////////////////////
-void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
-    pthread_create(hilo_recibir_mensajes, NULL, recepcion_mensajes, NULL);
-}
-
-void llenar_parametros_reconexion(parametros_reconexion* parametros, int tiempo, int* flag){
-    parametros->tiempo_reconexion = tiempo;
-    parametros->flag_conexion_broker = flag;
-}
-
-void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){
-    pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
-}
-
 void activar_hilo_administrador_cola_ready(pthread_t* hilo_cola_ready){
     pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
 }
@@ -44,6 +31,10 @@ void activar_hilo_administrador_cola_caught(pthread_t* hilo_cola_caught){
 
 void activar_hilo_circulo_deadlock(parametros_deadlock* parametros, pthread_t* hilo){
     pthread_create(hilo, NULL, ciclo_deadlock, parametros);
+}
+
+void activar_hilo(pthread_t* hilo, void* (*funcion)(void*), void* parametros){
+    pthread_create(hilo, NULL, funcion, parametros);
 }
 
 void join_hilo(pthread_t* hilo){
@@ -60,30 +51,135 @@ void join_hilos(pthread_t* hilos, int cantidad){
     printf("\n");
 }
 
+///////////////////-EMISION DE MENSAJES-/////////////////////
+void preparar_mensajes_get(elemento_objetivo* objetivo, int tamano){
+    int i;
+    for(i=0;i<tamano;i++){
+       armar_preparar_mensaje_get(objetivo[i].pokemon, i); 
+    }
+}
+
+void armar_preparar_mensaje_get(char* pokemon, int pos_en_objetivo_global){
+    Get mensaje = armar_mensaje_get(pokemon);
+    agregar_mensaje_get_a_cola_mensajes_broker(mensaje, pos_en_objetivo_global);
+}
+
+Get armar_mensaje_get(char* unPokemon){
+    Get mensaje;
+    mensaje.pokemon = unPokemon;
+    return mensaje;
+}
+
+void armar_enviar_registrar_mensaje_catch(char* pokemon, int pos_x, int pos_y, int posicion){
+    Catch mensaje = armar_mensaje_catch(pokemon, pos_x, pos_y);
+    int idMensaje = enviar_mensaje_catch(&mensaje);
+    registrar_id_mensaje_catch(idMensaje, posicion);
+}
+
+Catch armar_mensaje_catch(char* pokemon, int pos_x, int pos_y){
+    Catch mensaje;
+    mensaje.pokemon = pokemon;
+    mensaje.pos_x = pos_x;
+    mensaje.pos_y = pos_y;
+    return mensaje;
+}
+/*
+int enviar_mensaje_catch(Catch* mensaje){
+    int respuesta = emitir_mensaje_a_broker(mensaje, CATCH);
+    return respuesta;
+}
+*/
 //////////////////-OBJETIVO ACTUAL-/////////////////////
-int esta_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetivos){
-    int respuesta = esta_en_char(pokemon, objetivo, cantidad_objetivos);
-    return respuesta;
+int cantidad_de_veces_en_objetivo_actual(char* pokemon, elemento_objetivo* objetivo_global, int tamano_objetivo, int* pos_pokemon_en_objetivo){
+    int i, cantidad, pos;
+    cantidad = 0;
+    pos = buscar_pos_en_objetivo(pokemon, objetivo_global, tamano_objetivo);
+    if(pos != -1){cantidad = cantidad_repeticiones_de(objetivo_global[i]);}
+    *pos_pokemon_en_objetivo = pos;
+    return cantidad;
 }
 
-int cantidad_de_veces_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetivos){
-    int respuesta = se_encuentra_en_char(pokemon, objetivo, cantidad_objetivos);
-    return respuesta;
+int cantidad_repeticiones_de(elemento_objetivo pokemon_objetivo){
+    return objetivo[i].repeticiones;
 }
 
-//ver si se puede pasar objetivo como doble puntero y no como triple(cuando se implementen las conexiones con otros modulos)
-int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
-    int i = 0;
-    int corte = 0;
-    while(i<tamano && corte == 0){
-	if((*objetivo)[i] != NULL && strcmp((*objetivo)[i], pokemon) == 0){
-            (*objetivo)[i] = NULL;
+int eliminar_de_objetivo_global(char* pokemon, elemento_objetivo* objetivo_global, int tamano_objetivo){
+    int pos, corte;
+    corte = 0;
+    pos = buscar_pos_en_objetivo(pokemon, objetivo_global, tamano_objetivo);
+    if(pos != -1){
+        if(cantidad_repeticiones_de(objetivo_global[pos]) > 0){
             corte = 1;
+            decrementar_repeticiones(&objetivo_global[pos]);
+            if(cantidad_repeticiones_de(objetivo_global[pos]) > 0){
+                if(pokemon_esta_por_eliminarse(objetivo_global[pos]) == 1){sacar_de_memoria(&objetivo_global[pos]);}
+            }
+            else{
+                eliminar_elemento_lista_ids(objetivo_global[pos].id_mensaje);
+                eliminar_pokemon_de_mensajes_get(objetivo_global[pos].pokemon);
+            }
+        }
+        else{printf("Error team ya atrapo la cantidad necesaria de pokemon %s\n", pokemon);}
+    }
+    else{printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues
+    return corte;
+}
+
+void decrementar_repeticiones(elemento_objetivo* pokemon_objetivo){
+    pokemon_objetivo->repeticiones-=1;
+}
+
+void guardar_en_memoria(elemento_objetivo* pokemon_objetivo){
+    pokemon_objetivo->estado_en_memoria = 1;
+}
+
+void sacar_de_memoria(elemento_objetivo* pokemon_objetivo){
+    pokemon_objetivo->estado_en_memoria = 0;
+}
+
+void poner_a_punto_de_eliminacion_de_memoria(elemento_objetivo* pokemon_objetivo){
+    pokemon_objetivo->estado_en_memoria = 2;
+}
+
+void esta_en_memoria(elemento_objetivo pokemon_objetivo){
+    int respuesta = 1;
+    if(pokemon_objetivo.estado_en_memoria == 0){respuesta = 0;}
+    return respuesta;
+}
+
+int pokemon_esta_por_eliminarse(elemento_objetivo pokemon_objetivo){
+    int respuesta = 0;
+    if(pokemon_objetivo.estado_en_memoria == 2){respuesta = 1;}
+    return respuesta;
+}
+
+int buscar_pos_en_objetivo(char* pokemon, elemento_objetivo* objetivo, int tamano_objetivo){
+    int pos = 0:
+    while(pos<tamano_objetivo && son_iguales_char(pokemon, objetivo[pos].pokemon) == 0){pos++;}
+    if(pos == tamano_objetivo){
+        pos = -1;
+        printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);
+    }
+    return pos;
+}
+
+void verificar_cantidad_pokemon_a_partir_de_en(char* pokemon, int pos_inicial, char** objetivo, int tamano){
+    if(sigue_habiendo_pokemon_a_partir_de_en(pokemon, pos_inicial, objetivo, tamano) == 0){
+        eliminar_id_de_pokemon(pokemon);
+    }
+}
+
+int sigue_habiendo_pokemon_a_partir_de_en(char* pokemon, int pos_inicial, char** objetivo, int tamano){
+    int i, respuesta;
+    respuesta = 0;
+    i = pos_inicial;
+    while(i<tamano && respuesta == 0){
+        if(objetivo[i] != NULL && son_iguales_char(objetivo[i], pokemon) == 1){
+            respuesta = 1;
 	}
 	i++;
     }
-    if(corte == 0){printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues
-    return corte;
+    return respuesta;
 }
 
 //////////////////-ENTRENADORES-/////////////////////
@@ -193,7 +289,7 @@ int pokemon_se_repitio_antes_en_objetivo(char* pokemon, char** objetivo, int pos
 
 int buscar_y_reemplazar_por_en_actuales_de(char* pokemon_a_buscar, char* pokemon_reemplazo, d_entrenador* entrenador){
     int i, actuales;
-    i = 0;
+    i = 0; 
     cant_objetivos_y_actuales_de(*entrenador, NULL, &actuales);
     while(i<actuales && strcmp(entrenador->pokemones_actuales[i], pokemon_a_buscar) != 0){i++;}
     if(i<actuales){entrenador->pokemones_actuales[i] = pokemon_reemplazo;}
@@ -203,15 +299,15 @@ int buscar_y_reemplazar_por_en_actuales_de(char* pokemon_a_buscar, char* pokemon
 
 void actualizar_estado_entrenador(d_entrenador* entrenador, int tipo_control){
     switch(tipo_control){
-        case 0:
+        case 0: 
             if(esta_en_el_limite(*entrenador) == 1 && esta_terminado(*entrenador) == 1){
                 cambiar_estado_a(entrenador, EXIT);
             }
             break;
-        case 1:
+        case 1: 
             if(esta_en_el_limite(*entrenador) == 1){
                 if(esta_terminado(*entrenador) == 1){
-                   cambiar_estado_a(entrenador, EXIT);
+                   cambiar_estado_a(entrenador, EXIT); 
                 }
                 else{bloquear(entrenador, EN_ESPERA);}
             }
@@ -220,10 +316,20 @@ void actualizar_estado_entrenador(d_entrenador* entrenador, int tipo_control){
 
 ///////////////////-COLA MENSAJES-/////////////////////
 //ver despues si se le puede pasar a esta funcon mensaje como copia de una estructura y no como un puntero a una estructura
-int filtrar_mensaje(mensaje_server* mensaje, char** objetivo_global, int tamano){
-    int respuesta = esta_en_objetivo_actual(mensaje->pokemon, objetivo_global, tamano);
+int filtrar_mensaje(void* mensaje, elemento_objetivo* objetivo_global, int tamano_objetivo){
+    int respuesta, pos;
+    respuesta = 0;
+    char* pokemon = pokemon_de_mensaje(mensaje);
+    pos = buscar_pos_en_objetivo(pokemon, objetivo_global, tamano_objetivo);
+    if(pos != -1 && esta_en_memoria(objetivo_global[pos]) == 0){
+        guardar_en_memoria(&objetivo_global[pos]);      
+        respuesta = 1;
+    }
     return respuesta;
 }
+
+char* pokemon_de_mensaje(Appeared* mensaje){return mensaje->pokemon;}
+char* pokemon_de_mensaje(Localized* mensaje){return mensaje->pokemon;}
 
 ///////////////////-VECTORES CHAR-/////////////////////
 int esta_en_char(char* pokemon, char** vector, int tamano){
@@ -235,18 +341,18 @@ int esta_en_char(char* pokemon, char** vector, int tamano){
             corte = 1;
         }
 	i++;
-    }
+    }    
     return corte;
 }
 
 int se_encuentra_en_char(char* pokemon, char** vector, int tamano){
     int i, resultado;
-    resultado = 0;
+    resultado = 0;    
     for(i=0;i<tamano;i++){
 	if(vector[i] != NULL && strcmp(vector[i], pokemon) == 0){
             resultado++;
         }
-    }
+    }    
     return resultado;
 }
 
@@ -262,13 +368,13 @@ int esta_en_null(char* pokemon, char** vector){
 int se_encuentra_en_null(char* pokemon, char** vector){
     int i, resultado;
     i = 0;
-    resultado = 0;
+    resultado = 0;    
     while(vector[i] != NULL){
 	if(strcmp(vector[i], pokemon) == 0){
             resultado++;
         }
 	i++;
-    }
+    }    
     return resultado;
 }
 
@@ -276,19 +382,19 @@ int esta_en_char_lleno(char* pokemon, char** vector, int tamano){
     int i, corte;
     i = 0;
     corte = 0;
-    while(i<tamano && strcmp(vector[i], pokemon) != 0){i++;}
+    while(i<tamano && son_iguales_char(vector[i], pokemon) == 0){i++;} 
     if(i<tamano){corte = 1;}
     return corte;
 }
 
 int se_encuentra_en_char_lleno(char* pokemon, char** vector, int tamano){
     int i, resultado;
-    resultado = 0;
+    resultado = 0;    
     for(i=0;i<tamano;i++){
-	if(strcmp(vector[i], pokemon) == 0){
+	if(son_iguales_char(vector[i], pokemon) == 1){
             resultado++;
         }
-    }
+    }    
     return resultado;
 }
 

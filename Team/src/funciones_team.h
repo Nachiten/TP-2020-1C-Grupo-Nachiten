@@ -21,7 +21,7 @@ void join_hilo(pthread_t*);
 void join_hilos(pthread_t*, int);
 int esta_en_objetivo_actual(char*, char**, int);
 int cantidad_de_veces_en_objetivo_actual(char*, char**, int);
-int eliminar_de_objetivo_actual(char*, char***, int);
+int eliminar_de_objetivo_actual(char*, char**, int);
 void cambiar_estado_a(d_entrenador*, int);
 void bloquear(d_entrenador*, int);
 int cumple_condicion_deadlock(d_entrenador);
@@ -58,5 +58,4 @@ int cant_en_espera(d_entrenador*, int);
 void llegar_por_eje(d_entrenador*, int, int);
 void llegar_por_eje_con_quantum(d_entrenador*, int, int, int, int*, int);
 void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador*, int, int, int);
-
 #endif /* SRC_FUNCIONES_TEAM_H_ */

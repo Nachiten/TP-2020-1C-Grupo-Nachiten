@@ -10,6 +10,15 @@
 #include <string.h>
 #include <windows.h>
 #include <semaphore.h>
+#include "estructuras.h"    
+
+typedef struct{
+	int numeroCola;
+}Suscripcion;
+
+typedef struct{
+	int numeroCola;
+}Dessuscripcion;
 
 typedef struct{
     int posicion[2];
@@ -19,10 +28,16 @@ typedef struct{
     char** pokemones_actuales;
 } d_entrenador;
 
+//cambiar las funciones que usan este tipo de dato y reemplazarlo por el Caught que se tiene en estructuras.h
 typedef struct{
 	int resultado;
-        int num_envio;
+        int num_envio;//OJO el valor -1 esta reservado para mensaje de comportamiento default, en ese caso resultado es la posicion del entrenador
 }mensaje_caught;
+
+typedef struct{
+    int posicion;//este valor es un dato_extra que eventualmente podria ser un void*
+    void* mensaje;
+}mensaje_broker;
 
 typedef struct{
     char* pokemon;
@@ -56,14 +71,16 @@ typedef struct{
 } parametros_deadlock;
 
 typedef struct{
-    int socket;
-    int tiempo_reconexion;
-} parametros_recepcion;
+    void* mensaje_a_enviar;
+    int codigo;
+} parametros_emisor;
 
 typedef struct{
-    int* flag_conexion_broker;
-    int tiempo_reconexion;
-} parametros_reconexion;
+    char* pokemon;
+    int repeticiones;
+    int estado_en_memoria;
+    int id_mensaje;
+} elemento_objetivo;
 
 enum{NEW, READY, EXEC, BLOCKED, EXIT};
 enum{APPEARED, GET, LOCALIZED, CATCH, CAUGHT};
@@ -77,6 +94,8 @@ void destruir_sem_entrenadores(int);
 void inicializar_hilos_entrenadores(d_entrenador*, int, pthread_t*);
 void* ciclo_vida_entrenador(parametros_entrenador*);
 void* administrar_cola_ready(void*);
+void procesar_mensaje_server(void*);
+void procesar_mensaje_caught(Caught*);
 int comparar_estimaciones(int);
 void libero_exec_me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
 void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
@@ -90,4 +109,3 @@ void moverse_fifo(d_entrenador*, int, int, int);
 void moverse_rr(d_entrenador*, int, int, int);
 void moverse_sjf_sin_d(d_entrenador*, int, int, int);
 void moverse_sjf_con_d(d_entrenador*, int, int, int);
-

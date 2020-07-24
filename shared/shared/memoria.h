@@ -16,6 +16,7 @@
 #include<string.h>
 #include"estructuras.h"
 #include"utilidades.h"
+#include<commons/memory.h>
 #include <time.h>	//para el dump de la fecha y hora
 #include <semaphore.h> // para los semaforos
 
@@ -31,7 +32,7 @@ lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanio
 lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog);//selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Buddy_System(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //selecciona particion por BS (le voy a decir bullshit)
 void matar_lista_particiones(lista_particiones* laLista); //usar cuando se quiere cerrar el programa
-void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria, t_log* dumpCache); //para fines de control, muestrar por pantalla info de las particiones y espacio libre en memoria
+void revision_lista_particiones(void* CACHE, lista_particiones* laLista, uint32_t tamanioMemoria, t_log* dumpCache); //para fines de control, muestrar por pantalla info de las particiones y espacio libre en memoria
 //se fija si en la ultima particion de la memoria hay espacio para meter los datos o no.
 uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size);
 lista_particiones* comparador_de_candidatas(particionesCandidatas* listaDeCandidatas); //compara particiones candidatas a ser elegidas para algoritmo Best Fit
@@ -40,12 +41,12 @@ void matar_lista_particiones_candidatas(particionesCandidatas* listaDeCandidatas
 //para agregar cosas al CACHE
 
 void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);//poner el mensaje en la particion elegida
-void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
-void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
-void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
-void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
-void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
-void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima);
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje);
 
 void verificacionPosicion(uint32_t limiteSuperiorDeParticion, uint32_t posicionSuperiorUltimoDato); //para ver como quedó la información luego de meterla en la particion.
 //para llamar a la seleccion de particion y la escritura de la misma

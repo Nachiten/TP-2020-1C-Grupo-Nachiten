@@ -478,7 +478,7 @@ void matar_lista_particiones_candidatas(particionesCandidatas* listaDeCandidatas
 	free(listaDeCandidatas); //borro la primera candidata
 }
 
-void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemoria, t_log* dumpCache)
+void revision_lista_particiones(void* CACHE, lista_particiones* laLista, uint32_t tamanioMemoria, t_log* dumpCache)
 {
 	lista_particiones* auxiliar = laLista;
 	uint32_t espacioLibre = 0;
@@ -505,10 +505,13 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 			log_info(dumpCache, "La particion está en uso.");
 			espacioOcupado += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion ocupada, suma el espacio en uso
 		}
-		log_info(dumpCache, "Número de víctima: %u.", auxiliar->numero_de_victima);
 		log_info(dumpCache, "Límite inferior de la partición: %u.", auxiliar->laParticion.limiteInferior);
 		log_info(dumpCache, "Límite superior de la partición: %u.", auxiliar->laParticion.limiteSuperior);
+		//log_info(dumpCache, "%s", mem_hexstring(CACHE, auxiliar->laParticion.limiteSuperior));
+		log_info(dumpCache, "Posiciones de memoria: de %p hasta %p.", (CACHE + auxiliar->laParticion.limiteInferior), (CACHE + auxiliar->laParticion.limiteSuperior));
 		log_info(dumpCache, "Tamaño: %u bytes.", auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior);
+		log_info(dumpCache, "Número de víctima: %u.", auxiliar->numero_de_victima);
+		log_info(dumpCache, "Cola a la que pertenece el mensaje: %i.", auxiliar->cola);
 		if(auxiliar->ID_MENSAJE_GUARDADO != -1)
 		{
 			log_info(dumpCache, "En esta partición se guardan los datos del mensaje ID: %i.", auxiliar->ID_MENSAJE_GUARDADO);
@@ -959,27 +962,27 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 	switch(tipoMensaje)
 	{
 			case NEW:
-				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case APPEARED:
-				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case GET:
-				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case LOCALIZED:
-				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case CATCH:
-				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case CAUGHT:
-				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
+				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -1003,7 +1006,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 
 }
 
-void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1040,10 +1043,13 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1076,10 +1082,13 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1104,10 +1113,13 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t iterador = 0;
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
@@ -1145,10 +1157,13 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1181,10 +1196,13 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
 
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
+
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima, codigo_operacion tipoMensaje)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1212,6 +1230,9 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 
 	//me guardo a QUE ID pertenecen estos datos
 	particionElegida->ID_MENSAJE_GUARDADO = estructura->ID;
+
+	//me guardo en que cola se encuentra este mensaje
+	particionElegida->cola = tipoMensaje;
 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }

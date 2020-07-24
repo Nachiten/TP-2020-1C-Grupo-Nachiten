@@ -359,6 +359,8 @@ void inicializar_semaforos(){
 	semLog = malloc(sizeof(sem_t));
 	semCache = malloc(sizeof(sem_t));
 	semParticiones = malloc(sizeof(sem_t));
+	semNumeroVictima = malloc(sizeof(sem_t));
+	semParticionesEliminadas = malloc(sizeof(sem_t));
 
 	sem_init(semNew, 0, 1);
 	sem_init(semAppeared, 0, 1);
@@ -370,6 +372,8 @@ void inicializar_semaforos(){
 	sem_init(semLog, 0, 1);
 	sem_init(semCache, 0, 1);
 	sem_init(semParticiones, 0, 1);
+	sem_init(semNumeroVictima, 0, 1);
+	sem_init(semParticionesEliminadas, 0, 1);
 }
 
 int32_t crear_id(){
@@ -642,7 +646,7 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO) == 0)
+			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima) == 0)
 			{
 				mensaje = list_remove(cola->mensajes,i);
 				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
@@ -1215,7 +1219,7 @@ void mostrameMemoria(int32_t senial)
 		sem_wait(semLog);
 		log_info(logger, "Dump de la Cache solicitada\n");
 		sem_post(semLog);
-		revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM, dumpCache);
+		revision_lista_particiones(CACHE, hoja_de_particiones, TAMANIO_MEM, dumpCache);
 	}
 	else
 	{

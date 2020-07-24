@@ -1066,7 +1066,7 @@ int main(void) {
 
 	// Inicializacion del logger... todavia no es necesario
 
-	t_log* logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	// puntoMontaje/Blocks
 	pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -1115,22 +1115,58 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-//	mensajeNew(bulbasaur, 1, 15, 1, 1);
-//
-//	printf("Sleep antes de catch\n");
-//	//sleep(10);
-//
-//	mensajeCatch(bulbasaur, 1, 15, 1);
-//
+	mensajeNew(fruta, 10, 5, 20, 1);
+
+	mensajeNew(bulbasaur, 1, 15, 1, 1);
+
+	mensajeCatch(bulbasaur, 1, 15, 1);
+
 	mensajeNew(pikachu, 1, 15, 1, 1);
-//
-//	mensajeCatch(pikachu, 1, 15, 1);
-//
-//	printearBitArray();
-//
-//	mensajeGet(pikachu, 1);
-//
-//	mensajeCatch(jorge, 1, 24, 1);
+
+	mensajeNew(fruta, 10, 5, 20, 1);
+
+	mensajeCatch(pikachu, 1, 15, 1);
+
+	printearBitArray();
+
+	mensajeNew(jorge, 1, 20, 3, 1);
+
+	mensajeGet(pikachu, 1);
+
+	mensajeCatch(jorge, 1, 24, 1);
+
+	mensajeNew(fruta, 23, 10, 1, 1);
+
+	mensajeNew(jorge, 1, 30, 5, 1);
+
+	mensajeCatch(jorge, 1, 20, 1);
+
+	mensajeNew(fruta, 25, 15, 25, 1);
+
+	mensajeCatch(fruta, 23, 10, 1);
+
+	mensajeCatch(pikachu, 1, 15, 1);
+
+	mensajeNew(jorge, 1, 40, 7, 1);
+
+	mensajeNew(fruta, 35, 20, 40, 1);
+
+	mensajeCatch(jorge, 1, 20, 1);
+
+	mensajeNew(pikachu, 1, 20, 3, 1);
+
+	mensajeCatch(jorge, 1, 20, 1);
+
+
+	/*Expected:
+	 * Bulbasaur: -> Vacio
+	 * Pikachu -> 1-20=3
+	 * Jorge -> 1-30=5
+	 * 			1-40=7
+	 * Fruta -> 10-5=40
+	 * 			25-15=25
+	 * 			35-20=40
+	 */
 
 
 
@@ -1272,11 +1308,11 @@ int main(void) {
 	// ****************************************************************
 
 	// Levanto hilo para escuchar broker
-	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
-
-	pthread_t hiloBroker;
-
-	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+//	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+//
+//	pthread_t hiloBroker;
+//
+//	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
@@ -1286,7 +1322,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-    pthread_join(hiloBroker, NULL);
+//    pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

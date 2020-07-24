@@ -24,7 +24,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 	abrirArchivoPokemon(pokemon);
 
 	if (hayAlgunBloque(pathFiles, pokemon)){
-		printf("NEW | Ya habia bloques, leyendo...\n");
+		//printf("NEW | Ya habia bloques, leyendo...\n");
 
 		char** bloques = leerBloquesPokemon(pokemon);
 
@@ -48,15 +48,19 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		// La linea buscada no es encontrada dentro del archivo, se debe agregar una linea nueva
 		if (encontrarCoords(posX, posY, lineasLeidas) == -1){
 
-			printf("NEW | La linea NO fue encontrada... pegando al final\n");
+			//printf("NEW | La linea NO fue encontrada... pegando al final\n");
 
 			lineasNuevasMasPokemon = agregarNuevoPokemonALineas(posX, posY, cantidad, lineasLeidas);
+
+			log_info(logger, "NEW | Se agregara la linea %i-%i=%i al pokemon %s", posX, posY, cantidad, pokemon);
 
 		} else {
 			printf("NEW | La linea fue encontrada, se la debe modificar... [No hecho todavia]");
 			//printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
 			lineasNuevasMasPokemon = sumarALineaPokemon(lineasLeidas, posX, posY, cantidad);
+
+			log_info(logger, "NEW | Se modificara la linea existente %i-%i sumando %i al pokemon %s", posX, posY, cantidad, pokemon);
 		}
 
 		cantidadBloquesRequeridos = cantidadDeBloquesQueOcupa(strlen(lineasNuevasMasPokemon));
@@ -67,7 +71,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		if (cantidadBloquesRequeridos == cantidadBloquesActual){
 
 			// La cantidad se mantiene igual, solo escribir los bloques
-			printf("NEW | No se necesitan bloques extra... solo escribir\n");
+			//printf("NEW | No se necesitan bloques extra... solo escribir\n");
 
 			// Generar lista con los datos a escribir en los bloques
 			t_list* listaDatos = separarStringEnBloques(lineasNuevasMasPokemon, cantidadBloquesRequeridos);
@@ -81,7 +85,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		// Debo pedir bloques nuevos
 		} else if (cantidadBloquesRequeridos > cantidadBloquesActual){
 
-			printf("NEW | Se necesitan mas bloques... pidiendo\n");
+			//printf("NEW | Se necesitan mas bloques... pidiendo\n");
 
 			// Cantidad de bloques extra que se deben pedir
 			int cantidadBloquesExtra = cantidadBloquesRequeridos - cantidadBloquesActual;
@@ -110,6 +114,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 	} else {
 		printf("NEW | No habia bloques... generando de 0\n");
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
+		log_info(logger, "NEW | Escribiendo nueva linea %i-%i=%i en pokemon vacio %s", posX, posY, cantidad, pokemon);
 	}
 
 	//sleep(TIEM_REIN_OPERACION);
@@ -138,7 +143,8 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 		int lineaEncontrada = encontrarCoords(posX, posY, lineasLeidas);
 
 		if (lineaEncontrada != -1){
-			printf("CATCH | Se encontro la linea\n");
+			//printf("CATCH | Se encontro la linea\n");
+			log_info(logger, "CATCH | Se le restara 1 a la coordenada %i-%i dentro del archivo %s", posX, posY, pokemon);
 
 			char* lineasModificadas = restarALineaPokemon(lineasLeidas, posX, posY);
 
@@ -155,7 +161,7 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 			// No debo liberar ningun bloque, ocupa lo mismo
 			if (cantidadBloquesActual == cantidadBloquesRequeridos){
-				printf("CATCH | La cantidad de bloques se mantiene igual");
+				//printf("CATCH | La cantidad de bloques se mantiene igual");
 
 
 			} else if (cantidadBloquesRequeridos < cantidadBloquesActual){
@@ -166,7 +172,7 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 				 * 3) Escribir el size en metadata.bin
 				 * 4) Escribir los nuevos bloques en metadata.bin
 				 */
-				printf("CATCH | Se deben liberar bloques\n");
+				//printf("CATCH | Se deben liberar bloques\n");
 
 				int cantidadDeBloquesALiberar = cantidadBloquesActual - cantidadBloquesRequeridos;
 
@@ -193,12 +199,14 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 			resultado = 1;
 		} else {
-			printf("CATCH | Las coordenadas buscadas no existen dentro del archivo\n");
+			//printf("CATCH | Las coordenadas buscadas no existen dentro del archivo\n");
+			log_warning(logger, "CATCH | Las coordenadas %i-%i no existen dentro del archivo %s", posX, posY, pokemon);
 		}
 
 		cerrarArchivoPokemon(pokemon);
 	} else {
-		printf("CATCH | No existe el pokemon buscado\n");
+		//printf("CATCH | No existe el pokemon buscado\n");
+		log_warning(logger, "CATCH | El pokemon %s no existe", pokemon);
 	}
 
 	enviarMensajeCaught(pokemon, resultado, IDMensaje);
@@ -220,16 +228,24 @@ void mensajeGet(char* pokemon, int IDMensaje){
 
 		int cantBytes = leerSizePokemon(pokemon);
 
-		// Leer lineas del archivo
-		char* lineasLeidas = leerContenidoBloquesPokemon(bloquesLeidos, cantBytes);
+		if (cantBytes > 0)
+		{
+			// Leer lineas del archivo
+			char* lineasLeidas = leerContenidoBloquesPokemon(bloquesLeidos, cantBytes);
 
-		// Generar una lista con todas las coordenadas del archivo
-		listaCoords = convertirAListaDeCoords(lineasLeidas);
+			// Generar una lista con todas las coordenadas del archivo
+			listaCoords = convertirAListaDeCoords(lineasLeidas);
+
+			log_info(logger, "GET | Se encontraron coordenadas del pokemon %s", pokemon);
+		} else {
+			log_warning(logger, "GET | El pokemon %s está vacio", pokemon);
+		}
 
 		cerrarArchivoPokemon(pokemon);
 
 	} else {
-		printf("GET | El pokemon %s no existe\n", pokemon);
+		//printf("GET | El pokemon %s no existe\n", pokemon);
+		log_warning(logger, "GET | El pokemon %s no existe", pokemon);
 	}
 
 	Localized* miStruct = generarStructLocalized(pokemon, listaCoords, IDMensaje);
@@ -258,8 +274,6 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	structAEnviar->posPokemon.y = posY;
 
 	//mandar_mensaje(structAEnviar, APPEARED, );
-
-
 }
 
 void enviarMensajeCaught(char* pokemon, int resultado, int IDMensaje){
@@ -298,8 +312,7 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 
 	int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 
-	mandar_mensaje(structAEnviar, LOCALIZED , socketLocalized );
-
+	//mandar_mensaje(structAEnviar, LOCALIZED , socketLocalized );
 }
 
 Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){

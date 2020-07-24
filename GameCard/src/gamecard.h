@@ -49,6 +49,7 @@ typedef struct semaforoPokemon{
 }semPokemon;
 
 t_list* listaSemPokemon;
+t_log* logger;
 
 // Leer bloques pokemon
 char* leerContenidoBloquesPokemon(char**, int);

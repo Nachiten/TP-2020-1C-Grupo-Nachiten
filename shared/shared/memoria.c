@@ -146,7 +146,7 @@ void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUE
 	}
 
 	//mandamos la victima al matadero
-	borrarReferenciaAParticion(laLista, particionABorrar, PARTICIONES_ELIMINADAS);
+	borrarReferenciaAParticion(laLista, particionABorrar, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 
 	//si frecuencia de compactacion es -1, 0 o 1 se compacta siempre
 	//sino, solo cuando la cantidad de particiones eliminadas sea igual a la frecuencia que piden
@@ -158,15 +158,15 @@ void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUE
 	}
 }
 
-void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS)
+void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA)
 {
 	particionABorrar->laParticion.estaLibre = 1;
 	printf("La particion %u ahora está libre!\n\n", particionABorrar->numero_de_particion);
 	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
-	consolidarParticion(laLista, particionABorrar);
+	consolidarParticion(laLista, particionABorrar, ADMIN_MEMORIA);
 }
 
-void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar)
+void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar, char* ADMIN_MEMORIA)
 {
 	uint32_t numPart = particionABorrar->numero_de_particion;
 	uint32_t numPartAnt = 0;
@@ -182,69 +182,137 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 		numeroACorregir = particionABorrar->anter_particion->numero_de_particion;
 	}
 
-	if(particionABorrar->anter_particion != NULL)
+	if(strcmp(ADMIN_MEMORIA,"BS") != 0)
 	{
-		numPartAnt = particionABorrar->anter_particion->numero_de_particion;
-
-		//si la particion anterior a la que borro esta libre, las consolido
-		if(particionABorrar->anter_particion->laParticion.estaLibre == 1)
+		if(particionABorrar->anter_particion != NULL)
 		{
-			//expando el tamaño de la particion anterior
-			particionABorrar->anter_particion->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
-			resultado = particionABorrar->anter_particion->numero_de_particion;
-			particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
+			numPartAnt = particionABorrar->anter_particion->numero_de_particion;
 
-			//si la particion que estoy borrando no apunta a NULL, entonces hago que la siguiente apunte a su anterior
-			if(particionABorrar->sig_particion != NULL)
+			//si la particion anterior a la que borro esta libre, las consolido
+			if(particionABorrar->anter_particion->laParticion.estaLibre == 1)
 			{
-				particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
-			}
+				//expando el tamaño de la particion anterior
+				particionABorrar->anter_particion->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+				resultado = particionABorrar->anter_particion->numero_de_particion;
+				particionABorrar->anter_particion->sig_particion = particionABorrar->sig_particion;
 
-			consolidado = 1;
-			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartAnt, resultado);
+				//si la particion que estoy borrando no apunta a NULL, entonces hago que la siguiente apunte a su anterior
+				if(particionABorrar->sig_particion != NULL)
+				{
+					particionABorrar->sig_particion->anter_particion = particionABorrar->anter_particion;
+				}
+
+				consolidado = 1;
+				printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartAnt, resultado);
+			}
+		}
+
+		if(particionABorrar->sig_particion != NULL)
+		{
+			numPartSig = particionABorrar->sig_particion->numero_de_particion;
+
+			//si la particion siguiente a la que quiero borrar esta libre, las consolido (Y BORRO LA SIGUIENTE)
+			if(particionABorrar->sig_particion->laParticion.estaLibre == 1)
+			{
+				resultado = particionABorrar->numero_de_particion;
+
+				auxiliame = particionABorrar;
+
+				//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
+				particionABorrar = particionABorrar->sig_particion;
+
+				//expando el tamaño de la particion incluyendo el espacio de la siguiente
+				auxiliame->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+
+				//si la particion siguiente (LA QUE VOY A BORRAR) no apunta a NULL, entonces hago que SU siguiente apunte a esta particion
+				if(particionABorrar->sig_particion != NULL)
+				{
+					particionABorrar->sig_particion->anter_particion = auxiliame;
+				}
+
+				//apunto a la siguiente de mi siguiente
+				auxiliame->sig_particion = particionABorrar->sig_particion;
+
+				consolidado = 1;
+				printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
+			}
+		}
+
+		if(consolidado == 1)
+		{
+			while(correctorDeNumeros != NULL)
+			{
+				correctorDeNumeros->numero_de_particion = numeroACorregir;
+				numeroACorregir++;
+				correctorDeNumeros = correctorDeNumeros->sig_particion;
+			}
+			free(particionABorrar);
 		}
 	}
 
-	if(particionABorrar->sig_particion != NULL)
+	if(strcmp(ADMIN_MEMORIA,"BS") == 0)
 	{
-		numPartSig = particionABorrar->sig_particion->numero_de_particion;
-
-		//si la particion siguiente a la que quiero borrar esta libre, las consolido (Y BORRO LA SIGUIENTE)
-		if(particionABorrar->sig_particion->laParticion.estaLibre == 1)
+		if(particionABorrar->sig_particion != NULL)
 		{
-			resultado = particionABorrar->numero_de_particion;
+			numPartSig = particionABorrar->sig_particion->numero_de_particion;
 
-			auxiliame = particionABorrar;
-
-			//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
-			particionABorrar = particionABorrar->sig_particion;
-
-			//expando el tamaño de la particion incluyendo el espacio de la siguiente
-			auxiliame->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
-
-			//si la particion siguiente (LA QUE VOY A BORRAR) no apunta a NULL, entonces hago que SU siguiente apunte a esta particion
-			if(particionABorrar->sig_particion != NULL)
+			//si la particion siguiente a la que quiero borrar esta libre, y tienen el mismo tamaño las consolido (Y BORRO LA SIGUIENTE)
+			if((particionABorrar->sig_particion->laParticion.estaLibre == 1 ) && ((particionABorrar->laParticion.limiteSuperior - particionABorrar->laParticion.limiteInferior) == (particionABorrar->sig_particion->laParticion.limiteSuperior - particionABorrar->sig_particion->laParticion.limiteInferior)))
 			{
-				particionABorrar->sig_particion->anter_particion = auxiliame;
+				resultado = particionABorrar->numero_de_particion;
+
+				auxiliame = particionABorrar;
+
+				//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
+				particionABorrar = particionABorrar->sig_particion;
+
+				//expando el tamaño de la particion incluyendo el espacio de la siguiente
+				auxiliame->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+
+				//si la particion siguiente (LA QUE VOY A BORRAR) no apunta a NULL, entonces hago que SU siguiente apunte a esta particion
+				if(particionABorrar->sig_particion != NULL)
+				{
+					particionABorrar->sig_particion->anter_particion = auxiliame;
+				}
+
+				//apunto a la siguiente de mi siguiente
+				auxiliame->sig_particion = particionABorrar->sig_particion;
+
+				printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
 			}
 
-			//apunto a la siguiente de mi siguiente
-			auxiliame->sig_particion = particionABorrar->sig_particion;
+			//ahora hago lo mismo desde el principio en caso de haya que consolidar mas particiones
+			particionABorrar = laLista;
+			while(particionABorrar->sig_particion != NULL)
+			{
+				numPartSig = particionABorrar->sig_particion->numero_de_particion;
 
-			consolidado = 1;
-			printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
-		}
-	}
+				//si la particion siguiente a la que quiero borrar esta libre, y tienen el mismo tamaño las consolido (Y BORRO LA SIGUIENTE)
+				if((particionABorrar->sig_particion->laParticion.estaLibre == 1 ) && ((particionABorrar->laParticion.limiteSuperior - particionABorrar->laParticion.limiteInferior) == (particionABorrar->sig_particion->laParticion.limiteSuperior - particionABorrar->sig_particion->laParticion.limiteInferior)))
+				{
+					resultado = particionABorrar->numero_de_particion;
 
-	if(consolidado == 1)
-	{
-		while(correctorDeNumeros != NULL)
-		{
-			correctorDeNumeros->numero_de_particion = numeroACorregir;
-			numeroACorregir++;
-			correctorDeNumeros = correctorDeNumeros->sig_particion;
+					auxiliame = particionABorrar;
+
+					//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
+					particionABorrar = particionABorrar->sig_particion;
+
+					//expando el tamaño de la particion incluyendo el espacio de la siguiente
+					auxiliame->laParticion.limiteSuperior = particionABorrar->laParticion.limiteSuperior;
+
+					//si la particion siguiente (LA QUE VOY A BORRAR) no apunta a NULL, entonces hago que SU siguiente apunte a esta particion
+					if(particionABorrar->sig_particion != NULL)
+					{
+						particionABorrar->sig_particion->anter_particion = auxiliame;
+					}
+
+					//apunto a la siguiente de mi siguiente
+					auxiliame->sig_particion = particionABorrar->sig_particion;
+
+					printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
+				}
+			}
 		}
-		free(particionABorrar);
 	}
 }
 
@@ -288,7 +356,7 @@ void compactacion(void* CACHE, lista_particiones* laLista)
 					 particionOcupada->ID_MENSAJE_GUARDADO = -1;
 
 					 auxilio = particionOcupada->anter_particion;
-					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno);
+					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno, "PD");
 					 particionOcupada = auxilio;
 					 particionOcupada->sig_particion->laParticion.limiteInferior = particionOcupada->laParticion.limiteSuperior;
 					 particionMovida = 1;

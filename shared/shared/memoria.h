@@ -15,6 +15,7 @@
 #include<unistd.h>
 #include<string.h>
 #include"estructuras.h"
+#include"utilidades.h"
 #include <time.h>
 
 //para manejo de la lista de las particiones existentes en CACHE
@@ -22,8 +23,8 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos, char* algorAdminMemoria); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
 void corregirNumerosYParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal); //arregla los numeros de particiones despues de que la aberracion de BS cree sus particiones
 void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ALGORITMO_MEMORIA); //selecciona la particion a ser eliminada
-void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
-void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar); //consolida particiones en caso que sea necesario
+void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
+void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar, char* ADMIN_MEMORIA); //consolida particiones en caso que sea necesario
 void compactacion(); //compacta...
 lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
 lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA);//selecciona la primera particion que sirva y devuelve un puntero a esa particion

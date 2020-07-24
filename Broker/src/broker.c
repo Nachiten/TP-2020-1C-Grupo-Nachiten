@@ -229,7 +229,7 @@ int main(void) {
 
 	//ESTE ES LOCALIZED
 	//pesa 19
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 29
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
@@ -238,17 +238,17 @@ int main(void) {
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de borrado
-//	lista_particiones* particion0 = hoja_de_particiones;
+	lista_particiones* particion0 = hoja_de_particiones;
 //	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
 //	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
 //	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
 //	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
 
-	//borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS);
+	borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 
 //	compactacion(CACHE, hoja_de_particiones);
 
@@ -404,14 +404,14 @@ void suscribir(t_sub* sub,t_cola* cola)
 	{
 		for(int i = 0;i < cola->mensajes->elements_count; i++)
 		{
-			t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
+			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 
 			if(mensaje->subs->head != NULL)
 			{
 				for(int j = 0;j < mensaje->subs->elements_count; j++)
 				{
-					t_sub* subDelMensaje;// = malloc(sizeof(t_sub));
+					t_sub* subDelMensaje;
 					subDelMensaje = list_get(mensaje->subs,j);
 					if((subDelMensaje->recibido == sub->recibido) && (subDelMensaje->socket == sub->socket) && (subDelMensaje->suscripto == sub->suscripto))
 					{
@@ -431,7 +431,7 @@ void suscribir(t_sub* sub,t_cola* cola)
 int32_t buscar_en_cola(int32_t id_correlativo, t_cola* cola){
 	if(cola->mensajes->head != NULL){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){
-			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i);
 			if(mensaje->id_correlativo == id_correlativo){
 				return -1;
@@ -609,10 +609,10 @@ void agregar_mensajes_viejos(int32_t socket, t_cola* cola){
 void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
 	if(descarte->mensajes->head != NULL){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
-			t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+			t_mensaje* mensaje;
 			mensaje = list_get(colaDescartesNew->mensajes,i);
 					if(sub_presente(socket, mensaje) == 0){
-						t_mensaje* mensajeViejo = malloc(sizeof(t_mensaje));
+						t_mensaje* mensajeViejo;
 						mensajeViejo = list_remove(descarte->mensajes, i);
 						list_add(cola->mensajes, mensajeViejo);
 			}
@@ -623,7 +623,7 @@ void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
 int sub_presente(int32_t socketCliente, t_mensaje* mensaje){
 	if(mensaje->subs->head != NULL){
 		for(int j = 0; j < mensaje->subs->elements_count; j++){
-			t_sub* sub = malloc(sizeof(t_sub));
+			t_sub* sub;
 			sub = list_get(mensaje->subs,j);
 			if(sub->socket == socketCliente){
 				return 1;
@@ -760,13 +760,13 @@ void borrar_datos_caught(Caught* mensaje){
 // suscriptores de ese mensaje hasta encontrar el socket adecuado y pone en visto el mensaje
 void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 	for(int i = 0; i < cola->mensajes->elements_count; i++){
-		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
+		t_mensaje* mensaje;
 		mensaje = list_get(cola->mensajes,i);
 
 		if(mensaje->id == id_mensaje){
 			for(int j = 0; j < mensaje->subs->elements_count; j++){
 
-				t_sub* sub;// = malloc(sizeof(t_sub));
+				t_sub* sub;
 				sub = list_get(mensaje->subs,j);
 
 				if(sub->socket == socket){
@@ -853,13 +853,13 @@ void borrar_mensajes(t_cola* cola){
 		{
 			for(int i = 0; i < cola->mensajes->elements_count; i++)
 			{ //avanza hasta el final de la cola de mensajes
-				t_mensaje* mensaje = malloc(sizeof(t_mensaje));
+				t_mensaje* mensaje;
 				mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 				if(mensaje->subs->head != NULL)
 				{
 					for(int j = 0; j < mensaje->subs->elements_count; j++)
 					{ //avanza hasta el final de la cola de subs
-						t_sub* sub = malloc(sizeof(t_sub));
+						t_sub* sub;
 						sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
 						if(sub->recibido == 1)
 						{
@@ -870,7 +870,7 @@ void borrar_mensajes(t_cola* cola){
 				}
 				if((subsTotales == yaRecibido) && (subsTotales != 0) && (yaRecibido != 0))
 				{
-					t_mensaje* mensajeBorrado = malloc(sizeof(t_mensaje));
+					t_mensaje* mensajeBorrado;// = malloc(sizeof(t_mensaje)); ToDo revisar si rompe
 					mensajeBorrado = list_remove(cola->mensajes, i);
 					agregar_descarte(cola,mensajeBorrado);
 				}
@@ -906,7 +906,7 @@ void agregar_descarte (t_cola* cola, t_mensaje* descarte){
 
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
-void desuscribir(int32_t socket, t_cola* cola){
+void desuscribir(int32_t socket, t_cola* cola){//ToDo ver que onda
 	t_sub* sub;// = malloc(sizeof(t_sub));
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));

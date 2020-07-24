@@ -810,12 +810,12 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 	free(primeraMitadDelString);
 
 	// Liberar la memoria del array de strings
-	int i;
-	while (stringsSeparados[i] != NULL)
-	{
-		free(stringsSeparados[i]);
-		i++;
-	}
+//	int i;
+//	while (stringsSeparados[i] != NULL)
+//	{
+//		free(stringsSeparados[i]);
+//		i++;
+//	}
 
 	free(stringsSeparados);
 
@@ -916,11 +916,18 @@ void liberarNBloques(t_list* listaBloques, int cantidad){
 	t_list* bloquesALiberar = list_take_and_remove(listaBloques, cantidad);
 
 	int i;
-	for (i= 0; i<list_size(bloquesALiberar) ; i++){
-		int* bloqueALiberar = list_get(bloquesALiberar, i);
+
+	int cantElementos = list_size(bloquesALiberar);
+
+	for (i= 0; i< cantElementos; i++){
+		int* bloqueALiberar = list_remove(bloquesALiberar, i);
 
 		liberarUnBloque(*bloqueALiberar - 1);
+
+		free(bloqueALiberar);
 	}
+
+	list_destroy(bloquesALiberar);
 }
 
 t_list* convertirAListaDeStringsDesdeChars(char** lineas){
@@ -1057,6 +1064,9 @@ t_list* convertirAListaDeCoords(char* lineas){
 		list_add(lista, posYConvertido);
 
 		cantLineas++;
+
+		free(lineaSeparada);
+		free(coordMasCantidad);
 	}
 
 	if ( list_size(lista) % 2 != 0){
@@ -1195,6 +1205,18 @@ int main(void) {
 	mensajeNew(fruta, 10, 53, 25, 1);
 	mensajeNew(fruta, 10, 54, 25, 1);
 	mensajeNew(fruta, 10, 55, 25, 1);
+	mensajeNew(fruta, 10, 56, 25, 1);
+	mensajeNew(fruta, 10, 57, 25, 1);
+	mensajeNew(fruta, 10, 58, 25, 1);
+	mensajeNew(fruta, 10, 59, 25, 1);
+	mensajeNew(fruta, 10, 60, 25, 1);
+	mensajeNew(fruta, 10, 61, 25, 1);
+	mensajeNew(fruta, 10, 62, 25, 1);
+	mensajeNew(fruta, 10, 63, 25, 1);
+	mensajeNew(fruta, 10, 64, 25, 1);
+	mensajeNew(fruta, 10, 65, 25, 1);
+	mensajeNew(fruta, 10, 66, 25, 1);
+	mensajeNew(fruta, 10, 67, 25, 1);
 
 
 	/*Expected:

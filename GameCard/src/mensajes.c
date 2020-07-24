@@ -79,7 +79,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 			// Borrar elementos de la lista antes de borrar lista
 			int i;
-			for (i=0; i < list_size(listaDatos); i++){
+			int cantidadElementosLista = list_size(listaDatos);
+			for ( i = cantidadElementosLista - 1; i >= 0; i--){
 				char* elemento = list_remove(listaDatos, i);
 				free(elemento);
 			}
@@ -110,12 +111,14 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			// Fijo el string BLOCKS=[1,2,3]
 			fijarBloquesA(pokemon, listaBloques);
 
+			// TODO | Hacer bien
 			// Borrar elementos de la lista antes de borrar lista
-			int i;
-			for (i=0; i < list_size(listaDatos); i++){
-				char* elemento = list_remove(listaDatos, i);
-				free(elemento);
-			}
+			//int i;
+//			int cantidadElementosLista = list_size(listaDatos);
+//			for (i=0; i < cantidadElementosLista; i++){
+//				char* elemento = list_remove(listaDatos, i);
+//				free(elemento);
+//			}
 
 			list_destroy(listaDatos);
 
@@ -220,7 +223,9 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 			// Sacar
 			int i;
-			for (i=0; i < list_size(listaDatosBloques); i++){
+			int cantidadElementosLista = list_size(listaDatosBloques);
+			for (i = cantidadElementosLista - 1; i >= 0; i--)
+			{
 				char* elemento = list_remove(listaDatosBloques, i);
 				free(elemento);
 			}
@@ -290,7 +295,8 @@ void mensajeGet(char* pokemon, int IDMensaje){
 	// Liberar lista de enteros
 
 	int i;
-	for (i=0; i < list_size(listaCoords); i++){
+	int cantidadElementosLista = list_size(listaCoords);
+	for (i = cantidadElementosLista - 1; i >= 0; i--){
 		int* elemento = list_remove(listaCoords, i);
 		free(elemento);
 	}
@@ -325,6 +331,7 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 
 	//mandar_mensaje(structAEnviar, APPEARED, );
 
+	// TODO | Liberar nombre pokemon
 	free(structAEnviar);
 }
 
@@ -341,6 +348,8 @@ void enviarMensajeCaught(char* pokemon, int resultado, int IDMensaje){
 
 	// TODO | Falta terminar
 	//mandar_mensaje()
+
+	free(structCaught);
 }
 
 void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensaje){
@@ -362,7 +371,7 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 
 	//Todo | falta enviar el mensaje
 
-	int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+	//int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 
 	//mandar_mensaje(structAEnviar, LOCALIZED , socketLocalized );
 }

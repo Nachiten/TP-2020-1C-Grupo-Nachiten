@@ -1,5 +1,26 @@
 #include "Team.h"
 
+typedef struct nodoColaMb{
+    mensaje_broker contenido;
+    struct nodoColaMb* next;
+}nodo_cola_mensajes_broker;
+
+typedef struct{
+    nodo_cola_mensajes_broker* inicio;
+    nodo_cola_mensajes_broker* fondo;
+}particion_cola_mensajes_broker;
+
+typedef struct{
+    nodo_cola_mensajes_broker* elementos;
+    int cantidad_elementos;
+}particion_lista_suscripciones_mensajes_broker;
+
+typedef struct{
+    particion_lista_suscripciones_mensajes_broker lista_suscripciones;
+    nodo_cola_mensajes_broker* lista_get;
+    particion_cola_mensajes_broker cola_catch;
+}cola_Mensajes_Broker;
+
 cola_Mensajes_Broker cola_mensajes_broker;
 
 void inicializar_cola_mensajes_broker(){

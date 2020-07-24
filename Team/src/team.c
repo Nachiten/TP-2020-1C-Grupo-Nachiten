@@ -5,127 +5,86 @@ sem_t* sem_entrenadores;
 sem_t colaMensajes_llenos, datosHilo, enExec, entrenadores_disponibles, colaReady_llenos, colaCaught_llenos, extraccion_mensaje_caught;
 pthread_mutex_t colaMensajes_mutex, objetivo_actual_mutex, colaReady_mutex, colaCaught_mutex;
 char** objetivo_actual;
-int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
+elemento_objetivo* objetivo_global_team;
+int estado_team, conexion, objetivo_team, cantidad_objetivos, quantum, retardo;
 
-int main(void) {
-
-	printf("Inicio de Team\n");
-
-	int conexion;
-	char* ip;
-	char* puerto;
-
-	t_log* logger;
-	t_config* config;
-
-	//Cargo las configuraciones del .config
-	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team.config");
-
-	if (config == NULL){
-		printf("No se pudo leer la config\n");
-	} else {
-		printf("La config fue leida correctamente\n");
-	}
-
-	// Leer path del log
-	char* pathLogs = config_get_string_value(config,"LOG_FILE");
-
-	if (pathLogs == NULL){
-		printf("No se pudo leer el path del log de la config\n");
-	} else {
-		printf("El path del log fue leido correctamente\n");
-	}
-
-	//Dejo cargado un logger para loguear los eventos.
-	logger = cargarUnLog(pathLogs, "broker");
-	/*
-	ip = config_get_string_value(config, "IP_BROKER");
-	if (ip == NULL){
-		log_error(logger, "No se ha podido leer la 'ip' de la config");
-		return 3;
-	} else {
-		log_info(logger, "Se leyo la ip del broker correctamente");
-	}
-	puerto = config_get_string_value(config, "PUERTO_BROKER");
-	if (puerto == NULL){
-		log_error(logger, "No se ha podido leer el 'puerto' de la config");
-		return 3;
-	} else {
-		log_info(logger, "Se leyo el puerto del broker correctamente");
-	}
-*/
-	//conexion = crear_conexion(ip, puerto);
-	conexion = 0;
-	estado_team = 0;
-	d_entrenador* entrenadores;
-	pthread_t hilo_recibir_mensajes, hilo_cola_ready, hilo_cola_caught;
-	pthread_t* pool_hilos;
-	mensaje_server mensaje;
-
-	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, tiempo_reconexion, flag_finalizacion, i, pos_elegido, temp_cant;
-	int primer_extraccion, segunda_extraccion;
-
-	primer_extraccion = extraer_valores_config(config, &algoritmo_planificacion, &quantum, &estimacion_inicial, &retardo, &tiempo_reconexion);
-	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
-    if(primer_extraccion == 1 && segunda_extraccion == 1){
-
-        objetivo_team = cantidad_objetivos;
+int main() {
+    printf("Inicio Team\n");
+         
+    estado_team = 0;
+    conexion = 0;
+    
+    d_entrenador* entrenadores;
+    pthread_t hilo_cola_ready, hilo_cola_caught;
+    pthread_t* pool_hilos;
+    mensaje_server mensaje;
+    int primer_extraccion, segunda_extraccion, algoritmo_planificacion, estimacion_inicial, tiempo_reconexion, cant_entrenadores;
+    
+    primer_extraccion = extraer_valores_config(config, &algoritmo_planificacion, &quantum, &estimacion_inicial, &retardo, &tiempo_reconexion);
+    segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
+    if(primer_extraccion == 1 && segunda_extraccion > 0){
+        
         pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
         sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
         asignar_funcion_moverse(algoritmo_planificacion);
-
-        //conexion = crear_conexion(ip, puerto);
-
         inicializar_semaforos(cant_entrenadores);
-        inicializar_cola_caught(cant_entrenadores);
         if(algoritmo_planificacion == SJF_S || algoritmo_planificacion == SJF_C){inicializar_vector_estimaciones(estimacion_inicial, cant_entrenadores);}
         inicializar_cola_ready();
-        inicializar_cola_mensajes();
-        inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
-        activar_hilo_administrador_cola_caught(&hilo_cola_caught);
         activar_hilo_administrador_cola_ready(&hilo_cola_ready);
-        activar_hilo_recepcion(&hilo_recibir_mensajes);
+            
+        if(segunda_extraccion == 1){
+            
+            int flag_finalizacion, i, pos_elegido, pos_pokemon_en_objetivo;
+            
+            inicializar_cola_caught(cant_entrenadores);
+            inicializar_cola_mensajes();
+            inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
+            activar_hilo_administrador_cola_caught(&hilo_cola_caught);
+            iniciar_conexiones(ip, puerto, tiempo_reconexion, objetivo_global_team, cantidad_objetivos);
+            objetivo_team = cantidad_objetivos;
 
-        while(objetivo_team>0){
-            if(sem_trywait(&colaMensajes_llenos) != -1){
-                i=0;
-                datos_primero_cola_mensajes(&mensaje);
-                pthread_mutex_lock(&objetivo_actual_mutex);
-                flag_finalizacion = cantidad_de_veces_en_objetivo_actual(mensaje.pokemon, objetivo_actual, cantidad_objetivos);
-                pthread_mutex_unlock(&objetivo_actual_mutex);
-                while(flag_finalizacion != 0 && i<mensaje.cantidad_pos && objetivo_team>0){
-                    if(sem_trywait(&entrenadores_disponibles) != -1){
-                        pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], entrenadores, cant_entrenadores);
-                        if(pos_elegido != -1){
-                            printf("Entrenador %i para atrapar %s\n", pos_elegido, mensaje.pokemon);
-                            sem_post(&sem_entrenadores[pos_elegido]);
-                            sem_wait(&datosHilo);
-                            pthread_mutex_lock(&colaReady_mutex);
-                            agregar_a_ready(pos_elegido);
-                            pthread_mutex_unlock(&colaReady_mutex);//
-                            sem_post(&colaReady_llenos);
+            while(objetivo_team>0){
+                if(sem_trywait(&colaMensajes_llenos) != -1){
+                    i=0;
+                    datos_primero_cola_mensajes(&mensaje);
+                    pthread_mutex_lock(&objetivo_actual_mutex);
+                    flag_finalizacion = cantidad_de_veces_en_objetivo_actual(mensaje.pokemon, objetivo_global_team, cantidad_objetivos, &pos_pokemon_en_objetivo);
+                    pthread_mutex_unlock(&objetivo_actual_mutex);
+                    while(flag_finalizacion != 0 && i<mensaje.cantidad_pos && objetivo_team>0){
+                        if(sem_trywait(&entrenadores_disponibles) != -1){
+                            pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], entrenadores, cant_entrenadores);
+                            if(pos_elegido != -1){
+                                if(flag_finalizacion == 1){poner_a_punto_de_eliminacion_de_memoria(&objetivo_global_team[pos_pokemon_en_objetivo]);}
+                                printf("Entrenador %i para atrapar %s\n", pos_elegido, mensaje.pokemon);                    
+                                sem_post(&sem_entrenadores[pos_elegido]);
+                                sem_wait(&datosHilo);                      
+                                pthread_mutex_lock(&colaReady_mutex);
+                                agregar_a_ready(pos_elegido);
+                                pthread_mutex_unlock(&colaReady_mutex);
+                                sem_post(&colaReady_llenos);
+                            }
+                            else{printf("Error pos elegido es -1 aunque hay entrenadores disponibles\n");}
+                            i++;
+                            flag_finalizacion-=1;
                         }
-                        else{printf("Error pos elegido es -1 aunque hay entrenadores disponibles\n");}
-                        i++;
-                        flag_finalizacion-=1;
                     }
+                    pthread_mutex_lock(&colaMensajes_mutex);
+                    actualizar_cola_mensajes();
+                    pthread_mutex_unlock(&colaMensajes_mutex);
                 }
-                pthread_mutex_lock(&colaMensajes_mutex);
-                actualizar_cola_mensajes();
-                pthread_mutex_unlock(&colaMensajes_mutex);
             }
+
+            estado_team = 1;   
+            join_hilos(pool_hilos, cant_entrenadores);
+            cerrar_conexiones();
+            eliminar_cola_mensajes();
+            join_hilo(&hilo_cola_caught);
+            eliminar_cola_caught();
+            //informar_estado_actual(entrenadores, cant_entrenadores);
+        
         }
 
-        estado_team = 1;
-        join_hilos(pool_hilos, cant_entrenadores);
-        join_hilo(&hilo_recibir_mensajes);
-        eliminar_cola_mensajes();
-        join_hilo(&hilo_cola_caught);
-        eliminar_cola_caught();
-        //matar_conexion(conexion);
-        //informar_estado_actual(entrenadores, cant_entrenadores);
-
-        temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
+        int temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
         if(temp_cant > 1){
             printf("\nInicio proceso deadlock\n");
             printf("en_espera: %i\n", temp_cant);
@@ -142,10 +101,10 @@ int main(void) {
         free(pool_hilos);
         destruir_semaforos(cant_entrenadores);
         liberarConfig();
-
+    
     }
     else{printf("config con errores\n");}
-
+    
     printf("Fin Team\n");
     return 0;
 }
@@ -177,7 +136,7 @@ void destruir_semaforos(int cantidad){
     sem_destroy(&enExec);
     sem_destroy(&entrenadores_disponibles);
     sem_destroy(&extraccion_mensaje_caught);
-
+    
     destroy_mutex(&objetivo_actual_mutex);
     destroy_mutex(&colaMensajes_mutex);
     destroy_mutex(&colaReady_mutex);
@@ -204,7 +163,7 @@ void inicializar_hilos_entrenadores(d_entrenador* entrenadores, int cant_entrena
     parametros_entrenador mensaje_entrenador;
     for(i=0;i<cant_entrenadores;i++){
         mensaje_entrenador.entrenador = &entrenadores[i];
-        mensaje_entrenador.pos = i;
+        mensaje_entrenador.pos = i; 
         pthread_create(&(hilos[i]), NULL, ciclo_vida_entrenador, &mensaje_entrenador);
         sem_wait(&datosHilo);
     }
@@ -214,13 +173,13 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
     d_entrenador* entrenador = parametros->entrenador;
     int posicion = parametros->pos;
     sem_post(&datosHilo);
-
+    
     Appeared mensaje;
     int eliminacion, objetivo_individual;
     objetivo_individual = calcular_objetivo_propio(*entrenador);
 
     while(entrenador->estado != EXIT && entrenador->estado_block != EN_ESPERA){
-
+        
         sem_post(&entrenadores_disponibles);//
         sem_wait(&sem_entrenadores[posicion]);
         pthread_mutex_lock(&colaMensajes_mutex);
@@ -228,16 +187,16 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         pthread_mutex_unlock(&colaMensajes_mutex);
         sem_post(&datosHilo);
         cambiar_estado_a(entrenador, READY);
-
+ 
         sem_wait(&sem_entrenadores[posicion]);
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.pos_x, mensaje.pos_y, posicion);
-        armar_enviar_catch(mensaje.pokemon, mensaje.pos_x, mensaje.pos_y, posicion, conexion);
+        armar_enviar_registrar_mensaje_catch(mensaje.pokemon, mensaje.pos_x, mensaje.pos_y, posicion);
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){
             pthread_mutex_lock(&objetivo_actual_mutex);
-            eliminacion = eliminar_de_objetivo_actual(mensaje.pokemon, &objetivo_actual, cantidad_objetivos);
+            eliminacion = eliminar_de_objetivo_global(mensaje.pokemon, objetivo_global_team, cantidad_objetivos);
             pthread_mutex_unlock(&objetivo_actual_mutex);
             if(eliminacion == 1){
                 agregar_captura(entrenador, mensaje.pokemon);
@@ -264,64 +223,28 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 }
 
 ///////////////////-RECEPCION-/////////////////////
-void* recepcion_mensajes(parametros_recepcion* parametros){
-    int bytes_recibidos, codigo, conexion_broker;
-    pthread_t hilo_reconexion;
-    parametros_reconexion nuevosParametros;
-    conexion_broker = 1;
-    llenar_parametros_reconexion(&nuevosParametros, parametros->tiempo_reconexion, &conexion_broker);
-
-    while(estado_team == 0){
-        bytes_recibidos = recv(parametros->socket, &codigo, sizeof(codigo), 0);
-        if(bytes_recibidos < 0){
-            if(conexion_broker == 1){
-                printf("Se cayo conexion con broker\n");
-                conexion_broker = 0;
-                activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
-            }
-            else{
-
-            }
-        }
-        else{procesar_mensaje(codigo, parametros->socket);}
-    }
-    return NULL;
-}
-
-void* intento_reconexion(parametros_reconexion* parametros){
-    while(*(parametros->flag_conexion_broker) != 1){
-        Sleep(parametros->tiempo_reconexion);
-        if(probar_conexion_con_broker() == 1){
-            *(parametros->flag_conexion_broker) = 1;
-        }
-    }
-    return NULL;
-}
-
-void procesar_mensaje(int codigo, int socket){
-    void* mensaje_rec;
+void procesar_mensaje_server(void* mensaje_rec){
     int filtro;
-    switch(codigo){
-        case APPEARED
+    pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex
+    filtro = filtrar_mensaje(mensaje_rec, objetivo_global_team, cantidad_objetivos);
+    pthread_mutex_unlock(&objetivo_actual_mutex);
+    if(filtro == 1){
+        pthread_mutex_lock(&colaMensajes_mutex);
+        agregar_a_cola_mensajes(mensaje_rec);
+        pthread_mutex_unlock(&colaMensajes_mutex);
+        sem_post(&colaMensajes_llenos);
+    }
+}
+    
+void procesar_mensaje_caught(Caught* mensaje_rec){
+    pthread_mutex_lock(&colaCaught_mutex);
+    agregar_a_cola_caught(mensaje_rec);
+    pthread_mutex_unlock(&colaCaught_mutex);
+    sem_post(&colaCaught_llenos);   
+}
 
-    }
-    if(codigo == LOCALIZED || codigo == APPEARED){
-        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex
-        filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
-        pthread_mutex_unlock(&objetivo_actual_mutex);
-        if(filtro == 1){
-            pthread_mutex_lock(&colaMensajes_mutex);
-            agregar_a_cola_mensajes(mensaje_rec);
-            pthread_mutex_unlock(&colaMensajes_mutex);
-            sem_post(&colaMensajes_llenos);
-        }
-    }
-    if(codigo == CAUGHT){
-        pthread_mutex_lock(&colaCaught_mutex);
-        agregar_a_cola_caught(mensaje_rec);
-        pthread_mutex_unlock(&colaCaught_mutex);
-        sem_post(&colaCaught_llenos);
-    }
+void registrar_id_en_pos_objetivo_global(int id, int posicion){
+    objetivo_global_team[posicion].idMensaje = id;
 }
 
 ///////////////////-READY-/////////////////////
@@ -361,19 +284,21 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
     pthread_mutex_lock(&colaReady_mutex);
     agregar_a_ready(pos);
     pthread_mutex_unlock(&colaReady_mutex);
-    sem_post(&colaReady_llenos);
+    sem_post(&colaReady_llenos);            
     sem_wait(&sem_entrenadores[pos]);
     cambiar_estado_a(entrenador, EXEC);
 }
 
 ///////////////////-CAUGHT-/////////////////////
 void* administrar_cola_caught(void* parametros){
-    int posicion;
+    int posicion;    
     while(estado_team == 0){
         if(sem_trywait(&colaCaught_llenos) != -1){
             posicion = posicion_primero_cola_caught();
-            sem_post(&sem_entrenadores[posicion]);
-            sem_wait(&extraccion_mensaje_caught);
+            if(posicion != -1){
+                sem_post(&sem_entrenadores[posicion]);
+                sem_wait(&extraccion_mensaje_caught);
+            }
         }
     }
     return NULL;
@@ -402,19 +327,19 @@ void* ciclo_deadlock(parametros_deadlock* parametros){
     ubicacion_primer_entrenador = temp_entrenadores[respuesta[0].posicion].ubicacion;
     i=1;
     while(i<tamano){
-        borrar_de_entrenador_deadlock(respuesta[i-1].pokemon, &temp_entrenadores[respuesta[i-1].posicion], &temp_entrenadores[respuesta[i].posicion]);
+        borrar_de_entrenador_deadlock(respuesta[i-1].pokemon, &temp_entrenadores[respuesta[i-1].posicion], &temp_entrenadores[respuesta[i].posicion]);       
         realizar_intercambio_entre(&entrenadores[ubicacion_primer_entrenador], respuesta[i-1].pokemon, &entrenadores[temp_entrenadores[respuesta[i].posicion].ubicacion], respuesta[i].pokemon, ubicacion_primer_entrenador);
         i++;
     }
     borrar_de_entrenador_deadlock(respuesta[i-1].pokemon, &temp_entrenadores[respuesta[i-1].posicion], &temp_entrenadores[respuesta[0].posicion]);
     free(respuesta);
-
+    
     return NULL;
 }
 
 void realizar_intercambio_entre(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* otro_entrenador, char* otro_pokemon, int posicion_un_entrenador){
     cambiar_estado_a(un_entrenador, READY);
-    me_agrego_a_ready_y_espero(un_entrenador, posicion_un_entrenador);
+    me_agrego_a_ready_y_espero(un_entrenador, posicion_un_entrenador); 
     moverse_a(un_entrenador, otro_entrenador->posicion[0], otro_entrenador->posicion[1], posicion_un_entrenador);
     intercambiar(un_entrenador, un_pokemon, otro_entrenador, otro_pokemon);
     sem_post(&enExec);
@@ -428,7 +353,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
         mostrar_respuesta(respuesta, tamano_respuesta);
         agregar_respuesta_tamano(mensaje_deadlock, respuesta, tamano_respuesta);
         activar_hilo_circulo_deadlock(mensaje_deadlock, &(hilos[num_circulo]));
-        sem_wait(&datosHilo);
+        sem_wait(&datosHilo);                
         actualizar_respuesta(respuesta, tamano_respuesta);
         num_circulo++;
         tamano_respuesta = detectar_deadlock(entrenadores, cant_entrenadores, respuesta);
@@ -442,7 +367,7 @@ void asignar_funcion_moverse(int algoritmo_planificacion){
         case FIFO :
             moverse_a = &moverse_fifo;
             break;
-        case RR :
+        case RR : 
             moverse_a = &moverse_rr;
             break;
         case SJF_S :
@@ -476,6 +401,5 @@ void moverse_sjf_con_d(d_entrenador* entrenador, int pos_x, int pos_y, int entre
     llegar_por_eje_con_seguimiento_de_rafaga(entrenador, pos_x, 0, entrenador_pos);
     llegar_por_eje_con_seguimiento_de_rafaga(entrenador, pos_y, 1, entrenador_pos);
 }
-
 
 

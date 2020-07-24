@@ -565,6 +565,8 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad){
 	// Fijar el SIZE=35
 	fijarSizeA(pokemon, pesoEnBytes);
 
+	list_destroy(listaBloquesAOcupar);
+	list_destroy(listaDatosBloques);
 }
 
 // Escribir las lineas en listaDatosBloques en los bloques listaBloquesAOcupar

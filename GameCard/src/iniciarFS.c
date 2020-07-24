@@ -107,6 +107,9 @@ void inicializarFileSystem(char* pathBloques, char* pathFiles, char* pathMetadat
 
 	// Lo guardo en archivo
 	guardarBitArrayEnArchivo(pathMetadata, BITARRAY, BLOCKS);
+
+	bitarray_destroy(bitArrayBloques);
+	free(BITARRAY);
 }
 
 t_list* escanearPokemonsExistenes(){

@@ -117,37 +117,6 @@ t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char
 	*/
 }
 
-//TODO No terminado
-void leerUnPokemon(char* pathFiles, char* pokemon){
-
-	char* metadataBin = "/Metadata.bin";
-	// + 2 por el \0 y la "/"
-	char* pathPokemonMetadata = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
-
-	strcpy(pathPokemonMetadata, pathFiles);
-	strcat(pathPokemonMetadata, "/");
-	// TODO se debe chequear antes de esto q la carpeta del pokemon existe | si no existe se crea
-	strcat(pathPokemonMetadata, pokemon);
-	// TODO idem punto anterior. Si el metadata no existe debe crearse
-	strcat(pathPokemonMetadata, metadataBin);
-
-	t_config* metadataPokemon;
-
-	metadataPokemon = leerConfiguracion(pathPokemonMetadata);
-
-	printf("Path pokemonMetadata: %s\n", pathPokemonMetadata);
-
-	config_set_value(metadataPokemon, "OPEN" , "N");
-	//config_remove_key(metadataPokemon, "DIRECTORY");
-	int numeroSize = config_get_int_value(metadataPokemon, "SIZE");
-	// TODO : Hacer que se pueda leer y escribir los archivos metadata.bin de los pokemons
-
-	printf("%i\n", numeroSize);
-
-	// path: {puntoMontaje}/Files/Pikachu/Metadata.bin
-
-}
-
 // Checkear si existe un determinado pokemon dentro de la carpeta Files/
 // Retorna 1 si la carpeta existe, 0 si no existe
 int existeCarpetaPokemon(char* pokemon){
@@ -533,6 +502,9 @@ t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques){
 
 		// Agrego el bloque recortado a la lista de strings
 		list_add(listaStrings, miString);
+
+		// TODO | OJO AL PIOJO
+		//free(miString);
 
 		//printf("String en posicion: %i | %s\n", i , miString);
 	}
@@ -1125,47 +1097,63 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(fruta, 10, 5, 20, 1);
-
-	mensajeNew(bulbasaur, 1, 15, 1, 1);
-
-	mensajeCatch(bulbasaur, 1, 15, 1);
-
 	mensajeNew(pikachu, 1, 15, 1, 1);
 
-	mensajeNew(fruta, 10, 5, 20, 1);
-
 	mensajeCatch(pikachu, 1, 15, 1);
-
-	printearBitArray();
-
-	mensajeNew(jorge, 1, 20, 3, 1);
 
 	mensajeGet(pikachu, 1);
+	mensajeGet(pikachu, 1);
+	mensajeGet(pikachu, 1);
+	mensajeGet(pikachu, 1);
 
-	mensajeCatch(jorge, 1, 24, 1);
-
-	mensajeNew(fruta, 23, 10, 1, 1);
-
-	mensajeNew(jorge, 1, 30, 5, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
-
-	mensajeNew(fruta, 25, 15, 25, 1);
-
-	mensajeCatch(fruta, 23, 10, 1);
-
-	mensajeCatch(pikachu, 1, 15, 1);
-
-	mensajeNew(jorge, 1, 40, 7, 1);
-
-	mensajeNew(fruta, 35, 20, 40, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
-
-	mensajeNew(pikachu, 1, 20, 3, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
+//	mensajeNew(fruta, 10, 5, 20, 1);
+//
+//	mensajeNew(bulbasaur, 1, 15, 1, 1);
+//
+//	mensajeCatch(bulbasaur, 1, 15, 1);
+//
+//	mensajeNew(pikachu, 1, 15, 1, 1);
+//
+//	mensajeNew(fruta, 10, 5, 20, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	printearBitArray();
+//
+//	mensajeNew(jorge, 1, 20, 3, 1);
+//
+//	mensajeGet(pikachu, 1);
+//
+//	mensajeCatch(jorge, 1, 24, 1);
+//
+//	mensajeNew(fruta, 23, 10, 1, 1);
+//
+//	mensajeNew(jorge, 1, 30, 5, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 25, 15, 25, 1);
+//
+//	mensajeCatch(fruta, 23, 10, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	mensajeNew(jorge, 1, 40, 7, 1);
+//
+//	mensajeNew(fruta, 35, 20, 40, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(pikachu, 1, 20, 3, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 10, 50, 25, 1);
+//	mensajeNew(fruta, 10, 51, 25, 1);
+//	mensajeNew(fruta, 10, 52, 25, 1);
+//	mensajeNew(fruta, 10, 53, 25, 1);
+//	mensajeNew(fruta, 10, 54, 25, 1);
+//	mensajeNew(fruta, 10, 55, 25, 1);
 
 
 	/*Expected:

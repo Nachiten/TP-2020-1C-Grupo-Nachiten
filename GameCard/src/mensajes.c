@@ -55,8 +55,6 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			log_info(logger, "NEW | Se agregara la linea %i-%i=%i al pokemon %s", posX, posY, cantidad, pokemon);
 
 		} else {
-			printf("NEW | La linea fue encontrada, se la debe modificar... [No hecho todavia]");
-			//printf("Lineas con linea reemplazada: %s", lineasConLineaReemplazada);
 
 			lineasNuevasMasPokemon = sumarALineaPokemon(lineasLeidas, posX, posY, cantidad);
 
@@ -118,7 +116,6 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 
 	} else {
-		printf("NEW | No habia bloques... generando de 0\n");
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);
 		log_info(logger, "NEW | Escribiendo nueva linea %i-%i=%i en pokemon vacio %s", posX, posY, cantidad, pokemon);
 	}

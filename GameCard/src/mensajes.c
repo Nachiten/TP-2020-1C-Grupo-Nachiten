@@ -111,14 +111,13 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			// Fijo el string BLOCKS=[1,2,3]
 			fijarBloquesA(pokemon, listaBloques);
 
-			// TODO | Hacer bien
 			// Borrar elementos de la lista antes de borrar lista
-			//int i;
-//			int cantidadElementosLista = list_size(listaDatos);
-//			for (i=0; i < cantidadElementosLista; i++){
-//				char* elemento = list_remove(listaDatos, i);
-//				free(elemento);
-//			}
+			int i;
+			int cantidadElementosLista = list_size(listaDatos);
+			for (i = cantidadElementosLista - 1; i >= 0; i--){
+				char* elemento = list_remove(listaDatos, i);
+				free(elemento);
+			}
 
 			list_destroy(listaDatos);
 

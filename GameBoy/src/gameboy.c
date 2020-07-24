@@ -542,8 +542,8 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 
 	//para ver si hay que loguear un mensaje nuevo o no
 	int32_t IDMensajeRecibido = -1;
-	uint32_t match = 0;
-	mensajesRecibidos* auxiliar = estructura->listaRecibidos;
+//	uint32_t match = 0;
+//	mensajesRecibidos* auxiliar = estructura->listaRecibidos;
 
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
@@ -551,6 +551,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 	Localized* mensajeLocalized;
 	Catch* mensajeCatch;
 	Caught* mensajeCaught;
+	confirmacionMensaje* mensajeConfirm;
 
 	while(tamanioRecibido > 0 || size > 0)
 	{
@@ -564,24 +565,35 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 		switch(cod_op){
 			case NEW:;
 				mensajeNew = malloc(sizeof(New));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
-				IDMensajeRecibido = mensajeNew->ID;
-				//mandarte el ACKToDo
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeNew->nombrePokemon);
 				free(mensajeNew);
+				free(mensajeConfirm);
 				break;
 
 			case APPEARED:
 				mensajeAppeared = malloc(sizeof(Appeared));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
-				IDMensajeRecibido = mensajeAppeared->ID;
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeAppeared->nombrePokemon);
 				free(mensajeAppeared);
+				free(mensajeConfirm);
 				break;
 
 			case GET:
 				mensajeGet = malloc(sizeof(Get));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				IDMensajeRecibido = mensajeGet->ID;
 				free(mensajeGet->nombrePokemon);
 				free(mensajeGet);
@@ -589,7 +601,9 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 
 			case LOCALIZED:
 				mensajeLocalized = malloc(sizeof(Localized));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				IDMensajeRecibido = mensajeLocalized->ID;
 				free(mensajeLocalized->nombrePokemon);
 				free(mensajeLocalized);
@@ -597,7 +611,9 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 
 			case CATCH:
 				mensajeCatch = malloc(sizeof(Catch));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				IDMensajeRecibido = mensajeCatch->ID;
 				free(mensajeCatch->nombrePokemon);
 				free(mensajeCatch);
@@ -605,7 +621,9 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 
 			case CAUGHT:
 				mensajeCaught = malloc(sizeof(Caught));
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				IDMensajeRecibido = mensajeCaught->ID;
 				free(mensajeCaught->nombrePokemon);
 				free(mensajeCaught);

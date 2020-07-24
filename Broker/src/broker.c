@@ -222,23 +222,23 @@ int main(void) {
 	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
 
 	//pesa 24
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 21
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 15
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//ESTE ES LOCALIZED
 	//pesa 19
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 29
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//pesa 14
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
 
 	//para pruebas de borrado
 	//lista_particiones* particion0 = hoja_de_particiones;
@@ -646,7 +646,7 @@ void mandar_mensajes_broker(t_cola* cola){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje;
 			mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
-			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima) == 0)
+			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima, semCache) == 0)
 			{
 				mensaje = list_remove(cola->mensajes,i);
 				liberar_estructuras(mensaje->mensaje, cola->tipoCola);

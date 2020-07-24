@@ -24,17 +24,17 @@
 void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminMemoria, uint32_t tamanioMemoria); //antes de empezar a meter particiones en CACHE hay que inicializarlo
 lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLosDatos, char* algorAdminMemoria); //crea una referencia a una particion nueva y devuelve un puntero a esa particion
 void corregirNumerosYParticiones(lista_particiones* particionOriginal, uint32_t numeroParticionOriginal); //arregla los numeros de particiones despues de que la aberracion de BS cree sus particiones
-void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //selecciona la particion a ser eliminada
-void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
+void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas); //selecciona la particion a ser eliminada
+void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas); //borra referencia a la particion (SOLO la marca como libre para que se la pueda pisar)
 void consolidarParticion(lista_particiones* laLista, lista_particiones* particionABorrar, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //consolida particiones en caso que sea necesario
-void compactacion(void* CACHE, lista_particiones* laLista, t_log* logger, sem_t* semLog); //compacta...
-lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
-lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog);//selecciona la primera particion que sirva y devuelve un puntero a esa particion
-lista_particiones* seleccionar_particion_Buddy_System(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog); //selecciona particion por BS (le voy a decir bullshit)
+void compactacion(void* CACHE, lista_particiones* laLista, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas); //compacta...
+lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas); //selecciona la primera particion que sirva y devuelve un puntero a esa particion
+lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas);//selecciona la primera particion que sirva y devuelve un puntero a esa particion
+lista_particiones* seleccionar_particion_Buddy_System(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, char* algoritmoAsignacion, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas); //selecciona particion por BS (le voy a decir bullshit)
 void matar_lista_particiones(lista_particiones* laLista); //usar cuando se quiere cerrar el programa
 void revision_lista_particiones(void* CACHE, lista_particiones* laLista, uint32_t tamanioMemoria, t_log* dumpCache); //para fines de control, muestrar por pantalla info de las particiones y espacio libre en memoria
 //se fija si en la ultima particion de la memoria hay espacio para meter los datos o no.
-uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size);
+uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** particionElegida, uint32_t tamanioMemoria, uint32_t size, t_log* semParticiones);
 lista_particiones* comparador_de_candidatas(particionesCandidatas* listaDeCandidatas); //compara particiones candidatas a ser elegidas para algoritmo Best Fit
 void matar_lista_particiones_candidatas(particionesCandidatas* listaDeCandidatas); //libera memoria reservada para lista de candidatas del algoritmo Best Fit
 
@@ -65,7 +65,7 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Catch* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima);
 void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Caught* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima);
 
-uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima);
+uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima, sem_t* semCache);
 
 //deben ser las funciones mas idiotas que hice en este TP
 uint32_t calcular_bytes_utiles_de_mensaje(void* mensaje, codigo_operacion tipoMensaje);

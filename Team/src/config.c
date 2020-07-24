@@ -18,6 +18,7 @@ PARAMS:
 @cant_entrenadores: Cantidad de entrenadores existentes
 @objetivos: Cantidad de objetivos
 */
+
 int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion){
     int respuesta = 1;
     char* algoritmo = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
@@ -42,7 +43,7 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
     cant_objetivos = 0;
     respuesta = 1;
     i=0;
-
+        
     char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
     char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
     char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
@@ -51,6 +52,7 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 
     if(cant_posiciones > 0){
         printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
+        *cant_entrenadores = cant_posiciones;
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 	while(i<cant_posiciones && respuesta == 1){
             temp2[i].estado = NEW;
@@ -63,14 +65,17 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
             i++;
 	}
 	if(respuesta == 1){
+            *entrenadores = temp2;
             cant_objetivos = calcular_tamano_objetivo_global(temp2, cant_posiciones);
             printf("La cantidad de objetivos es: %i\n", cant_objetivos);
-            temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-            llenar_objetivo_global(temp2, cant_posiciones, temp1, cant_objetivos);
-            *entrenadores = temp2;
-            *cant_entrenadores = cant_posiciones;
-            *objetivo_global = temp1;
             *objetivos = cant_objetivos;
+            if(cant_objetivos > 0){
+                temp1 = malloc((cant_objetivos+1) * sizeof(char*));
+                llenar_objetivo_global(temp2, cant_posiciones, temp1, cant_objetivos);
+                *objetivo_global = temp1;
+                *objetivos = cant_objetivos;
+            }
+            else{respuesta = 2;}
 	}
 	else{
             printf("error en llenado de objetivos y actuales de entrenador %i\n", i-1);
@@ -255,6 +260,5 @@ void liberarConfig(){
     free(temp1);
     free(temp2);
 }
-
 
 

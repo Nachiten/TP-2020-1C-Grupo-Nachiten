@@ -70,8 +70,8 @@ void crearPokemonSiNoExiste(char* );
 void escribirDatoEnBloque(char*, int);
 void escribirLineaNuevaPokemon(char*, int, int, int);
 void escribirLineasEnBloques(t_list*, t_list*);
-void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
-void leerMetadataBin(char*, int* , int* , char**, t_config*);
+t_config* leerConfig(int*, int* ,char** ,char** ,char**);
+t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER);
 void leerUnPokemon(char*, char*);
 
 int cantidadDeBloquesQueOcupa(int);

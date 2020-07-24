@@ -46,9 +46,9 @@
 //	printf("Hilo 3 cerro el archivo pikachu\n");
 //}
 
-void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER, t_config* config){
+t_config* leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER){
 
-	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
+	t_config* config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
 
 	if (config == NULL){
 		printf("No se pudo leer la config!!");
@@ -77,10 +77,10 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 		printf("No se ha podido leer el puerto_broker de la config");
 	}
 
-	//config_destroy(config);
+	return config;
 }
 
-void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER, t_config* metadataBin){
+t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
 
 	// Nombre del archivo metadata
 	char* archivoMetadata = "/Metadata.bin";
@@ -94,7 +94,7 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	strcat(pathMetadataBin, archivoMetadata);
 
 	// Leo el archivo
-	metadataBin = leerConfiguracion(pathMetadataBin);
+	t_config* metadataBin = leerConfiguracion(pathMetadataBin);
 
 	if (metadataBin == NULL){
 		printf("No se pudo leer el archivo Metadata/Metadata.bin");
@@ -107,6 +107,8 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	*MAGIC_NUMBER = config_get_string_value(metadataBin,"MAGIC_NUMBER" );
 
 	free(pathMetadataBin);
+
+	return metadataBin;
 
 	/*
 	printf("%i\n", *BLOCKS);
@@ -1043,7 +1045,7 @@ t_list* convertirAListaDeCoords(char* lineas){
 }
 
 int main(void) {
-	t_config* config = NULL;
+	//t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
 	char* PUNTO_MONTAJE;
 
@@ -1059,7 +1061,7 @@ int main(void) {
 	//Inicializar lista de semaforos pokemon
 	listaSemPokemon = list_create();
 
-	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER, config);
+	t_config* config = leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
 
 	// Testing
 	//printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
@@ -1081,10 +1083,9 @@ int main(void) {
     // printf("%s\n", pathFiles);
 
 	char* MAGIC_NUMBER;
-	t_config* metadataBin = NULL;
 
 	// Funcion para leer metadata.bin
-	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER, metadataBin);
+	t_config* metadataBin = leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
 
 	if (BLOCKS % 8 != 0){
 		printf("[Error] La cantidad de bloques debe ser multiplo de 8");
@@ -1237,9 +1238,14 @@ int main(void) {
 
 	//****************************************************************
 
-//	config_destroy(config);
-//	config_destroy(metadataBin);
-//	log_destroy(logger);
+	// Libero la config
+	if (config != NULL) config_destroy(config);
+
+	// Libero el config de metadatabin
+	if (metadataBin != NULL) config_destroy(metadataBin);
+
+	// Libero el logger
+	if (logger != NULL) log_destroy(logger);
 
 	return EXIT_SUCCESS;
 }

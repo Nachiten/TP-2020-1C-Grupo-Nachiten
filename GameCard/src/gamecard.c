@@ -328,7 +328,11 @@ char** leerBloquesPokemon(char* pokemon){
 		exit(6);
 	}
 
-	return config_get_array_value(datosMetadata, "BLOCKS");
+	char** arrayBloques = config_get_array_value(datosMetadata, "BLOCKS");
+
+	config_destroy(datosMetadata);
+
+	return arrayBloques;
 }
 
 // Retorna el SIZE de un pokemon existente
@@ -353,7 +357,11 @@ int leerSizePokemon(char* pokemon){
 		exit(6);
 	}
 
-	return config_get_int_value(datosMetadata, "SIZE");
+	int valorSize = config_get_int_value(datosMetadata, "SIZE");
+
+	config_destroy(datosMetadata);
+
+	return valorSize;
 }
 
 // Fijar los bloques del metadata.bin del pokemon a los dados

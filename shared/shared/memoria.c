@@ -484,35 +484,36 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 	uint32_t espacioLibre = 0;
 	uint32_t espacioOcupado = 0;
 	uint32_t control = 1;
-//	time_t fecha;
-//	time();
+	time_t fecha;
+	time(&fecha);
 
-	puts("Realizando control del estado de memoria y particiones...");
-	puts("----------------------------------------------------------");
-	printf("Dump solicitado a las: HS%s.\n",temporal_get_string_time());
+	log_info(dumpCache, "Realizando control del estado de memoria y particiones...");
+	log_info(dumpCache, "Dump solicitado: %s",ctime(&fecha));
+	log_info(dumpCache, "----------------------------------------------------------");
 
 	//recorro las particiones hasta la ultima
 	while(control == 1)
 	{
-		printf("Nº de particion: %u.\n", auxiliar->numero_de_particion);
+		log_info(dumpCache, "Nº de particion: %u.", auxiliar->numero_de_particion);
 		if(auxiliar->laParticion.estaLibre == 1)
 		{
-			puts("La partición está libre.");
+			log_info(dumpCache, "La partición está libre.");
 			espacioLibre += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion libre, suma el espacio "desperdiciado"
 		}
 		else
 		{
-			puts("La particion está en uso.");
+			log_info(dumpCache, "La particion está en uso.");
 			espacioOcupado += (auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior); //si hay una particion ocupada, suma el espacio en uso
 		}
-		printf("Número de víctima: %u.\n", auxiliar->numero_de_victima);
-		printf("Límite inferior de la partición: %u.\n", auxiliar->laParticion.limiteInferior);
-		printf("Límite superior de la partición: %u.\n", auxiliar->laParticion.limiteSuperior);
+		log_info(dumpCache, "Número de víctima: %u.", auxiliar->numero_de_victima);
+		log_info(dumpCache, "Límite inferior de la partición: %u.", auxiliar->laParticion.limiteInferior);
+		log_info(dumpCache, "Límite superior de la partición: %u.", auxiliar->laParticion.limiteSuperior);
+		log_info(dumpCache, "Tamaño: %u bytes.", auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior);
 		if(auxiliar->ID_MENSAJE_GUARDADO != -1)
 		{
-			printf("En esta partición se guardan los datos del mensaje ID: %i.\n", auxiliar->ID_MENSAJE_GUARDADO);
+			log_info(dumpCache, "En esta partición se guardan los datos del mensaje ID: %i.", auxiliar->ID_MENSAJE_GUARDADO);
 		}
-		puts("----------------------------------------------------------");
+		log_info(dumpCache, "----------------------------------------------------------");
 
 		//avanzo
 		if(auxiliar->sig_particion != NULL)
@@ -524,11 +525,11 @@ void revision_lista_particiones(lista_particiones* laLista, uint32_t tamanioMemo
 			control = 0;
 		}
 	}
-	printf("\nEspacio desperdiciado en particiones libres: %u.\n", espacioLibre);
-	printf("Espacio libre en CACHE (No particionado): %u.\n", (tamanioMemoria - espacioOcupado - espacioLibre));
-	printf("Espacio total libre: %u.\n", (tamanioMemoria - espacioOcupado));
+	log_info(dumpCache, "Espacio desperdiciado en particiones libres: %u.", espacioLibre);
+	log_info(dumpCache, "Espacio libre en CACHE (No particionado): %u.", (tamanioMemoria - espacioOcupado - espacioLibre));
+	log_info(dumpCache, "Espacio total libre: %u.", (tamanioMemoria - espacioOcupado));
 
-	puts("---No se tuvo en cuenta la fragmentación interna durante el checkeo---\n");
+	log_info(dumpCache, "---No se tuvo en cuenta la fragmentación interna durante el checkeo---\n");
 }
 
 lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanioMemoria, lista_particiones* laLista, uint32_t size, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog)
@@ -953,32 +954,32 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 	return resultado;
 }
 
-void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA)
+void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	switch(tipoMensaje)
 	{
 			case NEW:
-				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_NEW_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case APPEARED:
-				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_APPEARED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case GET:
-				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_GET_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case LOCALIZED:
-				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_LOCALIZED_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case CATCH:
-				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_CATCH_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case CAUGHT:
-				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA);
+				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -1002,7 +1003,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 
 }
 
-void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, New* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1030,9 +1031,10 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
-
 	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1041,7 +1043,7 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegida, Appeared* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1065,7 +1067,10 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1074,7 +1079,7 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Get* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1090,7 +1095,10 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1099,7 +1107,7 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegida, Localized* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t iterador = 0;
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
@@ -1128,7 +1136,10 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1137,7 +1148,7 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, Catch* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1161,7 +1172,10 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1170,7 +1184,7 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	verificacionPosicion(particionElegida->laParticion.limiteSuperior, desplazamiento);
 }
 
-void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA)
+void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida, Caught* estructura, uint32_t* NUMERO_VICTIMA, sem_t* semNumeroVictima)
 {
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
@@ -1190,7 +1204,10 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
 
+	//aumento su numero de victima
+	sem_wait(semNumeroVictima);
 	*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+	sem_post(semNumeroVictima);
 	particionElegida->numero_de_victima = *NUMERO_VICTIMA;
 
 	//me guardo a QUE ID pertenecen estos datos
@@ -1272,12 +1289,12 @@ void agregar_mensaje_a_Cache(void* CACHE, uint32_t tamanioMemoria, uint32_t tama
 	log_info(logger, "Inicio de la partición elegida: %u.", particionElegida->laParticion.limiteInferior);
 	sem_post(semLog);
 
-
-
 	//ahora que tenemos la particion, metemos los datos
-	//sem_wait(semCache); ToDO
-	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA);
-	//sem_post(semCache);
+	sem_wait(semCache);
+	sem_wait(semParticiones);
+	poner_en_particion(CACHE, particionElegida, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, semNumeroVictima);
+	sem_post(semParticiones);
+	sem_post(semCache);
 
 //PASO 3: profit?
 }
@@ -1301,32 +1318,32 @@ lista_particiones* buscarLaParticionDelMensaje(lista_particiones* laLista, int32
 	return auxiliar;
 }
 
-void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, void* estructura, codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	switch(tipoMensaje)
 	{
 			case NEW:
-				sacar_NEW_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_NEW_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case APPEARED:
-				sacar_APPEARED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_APPEARED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case GET:
-				sacar_GET_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_GET_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case LOCALIZED:
-				sacar_LOCALIZED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_LOCALIZED_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case CATCH:
-				sacar_CATCH_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_CATCH_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case CAUGHT:
-				sacar_CAUGHT_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+				sacar_CAUGHT_de_particion(CACHE, particionDelMensaje, estructura, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 				break;
 
 			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -1349,7 +1366,7 @@ void sacar_de_particion(void* CACHE, lista_particiones* particionDelMensaje, voi
 	}
 }
 
-void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje, New* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje, New* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1389,12 +1406,15 @@ void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Appeared* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Appeared* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1429,12 +1449,15 @@ void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMen
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Get* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Get* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1459,12 +1482,15 @@ void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Localized* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Localized* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1505,12 +1531,15 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Catch* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Catch* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1545,12 +1574,15 @@ void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaj
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Caught* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensaje, Caught* estructura, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
@@ -1580,12 +1612,15 @@ void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensa
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
 	{
+		//aumento su numero de victima
+		sem_wait(semNumeroVictima);
 		*NUMERO_VICTIMA = *NUMERO_VICTIMA + 1;
+		sem_post(semNumeroVictima);
 		particionDelMensaje->numero_de_victima = *NUMERO_VICTIMA;
 	}
 }
 
-uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO)
+uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* estructuraMensaje, int32_t ID_MENSAJE,codigo_operacion tipoMensaje, uint32_t* NUMERO_VICTIMA, char* ALGOR_REEMPLAZO, sem_t* semNumeroVictima)
 {
 	lista_particiones* particionDelMensaje;
 	int32_t particionEncontrada = -1;
@@ -1595,7 +1630,7 @@ uint32_t sacar_mensaje_de_Cache(void* CACHE, lista_particiones* laLista, void* e
 
 	if(particionEncontrada == 1)
 	{
-		sacar_de_particion(CACHE, particionDelMensaje, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, ALGOR_REEMPLAZO);
+		sacar_de_particion(CACHE, particionDelMensaje, estructuraMensaje, tipoMensaje, NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima);
 	}
 
 	else

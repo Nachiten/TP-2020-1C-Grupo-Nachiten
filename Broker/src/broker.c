@@ -105,7 +105,6 @@ int main(void) {
 	puts("****************************************************");
 
 	//preparo el espacio de memoria cache
-	//IMPORTANTE: el tamaño de memoria que le asignemos viene del archivo de config, en bytes, hay que actualizarlo segun vayamos avanzando con esto
 	CACHE = malloc(TAMANIO_MEM);
 	puts("Malloc de memoria completo");
 

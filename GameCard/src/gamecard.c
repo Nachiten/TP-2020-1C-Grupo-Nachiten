@@ -225,7 +225,6 @@ void crearMetadataPokemon(char* pokemon){
 
 	config_destroy(datosMetadata);
 
-	//free(pathMetadata);
 	free(pathCompleto);
 
 }

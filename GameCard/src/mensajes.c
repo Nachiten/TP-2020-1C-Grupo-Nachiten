@@ -79,6 +79,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			// Escribir los datos en los bloques correspondientes
 			escribirLineasEnBloques(listaBloques, listaDatos);
 
+			list_destroy(listaDatos);
+
 			// Fijo el SIZE=60
 			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
@@ -102,6 +104,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			// Fijo el string BLOCKS=[1,2,3]
 			fijarBloquesA(pokemon, listaBloques);
 
+			list_destroy(listaDatos);
+
 			// Fijo el SIZE=60
 			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
 
@@ -109,6 +113,8 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		} else {
 			printf("ERROR | La cantidad de bloques requeridos no puede ser menor al agregar un pokemon nuevo");
 		}
+
+		list_destroy(listaBloques);
 
 
 	} else {
@@ -194,6 +200,9 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 			t_list* listaDatosBloques = separarStringEnBloques(lineasModificadas, cantidadBloquesRequeridos);
 
 			escribirLineasEnBloques(listaBloques, listaDatosBloques);
+
+			list_destroy(listaDatosBloques);
+			list_destroy(listaBloques);
 
 			fijarSizeA(pokemon, strlen(lineasModificadas));
 

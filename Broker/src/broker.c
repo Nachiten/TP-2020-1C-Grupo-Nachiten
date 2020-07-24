@@ -229,7 +229,7 @@ int main(void) {
 
 	//ESTE ES LOCALIZED
 	//pesa 19
-	agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
+	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//pesa 29
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
@@ -238,13 +238,13 @@ int main(void) {
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 
 	//para pruebas de borrado
-	lista_particiones* particion0 = hoja_de_particiones;
+	//lista_particiones* particion0 = hoja_de_particiones;
 //	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
 //	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
 //	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
 //	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
 
-	borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
+	//borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 	//borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 	//borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
 	//borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
@@ -994,6 +994,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS);
 			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
+			puts("termine mi case Catch");
 			break;
 		case CAUGHT:
 			mensajeCaught = malloc(sizeAAllocar);
@@ -1174,6 +1175,7 @@ void esperar_cliente(int32_t socket_servidor)
 void iniciar_server(char* ip, char* puerto)
 {
 	int socket_servidor;
+	int activo = 1;
 
     struct addrinfo hints, *servinfo, *p;
 
@@ -1186,6 +1188,9 @@ void iniciar_server(char* ip, char* puerto)
     {
         if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
             continue;
+
+        //para que pueda reusar el socket si se cae
+        setsockopt(socket_servidor, SOL_SOCKET, SO_REUSEADDR, &activo,sizeof(activo));
 
         if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
             close(socket_servidor);

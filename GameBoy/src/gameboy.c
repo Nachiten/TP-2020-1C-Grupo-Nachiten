@@ -31,6 +31,34 @@ int main(int cantArg, char* arg[]) {
 //	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
 //	resultado_de_conexion(socket, logger, "BROKER");
 //
+//	//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
+//	New* nuevoPokemon = malloc(sizeof(New));
+//
+//	nuevoPokemon->nombrePokemon = "Hola";
+//	nuevoPokemon->largoNombre = strlen(nuevoPokemon->nombrePokemon);
+//	nuevoPokemon->posPokemon.x = 1; //cambiamos el string a int
+//	nuevoPokemon->posPokemon.y = 2; //cambiamos el string a int
+//	nuevoPokemon->cantPokemon = 3; //cambiamos el string a int
+//	nuevoPokemon->ID = 0;
+//	nuevoPokemon->corrID = -2;
+//
+//	//mandamos el mensaje
+//	mandar_mensaje(nuevoPokemon, NEW, socket);
+//	mandar_mensaje(nuevoPokemon, NEW, socket);
+//	mandar_mensaje(nuevoPokemon, NEW, socket);
+//	mandar_mensaje(nuevoPokemon, NEW, socket);
+//
+//	//libero la estructura que acabo de crear
+//	free(nuevoPokemon);
+
+
+
+
+
+
+
+
+
 //	if(socket != -1)//si y solo si se puedo conectar
 //	{
 //		//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
@@ -40,16 +68,16 @@ int main(int cantArg, char* arg[]) {
 //		estructuraSuscribirse->numeroCola = 1; //cambiamos el string a int
 //		estructuraDessuscribirse->numeroCola = 1; //cambiamos el string a int
 //
-//		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
-//		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
-//		listaRecibidos->siguiente = NULL;
+////		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
+////		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
+////		listaRecibidos->siguiente = NULL;
 //
 //		//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
 //		pthread_t hilo;
 //		HiloGameboy estructura;
 //		estructura.conexion = socket;
 //		estructura.log = logger;
-//		estructura.listaRecibidos = listaRecibidos;
+//		//estructura.listaRecibidos = listaRecibidos;
 //		estructura.cola = 1;
 //
 //		//mandamos el mensaje pidiendo suscribirse a la cola
@@ -63,7 +91,7 @@ int main(int cantArg, char* arg[]) {
 //		pthread_detach(hilo);
 //
 //		//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-//		sleep(1000);
+//		sleep(5000);
 //
 //
 //		cerrar_conexion(socket);
@@ -77,15 +105,15 @@ int main(int cantArg, char* arg[]) {
 //		free(estructuraDessuscribirse);
 //
 //		//liberamos la lista de IDs recibidas
-//		mensajesRecibidos* auxiliar = listaRecibidos;
-//		while(listaRecibidos->siguiente != NULL)
-//		{
-//			listaRecibidos = listaRecibidos->siguiente;
-//			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-//			free(auxiliar);
-//			auxiliar = listaRecibidos;
-//		}
-//		free(auxiliar);
+////		mensajesRecibidos* auxiliar = listaRecibidos;
+////		while(listaRecibidos->siguiente != NULL)
+////		{
+////			listaRecibidos = listaRecibidos->siguiente;
+////			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+////			free(auxiliar);
+////			auxiliar = listaRecibidos;
+////		}
+////		free(auxiliar);
 //	}
 
 
@@ -93,17 +121,6 @@ int main(int cantArg, char* arg[]) {
 
 
 
-
-
-
-
-
-
-
-
-
-	//sacar
-	//switcher = 45;
 
 
 	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
@@ -450,16 +467,16 @@ int main(int cantArg, char* arg[]) {
 							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 
-							//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
-							mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
-							listaRecibidos->siguiente = NULL;
+//							//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
+//							mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
+//							listaRecibidos->siguiente = NULL;
 
 							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
 							pthread_t hilo;
 							HiloGameboy estructura;
 							estructura.conexion = socket;
 							estructura.log = logger;
-							estructura.listaRecibidos = listaRecibidos;
+							//estructura.listaRecibidos = listaRecibidos;
 							estructura.cola = cambia_a_int(arg[2]);
 
 							//mandamos el mensaje pidiendo suscribirse a la cola
@@ -485,16 +502,16 @@ int main(int cantArg, char* arg[]) {
 							free(estructuraSuscribirse);
 							free(estructuraDessuscribirse);
 
-							//liberamos la lista de IDs recibidas
-							mensajesRecibidos* auxiliar = listaRecibidos;
-							while(listaRecibidos->siguiente != NULL)
-							{
-								listaRecibidos = listaRecibidos->siguiente;
-								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-								free(auxiliar);
-								auxiliar = listaRecibidos;
-							}
-							free(auxiliar);
+//							//liberamos la lista de IDs recibidas
+//							mensajesRecibidos* auxiliar = listaRecibidos;
+//							while(listaRecibidos->siguiente != NULL)
+//							{
+//								listaRecibidos = listaRecibidos->siguiente;
+//								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
+//								free(auxiliar);
+//								auxiliar = listaRecibidos;
+//							}
+//							free(auxiliar);
 						}
 					}
 					else
@@ -517,7 +534,8 @@ int main(int cantArg, char* arg[]) {
 	return EXIT_SUCCESS;
 }
 
-void hilo_recibir_mensajes(HiloGameboy* estructura){
+void hilo_recibir_mensajes(HiloGameboy* estructura)
+{
 	int32_t size = 1;
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
@@ -534,7 +552,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 	Catch* mensajeCatch;
 	Caught* mensajeCaught;
 
-	while(tamanioRecibido != 0 || size != 0)
+	while(tamanioRecibido > 0 || size > 0)
 	{
 		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
@@ -548,7 +566,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 				mensajeNew = malloc(sizeof(New));
 				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
 				IDMensajeRecibido = mensajeNew->ID;
-				//mandarte el ACK
+				//mandarte el ACKToDo
 				free(mensajeNew->nombrePokemon);
 				free(mensajeNew);
 				break;
@@ -612,43 +630,43 @@ void hilo_recibir_mensajes(HiloGameboy* estructura){
 				break;
 		}
 
-		//siempre que me haya llegado un mensaje
-		if(IDMensajeRecibido != -1)
-		{
-			//recorro la lista de IDs de mensajes recibidos a ver si ya me llego
-			while(auxiliar != NULL && match != 0)
-			{
-				if(IDMensajeRecibido == auxiliar->ID_MENSAJE_RECIBIDO)//comparo las IDs para ver si ya habia llegado
-				{
-					match = 1;//hubo un match
-				}
-				auxiliar = auxiliar->siguiente;
-			}
-			auxiliar = estructura->listaRecibidos;
-
-			//si no hubo un match lo tengo que loguear y agregar a la lista
-			if(match != 1)
-			{
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				//avanzo hasta el ultimo elemento
-				while(auxiliar->siguiente != NULL)
-				{
-					auxiliar = auxiliar->siguiente;
-				}
-				//si estoy en la primera posicion
-				if(auxiliar == estructura->listaRecibidos)
-				{	//escribo la ID
-					auxiliar->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
-				}
-				//ya hay elementos en la lista
-				else
-				{	//creo un elemento nuevo y escribo la ID
-					auxiliar->siguiente = malloc(sizeof(mensajesRecibidos));
-					auxiliar->siguiente->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
-				}
-			}
-			auxiliar = estructura->listaRecibidos;
-			match = 0;
-		}
+//		//siempre que me haya llegado un mensaje
+//		if(IDMensajeRecibido != -1)
+//		{
+//			//recorro la lista de IDs de mensajes recibidos a ver si ya me llego
+//			while(auxiliar != NULL && match != 0)
+//			{
+//				if(IDMensajeRecibido == auxiliar->ID_MENSAJE_RECIBIDO)//comparo las IDs para ver si ya habia llegado
+//				{
+//					match = 1;//hubo un match
+//				}
+//				auxiliar = auxiliar->siguiente;
+//			}
+//			auxiliar = estructura->listaRecibidos;
+//
+//			//si no hubo un match lo tengo que loguear y agregar a la lista
+//			if(match != 1)
+//			{
+//				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+//				//avanzo hasta el ultimo elemento
+//				while(auxiliar->siguiente != NULL)
+//				{
+//					auxiliar = auxiliar->siguiente;
+//				}
+//				//si estoy en la primera posicion
+//				if(auxiliar == estructura->listaRecibidos)
+//				{	//escribo la ID
+//					auxiliar->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
+//				}
+//				//ya hay elementos en la lista
+//				else
+//				{	//creo un elemento nuevo y escribo la ID
+//					auxiliar->siguiente = malloc(sizeof(mensajesRecibidos));
+//					auxiliar->siguiente->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
+//				}
+//			}
+//			auxiliar = estructura->listaRecibidos;
+//			match = 0;
+//		}
 	}
 }

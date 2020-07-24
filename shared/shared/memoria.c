@@ -100,7 +100,7 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 //				laLista = laLista->anter_particion;
 //			}
 
-			printf("limite sup: %u\n",laLista->laParticion.limiteSuperior);
+			//printf("limite sup: %u\n",laLista->laParticion.limiteSuperior);
 		}
 		corregirNumerosYParticiones(laLista, numeroParticionOriginal);
 		return laLista;

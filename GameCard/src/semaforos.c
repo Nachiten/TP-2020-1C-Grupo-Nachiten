@@ -92,6 +92,15 @@ void crearSemaforosDePokemonesExistentes()
 
 		crearSemaforoPokemon(unPokemon);
 	}
+
+	i = 0;
+	// Destruir lista
+	for (i=0; i < list_size(listaPokemons); i++){
+		char* elemento = list_remove(listaPokemons, i);
+		free(elemento);
+	}
+
+	list_destroy(listaPokemons);
 }
 
 

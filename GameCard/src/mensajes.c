@@ -77,7 +77,15 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 			// Escribir los datos en los bloques correspondientes
 			escribirLineasEnBloques(listaBloques, listaDatos);
 
+			// Borrar elementos de la lista antes de borrar lista
+			int i;
+			for (i=0; i < list_size(listaDatos); i++){
+				char* elemento = list_remove(listaDatos, i);
+				free(elemento);
+			}
+
 			list_destroy(listaDatos);
+
 
 			// Fijo el SIZE=60
 			fijarSizeA(pokemon, strlen(lineasNuevasMasPokemon));
@@ -101,6 +109,13 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 			// Fijo el string BLOCKS=[1,2,3]
 			fijarBloquesA(pokemon, listaBloques);
+
+			// Borrar elementos de la lista antes de borrar lista
+			int i;
+			for (i=0; i < list_size(listaDatos); i++){
+				char* elemento = list_remove(listaDatos, i);
+				free(elemento);
+			}
 
 			list_destroy(listaDatos);
 
@@ -203,6 +218,13 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 			escribirLineasEnBloques(listaBloques, listaDatosBloques);
 
+			// Sacar
+			int i;
+			for (i=0; i < list_size(listaDatosBloques); i++){
+				char* elemento = list_remove(listaDatosBloques, i);
+				free(elemento);
+			}
+
 			list_destroy(listaDatosBloques);
 			list_destroy(listaBloques);
 
@@ -265,7 +287,20 @@ void mensajeGet(char* pokemon, int IDMensaje){
 
 	Localized* miStruct = generarStructLocalized(pokemon, listaCoords, IDMensaje);
 
+	// Liberar lista de enteros
+
+	int i;
+	for (i=0; i < list_size(listaCoords); i++){
+		int* elemento = list_remove(listaCoords, i);
+		free(elemento);
+	}
+
+	list_destroy(listaCoords);
+
 	enviarMensajeLocalized(pokemon, miStruct, IDMensaje);
+
+	//free(miStruct->nombrePokemon);
+	free(miStruct);
 
 
 }
@@ -289,6 +324,8 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	structAEnviar->posPokemon.y = posY;
 
 	//mandar_mensaje(structAEnviar, APPEARED, );
+
+	free(structAEnviar);
 }
 
 void enviarMensajeCaught(char* pokemon, int resultado, int IDMensaje){

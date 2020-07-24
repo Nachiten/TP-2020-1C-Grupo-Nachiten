@@ -241,6 +241,9 @@ char* separarCoord(char* unString){
 
 	token = strsep(&stringModificado, "=");
 
+	// TODO | Ojo al piojo
+	//free(stringModificado);
+
 	return token;
 }
 
@@ -276,11 +279,18 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 		numLinea++;
 	}
 
-	int i = 0;
-	while( arrayLineas[i] != NULL){
-		free(arrayLineas[i]);
-		i++;
+	int cantLineas = 0;
+	while( arrayLineas[cantLineas] != NULL){
+		cantLineas++;
 	}
+
+	while( cantLineas > 0 && arrayLineas[cantLineas] != NULL){
+		free(arrayLineas[cantLineas]);
+		cantLineas--;
+	}
+
+	free(arrayLineas);
+
 
 	return retorno;
 }
@@ -807,6 +817,8 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 		i++;
 	}
 
+	free(stringsSeparados);
+
 	free(charConvertido);
 
 
@@ -861,6 +873,8 @@ void abrirArchivoPokemon(char* pokemon){
 		sleep(TIEM_REIN_OPERACION);
 
 	}
+
+	free(pathMetadataPokemon);
 
 }
 

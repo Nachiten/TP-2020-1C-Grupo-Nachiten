@@ -1336,5 +1336,10 @@ int main(void) {
 	*/
 
 	//****************************************************************
+
+//	config_destroy(config);
+//	config_destroy(metadataBin);
+//	log_destroy(logger);
+
 	return EXIT_SUCCESS;
 }

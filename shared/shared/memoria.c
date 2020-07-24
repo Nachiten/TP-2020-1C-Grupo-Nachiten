@@ -260,7 +260,7 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 			if((particionABorrar->sig_particion->laParticion.estaLibre == 1 ) && ((particionABorrar->laParticion.limiteSuperior - particionABorrar->laParticion.limiteInferior) == (particionABorrar->sig_particion->laParticion.limiteSuperior - particionABorrar->sig_particion->laParticion.limiteInferior)))
 			{
 				resultado = particionABorrar->numero_de_particion;
-
+				correctorDeNumeros = particionABorrar;
 				auxiliame = particionABorrar;
 
 				//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
@@ -278,7 +278,20 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 				//apunto a la siguiente de mi siguiente
 				auxiliame->sig_particion = particionABorrar->sig_particion;
 
+				consolidado = 1;
 				printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
+			}
+
+			if(consolidado == 1)
+			{
+				while(correctorDeNumeros != NULL)
+				{
+					correctorDeNumeros->numero_de_particion = numeroACorregir;
+					numeroACorregir++;
+					correctorDeNumeros = correctorDeNumeros->sig_particion;
+				}
+				correctorDeNumeros = NULL;
+				free(particionABorrar);
 			}
 
 			//ahora hago lo mismo desde el principio en caso de haya que consolidar mas particiones
@@ -286,12 +299,14 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 			while(particionABorrar->sig_particion != NULL)
 			{
 				numPartSig = particionABorrar->sig_particion->numero_de_particion;
+				numeroACorregir = 0;
+				consolidado = 0;
 
 				//si la particion siguiente a la que quiero borrar esta libre, y tienen el mismo tamaño las consolido (Y BORRO LA SIGUIENTE)
 				if((particionABorrar->sig_particion->laParticion.estaLibre == 1 ) && ((particionABorrar->laParticion.limiteSuperior - particionABorrar->laParticion.limiteInferior) == (particionABorrar->sig_particion->laParticion.limiteSuperior - particionABorrar->sig_particion->laParticion.limiteInferior)))
 				{
 					resultado = particionABorrar->numero_de_particion;
-
+					correctorDeNumeros = particionABorrar;
 					auxiliame = particionABorrar;
 
 					//avanzo particionABorrar a la siguiente (porque es la que voy a borrar en realidad)
@@ -309,7 +324,21 @@ void consolidarParticion(lista_particiones* laLista, lista_particiones* particio
 					//apunto a la siguiente de mi siguiente
 					auxiliame->sig_particion = particionABorrar->sig_particion;
 
+					consolidado = 1;
 					printf("La particion %u fue consolidada con la particion %u y ahora se llaman partición %u.\n\n", numPart, numPartSig, resultado);
+
+					if(consolidado == 1)
+					{
+						while(correctorDeNumeros != NULL)
+						{
+							correctorDeNumeros->numero_de_particion = numeroACorregir;
+							numeroACorregir++;
+							correctorDeNumeros = correctorDeNumeros->sig_particion;
+						}
+						correctorDeNumeros = NULL;
+						free(particionABorrar);
+					}
+					particionABorrar = laLista;
 				}
 			}
 		}

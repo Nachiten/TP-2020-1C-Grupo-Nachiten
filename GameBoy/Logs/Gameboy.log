@@ -19420,3 +19420,4 @@
 [INFO] 18:57:43:354 Gameboy/(30000:30000): Suscripto a la cola de mensajes: 1
 [INFO] 18:57:46:408 Gameboy/(30005:30005): Conexión establecida con socket de BROKER
 [INFO] 18:57:46:414 Gameboy/(30000:30003): Recibido un nuevo mensaje en la cola: 1
+[INFO] 19:26:39:153 Gameboy/(4077:4077): Conexión establecida con socket de BROKER

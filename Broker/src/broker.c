@@ -1071,7 +1071,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case DESSUSCRIPCION:
 			mensajeDessuscrip = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeDessuscrip, cod_op, socket_cliente);
-//todo preguntar si estos logs pueden quedarse
+
 			switch(mensajeDessuscrip->numeroCola){
 			case NEW:
 				sem_wait(semNew);
@@ -1144,22 +1144,24 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 
 void serve_client(int32_t* socket)
 {
-	int32_t sizeAAllocar;
-	codigo_operacion cod_op;
+	while(1){
+		int32_t sizeAAllocar;
+		codigo_operacion cod_op;
 
-	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-	bytesRecibidos(recibidos);
+		int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+		bytesRecibidos(recibidos);
 
-	int32_t recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
-	bytesRecibidos(recibidosSize);
-	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+		int32_t recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+		bytesRecibidos(recibidosSize);
+		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
-	if(recibidos == -1 || recibidosSize == -1)
-	{
-		cod_op = -1;
+		if(recibidos == -1 || recibidosSize == -1)
+		{
+			cod_op = -1;
+		}
+
+		process_request(cod_op, *socket, sizeAAllocar);
 	}
-
-	process_request(cod_op, *socket, sizeAAllocar);
 }
 
 void esperar_cliente(int32_t socket_servidor)

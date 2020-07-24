@@ -646,6 +646,7 @@ char* leerContenidoDeUnBloque(char* bloqueALeer, int cantBytesALeer){
 	fread(datosLeidos, cantBytesALeer + 1, 1, myFile);
 
 	fclose(myFile);
+	free(pathDeArchivos);
 
 	//printf("Linea leida:\n %s\n", datosLeidos);
 

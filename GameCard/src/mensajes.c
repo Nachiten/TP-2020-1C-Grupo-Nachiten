@@ -116,6 +116,7 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 
 		if (lineasNuevasMasPokemon != NULL) free(lineasNuevasMasPokemon);
 
+		free(lineasLeidas);
 
 	} else {
 		escribirLineaNuevaPokemon(pokemon, posX, posY, cantidad);

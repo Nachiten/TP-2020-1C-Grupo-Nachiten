@@ -270,10 +270,17 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 			retorno = numLinea;
 		}
 
+		free(lineaActualConvertida);
+		free(lineaConvertidaABuscar);
+
 		numLinea++;
 	}
 
-	free(arrayLineas);
+	int i = 0;
+	while( arrayLineas[i] != NULL){
+		free(arrayLineas[i]);
+		i++;
+	}
 
 	return retorno;
 }
@@ -791,8 +798,18 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 	free(stringAEscribir);
 	free(stringAEncontrar);
 	free(primeraMitadDelString);
-	free(stringsSeparados);
+
+	// Liberar la memoria del array de strings
+	int i;
+	while (stringsSeparados[i] != NULL)
+	{
+		free(stringsSeparados[i]);
+		i++;
+	}
+
 	free(charConvertido);
+
+
 
 	return stringARetornar;
 }

@@ -209,6 +209,8 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 			fijarSizeA(pokemon, strlen(lineasModificadas));
 
 			resultado = 1;
+
+			free(lineasModificadas);
 		} else {
 			//printf("CATCH | Las coordenadas buscadas no existen dentro del archivo\n");
 			log_warning(logger, "CATCH | Las coordenadas %i-%i no existen dentro del archivo %s", posX, posY, pokemon);

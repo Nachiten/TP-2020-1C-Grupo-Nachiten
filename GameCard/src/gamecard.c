@@ -1076,7 +1076,6 @@ t_list* convertirAListaDeCoords(char* lineas){
 
 int main(void) {
 	//t_config* config = NULL;
-	int TIEM_REIN_CONEXION;
 	char* PUNTO_MONTAJE;
 
 	socketNew = -1;
@@ -1149,7 +1148,7 @@ int main(void) {
 	mensajeNew(pikachu, 1, 15, 8, 1);
 	mensajeNew(pikachu, 7, 555, 1, 2);
 	mensajeNew(pikachu, 199, 9915, 5, 3);
-//
+
 //	mensajeCatch(pikachu, 1, 15, 1);
 //
 //	mensajeGet(pikachu, 1);
@@ -1280,10 +1279,10 @@ int main(void) {
 
 //	pthread_t hiloGameBoy;
 //
-//	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+//	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);1
 //
 //	// CIERRO HILOS
-  pthread_join(hiloBroker, NULL);
+    pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

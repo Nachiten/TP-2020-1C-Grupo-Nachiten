@@ -36,6 +36,7 @@ char* pathFiles;
 int BLOCKS;
 int BLOCK_SIZE;
 int TIEM_REIN_OPERACION;
+int TIEM_REIN_CONEXION;
 char* IP_BROKER;
 char* PUERTO_BROKER;
 

@@ -12,8 +12,8 @@ void comenzarEscuchaGameBoy(){
 void comenzarConexionConBroker(datosHiloBroker* datos){
 
 	// CONEXION Y ESPERAR MENSAJES DE BROKER
-	char* IP_BROKER = datos->IP_BROKER;
-	char* PUERTO_BROKER = datos->PUERTO_BROKER;
+	//char* IP_BROKER = datos->IP_BROKER;
+	//char* PUERTO_BROKER = datos->PUERTO_BROKER;
 	int TIEM_REIN_CONEXION = datos->TIEM_REIN_CONEXION;
 
 	t_log* logger = datos->logger;
@@ -22,10 +22,19 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	socketCatch = conectarseABroker(logger, CATCH);
 	socketGet = conectarseABroker(logger, GET);
 
-	while (socketNew == -1 || socketCatch == -1 || socketGet == -1){
+	while (socketNew == -1){
+		// TODO | Son 3 ifs distintos
 		sleep(TIEM_REIN_CONEXION);
 		socketNew = conectarseABroker(logger, NEW);
+	}
+
+	while (socketCatch == -1){
+		sleep(TIEM_REIN_CONEXION);
 		socketCatch = conectarseABroker(logger, CATCH);
+	}
+
+	while(socketGet == -1){
+		sleep(TIEM_REIN_CONEXION);
 		socketGet = conectarseABroker(logger, GET);
 	}
 
@@ -33,12 +42,23 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	printf("Socket Catch: %i\n", socketCatch);
 	printf("Socket Get: %i\n", socketGet);
 
-	while(1)
-	{
-		esperarMensajes(socketGet, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, GET);
-		esperarMensajes(socketNew, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, NEW);
-		esperarMensajes(socketCatch, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, CATCH);
-	}
+	pthread_t hiloGet;
+	pthread_t hiloNew;
+	pthread_t hiloCatch;
+
+	datosHiloColas datosGet = {socketGet, GET};
+	datosHiloColas datosNew = {socketGet, GET};
+	datosHiloColas datosCatch = {socketGet, GET};
+
+	// Levanto hilos para escuchar colas (cada uno tiene un while)
+	pthread_create(&hiloGet  , NULL, (void*)esperarMensajes, &datosGet);
+	pthread_create(&hiloNew  , NULL, (void*)esperarMensajes, &datosNew);
+	pthread_create(&hiloCatch, NULL, (void*)esperarMensajes, &datosCatch);
+
+	pthread_join(hiloGet, NULL);
+	pthread_join(hiloNew, NULL);
+	pthread_join(hiloCatch, NULL);
+
 
 	puts("sali de esperar mensaje");
 
@@ -83,99 +103,106 @@ void serve_client(int32_t* socket)
 	}
 }
 
-void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* logger, int TIEM_REIN_CONEXION, codigo_operacion nombreCola){
+void esperarMensajes(datosHiloColas* datosHiloColas){
 
-	codigo_operacion cod_op;
-	uint32_t desconexion = 1;
+	codigo_operacion nombreCola = datosHiloColas->cola;
+	int socketCola = datosHiloColas->socket;
 
-	int32_t recibidosCodOP = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-	bytesRecibidos(recibidosCodOP);
+	while(1){
+		codigo_operacion cod_op;
+		uint32_t desconexion = 1;
 
-	int32_t sizeAAllocar;
+		printf("Esperando mensajes de la cola %i", nombreCola);
+		int32_t recibidosCodOP = recv(socketCola, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+		bytesRecibidos(recibidosCodOP);
 
-	//en caso de que haya fallado la conexion del COD OP
-	while( (recibidosCodOP == -1) || (desconexion == -1) )
-	{
-		sleep(TIEM_REIN_CONEXION);
-		desconexion = conectarseABroker(logger, nombreCola);
-		if(desconexion != -1)
+		int32_t sizeAAllocar;
+
+		//en caso de que haya fallado la conexion del COD OP
+		while( (recibidosCodOP == -1) || (desconexion == -1) )
 		{
-			recibidosCodOP = recv(socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-			bytesRecibidos(recibidosCodOP);
+			sleep(TIEM_REIN_CONEXION);
+			desconexion = conectarseABroker(logger, nombreCola);
+			if(desconexion != -1)
+			{
+				recibidosCodOP = recv(socketCola, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+				bytesRecibidos(recibidosCodOP);
+			}
 		}
-	}
 
-	int32_t recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
-	bytesRecibidos(recibidosSize);
+		int32_t recibidosSize = recv(socketCola, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+		bytesRecibidos(recibidosSize);
 
-	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
-	//en caso de que haya fallado la conexion de la variable SIZE
-	while((recibidosSize == -1) || (desconexion == -1))
-	{
-		sleep(TIEM_REIN_CONEXION);
-		desconexion = conectarseABroker(logger, nombreCola);
-		if(desconexion != -1)
+		//en caso de que haya fallado la conexion de la variable SIZE
+		while((recibidosSize == -1) || (desconexion == -1))
 		{
-			recibidosSize = recv(socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
-			bytesRecibidos(recibidosSize);
+			sleep(TIEM_REIN_CONEXION);
+			desconexion = conectarseABroker(logger, nombreCola);
+			if(desconexion != -1)
+			{
+				recibidosSize = recv(socketCola, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+				bytesRecibidos(recibidosSize);
+			}
 		}
-	}
 
-	switch (cod_op)
-	{
-	 	case NEW: ;
-			New* mensajeNewRecibido = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeNewRecibido, cod_op, socket);
+		switch (cod_op)
+		{
+			case NEW: ;
+				New* mensajeNewRecibido = malloc(sizeAAllocar);
+				recibir_mensaje(mensajeNewRecibido, cod_op, socketCola);
 
-			printf("Termine de recibir mensaje new sin explotar\n");
+				printf("Termine de recibir mensaje new sin explotar\n");
 
-			// cola = 1;
+				// cola = 1;
 
-//			typedef struct {
-//				int32_t id_mensaje;
-//				int colaMensajes;
-//			}confirmacionMensaje;
+	//			typedef struct {
+	//				int32_t id_mensaje;
+	//				int colaMensajes;
+	//			}confirmacionMensaje;
 
-//			confirmacionMensaje* ackBroker = malloc(sizeAAllocar);
-//
-//			ackBroker->colaMensajes = NEW;
-//			ackBroker->id_mensaje = mensajeNewRecibido->ID;
-//
-//			// TODO : Explota al tratar de mandar este mensaje
-//			mandar_mensaje(ackBroker, CONFIRMACION, socket);
+	//			confirmacionMensaje* ackBroker = malloc(sizeAAllocar);
+	//
+	//			ackBroker->colaMensajes = NEW;
+	//			ackBroker->id_mensaje = mensajeNewRecibido->ID;
+	//
+	//			// TODO : Explota al tratar de mandar este mensaje
+	//			mandar_mensaje(ackBroker, CONFIRMACION, socket);
 
-			//printf("Termine de mandar ack sin explotar\n");
+				//printf("Termine de mandar ack sin explotar\n");
 
-			char* pokemon = mensajeNewRecibido->nombrePokemon;
-			int posX = mensajeNewRecibido->posPokemon.x;
-			int posY = mensajeNewRecibido->posPokemon.y;
-			int cantidad = mensajeNewRecibido->cantPokemon;
+				char* pokemon = mensajeNewRecibido->nombrePokemon;
+				int posX = mensajeNewRecibido->posPokemon.x;
+				int posY = mensajeNewRecibido->posPokemon.y;
+				int cantidad = mensajeNewRecibido->cantPokemon;
 
-			int IDMensaje = mensajeNewRecibido->ID;
+				int IDMensaje = mensajeNewRecibido->ID;
 
-			mensajeNew( pokemon , posX, posY, cantidad, IDMensaje );
+				mensajeNew( pokemon , posX, posY, cantidad, IDMensaje );
 
-			break;
-		case GET: ;
-			Get* mensajeGetRecibido = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeGetRecibido, cod_op, socket);
+				break;
+			case GET: ;
+				Get* mensajeGetRecibido = malloc(sizeAAllocar);
+				recibir_mensaje(mensajeGetRecibido, cod_op, socketCola);
 
-			printf("Termine de recibir mensaje new sin explotar\n");
+				printf("Termine de recibir mensaje new sin explotar\n");
 
-			mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
-
-			break;
-		case CATCH: ;
-			Catch* mensajeCatchRecibido = malloc(sizeAAllocar);
-			recibir_mensaje(mensajeCatchRecibido, cod_op, socket);
-
-			printf("Termine de recibir mensaje new sin explotar\n");
+				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
 
 			break;
-		default:
-			printf("No deberia entrar aca D:");
+				case CATCH: ;
+				Catch* mensajeCatchRecibido = malloc(sizeAAllocar);
+				recibir_mensaje(mensajeCatchRecibido, cod_op, socketCola);
+
+				printf("Termine de recibir mensaje new sin explotar\n");
+
 			break;
+			default:
+				printf("No deberia entrar aca D:");
+				break;
+		}
+
 	}
 
 }

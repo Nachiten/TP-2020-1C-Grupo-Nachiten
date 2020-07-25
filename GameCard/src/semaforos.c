@@ -86,12 +86,16 @@ void crearSemaforosDePokemonesExistentes()
 
 	int i;
 
-	for(i= 0; i <list_size(listaPokemons); i++)
+	int cantElementos = list_size(listaPokemons);
+
+	for(i = cantElementos - 1; i >= 0; i--)
 	{
-		char* unPokemon = list_get(listaPokemons, i);
+		char* unPokemon = list_remove(listaPokemons, i);
 
 		crearSemaforoPokemon(unPokemon);
 	}
+
+	list_destroy(listaPokemons);
 }
 
 

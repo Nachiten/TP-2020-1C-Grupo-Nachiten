@@ -80,6 +80,9 @@ void liberarUnBloque(int index){
 	// Se hace el signal luego de guardar el bitarray en archivo
 	sem_post(semBitmap);
 
+	bitarray_destroy(bitArrayBloques);
+	free(BITARRAY);
+
 }
 
 // Obtiene "cantidad" de bloques libres (bits = 0) del bitmap
@@ -134,6 +137,9 @@ t_list* obtenerPrimerosLibresDeBitmap(int cantidad){
 	// Se hace el signal luego de guardar el bitarray en archivo
 	sem_post(semBitmap);
 
+	free(BITARRAY_ARCHIVO);
+	bitarray_destroy(bitArray);
+
 	return listaNums;
 }
 
@@ -157,7 +163,7 @@ void printearBitArray(){
 
 	printf("\n");
 
-	//bitarray_destroy(bitArray);
-	//free(BITARRAY_ARCHIVO);
+	bitarray_destroy(bitArray);
+	free(BITARRAY_ARCHIVO);
 
 }

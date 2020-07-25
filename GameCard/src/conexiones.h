@@ -22,12 +22,14 @@ void comenzarEscuchaGameBoy();
 void comenzarConexionConBroker(datosHiloBroker*);
 // Conexiones
 void serve_client(int32_t*);
-void esperarMensajes(int, char*, char*, t_log*, int);
+void esperarMensajes(int, char*, char*, t_log*, int, codigo_operacion);
 void escuchoSocket(int32_t); //necesario para recibir cosas desde ESE socket
 void esperar_conexiones(int32_t);
 
-int conectarseABroker(char*, char*, t_log*);
+int conectarseABroker(t_log*, codigo_operacion);
 void process_request(codigo_operacion, int32_t);
+void suscribirseAUnaCola(int32_t, codigo_operacion);
+int escucharGameBoy(char*, char*, t_log*);
 
 
 #endif /* SRC_CONEXIONES_H_ */

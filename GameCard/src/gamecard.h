@@ -36,8 +36,12 @@ char* pathFiles;
 int BLOCKS;
 int BLOCK_SIZE;
 int TIEM_REIN_OPERACION;
+char* IP_BROKER;
+char* PUERTO_BROKER;
 
-int socketBroker;
+int socketNew;
+int socketGet;
+int socketCatch;
 
 typedef struct semaforoPokemon{
 	sem_t* semaforo;
@@ -45,6 +49,7 @@ typedef struct semaforoPokemon{
 }semPokemon;
 
 t_list* listaSemPokemon;
+t_log* logger;
 
 // Leer bloques pokemon
 char* leerContenidoBloquesPokemon(char**, int);
@@ -65,9 +70,8 @@ void crearPokemonSiNoExiste(char* );
 void escribirDatoEnBloque(char*, int);
 void escribirLineaNuevaPokemon(char*, int, int, int);
 void escribirLineasEnBloques(t_list*, t_list*);
-void leerConfig(int*, int* ,char** ,char** ,char**, t_config*);
-void leerMetadataBin(char*, int* , int* , char**, t_config*);
-void leerUnPokemon(char*, char*);
+t_config* leerConfig(int*, int* ,char** ,char** ,char**);
+t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER);
 
 int cantidadDeBloquesQueOcupa(int);
 int cantidadDeElementosEnArray(char** array);

@@ -46,9 +46,9 @@
 //	printf("Hilo 3 cerro el archivo pikachu\n");
 //}
 
-void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER, t_config* config){
+t_config* leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER){
 
-	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
+	t_config* config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
 
 	if (config == NULL){
 		printf("No se pudo leer la config!!");
@@ -77,10 +77,10 @@ void leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_
 		printf("No se ha podido leer el puerto_broker de la config");
 	}
 
-	//config_destroy(config);
+	return config;
 }
 
-void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER, t_config* metadataBin){
+t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER){
 
 	// Nombre del archivo metadata
 	char* archivoMetadata = "/Metadata.bin";
@@ -94,7 +94,7 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 	strcat(pathMetadataBin, archivoMetadata);
 
 	// Leo el archivo
-	metadataBin = leerConfiguracion(pathMetadataBin);
+	t_config* metadataBin = leerConfiguracion(pathMetadataBin);
 
 	if (metadataBin == NULL){
 		printf("No se pudo leer el archivo Metadata/Metadata.bin");
@@ -108,42 +108,13 @@ void leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MA
 
 	free(pathMetadataBin);
 
+	return metadataBin;
+
 	/*
 	printf("%i\n", *BLOCKS);
 	printf("%i\n", *BLOCK_SIZE);
 	printf("%s\n", *MAGIC_NUMBER);
 	*/
-}
-
-//TODO No terminado
-void leerUnPokemon(char* pathFiles, char* pokemon){
-
-	char* metadataBin = "/Metadata.bin";
-	// + 2 por el \0 y la "/"
-	char* pathPokemonMetadata = malloc(strlen(pathFiles) + strlen(pokemon) + strlen(metadataBin) + 2);
-
-	strcpy(pathPokemonMetadata, pathFiles);
-	strcat(pathPokemonMetadata, "/");
-	// TODO se debe chequear antes de esto q la carpeta del pokemon existe | si no existe se crea
-	strcat(pathPokemonMetadata, pokemon);
-	// TODO idem punto anterior. Si el metadata no existe debe crearse
-	strcat(pathPokemonMetadata, metadataBin);
-
-	t_config* metadataPokemon;
-
-	metadataPokemon = leerConfiguracion(pathPokemonMetadata);
-
-	printf("Path pokemonMetadata: %s\n", pathPokemonMetadata);
-
-	config_set_value(metadataPokemon, "OPEN" , "N");
-	//config_remove_key(metadataPokemon, "DIRECTORY");
-	int numeroSize = config_get_int_value(metadataPokemon, "SIZE");
-	// TODO : Hacer que se pueda leer y escribir los archivos metadata.bin de los pokemons
-
-	printf("%i\n", numeroSize);
-
-	// path: {puntoMontaje}/Files/Pikachu/Metadata.bin
-
 }
 
 // Checkear si existe un determinado pokemon dentro de la carpeta Files/
@@ -223,7 +194,6 @@ void crearMetadataPokemon(char* pokemon){
 
 	config_destroy(datosMetadata);
 
-	//free(pathMetadata);
 	free(pathCompleto);
 
 }
@@ -271,6 +241,9 @@ char* separarCoord(char* unString){
 
 	token = strsep(&stringModificado, "=");
 
+	// TODO | Ojo al piojo
+	//free(stringModificado);
+
 	return token;
 }
 
@@ -281,6 +254,8 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 	//char* lineaDePrueba = "123-23=10\n10-20=3\n15-20=20";
 
 	int numLinea = 0;
+
+	int retorno = -1;
 
 	char** arrayLineas = string_split(lineaABuscar, "\n");
 
@@ -295,13 +270,27 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 		asprintf(&lineaConvertidaABuscar, "%i-%i", posX, posY);
 
 		if (strcmp(lineaConvertidaABuscar, lineaActualConvertida) == 0){
-			return numLinea;
+			retorno = numLinea;
 		}
+
+		free(lineaActualConvertida);
+
+		free(lineaConvertidaABuscar);
 
 		numLinea++;
 	}
 
-	return -1;
+	int i = 0;
+	while (arrayLineas[i] != NULL)
+	{
+		free(arrayLineas[i]);
+		i++;
+	}
+
+	free(arrayLineas);
+
+
+	return retorno;
 }
 
 // Lee los bloques del metadata.bin de un pokemon existente
@@ -326,7 +315,12 @@ char** leerBloquesPokemon(char* pokemon){
 		exit(6);
 	}
 
-	return config_get_array_value(datosMetadata, "BLOCKS");
+	char** arrayBloques = config_get_array_value(datosMetadata, "BLOCKS");
+
+	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
+
+	return arrayBloques;
 }
 
 // Retorna el SIZE de un pokemon existente
@@ -351,7 +345,12 @@ int leerSizePokemon(char* pokemon){
 		exit(6);
 	}
 
-	return config_get_int_value(datosMetadata, "SIZE");
+	int valorSize = config_get_int_value(datosMetadata, "SIZE");
+
+	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
+
+	return valorSize;
 }
 
 // Fijar los bloques del metadata.bin del pokemon a los dados
@@ -378,6 +377,7 @@ void fijarBloquesA(char* pokemon, t_list* listaBloques){
 	config_save(datosMetadata);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 }
 
 void fijarSizeA(char* pokemon, int sizeEnBytes){
@@ -405,6 +405,7 @@ void fijarSizeA(char* pokemon, int sizeEnBytes){
 	config_save(datosMetadata);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 }
 
 // Generar un array de la forma [1,2,3,4] con la lista de bloques
@@ -525,6 +526,10 @@ t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques){
 		// Agrego el bloque recortado a la lista de strings
 		list_add(listaStrings, miString);
 
+		// TODO | OJO AL PIOJO
+		//free(miString);
+		// Rompe todo hacer esto
+
 		//printf("String en posicion: %i | %s\n", i , miString);
 	}
 
@@ -556,6 +561,8 @@ void escribirLineaNuevaPokemon(char* pokemon, int posX, int posY, int cantidad){
 	// Fijar el SIZE=35
 	fijarSizeA(pokemon, pesoEnBytes);
 
+	list_destroy(listaBloquesAOcupar);
+	list_destroy(listaDatosBloques);
 }
 
 // Escribir las lineas en listaDatosBloques en los bloques listaBloquesAOcupar
@@ -610,44 +617,11 @@ void escribirDatoEnBloque(char* dato, int numBloque){
 	fwrite(dato, strlen(dato) + 1, 1, bloque);
 
 	fclose(bloque);
-
-	//printf("Path bloque: %s", pathBloque);
-
-
+	free(nombreArchivo);
+	free(pathBloque);
 }
 
-void suscribirseAColas(int32_t socket){
 
-	//Uso una estructura para guardar el numero de cola al que me quiero subscribir y mandarlo a la funcion mandar_mensaje
-	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-
-	estructuraSuscribirse->numeroCola = NEW;
-
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	sleep(5);
-
-	estructuraSuscribirse->numeroCola = GET;
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	sleep(5);
-
-	estructuraSuscribirse->numeroCola = CATCH;
-	//mandamos el mensaje pidiendo suscribirse a la cola
-	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-
-	free(estructuraSuscribirse);
-}
-
-int escucharGameBoy(char* IP_GAMECARD, char* PUERTO_GAMECARD, t_log* logger){
-	int socket = establecer_conexion(IP_GAMECARD, PUERTO_GAMECARD);//creo conexión con el Broker.
-
-	resultado_de_conexion(socket, logger, "SOCKET_ESCUCHA");
-
-	return socket;
-}
 
 t_list* convertirAListaDeEnterosDesdeChars(char** listaDeChars){
 	int cantidadNumeros = 0;
@@ -687,6 +661,7 @@ char* leerContenidoDeUnBloque(char* bloqueALeer, int cantBytesALeer){
 	fread(datosLeidos, cantBytesALeer + 1, 1, myFile);
 
 	fclose(myFile);
+	free(pathDeArchivos);
 
 	//printf("Linea leida:\n %s\n", datosLeidos);
 
@@ -828,10 +803,23 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 	strcat(stringARetornar, stringAEscribir);
 	strcat(stringARetornar, segundaMitadDelString);
 
-
 	free(stringAEscribir);
 	free(stringAEncontrar);
 	free(primeraMitadDelString);
+
+	// Liberar la memoria del array de strings
+	int i = 0;
+	while (stringsSeparados[i] != NULL)
+	{
+		free(stringsSeparados[i]);
+		i++;
+	}
+
+	free(stringsSeparados);
+
+	free(charConvertido);
+
+
 
 	return stringARetornar;
 }
@@ -884,6 +872,8 @@ void abrirArchivoPokemon(char* pokemon){
 
 	}
 
+	free(pathMetadataPokemon);
+
 }
 
 void cerrarArchivoPokemon(char* pokemon){
@@ -914,6 +904,7 @@ void cerrarArchivoPokemon(char* pokemon){
 	signalSemaforoPokemon(pokemon);
 
 	config_destroy(datosMetadata);
+	free(pathMetadataPokemon);
 
 }
 
@@ -923,11 +914,18 @@ void liberarNBloques(t_list* listaBloques, int cantidad){
 	t_list* bloquesALiberar = list_take_and_remove(listaBloques, cantidad);
 
 	int i;
-	for (i= 0; i<list_size(bloquesALiberar) ; i++){
-		int* bloqueALiberar = list_get(bloquesALiberar, i);
+
+	int cantElementos = list_size(bloquesALiberar);
+
+	for (i= 0; i< cantElementos; i++){
+		int* bloqueALiberar = list_remove(bloquesALiberar, i);
 
 		liberarUnBloque(*bloqueALiberar - 1);
+
+		free(bloqueALiberar);
 	}
+
+	list_destroy(bloquesALiberar);
 }
 
 t_list* convertirAListaDeStringsDesdeChars(char** lineas){
@@ -1064,6 +1062,9 @@ t_list* convertirAListaDeCoords(char* lineas){
 		list_add(lista, posYConvertido);
 
 		cantLineas++;
+
+		free(lineaSeparada);
+		free(coordMasCantidad);
 	}
 
 	if ( list_size(lista) % 2 != 0){
@@ -1074,13 +1075,13 @@ t_list* convertirAListaDeCoords(char* lineas){
 }
 
 int main(void) {
-	t_config* config = NULL;
+	//t_config* config = NULL;
 	int TIEM_REIN_CONEXION;
 	char* PUNTO_MONTAJE;
-	char* IP_BROKER;
-	char* PUERTO_BROKER;
 
-	socketBroker = -1;
+	socketNew = -1;
+	socketCatch = -1;
+	socketGet = -1;
 
 	semBitmap = malloc(sizeof(sem_t));
 
@@ -1090,14 +1091,14 @@ int main(void) {
 	//Inicializar lista de semaforos pokemon
 	listaSemPokemon = list_create();
 
-	leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER, config);
+	t_config* config = leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
 
 	// Testing
 	//printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
 
 	// Inicializacion del logger... todavia no es necesario
 
-	t_log* logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
+	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
 	// puntoMontaje/Blocks
 	pathBloques = crearCarpetaEn(PUNTO_MONTAJE, "/Blocks");
@@ -1112,10 +1113,9 @@ int main(void) {
     // printf("%s\n", pathFiles);
 
 	char* MAGIC_NUMBER;
-	t_config* metadataBin = NULL;
 
 	// Funcion para leer metadata.bin
-	leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER, metadataBin);
+	t_config* metadataBin = leerMetadataBin(pathMetadata, &BLOCKS, &BLOCK_SIZE, &MAGIC_NUMBER);
 
 	if (BLOCKS % 8 != 0){
 		printf("[Error] La cantidad de bloques debe ser multiplo de 8");
@@ -1146,117 +1146,86 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(bulbasaur, 1, 15, 1, 1);
-
-	printf("Sleep antes de catch\n");
-	//sleep(10);
-
-	mensajeCatch(bulbasaur, 1, 15, 1);
-
-	mensajeNew(pikachu, 1, 15, 1, 1);
-
-	mensajeCatch(pikachu, 1, 15, 1);
-
-	printearBitArray();
-
-	mensajeGet(pikachu, 1);
-
-	mensajeCatch(jorge, 1, 24, 1);
-
-
-
-//	mensajeNew(bulbasaur, 1,16,4, 1);
-//	mensajeNew(bulbasaur, 1,17,5, 1);
-//	mensajeNew(bulbasaur, 1,18,6, 1);
-//	mensajeNew(bulbasaur, 1,19,3, 1);
-//	mensajeNew(bulbasaur, 1,20,4, 1);
-//	mensajeNew(bulbasaur, 1,21,5, 1);
-//	mensajeNew(bulbasaur, 1,22,6, 1);
-//	mensajeNew(bulbasaur, 1,23,3, 1);
-//	mensajeNew(bulbasaur, 1,24,1, 1);
-
-
-
-//	mensajeNew(pikachu, 1,15,3, 1);
-//	mensajeNew(pikachu, 1,16,4, 1);
-//	mensajeNew(pikachu, 1,17,5, 1);
-//	mensajeNew(pikachu, 1,18,6, 1);
-//	mensajeNew(pikachu, 1,19,3, 1);
-//	mensajeNew(pikachu, 1,20,4, 1);
-//	mensajeNew(pikachu, 1,21,5, 1);
-//	mensajeNew(pikachu, 1,22,6, 1);
-//	mensajeNew(pikachu, 1,23,3, 1);
-//	mensajeNew(pikachu, 1,24,1, 1);
+//	mensajeNew(pikachu, 1, 15, 1, 1);
 //
-//	mensajeCatch(pikachu, 1, 24, 1);
+//	mensajeCatch(pikachu, 1, 15, 1);
 //
-//	mensajeNew(jorge, 1,15,3, 1);
-//	mensajeNew(jorge, 1,16,4, 1);
-//	mensajeNew(jorge, 1,17,5, 1);
-//	mensajeNew(jorge, 1,18,6, 1);
-//	mensajeNew(jorge, 1,19,3, 1);
-//	mensajeNew(jorge, 1,20,4, 1);
-//	mensajeNew(jorge, 1,21,5, 1);
-//	mensajeNew(jorge, 1,22,6, 1);
-//	mensajeNew(jorge, 1,23,3, 1);
-//	mensajeNew(jorge, 1,24,1, 1);
+//	mensajeGet(pikachu, 1);
+//	mensajeGet(pikachu, 1);
+//	mensajeGet(pikachu, 1);
+//	mensajeGet(pikachu, 1);
+
+//	mensajeNew(fruta, 10, 5, 20, 1);
 //
+//	mensajeNew(bulbasaur, 1, 15, 1, 1);
+//
+//	mensajeCatch(bulbasaur, 1, 15, 1);
+//
+//	mensajeNew(pikachu, 1, 15, 1, 1);
+//
+//	mensajeNew(fruta, 10, 5, 20, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	printearBitArray();
+//
+//	mensajeNew(jorge, 1, 20, 3, 1);
+//
+//	mensajeGet(pikachu, 1);
+//
+//	mensajeCatch(jorge, 1, 24, 1);
+//
+//	mensajeNew(fruta, 23, 10, 1, 1);
+//
+//	mensajeNew(jorge, 1, 30, 5, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 25, 15, 25, 1);
+//
+//	mensajeCatch(fruta, 23, 10, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	mensajeNew(jorge, 1, 40, 7, 1);
+//
+//	mensajeNew(fruta, 35, 20, 40, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(pikachu, 1, 20, 3, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 10, 50, 25, 1);
+//	mensajeNew(fruta, 10, 51, 25, 1);
+//	mensajeNew(fruta, 10, 52, 25, 1);
+//	mensajeNew(fruta, 10, 53, 25, 1);
+//	mensajeNew(fruta, 10, 54, 25, 1);
+//	mensajeNew(fruta, 10, 55, 25, 1);
+//	mensajeNew(fruta, 10, 56, 25, 1);
+//	mensajeNew(fruta, 10, 57, 25, 1);
+//	mensajeNew(fruta, 10, 58, 25, 1);
+//	mensajeNew(fruta, 10, 59, 25, 1);
+//	mensajeNew(fruta, 10, 60, 25, 1);
+//	mensajeNew(fruta, 10, 61, 25, 1);
+//	mensajeNew(fruta, 10, 62, 25, 1);
+//	mensajeNew(fruta, 10, 63, 25, 1);
+//	mensajeNew(fruta, 10, 64, 25, 1);
+//	mensajeNew(fruta, 10, 65, 25, 1);
+//	mensajeNew(fruta, 10, 66, 25, 1);
+//	mensajeNew(fruta, 10, 67, 25, 1);
 
 
-
-
-
-	//printf("Cosa: %i", strlen(""));
-
-
-//
-//	mensajeGet(bulbasaur, 1);
-
-//	char* lineasLeidas = "33-4=1\n35-7=1\n30-10=1\n10-14=1\n"; // Linea 1 = 35-7=7
-//
-//	printf("Lineas Antes:\n%s\n", lineasLeidas);
-//
-//	char* lineasDespues1 = restarALineaPokemon(lineasLeidas, 33, 4);
-//
-//	printf("Lineas Despues1:\n%s\n", lineasDespues1);
-//
-//	char* lineasDespues2 = restarALineaPokemon(lineasDespues1, 35, 7);
-//
-//	printf("Lineas Despues2:\n%s\n", lineasDespues2);
-//
-//	char* lineasDespues3 = restarALineaPokemon(lineasDespues2, 30, 10);
-//
-//	printf("Lineas Despues3:\n%s\n", lineasDespues3);
-//
-//	char* lineasDespues4 = restarALineaPokemon(lineasDespues3, 10, 14);
-//
-//	printf("Lineas Despues4:\n%s\n", lineasDespues4);
-
-//	int posX1 = 3;
-//	int posX2 = 4;
-//
-//	int posY1 = 5;
-//	int posY2 = 10;
-//
-//	int cantidadCoords = 2;
-//
-//	int tamanioArray = cantidadCoords * 2;
-//
-//	Localized* my_array = malloc(sizeof(struct Localized) + tamanioArray * sizeof(int) + strlen(pikachu) + 1);
-//
-//	my_array->cantPosciciones = cantidadCoords;
-//
-//	my_array->coords[0] = posX1;
-//	my_array->coords[1] = posX2;
-//	my_array->coords[2] = posY1;
-//	my_array->coords[3] = posY2;
-//
-//	my_array->largoNombre = strlen(pikachu);
-//
-//	my_array->nombrePokemon = pikachu;
-
-
-	//mensajeCatch(jorge, 1, 15);
+	/*Expected:
+	 * Bulbasaur: -> Vacio
+	 * Pikachu -> 1-20=3
+	 * Jorge -> 1-30=5
+	 * 			1-40=7
+	 * Fruta -> 10-5=40
+	 * 			25-15=25
+	 * 			35-20=40
+	 */
 
 
 	// Hilos de prueba
@@ -1294,20 +1263,15 @@ int main(void) {
 //	leerSemaforosLista();
 
 
-//	char* bloque1 = "1";
-//
-//	char* bloqueLeido = leerContenidoDeUnBloque(pathBloques, bloque1, 8);
-//
-//	printf("Bloque leido: %s", bloqueLeido);
 
 	// ****************************************************************
 
 	// Levanto hilo para escuchar broker
-	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
-
-	pthread_t hiloBroker;
-
-	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+//	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+//
+//	pthread_t hiloBroker;
+//
+//	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
@@ -1317,7 +1281,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-  pthread_join(hiloBroker, NULL);
+//  pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************
@@ -1331,5 +1295,15 @@ int main(void) {
 	*/
 
 	//****************************************************************
+
+	// Libero la config
+	if (config != NULL) config_destroy(config);
+
+	// Libero el config de metadatabin
+	if (metadataBin != NULL) config_destroy(metadataBin);
+
+	// Libero el logger
+	if (logger != NULL) log_destroy(logger);
+
 	return EXIT_SUCCESS;
 }

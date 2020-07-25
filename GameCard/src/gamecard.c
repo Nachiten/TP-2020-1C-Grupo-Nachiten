@@ -274,22 +274,17 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 		}
 
 		free(lineaActualConvertida);
+
 		free(lineaConvertidaABuscar);
 
 		numLinea++;
 	}
 
-	int cantLineas = 0;
-	while( arrayLineas[cantLineas] != NULL){
-		cantLineas++;
-	}
-
-	// Tiene 3 elementos..
-	// Cant lineas = 3
-
-	while( cantLineas - 1 >= 0 && arrayLineas[cantLineas] != NULL){
-		free(arrayLineas[cantLineas]);
-		cantLineas--;
+	int i = 0;
+	while (arrayLineas[i] != NULL)
+	{
+		free(arrayLineas[i]);
+		i++;
 	}
 
 	free(arrayLineas);
@@ -813,12 +808,12 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 	free(primeraMitadDelString);
 
 	// Liberar la memoria del array de strings
-//	int i;
-//	while (stringsSeparados[i] != NULL)
-//	{
-//		free(stringsSeparados[i]);
-//		i++;
-//	}
+	int i = 0;
+	while (stringsSeparados[i] != NULL)
+	{
+		free(stringsSeparados[i]);
+		i++;
+	}
 
 	free(stringsSeparados);
 
@@ -1160,66 +1155,66 @@ int main(void) {
 //	mensajeGet(pikachu, 1);
 //	mensajeGet(pikachu, 1);
 
-	mensajeNew(fruta, 10, 5, 20, 1);
-
-	mensajeNew(bulbasaur, 1, 15, 1, 1);
-
-	mensajeCatch(bulbasaur, 1, 15, 1);
-
-	mensajeNew(pikachu, 1, 15, 1, 1);
-
-	mensajeNew(fruta, 10, 5, 20, 1);
-
-	mensajeCatch(pikachu, 1, 15, 1);
-
-	printearBitArray();
-
-	mensajeNew(jorge, 1, 20, 3, 1);
-
-	mensajeGet(pikachu, 1);
-
-	mensajeCatch(jorge, 1, 24, 1);
-
-	mensajeNew(fruta, 23, 10, 1, 1);
-
-	mensajeNew(jorge, 1, 30, 5, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
-
-	mensajeNew(fruta, 25, 15, 25, 1);
-
-	mensajeCatch(fruta, 23, 10, 1);
-
-	mensajeCatch(pikachu, 1, 15, 1);
-
-	mensajeNew(jorge, 1, 40, 7, 1);
-
-	mensajeNew(fruta, 35, 20, 40, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
-
-	mensajeNew(pikachu, 1, 20, 3, 1);
-
-	mensajeCatch(jorge, 1, 20, 1);
-
-	mensajeNew(fruta, 10, 50, 25, 1);
-	mensajeNew(fruta, 10, 51, 25, 1);
-	mensajeNew(fruta, 10, 52, 25, 1);
-	mensajeNew(fruta, 10, 53, 25, 1);
-	mensajeNew(fruta, 10, 54, 25, 1);
-	mensajeNew(fruta, 10, 55, 25, 1);
-	mensajeNew(fruta, 10, 56, 25, 1);
-	mensajeNew(fruta, 10, 57, 25, 1);
-	mensajeNew(fruta, 10, 58, 25, 1);
-	mensajeNew(fruta, 10, 59, 25, 1);
-	mensajeNew(fruta, 10, 60, 25, 1);
-	mensajeNew(fruta, 10, 61, 25, 1);
-	mensajeNew(fruta, 10, 62, 25, 1);
-	mensajeNew(fruta, 10, 63, 25, 1);
-	mensajeNew(fruta, 10, 64, 25, 1);
-	mensajeNew(fruta, 10, 65, 25, 1);
-	mensajeNew(fruta, 10, 66, 25, 1);
-	mensajeNew(fruta, 10, 67, 25, 1);
+//	mensajeNew(fruta, 10, 5, 20, 1);
+//
+//	mensajeNew(bulbasaur, 1, 15, 1, 1);
+//
+//	mensajeCatch(bulbasaur, 1, 15, 1);
+//
+//	mensajeNew(pikachu, 1, 15, 1, 1);
+//
+//	mensajeNew(fruta, 10, 5, 20, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	printearBitArray();
+//
+//	mensajeNew(jorge, 1, 20, 3, 1);
+//
+//	mensajeGet(pikachu, 1);
+//
+//	mensajeCatch(jorge, 1, 24, 1);
+//
+//	mensajeNew(fruta, 23, 10, 1, 1);
+//
+//	mensajeNew(jorge, 1, 30, 5, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 25, 15, 25, 1);
+//
+//	mensajeCatch(fruta, 23, 10, 1);
+//
+//	mensajeCatch(pikachu, 1, 15, 1);
+//
+//	mensajeNew(jorge, 1, 40, 7, 1);
+//
+//	mensajeNew(fruta, 35, 20, 40, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(pikachu, 1, 20, 3, 1);
+//
+//	mensajeCatch(jorge, 1, 20, 1);
+//
+//	mensajeNew(fruta, 10, 50, 25, 1);
+//	mensajeNew(fruta, 10, 51, 25, 1);
+//	mensajeNew(fruta, 10, 52, 25, 1);
+//	mensajeNew(fruta, 10, 53, 25, 1);
+//	mensajeNew(fruta, 10, 54, 25, 1);
+//	mensajeNew(fruta, 10, 55, 25, 1);
+//	mensajeNew(fruta, 10, 56, 25, 1);
+//	mensajeNew(fruta, 10, 57, 25, 1);
+//	mensajeNew(fruta, 10, 58, 25, 1);
+//	mensajeNew(fruta, 10, 59, 25, 1);
+//	mensajeNew(fruta, 10, 60, 25, 1);
+//	mensajeNew(fruta, 10, 61, 25, 1);
+//	mensajeNew(fruta, 10, 62, 25, 1);
+//	mensajeNew(fruta, 10, 63, 25, 1);
+//	mensajeNew(fruta, 10, 64, 25, 1);
+//	mensajeNew(fruta, 10, 65, 25, 1);
+//	mensajeNew(fruta, 10, 66, 25, 1);
+//	mensajeNew(fruta, 10, 67, 25, 1);
 
 
 	/*Expected:

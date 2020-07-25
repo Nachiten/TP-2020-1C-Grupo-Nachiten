@@ -27,7 +27,7 @@ void escuchoSocket(int32_t); //necesario para recibir cosas desde ESE socket
 void esperar_conexiones(int32_t);
 
 int conectarseABroker(t_log*, codigo_operacion);
-void process_request(codigo_operacion, int32_t);
+void process_request(codigo_operacion, int32_t, int32_t tamanioDatos);
 void suscribirseAUnaCola(int32_t, codigo_operacion);
 int escucharGameBoy(char*, char*, t_log*);
 

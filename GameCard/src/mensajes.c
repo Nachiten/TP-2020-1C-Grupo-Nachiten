@@ -372,7 +372,7 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 
 	//int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 
-	//mandar_mensaje(structAEnviar, LOCALIZED , socketLocalized );
+	mandar_mensaje(structAEnviar, LOCALIZED , socketGet);
 }
 
 Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){

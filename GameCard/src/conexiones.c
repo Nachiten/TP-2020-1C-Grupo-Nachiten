@@ -18,14 +18,14 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 
 	t_log* logger = datos->logger;
 
-//	socketNew = conectarseABroker(logger, NEW);
-//	socketCatch = conectarseABroker(logger, CATCH);
+	socketNew = conectarseABroker(logger, NEW);
+	socketCatch = conectarseABroker(logger, CATCH);
 	socketGet = conectarseABroker(logger, GET);
 
 	while (socketNew == -1 || socketCatch == -1 || socketGet == -1){
 		sleep(TIEM_REIN_CONEXION);
-//		socketNew = conectarseABroker(logger, NEW);
-//		socketCatch = conectarseABroker(logger, CATCH);
+		socketNew = conectarseABroker(logger, NEW);
+		socketCatch = conectarseABroker(logger, CATCH);
 		socketGet = conectarseABroker(logger, GET);
 	}
 
@@ -44,15 +44,41 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 
 void serve_client(int32_t* socket)
 {
-	codigo_operacion cod_op;
-	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
-	bytesRecibidos(recibidos);
-	if(recibidos == -1)
-	{
-		cod_op = -1;
-	}
+//	codigo_operacion cod_op;
+//	int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+//	bytesRecibidos(recibidos);
+//	if(recibidos == -1)
+//	{
+//		cod_op = -1;
+//	}
+//
+//	process_request(cod_op, *socket);
 
-	process_request(cod_op, *socket);
+	while(1){
+		int32_t sizeAAllocar;
+		codigo_operacion cod_op;
+		int32_t recibidosSize = 0;
+
+		int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+		bytesRecibidos(recibidos);
+
+		if(recibidos >= 1)
+		{
+			recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+			bytesRecibidos(recibidosSize);
+			printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+		}
+
+		if(recibidos < 1  || recibidosSize < 1)
+		{
+			cod_op = -1;
+			sizeAAllocar = 0;
+		}
+
+		process_request(cod_op, *socket, sizeAAllocar);
+		recibidosSize = 0;
+		recibidos = 0;
+	}
 }
 
 void esperarMensajes(int socket, char* IP_BROKER, char* PUERTO_BROKER, t_log* logger, int TIEM_REIN_CONEXION, codigo_operacion nombreCola){
@@ -193,15 +219,14 @@ int conectarseABroker(t_log* logger, codigo_operacion nombreCola){
 }
 
 // Cuando llega mensaje de gameboy
-void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
+void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t tamanioDatos) {
 	New* mensajeNew;
 	Get* mensajeGet;
 	Catch* mensajeCatch;
-	uint32_t tamanioDatos;
 
 		switch (cod_op) {
 		case NEW:
-			mensajeNew  = malloc(sizeof(New));
+			mensajeNew  = malloc(tamanioDatos);
 			recibir_mensaje(mensajeNew, cod_op, socket_cliente);
 
 			//ya te llegaron los datos y llamas a tus funciones
@@ -210,7 +235,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			break;
 		case GET:
-			mensajeGet = malloc(sizeof(Get));
+			mensajeGet = malloc(tamanioDatos);
 			recibir_mensaje(mensajeGet, cod_op, socket_cliente);
 			printf("Termine de recibir un mensaje GET\n");
 
@@ -218,7 +243,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente) {
 
 			break;
 		case CATCH:
-			mensajeCatch = malloc(sizeof(Catch));
+			mensajeCatch = malloc(tamanioDatos);
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 
 			printf("Termine de recibir un mensaje CATCH\n");
@@ -238,6 +263,7 @@ void suscribirseAUnaCola(int32_t socket, codigo_operacion nombreCola){
 	Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
 
 	estructuraSuscribirse->numeroCola = nombreCola;
+	estructuraSuscribirse->pId = getpid();
 
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);

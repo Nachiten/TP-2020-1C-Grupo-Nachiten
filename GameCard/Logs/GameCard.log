@@ -1,0 +1,34 @@
+[INFO] 00:02:08:76 GAMECARD/(2594:2612): Conexión establecida con socket de BROKER
+[INFO] 00:02:16:286 GAMECARD/(2594:2612): Conexión establecida con socket de BROKER
+[INFO] 00:02:17:91 GAMECARD/(2594:2612): Conexión establecida con socket de BROKER
+[WARNING] 00:03:33:471 GAMECARD/(2594:2612): GET | El pokemon Pikachu no existe
+[INFO] 00:06:36:853 GAMECARD/(2791:2791): NEW | Escribiendo nueva linea 1-15=8 en pokemon vacio Pikachu
+[INFO] 00:06:36:853 GAMECARD/(2791:2791): NEW | Se agregara la linea 7-555=1 al pokemon Pikachu
+[INFO] 00:06:36:879 GAMECARD/(2791:2791): NEW | Se agregara la linea 199-9915=5 al pokemon Pikachu
+[INFO] 00:06:39:121 GAMECARD/(2791:2801): Conexión establecida con socket de BROKER
+[INFO] 00:06:39:121 GAMECARD/(2791:2801): Conexión establecida con socket de BROKER
+[INFO] 00:06:39:121 GAMECARD/(2791:2801): Conexión establecida con socket de BROKER
+[INFO] 00:06:39:128 GAMECARD/(2791:2801): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 00:07:37:854 GAMECARD/(2791:2801): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 00:07:37:856 GAMECARD/(2791:2801): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 00:14:56:191 GAMECARD/(3007:3007): NEW | Se modificara la linea existente 1-15 sumando 8 al pokemon Pikachu
+[INFO] 00:14:56:208 GAMECARD/(3007:3007): NEW | Se modificara la linea existente 7-555 sumando 1 al pokemon Pikachu
+[INFO] 00:14:56:209 GAMECARD/(3007:3007): NEW | Se modificara la linea existente 199-9915 sumando 5 al pokemon Pikachu
+[INFO] 00:14:56:217 GAMECARD/(3007:3017): Conexión establecida con socket de BROKER
+[INFO] 00:14:56:217 GAMECARD/(3007:3017): Conexión establecida con socket de BROKER
+[INFO] 00:14:56:218 GAMECARD/(3007:3017): Conexión establecida con socket de BROKER
+[INFO] 00:19:33:417 GAMECARD/(3309:3309): NEW | Se modificara la linea existente 1-15 sumando 8 al pokemon Pikachu
+[INFO] 00:19:33:420 GAMECARD/(3309:3309): NEW | Se modificara la linea existente 7-555 sumando 1 al pokemon Pikachu
+[INFO] 00:19:33:423 GAMECARD/(3309:3309): NEW | Se modificara la linea existente 199-9915 sumando 5 al pokemon Pikachu
+[INFO] 00:19:43:443 GAMECARD/(3309:3315): Conexión establecida con socket de BROKER
+[INFO] 00:19:43:444 GAMECARD/(3309:3315): Conexión establecida con socket de BROKER
+[INFO] 00:19:43:444 GAMECARD/(3309:3315): Conexión establecida con socket de BROKER
+[INFO] 00:34:13:302 GAMECARD/(3943:3943): NEW | Se modificara la linea existente 1-15 sumando 8 al pokemon Pikachu
+[INFO] 00:34:13:303 GAMECARD/(3943:3943): NEW | Se modificara la linea existente 7-555 sumando 1 al pokemon Pikachu
+[INFO] 00:34:13:304 GAMECARD/(3943:3943): NEW | Se modificara la linea existente 199-9915 sumando 5 al pokemon Pikachu
+[INFO] 00:34:20:209 GAMECARD/(3943:3956): Conexión establecida con socket de BROKER
+[INFO] 00:34:20:397 GAMECARD/(3943:3956): Conexión establecida con socket de BROKER
+[INFO] 00:34:20:792 GAMECARD/(3943:3956): Conexión establecida con socket de BROKER
+[INFO] 00:37:53:136 GAMECARD/(3943:3956): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 00:41:18:137 GAMECARD/(3943:3956): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 00:41:27:136 GAMECARD/(3943:3956): GET | Se encontraron coordenadas del pokemon Pikachu

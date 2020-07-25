@@ -1146,7 +1146,9 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-//	mensajeNew(pikachu, 1, 15, 1, 1);
+	mensajeNew(pikachu, 1, 15, 8, 1);
+	mensajeNew(pikachu, 7, 555, 1, 2);
+	mensajeNew(pikachu, 199, 9915, 5, 3);
 //
 //	mensajeCatch(pikachu, 1, 15, 1);
 //
@@ -1266,12 +1268,12 @@ int main(void) {
 
 	// ****************************************************************
 
-	// Levanto hilo para escuchar broker
-//	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
-//
-//	pthread_t hiloBroker;
-//
-//	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
+	 //Levanto hilo para escuchar broker
+	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
+
+	pthread_t hiloBroker;
+
+	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
@@ -1281,7 +1283,7 @@ int main(void) {
 //	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 //
 //	// CIERRO HILOS
-//  pthread_join(hiloBroker, NULL);
+  pthread_join(hiloBroker, NULL);
 //	pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************

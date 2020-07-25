@@ -35,7 +35,9 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 
 	while(1)
 	{
-	esperarMensajes(socketGet, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, GET);
+		esperarMensajes(socketGet, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, GET);
+		esperarMensajes(socketNew, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, NEW);
+		esperarMensajes(socketCatch, IP_BROKER, PUERTO_BROKER, logger, TIEM_REIN_CONEXION, CATCH);
 	}
 
 	puts("sali de esperar mensaje");

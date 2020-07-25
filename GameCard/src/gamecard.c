@@ -284,7 +284,10 @@ int encontrarCoords(int posX, int posY, char* lineaABuscar){
 		cantLineas++;
 	}
 
-	while( cantLineas > 0 && arrayLineas[cantLineas] != NULL){
+	// Tiene 3 elementos..
+	// Cant lineas = 3
+
+	while( cantLineas - 1 >= 0 && arrayLineas[cantLineas] != NULL){
 		free(arrayLineas[cantLineas]);
 		cantLineas--;
 	}

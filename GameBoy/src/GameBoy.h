@@ -27,6 +27,7 @@ typedef struct {
 	t_log* log;
 	mensajesRecibidos* listaRecibidos;
 	uint32_t cola;
+	uint32_t pID;
 } HiloGameboy;
 
 void hilo_recibir_mensajes(HiloGameboy* estructura);

@@ -876,7 +876,7 @@ void borrar_mensajes(t_cola* cola){
 				}
 				if((subsTotales == yaRecibido) && (subsTotales != 0) && (yaRecibido != 0))
 				{
-					t_mensaje* mensajeBorrado;// = malloc(sizeof(t_mensaje)); ToDo revisar si rompe
+					t_mensaje* mensajeBorrado;
 					mensajeBorrado = list_remove(cola->mensajes, i);
 					agregar_descarte(cola,mensajeBorrado);
 				}
@@ -912,7 +912,7 @@ void agregar_descarte (t_cola* cola, t_mensaje* descarte){
 
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
-void desuscribir(uint32_t pID, t_cola* cola){//ToDo ver que onda
+void desuscribir(uint32_t pID, t_cola* cola){
 	t_sub* sub;
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
@@ -1015,6 +1015,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case SUSCRIPCION:
 			mensajeSuscrip= malloc(sizeAAllocar);
 			recibir_mensaje(mensajeSuscrip, cod_op, socket_cliente);
+			printf("La ID que me llego en suscripcion: %u\n",mensajeSuscrip->pId);
 			switch(mensajeSuscrip->numeroCola){
 			case NEW:
 				sem_wait(semLog);
@@ -1130,6 +1131,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case CONFIRMACION:
 			mensajeConfirmacion = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeConfirmacion, cod_op, socket_cliente);
+			printf("La ID que me llego en confirmacion: %u\n",mensajeConfirmacion->pId);
 			confirmar_mensaje(socket_cliente, mensajeConfirmacion);// los semaforos estan aca
 			break;
 		case TEST:

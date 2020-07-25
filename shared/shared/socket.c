@@ -516,8 +516,11 @@ uint32_t serializar_paquete_confirmacion(t_paquete* paquete, confirmacionMensaje
 	//meto la ID del mensaje en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->id_mensaje), sizeof(confirma->id_mensaje));
 
+	//meto la PID del proceso en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->pId), sizeof(confirma->pId));
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(confirma->colaMensajes) + sizeof(confirma->id_mensaje);
+	paquete->buffer->size = sizeof(confirma->colaMensajes) + sizeof(confirma->id_mensaje) + sizeof(confirma->pId);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
@@ -811,7 +814,11 @@ void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_
 	//saco ID del mensaje que confirmo
 	bytesRecibidos(recv(socket_cliente, &(estructura->id_mensaje), sizeof(estructura->id_mensaje), MSG_WAITALL));
 
+	//saco PID del proceso que confirmo
+	bytesRecibidos(recv(socket_cliente, &(estructura->pId), sizeof(estructura->pId), MSG_WAITALL));
+
 	printf("la cola del mensaje es: %i\n", estructura->colaMensajes);
 	printf("la ID del mensaje que confirmo es: %u\n", estructura->id_mensaje);
+	printf("la PID del proceso: %u\n", estructura->pId);
 }
 

@@ -9,119 +9,17 @@ int main(int cantArg, char* arg[]) {
 	char* PUERTO;
 	char* LOG_PATH;
 	uint32_t switcher = DEFAULT; //para usar el switch case.
-
-//	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios. ToDo descomentar
-//	{
-//		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
-//		return EXIT_FAILURE;
-//	}
+	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios.
+	{
+		puts("Segmentation fault(te_la_creiste) \nHay que ingresar mas argumentos, campeón ;)");
+		return EXIT_FAILURE;
+	}
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameBoy.config");
 	LOG_PATH = config_get_string_value(config,"LOG_FILE_PATH"); //cargo el path del archivo log
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(LOG_PATH, "Gameboy");
-
-
-
-
-
-//	IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
-//	PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
-//	socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-//	resultado_de_conexion(socket, logger, "BROKER");
-//
-//	//Uso una estructura para guardar todos los datos del pokemon y mandarlo junto a la funcion mandar_mensaje
-//	New* nuevoPokemon = malloc(sizeof(New));
-//
-//	nuevoPokemon->nombrePokemon = "Hola";
-//	nuevoPokemon->largoNombre = strlen(nuevoPokemon->nombrePokemon);
-//	nuevoPokemon->posPokemon.x = 1; //cambiamos el string a int
-//	nuevoPokemon->posPokemon.y = 2; //cambiamos el string a int
-//	nuevoPokemon->cantPokemon = 3; //cambiamos el string a int
-//	nuevoPokemon->ID = 0;
-//	nuevoPokemon->corrID = -2;
-//
-//	//mandamos el mensaje
-//	mandar_mensaje(nuevoPokemon, NEW, socket);
-//	mandar_mensaje(nuevoPokemon, NEW, socket);
-//	mandar_mensaje(nuevoPokemon, NEW, socket);
-//	mandar_mensaje(nuevoPokemon, NEW, socket);
-//
-//	//libero la estructura que acabo de crear
-//	free(nuevoPokemon);
-
-
-
-
-
-
-
-
-
-//	if(socket != -1)//si y solo si se puedo conectar
-//	{
-//		//Uso una estructura para guardar el numero de cola al que me quiero subscribir y luego desuscribir y mandarlo a la funcion mandar_mensaje
-//		Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
-//		Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
-//
-//		estructuraSuscribirse->numeroCola = 1; //cambiamos el string a int
-//		estructuraDessuscribirse->numeroCola = 1; //cambiamos el string a int
-//
-////		//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
-////		mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
-////		listaRecibidos->siguiente = NULL;
-//
-//		//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
-//		pthread_t hilo;
-//		HiloGameboy estructura;
-//		estructura.conexion = socket;
-//		estructura.log = logger;
-//		//estructura.listaRecibidos = listaRecibidos;
-//		estructura.cola = 1;
-//
-//		//mandamos el mensaje pidiendo suscribirse a la cola
-//		mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
-//
-//		//logueamos la suscripcion a la cola de mensajes
-//		log_info(logger, "Suscripto a la cola de mensajes: %i", 1);
-//
-//		//hilo para recibir mensajes
-//		pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
-//		pthread_detach(hilo);
-//
-//		//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
-//		sleep(5000);
-//
-//
-//		cerrar_conexion(socket);
-//		socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-//
-//		//mandamos el mensaje pidiendo dessuscribirse a la cola
-//		mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
-//
-//		//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
-//		free(estructuraSuscribirse);
-//		free(estructuraDessuscribirse);
-//
-//		//liberamos la lista de IDs recibidas
-////		mensajesRecibidos* auxiliar = listaRecibidos;
-////		while(listaRecibidos->siguiente != NULL)
-////		{
-////			listaRecibidos = listaRecibidos->siguiente;
-////			printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-////			free(auxiliar);
-////			auxiliar = listaRecibidos;
-////		}
-////		free(auxiliar);
-//	}
-
-
-
-
-
-
-
 
 	switcher = valor_para_switch_case(arg[1]); //segun el primer parametro que se ingresa por terminal, decide donde va a ir el switch case
 
@@ -465,22 +363,17 @@ int main(int cantArg, char* arg[]) {
 							Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
 
 							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
-							printf("Process ID del Game: %u\n", getpid());
 							estructuraSuscribirse->pId = getpid(); //ponemos la ID del proceso
 							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
 							estructuraDessuscribirse->pId = getpid(); //ponemos la ID del proceso
-
-//							//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
-//							mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
-//							listaRecibidos->siguiente = NULL;
 
 							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
 							pthread_t hilo;
 							HiloGameboy estructura;
 							estructura.conexion = socket;
 							estructura.log = logger;
-							//estructura.listaRecibidos = listaRecibidos;
 							estructura.cola = cambia_a_int(arg[2]);
+							estructura.pID = getpid();
 
 							//mandamos el mensaje pidiendo suscribirse a la cola
 							mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
@@ -495,26 +388,12 @@ int main(int cantArg, char* arg[]) {
 							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 							sleep(cambia_a_int(arg[3]));
 
-//							cerrar_conexion(socket);
-//							socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
-
 							//mandamos el mensaje pidiendo dessuscribirse a la cola
 							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
 
 							//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
 							free(estructuraSuscribirse);
 							free(estructuraDessuscribirse);
-
-//							//liberamos la lista de IDs recibidas
-//							mensajesRecibidos* auxiliar = listaRecibidos;
-//							while(listaRecibidos->siguiente != NULL)
-//							{
-//								listaRecibidos = listaRecibidos->siguiente;
-//								printf("librero el de ID: %i", auxiliar->ID_MENSAJE_RECIBIDO);
-//								free(auxiliar);
-//								auxiliar = listaRecibidos;
-//							}
-//							free(auxiliar);
 						}
 					}
 					else
@@ -543,11 +422,6 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
 
-	//para ver si hay que loguear un mensaje nuevo o no
-	int32_t IDMensajeRecibido = -1;
-//	uint32_t match = 0;
-//	mensajesRecibidos* auxiliar = estructura->listaRecibidos;
-
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
 	Get* mensajeGet;
@@ -567,12 +441,14 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 		//tomo la ID del mensaje para saber si llego uno nuevo
 		switch(cod_op){
 			case NEW:;
-				mensajeNew = malloc(sizeof(New));
+				mensajeNew = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				mensajeConfirm->id_mensaje = mensajeNew->ID;
 				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				printf("mande confirmacion, ID: %u", estructura->pID);
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeNew->nombrePokemon);
 				free(mensajeNew);
@@ -580,12 +456,13 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				break;
 
 			case APPEARED:
-				mensajeAppeared = malloc(sizeof(Appeared));
+				mensajeAppeared = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
 				mensajeConfirm->id_mensaje = mensajeNew->ID;
 				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeAppeared->nombrePokemon);
 				free(mensajeAppeared);
@@ -593,43 +470,59 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				break;
 
 			case GET:
-				mensajeGet = malloc(sizeof(Get));
+				mensajeGet = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				IDMensajeRecibido = mensajeGet->ID;
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeGet->nombrePokemon);
 				free(mensajeGet);
+				free(mensajeConfirm);
 				break;
 
 			case LOCALIZED:
-				mensajeLocalized = malloc(sizeof(Localized));
+				mensajeLocalized = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				IDMensajeRecibido = mensajeLocalized->ID;
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeLocalized->nombrePokemon);
 				free(mensajeLocalized);
+				free(mensajeConfirm);
 				break;
 
 			case CATCH:
-				mensajeCatch = malloc(sizeof(Catch));
+				mensajeCatch = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				IDMensajeRecibido = mensajeCatch->ID;
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeCatch->nombrePokemon);
 				free(mensajeCatch);
+				free(mensajeConfirm);
 				break;
 
 			case CAUGHT:
-				mensajeCaught = malloc(sizeof(Caught));
+				mensajeCaught = malloc(size);
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				IDMensajeRecibido = mensajeCaught->ID;
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
 				free(mensajeCaught->nombrePokemon);
 				free(mensajeCaught);
+				free(mensajeConfirm);
 				break;
 
 			case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
@@ -650,44 +543,5 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 			case CONFIRMACION:
 				break;
 		}
-
-//		//siempre que me haya llegado un mensaje
-//		if(IDMensajeRecibido != -1)
-//		{
-//			//recorro la lista de IDs de mensajes recibidos a ver si ya me llego
-//			while(auxiliar != NULL && match != 0)
-//			{
-//				if(IDMensajeRecibido == auxiliar->ID_MENSAJE_RECIBIDO)//comparo las IDs para ver si ya habia llegado
-//				{
-//					match = 1;//hubo un match
-//				}
-//				auxiliar = auxiliar->siguiente;
-//			}
-//			auxiliar = estructura->listaRecibidos;
-//
-//			//si no hubo un match lo tengo que loguear y agregar a la lista
-//			if(match != 1)
-//			{
-//				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-//				//avanzo hasta el ultimo elemento
-//				while(auxiliar->siguiente != NULL)
-//				{
-//					auxiliar = auxiliar->siguiente;
-//				}
-//				//si estoy en la primera posicion
-//				if(auxiliar == estructura->listaRecibidos)
-//				{	//escribo la ID
-//					auxiliar->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
-//				}
-//				//ya hay elementos en la lista
-//				else
-//				{	//creo un elemento nuevo y escribo la ID
-//					auxiliar->siguiente = malloc(sizeof(mensajesRecibidos));
-//					auxiliar->siguiente->ID_MENSAJE_RECIBIDO = IDMensajeRecibido;
-//				}
-//			}
-//			auxiliar = estructura->listaRecibidos;
-//			match = 0;
-//		}
 	}
 }

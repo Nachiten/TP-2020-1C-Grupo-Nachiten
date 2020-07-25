@@ -913,7 +913,7 @@ void agregar_descarte (t_cola* cola, t_mensaje* descarte){
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
 void desuscribir(uint32_t pID, t_cola* cola){//ToDo ver que onda
-	t_sub* sub;// = malloc(sizeof(t_sub));
+	t_sub* sub;
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes

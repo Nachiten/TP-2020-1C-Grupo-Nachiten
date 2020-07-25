@@ -56,7 +56,8 @@ typedef struct
 //estructuras del Broker -----------------------------------------------------------------------------------------------
 
 typedef struct {
-	int32_t socket;
+	uint32_t pID;
+	int32_t elSocket;
 	int32_t recibido; // 0 si no se recibio, 1 si ya se recibio
 	int32_t suscripto; // 0 si no esta suscripto, 1 si esta suscripto
 }t_sub;
@@ -108,15 +109,18 @@ typedef struct particionesCandidatas{
 typedef struct {
 	int32_t id_mensaje;
 	codigo_operacion colaMensajes;
+	uint32_t pId;
 }confirmacionMensaje;
 
 // se tiene que mandar al broker para que sepa a que cola suscribir o desuscribir al cliente
 typedef struct{
 	int32_t numeroCola;
+	uint32_t pId;
 }Suscripcion;
 
 typedef struct{
 	int32_t numeroCola;
+	uint32_t pId;
 }Dessuscripcion;
 
 typedef struct Coords{

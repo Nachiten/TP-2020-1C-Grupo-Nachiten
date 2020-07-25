@@ -66,7 +66,7 @@ void resultado_de_conexion(int32_t socket, t_log* logger, char* modulo)
 {
 	if(socket == -1)
 	{
-		printf("Conexión fallida con socket de %s!!!", modulo);
+		printf("Conexión fallida con socket de %s!!!\n", modulo);
 	//log_warning(logger, "Conexión fallida con socket de %s", modulo);
 	}
 	else
@@ -467,8 +467,12 @@ uint32_t serializar_paquete_suscripcion(t_paquete* paquete, Suscripcion* cola)
 	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
 	desplazamiento += sizeof(cola->numeroCola);
 
+	//meto la PID del preoceso en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(cola->pId), sizeof(cola->pId));
+	desplazamiento += sizeof(cola->pId);
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(cola->numeroCola);
+	paquete->buffer->size = sizeof(cola->numeroCola) + sizeof(cola->pId);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
@@ -486,8 +490,12 @@ uint32_t serializar_paquete_dessuscripcion(t_paquete* paquete, Dessuscripcion* c
 	memcpy(paquete->buffer->stream + desplazamiento, &(cola->numeroCola), sizeof(cola->numeroCola));
 	desplazamiento += sizeof(cola->numeroCola);
 
+	//meto la PID del preoceso en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(cola->pId), sizeof(cola->pId));
+	desplazamiento += sizeof(cola->pId);
+
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(cola->numeroCola);
+	paquete->buffer->size = sizeof(cola->numeroCola) + sizeof(cola->pId);
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
@@ -781,12 +789,18 @@ void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente)
 {
 	//saco la COLA a la que suscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+
+	//saco la PID del preoceso del buffer del paquete
+	bytesRecibidos(recv(socket_cliente, &(estructura->pId), sizeof(estructura->pId), MSG_WAITALL));
 }
 
 void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente)
 {
 	//saco la COLA de la que dessuscribirse del mensaje
 	bytesRecibidos(recv(socket_cliente, &(estructura->numeroCola), sizeof(estructura->numeroCola), MSG_WAITALL));
+
+	//saco la PID del preoceso del buffer del paquete
+	bytesRecibidos(recv(socket_cliente, &(estructura->pId), sizeof(estructura->pId), MSG_WAITALL));
 }
 
 void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_cliente)

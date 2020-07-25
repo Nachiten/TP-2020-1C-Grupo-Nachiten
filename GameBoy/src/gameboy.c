@@ -465,7 +465,10 @@ int main(int cantArg, char* arg[]) {
 							Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
 
 							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+							printf("Process ID del Game: %u\n", getpid());
+							estructuraSuscribirse->pId = getpid(); //ponemos la ID del proceso
 							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+							estructuraDessuscribirse->pId = getpid(); //ponemos la ID del proceso
 
 //							//preparo la lista de IDs recibidas luego de suscribirme (si es que se llega a usar)
 //							mensajesRecibidos* listaRecibidos = malloc(sizeof(mensajesRecibidos));
@@ -492,8 +495,8 @@ int main(int cantArg, char* arg[]) {
 							//Esperamos la cantidad de segundos que hayan pedido antes de enviar el mensaje para la dessuscripcion
 							sleep(cambia_a_int(arg[3]));
 
-							cerrar_conexion(socket);
-							socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+//							cerrar_conexion(socket);
+//							socket = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
 
 							//mandamos el mensaje pidiendo dessuscribirse a la cola
 							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);

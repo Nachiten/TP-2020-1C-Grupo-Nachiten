@@ -113,113 +113,113 @@ int main(void) {
 
 	// *************************************************
 	//TESTING AGREGAR MENSAJES A CACHE
-	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
-	codigo_operacion codigoPrueba2 = 2;
-	codigo_operacion codigoPrueba3 = 3;
-	codigo_operacion codigoPrueba4 = 4;
-	codigo_operacion codigoPrueba5 = 5;
-	codigo_operacion codigoPrueba6 = 6;
-
-	uint32_t sizeDelMensajeNew = 0;
-	uint32_t sizeDelMensajeAppeared = 0;
-	uint32_t sizeDelMensajeGet = 0;
-	uint32_t sizeDelMensajeLocalized = 0;
-	uint32_t sizeDelMensajeCatch = 0;
-	uint32_t sizeDelMensajeCaught = 0;
-
-	New* pokemonNew = malloc(sizeof(New));
-
-	pokemonNew->nombrePokemon = "pikachu";
-	pokemonNew->largoNombre = strlen(pokemonNew->nombrePokemon);
-	pokemonNew->posPokemon.x = 5;
-	pokemonNew->posPokemon.y = 6;
-	pokemonNew->cantPokemon = 1;
-	pokemonNew->ID = 5;
-	pokemonNew->corrID = 4;
-
-	Appeared* pokemonAppeared = malloc(sizeof(Appeared));
-
-	pokemonAppeared->nombrePokemon = "Bulbasur";
-	pokemonAppeared->largoNombre = strlen(pokemonAppeared->nombrePokemon);
-	pokemonAppeared->posPokemon.x = 1;
-	pokemonAppeared->posPokemon.y = 1;
-	pokemonAppeared->ID = 30;
-	pokemonAppeared->corrID = 4;
-
-	Get* pokemonGet = malloc(sizeof(Get));
-	pokemonGet->nombrePokemon = malloc(11);
-	pokemonGet->nombrePokemon = "Charmander";
-	pokemonGet->largoNombre = strlen(pokemonGet->nombrePokemon);
-	pokemonGet->ID = 11;
-	pokemonGet->corrID = 10;
-
-	Localized* pokemonLocalized = malloc(sizeof(Localized));
-	pokemonLocalized->nombrePokemon = "Charmander";
-	pokemonLocalized->largoNombre = strlen(pokemonLocalized->nombrePokemon);
-	pokemonLocalized->cantPosciciones = 3;
-	pokemonLocalized->coords[0] = 0;
-	pokemonLocalized->coords[1] = 1;
-	pokemonLocalized->coords[2] = 2;
-	pokemonLocalized->coords[3] = 3;
-	pokemonLocalized->coords[4] = 4;
-	pokemonLocalized->coords[5] = 5;
-	pokemonLocalized->ID = 12;
-	pokemonLocalized->corrID = 12;
-
-	Catch* pokemonCatch = malloc(sizeof(Catch));
-	pokemonCatch->nombrePokemon = "unnumeromayora32";
-	pokemonCatch->largoNombre = strlen(pokemonCatch->nombrePokemon);
-	pokemonCatch->posPokemon.x = 1;
-	pokemonCatch->posPokemon.y = 1;
-	pokemonCatch->ID = 102;
-	pokemonCatch->corrID = 12;
-
-	Caught* pokemonCaught = malloc(sizeof(Caught));
-	pokemonCaught->nombrePokemon = "Catch";
-	pokemonCaught->largoNombre = strlen(pokemonCaught->nombrePokemon);
-	pokemonCaught->pudoAtrapar = 1;
-	pokemonCaught->ID = 22;
-	pokemonCaught->corrID = 12;
-
-	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
-	mensajePrueba->id = pokemonNew->ID;
-	mensajePrueba->id_correlativo = pokemonNew->corrID;
-	mensajePrueba->mensaje = pokemonNew;
-	mensajePrueba->tamanioMensaje = sizeDelMensajeNew;
-
-	t_mensaje* mensajePrueba2 = malloc(sizeof(t_mensaje));
-	mensajePrueba2->id = pokemonAppeared->ID;
-	mensajePrueba2->id_correlativo = pokemonAppeared->corrID;
-	mensajePrueba2->mensaje = pokemonAppeared;
-	mensajePrueba2->tamanioMensaje = sizeDelMensajeAppeared;
-
-	t_mensaje* mensajePrueba3 = malloc(sizeof(t_mensaje));
-	mensajePrueba3->id = pokemonGet->ID;
-	mensajePrueba3->mensaje = pokemonGet;
-	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
-
-	t_mensaje* mensajePrueba4 = malloc(sizeof(t_mensaje));
-	mensajePrueba4->id = pokemonLocalized->ID;
-	mensajePrueba4->mensaje = pokemonLocalized;
-	mensajePrueba4->tamanioMensaje = sizeDelMensajeLocalized;
-
-	t_mensaje* mensajePrueba5 = malloc(sizeof(t_mensaje));
-	mensajePrueba5->id = pokemonCatch->ID;
-	mensajePrueba5->mensaje = pokemonCatch;
-	mensajePrueba5->tamanioMensaje = sizeDelMensajeCatch;
-
-	t_mensaje* mensajePrueba6 = malloc(sizeof(t_mensaje));
-	mensajePrueba6->id = pokemonCaught->ID;
-	mensajePrueba6->mensaje = pokemonCaught;
-	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
-
-	//para calcular el tamaño que va a tener que guardar agregar mensaje
-	sizeDelMensajeNew = calcular_bytes_utiles_de_mensaje(mensajePrueba->mensaje, codigoPrueba);
-	sizeDelMensajeAppeared = calcular_bytes_utiles_de_mensaje(mensajePrueba2->mensaje, codigoPrueba2);
-	sizeDelMensajeGet = calcular_bytes_utiles_de_mensaje(mensajePrueba3->mensaje, codigoPrueba3);
-	sizeDelMensajeLocalized = calcular_bytes_utiles_de_mensaje(mensajePrueba4->mensaje, codigoPrueba4);
-	sizeDelMensajeCatch = calcular_bytes_utiles_de_mensaje(mensajePrueba5->mensaje, codigoPrueba5);
-	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
+//	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
+//	codigo_operacion codigoPrueba2 = 2;
+//	codigo_operacion codigoPrueba3 = 3;
+//	codigo_operacion codigoPrueba4 = 4;
+//	codigo_operacion codigoPrueba5 = 5;
+//	codigo_operacion codigoPrueba6 = 6;
+//
+//	uint32_t sizeDelMensajeNew = 0;
+//	uint32_t sizeDelMensajeAppeared = 0;
+//	uint32_t sizeDelMensajeGet = 0;
+//	uint32_t sizeDelMensajeLocalized = 0;
+//	uint32_t sizeDelMensajeCatch = 0;
+//	uint32_t sizeDelMensajeCaught = 0;
+//
+//	New* pokemonNew = malloc(sizeof(New));
+//
+//	pokemonNew->nombrePokemon = "pikachu";
+//	pokemonNew->largoNombre = strlen(pokemonNew->nombrePokemon);
+//	pokemonNew->posPokemon.x = 5;
+//	pokemonNew->posPokemon.y = 6;
+//	pokemonNew->cantPokemon = 1;
+//	pokemonNew->ID = 5;
+//	pokemonNew->corrID = 4;
+//
+//	Appeared* pokemonAppeared = malloc(sizeof(Appeared));
+//
+//	pokemonAppeared->nombrePokemon = "Bulbasur";
+//	pokemonAppeared->largoNombre = strlen(pokemonAppeared->nombrePokemon);
+//	pokemonAppeared->posPokemon.x = 1;
+//	pokemonAppeared->posPokemon.y = 1;
+//	pokemonAppeared->ID = 30;
+//	pokemonAppeared->corrID = 4;
+//
+//	Get* pokemonGet = malloc(sizeof(Get));
+//	pokemonGet->nombrePokemon = malloc(11);
+//	pokemonGet->nombrePokemon = "Charmander";
+//	pokemonGet->largoNombre = strlen(pokemonGet->nombrePokemon);
+//	pokemonGet->ID = 11;
+//	pokemonGet->corrID = 10;
+//
+//	Localized* pokemonLocalized = malloc(sizeof(Localized));
+//	pokemonLocalized->nombrePokemon = "Charmander";
+//	pokemonLocalized->largoNombre = strlen(pokemonLocalized->nombrePokemon);
+//	pokemonLocalized->cantPosciciones = 3;
+//	pokemonLocalized->coords[0] = 0;
+//	pokemonLocalized->coords[1] = 1;
+//	pokemonLocalized->coords[2] = 2;
+//	pokemonLocalized->coords[3] = 3;
+//	pokemonLocalized->coords[4] = 4;
+//	pokemonLocalized->coords[5] = 5;
+//	pokemonLocalized->ID = 12;
+//	pokemonLocalized->corrID = 12;
+//
+//	Catch* pokemonCatch = malloc(sizeof(Catch));
+//	pokemonCatch->nombrePokemon = "unnumeromayora32";
+//	pokemonCatch->largoNombre = strlen(pokemonCatch->nombrePokemon);
+//	pokemonCatch->posPokemon.x = 1;
+//	pokemonCatch->posPokemon.y = 1;
+//	pokemonCatch->ID = 102;
+//	pokemonCatch->corrID = 12;
+//
+//	Caught* pokemonCaught = malloc(sizeof(Caught));
+//	pokemonCaught->nombrePokemon = "Catch";
+//	pokemonCaught->largoNombre = strlen(pokemonCaught->nombrePokemon);
+//	pokemonCaught->pudoAtrapar = 1;
+//	pokemonCaught->ID = 22;
+//	pokemonCaught->corrID = 12;
+//
+//	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
+//	mensajePrueba->id = pokemonNew->ID;
+//	mensajePrueba->id_correlativo = pokemonNew->corrID;
+//	mensajePrueba->mensaje = pokemonNew;
+//	mensajePrueba->tamanioMensaje = sizeDelMensajeNew;
+//
+//	t_mensaje* mensajePrueba2 = malloc(sizeof(t_mensaje));
+//	mensajePrueba2->id = pokemonAppeared->ID;
+//	mensajePrueba2->id_correlativo = pokemonAppeared->corrID;
+//	mensajePrueba2->mensaje = pokemonAppeared;
+//	mensajePrueba2->tamanioMensaje = sizeDelMensajeAppeared;
+//
+//	t_mensaje* mensajePrueba3 = malloc(sizeof(t_mensaje));
+//	mensajePrueba3->id = pokemonGet->ID;
+//	mensajePrueba3->mensaje = pokemonGet;
+//	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
+//
+//	t_mensaje* mensajePrueba4 = malloc(sizeof(t_mensaje));
+//	mensajePrueba4->id = pokemonLocalized->ID;
+//	mensajePrueba4->mensaje = pokemonLocalized;
+//	mensajePrueba4->tamanioMensaje = sizeDelMensajeLocalized;
+//
+//	t_mensaje* mensajePrueba5 = malloc(sizeof(t_mensaje));
+//	mensajePrueba5->id = pokemonCatch->ID;
+//	mensajePrueba5->mensaje = pokemonCatch;
+//	mensajePrueba5->tamanioMensaje = sizeDelMensajeCatch;
+//
+//	t_mensaje* mensajePrueba6 = malloc(sizeof(t_mensaje));
+//	mensajePrueba6->id = pokemonCaught->ID;
+//	mensajePrueba6->mensaje = pokemonCaught;
+//	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
+//
+//	//para calcular el tamaño que va a tener que guardar agregar mensaje
+//	sizeDelMensajeNew = calcular_bytes_utiles_de_mensaje(mensajePrueba->mensaje, codigoPrueba);
+//	sizeDelMensajeAppeared = calcular_bytes_utiles_de_mensaje(mensajePrueba2->mensaje, codigoPrueba2);
+//	sizeDelMensajeGet = calcular_bytes_utiles_de_mensaje(mensajePrueba3->mensaje, codigoPrueba3);
+//	sizeDelMensajeLocalized = calcular_bytes_utiles_de_mensaje(mensajePrueba4->mensaje, codigoPrueba4);
+//	sizeDelMensajeCatch = calcular_bytes_utiles_de_mensaje(mensajePrueba5->mensaje, codigoPrueba5);
+//	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
 
 	//pesa 24
 	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
@@ -383,9 +383,10 @@ int32_t crear_id(){
 	return id_inicial;
 }
 
-t_sub* crear_sub(int32_t socket){
+t_sub* crear_sub(uint32_t pId, int32_t elSocket){
 	t_sub* nuevo = malloc(sizeof(t_sub));
-	nuevo->socket = socket;
+	nuevo->pID = pId;
+	nuevo->elSocket = elSocket;
 	nuevo->recibido = 0;
 	nuevo->suscripto = 1;
 	return nuevo;
@@ -418,7 +419,7 @@ void suscribir(t_sub* sub,t_cola* cola)
 				{
 					t_sub* subDelMensaje;
 					subDelMensaje = list_get(mensaje->subs,j);
-					if((subDelMensaje->recibido == sub->recibido) && (subDelMensaje->socket == sub->socket) && (subDelMensaje->suscripto == sub->suscripto))
+					if((subDelMensaje->recibido == sub->recibido) && (subDelMensaje->pID == sub->pID) && (subDelMensaje->suscripto == sub->suscripto))
 					{
 						control++;
 					}
@@ -575,35 +576,35 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 	}
 }
 
-void agregar_sub(int32_t socket, t_cola* cola){
+void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket){
 	t_sub* new; //= malloc(sizeof(t_sub));//de mas?
-	new = crear_sub(socket);
+	new = crear_sub(pId, elSocket);
 	list_add(cola->subs,new);
-	agregar_mensajes_viejos(socket,cola);
+	agregar_mensajes_viejos(pId,cola);
 	suscribir(new,cola);
 	mandar_mensajes_broker(cola);
 }
 
 // agrega los mensajes de la cola de descartes a la cola donde hay un nuevo sub
-void agregar_mensajes_viejos(int32_t socket, t_cola* cola){
+void agregar_mensajes_viejos(uint32_t pId, t_cola* cola){
 	switch(cola->tipoCola){
 	case NEW:
-		buscar_mensajes_descarte(socket, cola, colaDescartesNew);
+		buscar_mensajes_descarte(pId, cola, colaDescartesNew);
 		break;
 	case APPEARED:
-		buscar_mensajes_descarte(socket, cola, colaDescartesAppeared);
+		buscar_mensajes_descarte(pId, cola, colaDescartesAppeared);
 		break;
 	case GET:
-		buscar_mensajes_descarte(socket, cola, colaDescartesGet);
+		buscar_mensajes_descarte(pId, cola, colaDescartesGet);
 		break;
 	case LOCALIZED:
-		buscar_mensajes_descarte(socket, cola, colaDescartesLocalized);
+		buscar_mensajes_descarte(pId, cola, colaDescartesLocalized);
 		break;
 	case CATCH:
-		buscar_mensajes_descarte(socket, cola, colaDescartesCatch);
+		buscar_mensajes_descarte(pId, cola, colaDescartesCatch);
 		break;
 	case CAUGHT:
-		buscar_mensajes_descarte(socket, cola, colaDescartesCaught);
+		buscar_mensajes_descarte(pId, cola, colaDescartesCaught);
 		break;
 	default:
 		break;
@@ -611,12 +612,12 @@ void agregar_mensajes_viejos(int32_t socket, t_cola* cola){
 }
 
 // busca los mensajes de la lista de descartes que no se hayan mandado al suscriptor y los agrega a la cola
-void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
+void buscar_mensajes_descarte(uint32_t pId, t_cola* cola, t_cola* descarte){
 	if(descarte->mensajes->head != NULL){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
 			t_mensaje* mensaje;
 			mensaje = list_get(colaDescartesNew->mensajes,i);
-					if(sub_presente(socket, mensaje) == 0){
+					if(sub_presente(pId, mensaje) == 0){
 						t_mensaje* mensajeViejo;
 						mensajeViejo = list_remove(descarte->mensajes, i);
 						list_add(cola->mensajes, mensajeViejo);
@@ -625,12 +626,12 @@ void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte){
 	}
 }
 
-int sub_presente(int32_t socketCliente, t_mensaje* mensaje){
+int sub_presente(uint32_t pId, t_mensaje* mensaje){
 	if(mensaje->subs->head != NULL){
 		for(int j = 0; j < mensaje->subs->elements_count; j++){
 			t_sub* sub;
 			sub = list_get(mensaje->subs,j);
-			if(sub->socket == socketCliente){
+			if(sub->pID == pId){
 				return 1;
 			}
 		}
@@ -670,7 +671,7 @@ void mandar_mensajes_broker(t_cola* cola){
 						sem_wait(semLog);
 						log_info(logger, "Envio un mensaje a uno de los suscriptores");
 						sem_post(semLog);
-						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->socket);
+						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->elSocket);
 					}
 				}
 			borrar_datos(cola,mensaje);
@@ -763,7 +764,7 @@ void borrar_datos_caught(Caught* mensaje){
 
 // avanza en la cola de mensajes hasta encontrar el mensaje con el id deseado, despues busca en la lista de
 // suscriptores de ese mensaje hasta encontrar el socket adecuado y pone en visto el mensaje
-void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
+void modificar_cola(t_cola* cola, int32_t id_mensaje, uint32_t pID){
 	for(int i = 0; i < cola->mensajes->elements_count; i++){
 		t_mensaje* mensaje;
 		mensaje = list_get(cola->mensajes,i);
@@ -774,7 +775,7 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 				t_sub* sub;
 				sub = list_get(mensaje->subs,j);
 
-				if(sub->socket == socket){
+				if(sub->pID == pID){
 					sub->recibido = 1;
 					exit(EXIT_SUCCESS);
 				}
@@ -784,11 +785,11 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, int32_t socket){
 }
 
 // usa modificar_cola para confirmar el mensaje deseado (confirmar_cola esta arriba)
-void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
+void confirmar_mensaje(uint32_t pID, confirmacionMensaje* mensaje){
 	switch(mensaje->colaMensajes){
 	case NEW:
 		sem_wait(semNew);
-		modificar_cola(colaNew,mensaje->id_mensaje,socket);
+		modificar_cola(colaNew,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola New");
 		sem_post(semLog);
@@ -796,7 +797,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 		break;
 	case APPEARED:
 		sem_wait(semAppeared);
-		modificar_cola(colaAppeared,mensaje->id_mensaje,socket);
+		modificar_cola(colaAppeared,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Appeared");
 		sem_post(semLog);
@@ -804,7 +805,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 		break;
 	case GET:
 		sem_wait(semGet);
-		modificar_cola(colaGet,mensaje->id_mensaje,socket);
+		modificar_cola(colaGet,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Get");
 		sem_post(semLog);
@@ -812,7 +813,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 		break;
 	case LOCALIZED:
 		sem_wait(semLocalized);
-		modificar_cola(colaLocalized,mensaje->id_mensaje,socket);
+		modificar_cola(colaLocalized,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Localized");
 		sem_post(semLog);
@@ -820,7 +821,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 		break;
 	case CATCH:
 		sem_wait(semCatch);
-		modificar_cola(colaCatch,mensaje->id_mensaje,socket);
+		modificar_cola(colaCatch,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Catch");
 		sem_post(semLog);
@@ -828,7 +829,7 @@ void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje){
 		break;
 	case CAUGHT:
 		sem_wait(semCaught);
-		modificar_cola(colaCaught,mensaje->id_mensaje,socket);
+		modificar_cola(colaCaught,mensaje->id_mensaje,pID);
 		sem_wait(semLog);
 		log_info(logger, "Se confirmo un mensaje de la cola Caught");
 		sem_post(semLog);
@@ -911,21 +912,21 @@ void agregar_descarte (t_cola* cola, t_mensaje* descarte){
 
 // primero recorre la lista de mensajes hasta encontrar el sub deseado, lo elimina de la lista y sigue buscando en los
 // demas mensajes, cuando termina con eso elimina al sub de la lista de subs de la cola
-void desuscribir(int32_t socket, t_cola* cola){//ToDo ver que onda
+void desuscribir(uint32_t pID, t_cola* cola){//ToDo ver que onda
 	t_sub* sub;// = malloc(sizeof(t_sub));
 	for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 		t_mensaje* mensaje;// = malloc(sizeof(t_mensaje));
 		mensaje = list_get(cola->mensajes,i); // busca el i elemento de la lista mensajes
 		for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
 			sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
-			if(sub->socket == socket){
+			if(sub->pID == pID){
 				sub->suscripto = 0;
 			}
 		}
 	}
 	for(int j = 0; j < cola->subs->elements_count; j++ ){ //avanza hasta el final de la cola subs
 		sub = list_get(cola->subs,j); // busca el j elemento de la lista subs
-		if(sub->socket == socket){
+		if(sub->pID == pID){
 			sub->suscripto = 0;
 		}
 	}
@@ -1020,7 +1021,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola New");
 				sem_post(semLog);
 				sem_wait(semNew);
-				agregar_sub(socket_cliente, colaNew);
+				agregar_sub(mensajeSuscrip->pId, colaNew, socket_cliente);
 				sem_post(semNew);
 				break;
 			case APPEARED:
@@ -1028,7 +1029,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola Appeared");
 				sem_post(semLog);
 				sem_wait(semAppeared);
-				agregar_sub(socket_cliente, colaAppeared);
+				agregar_sub(mensajeSuscrip->pId, colaAppeared, socket_cliente);
 				sem_post(semAppeared);
 				break;
 			case GET:
@@ -1036,7 +1037,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola Get");
 				sem_post(semLog);
 				sem_wait(semGet);
-				agregar_sub(socket_cliente, colaGet);
+				agregar_sub(mensajeSuscrip->pId, colaGet, socket_cliente);
 				sem_post(semGet);
 				break;
 			case LOCALIZED:
@@ -1044,7 +1045,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola Localized");
 				sem_post(semLog);
 				sem_wait(semLocalized);
-				agregar_sub(socket_cliente, colaLocalized);
+				agregar_sub(mensajeSuscrip->pId, colaLocalized, socket_cliente);
 				sem_post(semLocalized);
 				break;
 			case CATCH:
@@ -1052,7 +1053,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola Catch");
 				sem_post(semLog);
 				sem_wait(semCatch);
-				agregar_sub(socket_cliente, colaCatch);
+				agregar_sub(mensajeSuscrip->pId, colaCatch, socket_cliente);
 				sem_post(semCatch);
 				break;
 			case CAUGHT:
@@ -1060,7 +1061,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				log_info(logger, "Se suscribio a la cola Caught");
 				sem_post(semLog);
 				sem_wait(semCaught);
-				agregar_sub(socket_cliente, colaCaught);
+				agregar_sub(mensajeSuscrip->pId, colaCaught, socket_cliente);
 				sem_post(semCaught);
 				break;
 			default:
@@ -1075,7 +1076,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			switch(mensajeDessuscrip->numeroCola){
 			case NEW:
 				sem_wait(semNew);
-				desuscribir(socket_cliente, colaNew);
+				desuscribir(mensajeDessuscrip->pId, colaNew);
 				sem_post(semNew);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola New");
@@ -1083,7 +1084,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				break;
 			case APPEARED:
 				sem_wait(semAppeared);
-				desuscribir(socket_cliente, colaAppeared);
+				desuscribir(mensajeDessuscrip->pId, colaAppeared);
 				sem_post(semAppeared);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Appeared");
@@ -1091,7 +1092,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				break;
 			case GET:
 				sem_wait(semGet);
-				desuscribir(socket_cliente, colaGet);
+				desuscribir(mensajeDessuscrip->pId, colaGet);
 				sem_post(semGet);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Get");
@@ -1099,7 +1100,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				break;
 			case LOCALIZED:
 				sem_wait(semLocalized);
-				desuscribir(socket_cliente, colaLocalized);
+				desuscribir(mensajeDessuscrip->pId, colaLocalized);
 				sem_post(semLocalized);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Localized");
@@ -1107,7 +1108,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				break;
 			case CATCH:
 				sem_wait(semCatch);
-				desuscribir(socket_cliente, colaCatch);
+				desuscribir(mensajeDessuscrip->pId, colaCatch);
 				sem_post(semCatch);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Catch");
@@ -1115,7 +1116,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				break;
 			case CAUGHT:
 				sem_wait(semCaught);
-				desuscribir(socket_cliente, colaCaught);
+				desuscribir(mensajeDessuscrip->pId, colaCaught);
 				sem_post(semCaught);
 				sem_wait(semLog);
 				log_info(logger, "Se desuscribio a la cola Caught");
@@ -1147,20 +1148,27 @@ void serve_client(int32_t* socket)
 	while(1){
 		int32_t sizeAAllocar;
 		codigo_operacion cod_op;
+		int32_t recibidosSize = 0;
 
 		int32_t recibidos = recv(*socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 		bytesRecibidos(recibidos);
 
-		int32_t recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
-		bytesRecibidos(recibidosSize);
-		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+		if(recibidos >= 1)
+		{
+			recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
+			bytesRecibidos(recibidosSize);
+			printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+		}
 
-		if(recibidos == -1 || recibidosSize == -1)
+		if(recibidos < 1  || recibidosSize < 1)
 		{
 			cod_op = -1;
+			sizeAAllocar = 0;
 		}
 
 		process_request(cod_op, *socket, sizeAAllocar);
+		recibidosSize = 0;
+		recibidos = 0;
 	}
 }
 

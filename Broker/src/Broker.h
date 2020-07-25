@@ -80,14 +80,14 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 void inicializar_colas();
 void inicializar_semaforos();
 void llenar_listaColas();
-t_sub* crear_sub(int32_t socket);
+t_sub* crear_sub(uint32_t pId, int32_t elSocket);
 t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint32_t sizeDeMensaje);
 void suscribir(t_sub* sub,t_cola* cola);
-void agregar_sub(int32_t socket, t_cola* cola);
+void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket);
 void mandar_mensajes_broker(t_cola* cola);
-void modificar_cola(t_cola* cola, int id_mensaje, int32_t socket);
-void confirmar_mensaje(int32_t socket, confirmacionMensaje* mensaje);
-void desuscribir(int32_t socket, t_cola* cola);
+void modificar_cola(t_cola* cola, int id_mensaje, uint32_t pId);
+void confirmar_mensaje(uint32_t pId, confirmacionMensaje* mensaje);
+void desuscribir(uint32_t pId, t_cola* cola);
 
 // ***********agregar a colas***********
 void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje);
@@ -98,9 +98,9 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
 
 void agregar_descarte (t_cola* cola, t_mensaje* descarte);
-void agregar_mensajes_viejos(int32_t socket, t_cola* cola);
-void buscar_mensajes_descarte(int32_t socket, t_cola* cola, t_cola* descarte);
-int sub_presente(int32_t socketCliente, t_mensaje* mensaje);
+void agregar_mensajes_viejos(uint32_t pId, t_cola* cola);
+void buscar_mensajes_descarte(uint32_t pId, t_cola* cola, t_cola* descarte);
+int sub_presente(uint32_t pId, t_mensaje* mensaje);
 // ***********borrar***********
 
 void borrar_datos(t_cola* cola, t_mensaje* mensaje);

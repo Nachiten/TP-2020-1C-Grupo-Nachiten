@@ -92,7 +92,8 @@ void mandar_mensaje(void* mensaje, codigo_operacion tipoMensaje, int32_t socket)
 	void* paquete_serializado = serializar_paquete(paquete_por_armar, mensaje, tipoMensaje, &size_serializado);
 
 	//mando el mensaje
-	bytesEnviados(send(socket, paquete_serializado, size_serializado, MSG_NOSIGNAL));
+	//bytesEnviados(send(socket, paquete_serializado, size_serializado, MSG_NOSIGNAL));
+	bytesEnviados(send(socket, paquete_serializado, size_serializado, 0));
 
 	//libero los malloc utilizados
 	eliminar_paquete(paquete_por_armar);

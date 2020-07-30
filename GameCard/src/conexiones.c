@@ -59,8 +59,8 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	pthread_create(&hiloNew  , NULL, (void*)esperarMensajes, &datosNew);
 	pthread_create(&hiloCatch, NULL, (void*)esperarMensajes, &datosCatch);
 
-	pthread_join(hiloGet, NULL);
-	pthread_join(hiloNew, NULL);
+	//pthread_join(hiloGet, NULL);
+	//pthread_join(hiloNew, NULL);
 	pthread_join(hiloCatch, NULL);
 
 //	pthread_detach(hiloGet);
@@ -127,6 +127,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 		printf("Esperando mensajes de la cola %i.\n", nombreCola);
 		recibidosCodOP = recv(socketCola, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 		bytesRecibidos(recibidosCodOP);
+		printf("Recibi un mensaje de la cola %i.\n", nombreCola);
 
 		//en caso de que haya fallado la conexion del COD OP
 		while((recibidosCodOP == -1) || (recibidosCodOP == 0) || (desconexion == -1) || ((desconexion == 0)))
@@ -213,9 +214,8 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
 				free(mensajeConfirm);
 
-
-				//ToDo esto no esta completo, verificar
-				//mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID); NACHO ESTO TE LO AGREGUE YO, NO ESTABA, REVISA A VER SI ESTA BIEN
+				// Corrigiendo...
+				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
 			break;
 			default:
 				printf("No deberia entrar aca D:");

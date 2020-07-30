@@ -241,7 +241,7 @@ char* separarCoord(char* unString){
 
 	token = strsep(&stringModificado, "=");
 
-	// TODO | Ojo al piojo
+	// Se rompe al hacer este free
 	//free(stringModificado);
 
 	return token;
@@ -526,9 +526,8 @@ t_list* separarStringEnBloques(char* lineaAEscribir, int cantBloques){
 		// Agrego el bloque recortado a la lista de strings
 		list_add(listaStrings, miString);
 
-		// TODO | OJO AL PIOJO
+		// Se rompe hacer esto
 		//free(miString);
-		// Rompe todo hacer esto
 
 		//printf("String en posicion: %i | %s\n", i , miString);
 	}
@@ -1145,12 +1144,8 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(pikachu, 1, 15, 8, 1);
-	mensajeNew(pikachu, 7, 555, 1, 2);
-	mensajeNew(pikachu, 199, 9915, 5, 3);
+	mensajeNew(pikachu, 1, 15, 30, 1);
 
-//	mensajeCatch(pikachu, 1, 15, 1);
-//
 //	mensajeGet(pikachu, 1);
 //	mensajeGet(pikachu, 1);
 //	mensajeGet(pikachu, 1);
@@ -1242,8 +1237,6 @@ int main(void) {
 //	pthread_join(hiloTesting2, NULL);
 //	pthread_join(hiloTesting3, NULL);
 
-
-
 	// Testing semaforos
 //	crearPokemonSiNoExiste(pikachu);
 //	crearPokemonSiNoExiste(bulbasaur);
@@ -1262,8 +1255,6 @@ int main(void) {
 //	signalSemaforoPokemon(fruta);
 //
 //	leerSemaforosLista();
-
-
 
 	// ****************************************************************
 

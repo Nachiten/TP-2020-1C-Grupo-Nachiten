@@ -140,14 +140,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 		log_info(logger, "NEW | Escribiendo nueva linea %i-%i=%i en pokemon vacio %s", posX, posY, cantidad, pokemon);
 	}
 
-
-
 	//sleep(TIEM_REIN_OPERACION);
 
 	// Cerrar el archivo luego de usarlo
 	cerrarArchivoPokemon(pokemon);
 
-	enviarMensajeAppeared(pokemon, posX, posY, IDMensaje); // TODO Num 3 HARDCODEADO | En realidad toma el ID como parametro esta funcion
+	enviarMensajeAppeared(pokemon, posX, posY, IDMensaje);
 }
 
 void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
@@ -188,9 +186,7 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 			if (cantidadBloquesActual == cantidadBloquesRequeridos){
 				//printf("CATCH | La cantidad de bloques se mantiene igual");
 
-
 			} else if (cantidadBloquesRequeridos < cantidadBloquesActual){
-				// TODO | Terminar
 				/* Luego de liberar los bloques y modificar la lista se debe
 				 * 1) Separar el array en bloques
 				 * 2) Escribir los datos de bloques
@@ -201,15 +197,13 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 				int cantidadDeBloquesALiberar = cantidadBloquesActual - cantidadBloquesRequeridos;
 
-				//liberarNBloques(listaBloques, cantidadDeBloquesALiberar);
-
-				// Tamanio: 2 | BloquesALiberar: 1
-
+				// Libero los bloques que sobran (que ya no necesito)
 				liberarNBloques(listaBloques, cantidadDeBloquesALiberar);
 
 //				printf("Printeando lista despues de liberar:");
 //				printearListaDeEnteros(listaBloques);
 
+				// Fijo el BLOCKS=[3,2,1]
 				fijarBloquesA(pokemon, listaBloques);
 
 			} else {
@@ -220,7 +214,7 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 			escribirLineasEnBloques(listaBloques, listaDatosBloques);
 
-			// Sacar
+			// Hace free de la lista
 			int i;
 			int cantidadElementosLista = list_size(listaDatosBloques);
 			for (i = cantidadElementosLista - 1; i >= 0; i--)
@@ -328,7 +322,11 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	structAEnviar->posPokemon.x = posX;
 	structAEnviar->posPokemon.y = posY;
 
-	//mandar_mensaje(structAEnviar, APPEARED, );
+	int socketAppeared = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+	mandar_mensaje(structAEnviar, APPEARED, socketAppeared);
+
+	cerrar_conexion(socketAppeared);
 
 	// TODO | Liberar nombre pokemon
 	free(structAEnviar);
@@ -345,16 +343,25 @@ void enviarMensajeCaught(char* pokemon, int resultado, int IDMensaje){
 	structCaught->corrID = IDMensaje;
 	structCaught->ID = 0;
 
-	// TODO | Falta terminar
-	//mandar_mensaje()
+	printf("Se enviara el siguiente mensaje al broker (cola caught):\n");
+	printf("Pokemon: %s\n", pokemon);
+	printf("CORRID Mensaje: %i\n", IDMensaje);
+	printf("Resultado (bool): %i\n", resultado);
+
+	int socketCaught = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+	mandar_mensaje(structCaught, CAUGHT, socketCaught);
+
+	cerrar_conexion(socketCaught);
 
 	free(structCaught);
 }
 
 void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensaje){
-	printf("Se enviara el siguiente mensaje al broker (cola appeared):\n");
+	printf("Se enviara el siguiente mensaje al broker (cola localized):\n");
 	printf("Pokemon: %s\n", pokemon);
-	printf("ID Mensaje: %i\n", IDMensaje);
+	printf("CORRID Mensaje: %i\n", IDMensaje);
+	printf("Cantidad de coords: %i\n", structAEnviar->cantPosciciones);
 
 	int i;
 	//Mostrar la lista coords del struct
@@ -370,9 +377,12 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 
 	//Todo | falta enviar el mensaje
 
-	//int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+	int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 
-	mandar_mensaje(structAEnviar, LOCALIZED , socketGet);
+	mandar_mensaje(structAEnviar, LOCALIZED, socketLocalized);
+
+	cerrar_conexion(socketLocalized);
+
 }
 
 Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){

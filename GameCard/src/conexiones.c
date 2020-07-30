@@ -2,7 +2,8 @@
 
 // Hilo de escucha de gameboy
 void comenzarEscuchaGameBoy(){
-	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config ToDo
+	// TODO | Leer socket de la config
+	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
 
 	escuchoSocket(socketoide); //escuchando al gameboy
 	close(socketoide);
@@ -59,8 +60,8 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	pthread_create(&hiloNew  , NULL, (void*)esperarMensajes, &datosNew);
 	pthread_create(&hiloCatch, NULL, (void*)esperarMensajes, &datosCatch);
 
-	pthread_join(hiloGet, NULL);
-	pthread_join(hiloNew, NULL);
+	//pthread_join(hiloGet, NULL);
+	//pthread_join(hiloNew, NULL);
 	pthread_join(hiloCatch, NULL);
 
 //	pthread_detach(hiloGet);
@@ -127,6 +128,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 		printf("Esperando mensajes de la cola %i.\n", nombreCola);
 		recibidosCodOP = recv(socketCola, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 		bytesRecibidos(recibidosCodOP);
+		printf("Recibi un mensaje de la cola %i.\n", nombreCola);
 
 		//en caso de que haya fallado la conexion del COD OP
 		while((recibidosCodOP == -1) || (recibidosCodOP == 0) || (desconexion == -1) || ((desconexion == 0)))
@@ -169,7 +171,12 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeNewRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+
+				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
 
 
@@ -181,6 +188,9 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				int IDMensaje = mensajeNewRecibido->ID;
 
 				mensajeNew( pokemon , posX, posY, cantidad, IDMensaje );
+
+				free(mensajeNewRecibido->nombrePokemon);
+				free(mensajeNewRecibido);
 
 				break;
 
@@ -194,10 +204,18 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeGetRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAckGet = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckGet);
+
+				cerrar_conexion(socketAckGet);
 				free(mensajeConfirm);
 
 				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
+
+				free(mensajeGetRecibido->nombrePokemon);
+				free(mensajeGetRecibido);
 
 			break;
 				case CATCH: ;
@@ -210,12 +228,20 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeCatchRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAckCatch = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckCatch);
+
+				cerrar_conexion(socketAckCatch);
+
 				free(mensajeConfirm);
 
+				// Corrigiendo...
+				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
 
-				//ToDo esto no esta completo, verificar
-				//mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID); NACHO ESTO TE LO AGREGUE YO, NO ESTABA, REVISA A VER SI ESTA BIEN
+				free(mensajeCatchRecibido->nombrePokemon);
+				free(mensajeCatchRecibido);
 			break;
 			default:
 				printf("No deberia entrar aca D:");
@@ -300,7 +326,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 
 			break;
 		default:
-			printf("Nunca deberia estar recibiendo un mensaje que no sea New Get o Catch");
+			//printf("Nunca deberia estar recibiendo un mensaje que no sea New Get o Catch");
 			break;
 		}
 }

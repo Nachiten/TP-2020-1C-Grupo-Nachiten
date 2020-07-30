@@ -2,7 +2,7 @@
 
 // Hilo de escucha de gameboy
 void comenzarEscuchaGameBoy(){
-	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
+	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config ToDo
 
 	escuchoSocket(socketoide); //escuchando al gameboy
 	close(socketoide);

@@ -2,6 +2,7 @@
 
 // Hilo de escucha de gameboy
 void comenzarEscuchaGameBoy(){
+	// TODO | Leer socket de la config
 	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
 
 	escuchoSocket(socketoide); //escuchando al gameboy
@@ -325,7 +326,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 
 			break;
 		default:
-			printf("Nunca deberia estar recibiendo un mensaje que no sea New Get o Catch");
+			//printf("Nunca deberia estar recibiendo un mensaje que no sea New Get o Catch");
 			break;
 		}
 }

@@ -717,11 +717,6 @@ char* leerContenidoBloquesPokemon(char** bloquesALeer, int cantidadALeerEnBytes)
 
 }
 
-
-
-
-
-
 // Pegar una nueva linea de pokemon al final de lineas
 char* agregarNuevoPokemonALineas(int posX, int posY, int cantidad, char* lineas){
 
@@ -815,15 +810,10 @@ char* sumarALineaPokemon(char* texto, int posX, int posY, int cantidad) {
 	}
 
 	free(stringsSeparados);
-
 	free(charConvertido);
-
-
 
 	return stringARetornar;
 }
-
-
 
 // Abrir un archivo de un pokemon existente
 void abrirArchivoPokemon(char* pokemon){
@@ -1144,7 +1134,7 @@ int main(void) {
 	char* fruta = "Fruta";
 	char* bulbasaur = "Bulbasaur";
 
-	mensajeNew(pikachu, 1, 15, 30, 1);
+	//mensajeNew(pikachu, 1, 15, 30, 1);
 
 //	mensajeGet(pikachu, 1);
 //	mensajeGet(pikachu, 1);
@@ -1268,13 +1258,13 @@ int main(void) {
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
 
-//	pthread_t hiloGameBoy;
-//
-//	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);1
-//
+	pthread_t hiloGameBoy;
+
+    pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+
 //	// CIERRO HILOS
     pthread_join(hiloBroker, NULL);
-//	pthread_join(hiloGameBoy, NULL);
+    pthread_join(hiloGameBoy, NULL);
 
 	// ****************************************************************
 

@@ -170,7 +170,12 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeNewRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+
+				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
 
 
@@ -182,6 +187,9 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				int IDMensaje = mensajeNewRecibido->ID;
 
 				mensajeNew( pokemon , posX, posY, cantidad, IDMensaje );
+
+				free(mensajeNewRecibido->nombrePokemon);
+				free(mensajeNewRecibido);
 
 				break;
 
@@ -195,10 +203,18 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeGetRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAckGet = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckGet);
+
+				cerrar_conexion(socketAckGet);
 				free(mensajeConfirm);
 
 				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
+
+				free(mensajeGetRecibido->nombrePokemon);
+				free(mensajeGetRecibido);
 
 			break;
 				case CATCH: ;
@@ -211,11 +227,20 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mensajeConfirm->id_mensaje = mensajeCatchRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, datosHiloColas->socket);
+
+				int socketAckCatch = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckCatch);
+
+				cerrar_conexion(socketAckCatch);
+
 				free(mensajeConfirm);
 
 				// Corrigiendo...
 				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
+
+				free(mensajeCatchRecibido->nombrePokemon);
+				free(mensajeCatchRecibido);
 			break;
 			default:
 				printf("No deberia entrar aca D:");

@@ -317,6 +317,7 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 	structAEnviar->corrID = IDMensaje;
 
 	structAEnviar->largoNombre = strlen(pokemon);
+	structAEnviar->nombrePokemon = malloc(strlen(pokemon) + 1);
 	structAEnviar->nombrePokemon = pokemon;
 
 	structAEnviar->posPokemon.x = posX;
@@ -375,8 +376,6 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 		printf("Coord Y: %i\n", coordY);
 	}
 
-	//Todo | falta enviar el mensaje
-
 	int socketLocalized = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 
 	mandar_mensaje(structAEnviar, LOCALIZED, socketLocalized);
@@ -405,8 +404,8 @@ Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMens
 	structLocalized->largoNombre = strlen(pokemon);
 	structLocalized->nombrePokemon = pokemon;
 
-	structLocalized->ID = IDMensaje;
-	structLocalized->corrID = -2;
+	structLocalized->ID = 0;
+	structLocalized->corrID = IDMensaje;
 
 	return structLocalized;
 }

@@ -2,8 +2,11 @@
 
 // Hilo de escucha de gameboy
 void comenzarEscuchaGameBoy(){
-	// TODO | Leer socket de la config
-	int32_t socketoide = reservarSocket("5001"); //tirarle la key de la config
+
+	printf("Puerto Gameboy:%s\n", PUERTO_GAMEBOY);
+
+	// El PUERTO_GAMEBOY se lee de la config
+	int32_t socketoide = reservarSocket(PUERTO_GAMEBOY);
 
 	listen(socketoide, SOMAXCONN);
 

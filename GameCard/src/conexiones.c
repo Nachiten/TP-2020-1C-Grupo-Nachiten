@@ -122,6 +122,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 	int32_t recibidosSize = 0;
 	uint32_t pID = getpid();
 	confirmacionMensaje* mensajeConfirm;
+	int32_t socketAck = 0;
 
 	while(1)
 	{
@@ -164,20 +165,17 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 			case NEW: ;
 				New* mensajeNewRecibido = malloc(sizeAAllocar);
 				recibir_mensaje(mensajeNewRecibido, cod_op, socketCola);
-				printf("Termine de recibir mensaje new sin explotar\n");
 
 				//mandamos confirmacion para no volver a recibir este mensaje
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				mensajeConfirm->id_mensaje = mensajeNewRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-
-				int socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
-
+				socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
-
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
+				sleep(1);
 
 
 				char* pokemon = mensajeNewRecibido->nombrePokemon;
@@ -197,19 +195,15 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 			case GET: ;
 				Get* mensajeGetRecibido = malloc(sizeAAllocar);
 				recibir_mensaje(mensajeGetRecibido, cod_op, socketCola);
-				printf("Termine de recibir mensaje new sin explotar\n");
 
 				//mandamos confirmacion para no volver a recibir este mensaje
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				mensajeConfirm->id_mensaje = mensajeGetRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-
-				int socketAckGet = establecer_conexion(IP_BROKER, PUERTO_BROKER);
-
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckGet);
-
-				cerrar_conexion(socketAckGet);
+				socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
 
 				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
@@ -221,20 +215,15 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				case CATCH: ;
 				Catch* mensajeCatchRecibido = malloc(sizeAAllocar);
 				recibir_mensaje(mensajeCatchRecibido, cod_op, socketCola);
-				printf("Termine de recibir mensaje new sin explotar\n");
 
 				//mandamos confirmacion para no volver a recibir este mensaje
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				mensajeConfirm->id_mensaje = mensajeCatchRecibido->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = pID;
-
-				int socketAckCatch = establecer_conexion(IP_BROKER, PUERTO_BROKER);
-
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAckCatch);
-
-				cerrar_conexion(socketAckCatch);
-
+				socketAck = establecer_conexion(IP_BROKER, PUERTO_BROKER);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
 
 				// Corrigiendo...
@@ -284,7 +273,7 @@ int conectarseABroker(t_log* logger, codigo_operacion nombreCola){
 
 	resultado_de_conexion(socket, logger, "BROKER");
 
-	if ((socket != -1) || (socket != 0))
+	if ((socket != -1) && (socket != 0))
 	{
 		suscribirseAUnaCola(socket, nombreCola);
 	}

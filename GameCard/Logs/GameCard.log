@@ -156,3 +156,140 @@
 [INFO] 21:41:30:706 GAMECARD/(7378:7388): NEW | Se modificara la linea existente 12-34 sumando 56 al pokemon Pikachu
 [INFO] 21:45:11:379 GAMECARD/(7378:7388): NEW | Se modificara la linea existente 12-34 sumando 56 al pokemon Pikachu
 [INFO] 21:45:11:383 GAMECARD/(7378:7388): NEW | Se modificara la linea existente 12-34 sumando 56 al pokemon Pikachu
+[INFO] 20:20:49:245 GAMECARD/(6335:6341): Conexión establecida con socket de BROKER
+[INFO] 20:20:59:247 GAMECARD/(6335:6341): Conexión establecida con socket de BROKER
+[INFO] 20:21:09:249 GAMECARD/(6335:6341): Conexión establecida con socket de BROKER
+[INFO] 20:22:27:631 GAMECARD/(6335:6359): NEW | Se agregara la linea 11-11=11 al pokemon Pikachu
+[INFO] 20:29:21:402 GAMECARD/(6704:6715): Conexión establecida con socket de BROKER
+[INFO] 20:29:22:407 GAMECARD/(6704:6715): Conexión establecida con socket de BROKER
+[INFO] 20:29:23:408 GAMECARD/(6704:6715): Conexión establecida con socket de BROKER
+[INFO] 20:33:08:57 GAMECARD/(6799:6807): Conexión establecida con socket de BROKER
+[INFO] 20:33:09:59 GAMECARD/(6799:6807): Conexión establecida con socket de BROKER
+[INFO] 20:33:10:61 GAMECARD/(6799:6807): Conexión establecida con socket de BROKER
+[INFO] 20:39:51:963 GAMECARD/(4540:4548): Conexión establecida con socket de BROKER
+[INFO] 20:39:52:966 GAMECARD/(4540:4548): Conexión establecida con socket de BROKER
+[INFO] 20:39:53:968 GAMECARD/(4540:4548): Conexión establecida con socket de BROKER
+[INFO] 20:45:11:511 GAMECARD/(4687:4693): Conexión establecida con socket de BROKER
+[INFO] 20:45:12:514 GAMECARD/(4687:4693): Conexión establecida con socket de BROKER
+[INFO] 20:45:13:519 GAMECARD/(4687:4693): Conexión establecida con socket de BROKER
+[INFO] 20:45:18:174 GAMECARD/(4687:4700): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 20:45:55:510 GAMECARD/(4687:4700): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 20:45:55:546 GAMECARD/(4687:4700): NEW | Escribiendo nueva linea 22-22=22 en pokemon vacio Bulbasur
+[INFO] 20:50:56:736 GAMECARD/(4687:4700): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 20:50:56:745 GAMECARD/(4687:4700): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 20:50:56:776 GAMECARD/(4687:4700): NEW | Escribiendo nueva linea 33-33=33 en pokemon vacio Charmander
+[INFO] 20:53:14:309 GAMECARD/(4778:4784): Conexión establecida con socket de BROKER
+[INFO] 20:53:15:311 GAMECARD/(4778:4784): Conexión establecida con socket de BROKER
+[INFO] 20:53:16:312 GAMECARD/(4778:4784): Conexión establecida con socket de BROKER
+[INFO] 20:53:17:887 GAMECARD/(4778:4790): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 20:54:49:136 GAMECARD/(4838:4847): Conexión establecida con socket de BROKER
+[INFO] 20:54:50:145 GAMECARD/(4838:4847): Conexión establecida con socket de BROKER
+[INFO] 20:54:51:146 GAMECARD/(4838:4847): Conexión establecida con socket de BROKER
+[INFO] 20:55:46:634 GAMECARD/(4838:4854): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 20:59:19:523 GAMECARD/(4838:4854): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:00:28:523 GAMECARD/(4838:4854): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 21:02:39:36 GAMECARD/(5071:5072): Conexión establecida con socket de BROKER
+[INFO] 21:02:42:37 GAMECARD/(5071:5072): Conexión establecida con socket de BROKER
+[INFO] 21:02:45:39 GAMECARD/(5071:5072): Conexión establecida con socket de BROKER
+[INFO] 21:03:42:656 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:03:42:657 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:42:657 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:45:658 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:45:658 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:45:659 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:03:48:660 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:03:48:660 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:48:660 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:51:661 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:51:661 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:51:661 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:03:54:662 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:54:663 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:03:54:663 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:57:664 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:03:57:664 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:03:57:664 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:00:664 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:00:665 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:00:665 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:03:665 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:03:666 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:03:666 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:06:667 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:06:667 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:06:667 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:09:668 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:09:668 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:09:668 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:12:669 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:12:669 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:12:669 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:15:670 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:04:15:670 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:15:670 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:18:672 GAMECARD/(5071:5077): Conexión establecida con socket de BROKER
+[INFO] 21:04:18:672 GAMECARD/(5071:5078): Conexión establecida con socket de BROKER
+[INFO] 21:04:18:672 GAMECARD/(5071:5079): Conexión establecida con socket de BROKER
+[INFO] 21:05:13:653 GAMECARD/(5725:5728): Conexión establecida con socket de BROKER
+[INFO] 21:05:14:653 GAMECARD/(5725:5728): Conexión establecida con socket de BROKER
+[INFO] 21:05:15:655 GAMECARD/(5725:5728): Conexión establecida con socket de BROKER
+[INFO] 21:10:46:299 GAMECARD/(19832:19833): Conexión establecida con socket de BROKER
+[INFO] 21:10:47:307 GAMECARD/(19832:19833): Conexión establecida con socket de BROKER
+[INFO] 21:10:48:307 GAMECARD/(19832:19833): Conexión establecida con socket de BROKER
+[INFO] 21:43:40:859 GAMECARD/(6250:6251): Conexión establecida con socket de BROKER
+[INFO] 21:43:41:861 GAMECARD/(6250:6251): Conexión establecida con socket de BROKER
+[INFO] 21:43:42:861 GAMECARD/(6250:6251): Conexión establecida con socket de BROKER
+[INFO] 21:43:49:813 GAMECARD/(6250:6257): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:46:16:438 GAMECARD/(6250:6257): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:46:16:441 GAMECARD/(6250:6257): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:46:27:759 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:27:759 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:27:759 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:30:761 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:30:761 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:30:762 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:33:763 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:33:763 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:33:763 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:36:765 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:36:765 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:36:765 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:39:766 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:39:766 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:39:767 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:42:768 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:42:768 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:42:769 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:45:769 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:45:770 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:46:45:770 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:48:770 GAMECARD/(6250:6258): Conexión establecida con socket de BROKER
+[INFO] 21:46:48:771 GAMECARD/(6250:6256): Conexión establecida con socket de BROKER
+[INFO] 21:46:48:771 GAMECARD/(6250:6257): Conexión establecida con socket de BROKER
+[INFO] 21:47:17:955 GAMECARD/(23410:23411): Conexión establecida con socket de BROKER
+[INFO] 21:47:18:957 GAMECARD/(23410:23411): Conexión establecida con socket de BROKER
+[INFO] 21:47:19:958 GAMECARD/(23410:23411): Conexión establecida con socket de BROKER
+[INFO] 21:47:33:730 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:33:730 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:33:730 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:36:732 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:36:732 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:36:732 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:39:733 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:39:733 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:39:734 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:42:735 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:42:735 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:42:735 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:45:737 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:45:737 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:45:737 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:48:739 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:48:739 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:48:739 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:51:740 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:47:51:740 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:51:740 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:54:741 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
+[INFO] 21:47:54:741 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
+[INFO] 21:47:54:741 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER

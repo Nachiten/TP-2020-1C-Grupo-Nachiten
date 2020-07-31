@@ -1015,7 +1015,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case SUSCRIPCION:
 			mensajeSuscrip= malloc(sizeAAllocar);
 			recibir_mensaje(mensajeSuscrip, cod_op, socket_cliente);
-			printf("La ID que me llego en suscripcion: %u\n",mensajeSuscrip->pId);
+			printf("La PID que me llego en suscripcion: %u\n",mensajeSuscrip->pId);
 			switch(mensajeSuscrip->numeroCola){
 			case NEW:
 				sem_wait(semLog);
@@ -1217,11 +1217,13 @@ void iniciar_server(char* ip, char* puerto)
     }
 
 	listen(socket_servidor, SOMAXCONN);
-
     freeaddrinfo(servinfo);
 
     while(1)
+    {
     	esperar_cliente(socket_servidor);
+    }
+
 }
 
 void mostrameMemoria(int32_t senial)

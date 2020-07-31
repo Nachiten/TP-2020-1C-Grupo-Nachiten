@@ -516,9 +516,11 @@ uint32_t serializar_paquete_confirmacion(t_paquete* paquete, confirmacionMensaje
 
 	//meto la ID del mensaje en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->id_mensaje), sizeof(confirma->id_mensaje));
+	desplazamiento += sizeof(confirma->id_mensaje);
 
 	//meto la PID del proceso en el buffer del paquete
 	memcpy(paquete->buffer->stream + desplazamiento, &(confirma->pId), sizeof(confirma->pId));
+	desplazamiento += sizeof(confirma->pId);
 
 	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
 	paquete->buffer->size = sizeof(confirma->colaMensajes) + sizeof(confirma->id_mensaje) + sizeof(confirma->pId);

@@ -86,8 +86,8 @@ t_mensaje* crear_mensaje(int32_t id, int32_t id_correlativo, void* mensaje, uint
 void suscribir(t_sub* sub,t_cola* cola);
 void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket);
 void mandar_mensajes_broker(t_cola* cola);
-void modificar_cola(t_cola* cola, int id_mensaje, uint32_t pId);
-void confirmar_mensaje(uint32_t pId, confirmacionMensaje* mensaje);
+int modificar_cola(t_cola* cola, int id_mensaje, uint32_t pId);
+void confirmar_mensaje(confirmacionMensaje* mensaje);
 void desuscribir(uint32_t pId, t_cola* cola);
 
 // ***********agregar a colas***********

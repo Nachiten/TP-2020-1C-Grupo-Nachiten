@@ -764,7 +764,7 @@ void borrar_datos_caught(Caught* mensaje){
 
 // avanza en la cola de mensajes hasta encontrar el mensaje con el id deseado, despues busca en la lista de
 // suscriptores de ese mensaje hasta encontrar el socket adecuado y pone en visto el mensaje
-void modificar_cola(t_cola* cola, int32_t id_mensaje, uint32_t pID){
+int modificar_cola(t_cola* cola, int32_t id_mensaje, uint32_t pID){
 	for(int i = 0; i < cola->mensajes->elements_count; i++){
 		t_mensaje* mensaje;
 		mensaje = list_get(cola->mensajes,i);
@@ -777,61 +777,75 @@ void modificar_cola(t_cola* cola, int32_t id_mensaje, uint32_t pID){
 
 				if(sub->pID == pID){
 					sub->recibido = 1;
-					exit(EXIT_SUCCESS);
+					return 1;
 				}
 			}
 		}
 	}
+	return 0;
 }
 
 // usa modificar_cola para confirmar el mensaje deseado (confirmar_cola esta arriba)
-void confirmar_mensaje(uint32_t pID, confirmacionMensaje* mensaje){
+void confirmar_mensaje(confirmacionMensaje* mensaje){
+	int confirmador;
 	switch(mensaje->colaMensajes){
 	case NEW:
 		sem_wait(semNew);
-		modificar_cola(colaNew,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaNew,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
-		log_info(logger, "Se confirmo un mensaje de la cola New");
+		if(confirmador == 1){
+			log_info(logger, "Se confirmo un mensaje de la cola New");
+		}
 		sem_post(semLog);
 		sem_post(semNew);
 		break;
 	case APPEARED:
 		sem_wait(semAppeared);
-		modificar_cola(colaAppeared,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaAppeared,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
+		if(confirmador == 1){
 		log_info(logger, "Se confirmo un mensaje de la cola Appeared");
+		}
 		sem_post(semLog);
 		sem_post(semAppeared);
 		break;
 	case GET:
 		sem_wait(semGet);
-		modificar_cola(colaGet,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaGet,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
+		if(confirmador == 1){
 		log_info(logger, "Se confirmo un mensaje de la cola Get");
+		}
 		sem_post(semLog);
 		sem_post(semGet);
 		break;
 	case LOCALIZED:
 		sem_wait(semLocalized);
-		modificar_cola(colaLocalized,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaLocalized,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
+		if(confirmador == 1){
 		log_info(logger, "Se confirmo un mensaje de la cola Localized");
+		}
 		sem_post(semLog);
 		sem_post(semLocalized);
 		break;
 	case CATCH:
 		sem_wait(semCatch);
-		modificar_cola(colaCatch,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaCatch,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
+		if(confirmador == 1){
 		log_info(logger, "Se confirmo un mensaje de la cola Catch");
+		}
 		sem_post(semLog);
 		sem_post(semCatch);
 		break;
 	case CAUGHT:
 		sem_wait(semCaught);
-		modificar_cola(colaCaught,mensaje->id_mensaje,pID);
+		confirmador = modificar_cola(colaCaught,mensaje->id_mensaje,mensaje->pId);
 		sem_wait(semLog);
+		if(confirmador == 1){
 		log_info(logger, "Se confirmo un mensaje de la cola Caught");
+		}
 		sem_post(semLog);
 		sem_post(semCaught);
 		break;
@@ -1132,8 +1146,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			mensajeConfirmacion = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeConfirmacion, cod_op, socket_cliente);
 			printf("La ID que me llego en confirmacion: %u\n",mensajeConfirmacion->pId);
-			//ToDo Fijate aca Nico, le estamos mandando socket_cliente, y adentro de la funcion lo toma como si fuera un PID
-			confirmar_mensaje(socket_cliente, mensajeConfirmacion);// los semaforos estan aca
+			confirmar_mensaje(mensajeConfirmacion);// los semaforos estan aca
 			break;
 		case TEST:
 			break;

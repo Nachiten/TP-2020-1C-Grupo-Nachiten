@@ -293,3 +293,30 @@
 [INFO] 21:47:54:741 GAMECARD/(23410:23416): Conexión establecida con socket de BROKER
 [INFO] 21:47:54:741 GAMECARD/(23410:23417): Conexión establecida con socket de BROKER
 [INFO] 21:47:54:741 GAMECARD/(23410:23418): Conexión establecida con socket de BROKER
+[INFO] 21:52:57:548 GAMECARD/(23546:23547): Conexión establecida con socket de BROKER
+[INFO] 21:52:58:549 GAMECARD/(23546:23547): Conexión establecida con socket de BROKER
+[INFO] 21:52:59:551 GAMECARD/(23546:23547): Conexión establecida con socket de BROKER
+[INFO] 21:53:04:259 GAMECARD/(23546:23553): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:53:20:599 GAMECARD/(23546:23553): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 21:53:21:612 GAMECARD/(23546:23553): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 21:55:20:4 GAMECARD/(23622:23623): Conexión establecida con socket de BROKER
+[INFO] 21:55:23:6 GAMECARD/(23622:23623): Conexión establecida con socket de BROKER
+[INFO] 21:55:26:7 GAMECARD/(23622:23623): Conexión establecida con socket de BROKER
+[INFO] 21:59:29:978 GAMECARD/(23622:23638): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 22:01:20:848 GAMECARD/(23622:23638): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 22:01:21:856 GAMECARD/(23622:23638): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:02:51:576 GAMECARD/(23756:23757): Conexión establecida con socket de BROKER
+[INFO] 22:02:52:577 GAMECARD/(23756:23757): Conexión establecida con socket de BROKER
+[INFO] 22:02:53:579 GAMECARD/(23756:23757): Conexión establecida con socket de BROKER
+[INFO] 22:02:57:674 GAMECARD/(23756:23763): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:04:52:64 GAMECARD/(23756:23763): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:04:53:68 GAMECARD/(23756:23763): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:12:31:569 GAMECARD/(23968:23969): Conexión establecida con socket de BROKER
+[INFO] 22:12:32:571 GAMECARD/(23968:23969): Conexión establecida con socket de BROKER
+[INFO] 22:12:33:572 GAMECARD/(23968:23969): Conexión establecida con socket de BROKER
+[INFO] 22:12:38:751 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:12:51:751 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:12:52:757 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:13:03:504 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:13:04:508 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 22:13:05:513 GAMECARD/(23968:23975): NEW | Se modificara la linea existente 33-33 sumando 33 al pokemon Charmander

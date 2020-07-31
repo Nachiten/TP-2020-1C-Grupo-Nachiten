@@ -1132,6 +1132,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			mensajeConfirmacion = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeConfirmacion, cod_op, socket_cliente);
 			printf("La ID que me llego en confirmacion: %u\n",mensajeConfirmacion->pId);
+			//ToDo Fijate aca Nico, le estamos mandando socket_cliente, y adentro de la funcion lo toma como si fuera un PID
 			confirmar_mensaje(socket_cliente, mensajeConfirmacion);// los semaforos estan aca
 			break;
 		case TEST:

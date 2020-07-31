@@ -10,6 +10,12 @@
 #include <string.h>
 #include <semaphore.h>
 #include"shared/estructuras.h"
+#include"shared/cargador.h"
+
+
+//var globales
+char* ip;
+char* puerto;
 
 typedef struct{
     int posicion[2];

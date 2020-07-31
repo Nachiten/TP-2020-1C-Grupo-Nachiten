@@ -268,7 +268,7 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
     cont = 1;
 
     sacar_en_espera(deadlock_entrenadores, entrenadores, cant_entrenadores);
-    /*
+    /*ToDo
     int index;for(index=0;index<4;index++){
         printf("entrenador %i", index);
         printf("   necesarios %s", deadlock_entrenadores[index].necesito[0]);

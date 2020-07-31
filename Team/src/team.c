@@ -11,9 +11,9 @@ int main(void) {
 
 	printf("Inicio de Team\n");
 
-	int conexion;
-	char* ip;
-	char* puerto;
+	int conexion;//Todo esto se supone que es un socket
+//	char* ip;
+//	char* puerto;
 
 	t_log* logger;
 	t_config* config;
@@ -21,40 +21,24 @@ int main(void) {
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team.config");
 
-	if (config == NULL){
+	if (config == NULL)
+	{
 		printf("No se pudo leer la config\n");
-	} else {
+	}
+	else
+	{
 		printf("La config fue leida correctamente\n");
 	}
 
 	// Leer path del log
 	char* pathLogs = config_get_string_value(config,"LOG_FILE");
 
-	if (pathLogs == NULL){
-		printf("No se pudo leer el path del log de la config\n");
-	} else {
-		printf("El path del log fue leido correctamente\n");
-	}
-
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "Team");
-	/*
 	ip = config_get_string_value(config, "IP_BROKER");
-	if (ip == NULL){
-		log_error(logger, "No se ha podido leer la 'ip' de la config");
-		return 3;
-	} else {
-		log_info(logger, "Se leyo la ip del broker correctamente");
-	}
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
-	if (puerto == NULL){
-		log_error(logger, "No se ha podido leer el 'puerto' de la config");
-		return 3;
-	} else {
-		log_info(logger, "Se leyo el puerto del broker correctamente");
-	}
-*/
-	//conexion = crear_conexion(ip, puerto);
+
+	//conexion = crear_conexion(ip, puerto); Todo
 	conexion = 0;
 	estado_team = 0;
 	d_entrenador* entrenadores;
@@ -74,7 +58,7 @@ int main(void) {
         sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
         asignar_funcion_moverse(algoritmo_planificacion);
 
-        //conexion = crear_conexion(ip, puerto);
+        //conexion = crear_conexion(ip, puerto); ToDo
 
         inicializar_semaforos(cant_entrenadores);
         inicializar_cola_caught(cant_entrenadores);
@@ -123,7 +107,7 @@ int main(void) {
         eliminar_cola_mensajes();
         join_hilo(&hilo_cola_caught);
         eliminar_cola_caught();
-        //matar_conexion(conexion);
+        //matar_conexion(conexion);ToDo ver
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
@@ -265,7 +249,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
     return NULL;
 }
 
-///////////////////-RECEPCION-/////////////////////
+///////////////////-RECEPCION-/////////////////////ToDo LUCAS
 void recepcion_mensajes(parametros_recepcion* parametros){
     int bytes_recibidos, codigo, conexion_broker;
     pthread_t hilo_reconexion;
@@ -330,7 +314,7 @@ void procesar_mensaje(int codigo, int socket){
     }
 }
 
-///////////////////-READY-/////////////////////
+///////////////////-READY-/////////////////////ToDo SANTI
 void* administrar_cola_ready(void* parametros){
     int posicion;
     while(estado_team < 2){
@@ -395,7 +379,7 @@ int recibir_caught(int posicion){
     return resultado;
 }
 
-///////////////////-DEADLOCK-/////////////////////
+///////////////////-DEADLOCK-/////////////////////ToDo NACHO
 void* ciclo_deadlock(parametros_deadlock* parametros){
     int tamano = parametros->tamano_respuesta;
     elemento_respuesta* respuesta = malloc(tamano * sizeof(elemento_respuesta));
@@ -442,7 +426,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
     join_hilos(hilos, num_circulo);
 }
 
-///////////////////-MOVERSE-/////////////////////
+///////////////////-MOVERSE-/////////////////////ToDo
 void asignar_funcion_moverse(int algoritmo_planificacion){
     switch(algoritmo_planificacion){
         case FIFO :

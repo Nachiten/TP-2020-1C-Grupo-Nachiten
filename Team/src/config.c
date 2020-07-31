@@ -8,7 +8,7 @@
 #include "config.h"
 
 char** temp1;
-d_entrenador* temp2;
+d_entrenador* entrenador;
 
 /* Lee los datos de la config en los parametros pasados por referencia:
 PARAMS:
@@ -38,7 +38,7 @@ int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* 
 }
 
 int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrenadores, char*** objetivo_global, int* cant_entrenadores, int* objetivos){
-    int i, j, cant_objetivos, cant_posiciones, respuesta;
+    int i, cant_objetivos, cant_posiciones, respuesta;
     cant_objetivos = 0;
     respuesta = 1;
     i=0;
@@ -49,25 +49,29 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 
     cant_posiciones = validar_tamano_vectores_extraidos(posicion_entrenador, objetivo, pokemones_actuales);
 
-    if(cant_posiciones > 0){
-        printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
-	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
-	while(i<cant_posiciones && respuesta == 1){
-            temp2[i].estado = NEW;
-            temp2[i].estado_block = ACTIVO;
-            temp2[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
-            temp2[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
-            if(llenar_objetivos_y_actuales_de_entrenador(&(temp2[i]), objetivo[i], pokemones_actuales[i]) == 0){
-		respuesta = -3;
-            }
-            i++;
+    if(cant_posiciones > 0)
+    {
+    printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
+	entrenador = malloc(cant_posiciones * sizeof(d_entrenador));
+
+	while(i<cant_posiciones && respuesta == 1)
+	{
+		entrenador[i].estado = ESTADO_NEW;
+		entrenador[i].estado_block = ACTIVO;
+		entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
+		entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
+		if(llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]) == 0)
+		{
+			respuesta = -3;
+		}
+		i++;
 	}
 	if(respuesta == 1){
-            cant_objetivos = calcular_tamano_objetivo_global(temp2, cant_posiciones);
+            cant_objetivos = calcular_tamano_objetivo_global(entrenador, cant_posiciones);
             printf("La cantidad de objetivos es: %i\n", cant_objetivos);
             temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-            llenar_objetivo_global(temp2, cant_posiciones, temp1, cant_objetivos);
-            *entrenadores = temp2;
+            llenar_objetivo_global(entrenador, cant_posiciones, temp1, cant_objetivos);
+            *entrenadores = entrenador;
             *cant_entrenadores = cant_posiciones;
             *objetivo_global = temp1;
             *objetivos = cant_objetivos;
@@ -253,7 +257,7 @@ void llenar_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, c
 
 void liberarConfig(){
     free(temp1);
-    free(temp2);
+    free(entrenador);
 }
 
 

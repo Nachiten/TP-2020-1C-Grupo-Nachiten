@@ -18,8 +18,7 @@ PARAMS:
 @cant_entrenadores: Cantidad de entrenadores existentes
 @objetivos: Cantidad de objetivos
 */
-
-int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion, char** ip, char** puerto){
+int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion){
     int respuesta = 1;
     char* algoritmo = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
     *algoritmo_planificacion = convertir_algoritmo(algoritmo);
@@ -31,10 +30,6 @@ int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* 
     *estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
     *retardo = config_get_int_value(config, "RETARDO_CICLO_CPU");
     *tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
-
-    *ip = config_get_string_value(config, "IP_BROKER");
-    *puerto = config_get_string_value(config, "PUERTO_BROKER");
-
     if(validar_datos(*quantum, *retardo, *tiempo_reconexion, *estimacion_inicial) == 0){
         printf("error en extraccion de datos ints\n");
         respuesta = -1;
@@ -47,7 +42,7 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
     cant_objetivos = 0;
     respuesta = 1;
     i=0;
-        
+
     char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
     char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
     char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
@@ -56,7 +51,6 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 
     if(cant_posiciones > 0){
         printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
-        *cant_entrenadores = cant_posiciones;
 	temp2 = malloc(cant_posiciones * sizeof(d_entrenador));
 	while(i<cant_posiciones && respuesta == 1){
             temp2[i].estado = NEW;
@@ -69,17 +63,14 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
             i++;
 	}
 	if(respuesta == 1){
-            *entrenadores = temp2;
             cant_objetivos = calcular_tamano_objetivo_global(temp2, cant_posiciones);
             printf("La cantidad de objetivos es: %i\n", cant_objetivos);
+            temp1 = malloc((cant_objetivos+1) * sizeof(char*));
+            llenar_objetivo_global(temp2, cant_posiciones, temp1, cant_objetivos);
+            *entrenadores = temp2;
+            *cant_entrenadores = cant_posiciones;
+            *objetivo_global = temp1;
             *objetivos = cant_objetivos;
-            if(cant_objetivos > 0){
-                temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-                llenar_objetivo_global(temp2, cant_posiciones, temp1, cant_objetivos);
-                *objetivo_global = temp1;
-                *objetivos = cant_objetivos;
-            }
-            else{respuesta = 2;}
 	}
 	else{
             printf("error en llenado de objetivos y actuales de entrenador %i\n", i-1);
@@ -137,7 +128,7 @@ int convertir_algoritmo(char* algoritmo){
     int i, respuesta;
     i=0;
     respuesta = -1;
-    char* vector[4] = {"FIFO", "RR", "SJF_S", "SJF_C"};
+    char* vector[4] = {"FIFO", "RR", "SJF-SD", "SJF-CD"};
     while(i<4 && respuesta == -1){
         if(son_iguales_char(vector[i], algoritmo) == 1){
             respuesta = i;
@@ -264,5 +255,6 @@ void liberarConfig(){
     free(temp1);
     free(temp2);
 }
+
 
 

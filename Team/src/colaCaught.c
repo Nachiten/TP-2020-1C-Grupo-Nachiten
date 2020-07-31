@@ -8,8 +8,11 @@
 #include "colaCaught.h"
 
 int tamano_maximo;
-int* vector_envios;
+int suscripcion = 0;
+int envio = 0;
+sem_t sem_envio;
 
+int* vector_envios;
 cola_Caught cola_caught;
 
 ///////////////////-COLA CAUGHT-/////////////////////
@@ -25,12 +28,12 @@ void eliminar_cola_caught(){
 	elemento_cola_caught* temp = actual;
 	actual = actual->next;
 	free(temp);
-    }    
+    }
     liberar_vector_envios();
 }
 
 int esta_vacia_cola_caught(){
-    int respuesta = 0;    
+    int respuesta = 0;
     if(cola_caught.inicio == NULL){
 	respuesta = 1;
     }
@@ -43,10 +46,9 @@ void actualizar_cola_caught(){
     free(temp);
 }
 
-void agregar_a_cola_caught(Caught* contenido){
+void agregar_a_cola_caught(mensaje_caught* contenido){
     elemento_cola_caught* nuevoMensaje = malloc(sizeof(elemento_cola_caught));
-    nuevoMensaje->mensaje.num_envio = contenido->corrID;
-    nuevoMensaje->mensaje.resultado = contenido->pudoAtrapar;
+    nuevoMensaje->mensaje = *contenido;
     nuevoMensaje->next = NULL;
     if(esta_vacia_cola_caught() == 1){
 	cola_caught.inicio = nuevoMensaje;
@@ -68,18 +70,15 @@ int posicion_primero_cola_caught(){
     int pos, num_envio;
     pos = 0;
     num_envio = cola_caught.inicio->mensaje.num_envio;
-    if(num_envio != -1){
-        while(pos < tamano_maximo && vector_envios[pos] != num_envio){pos++;}
-        if(pos < tamano_maximo){eliminar_elemento_lista_ids(num_envio);}
-        else{
-            pos = -1;
-            printf("error ningun entrenador figura que haya hecho el envio %i\n", num_envio);
-        } 
+
+    sem_wait(&sem_envio);
+    while(pos < tamano_maximo && vector_envios[pos] != num_envio){pos++;}
+    sem_post(&sem_envio);
+    if(pos == tamano_maximo){
+        pos = -1;
+        printf("error ningun entrenador figura que haya hecho el envio %i\n", num_envio);
     }
-    else{
-        pos = cola_caught.inicio->mensaje.resultado;//el valor -1 esta reservado para mensaje de comportamiento default, en ese caso resultado es la posicion del entrenador     
-        cola_caught.inicio->mensaje.resultado = 1;
-    }
+
     return pos;
 }
 
@@ -91,14 +90,33 @@ void inicializar_vector_envios(int tamano){
         vector_envios[i] = -1;
     }
     tamano_maximo = tamano;
+    init_sem(&sem_envio, 1);
 }
 
 void liberar_vector_envios(){
+    sem_destroy(&sem_envio);
     free(vector_envios);
 }
 
-void registrar_id_mensaje_catch(int idMensaje, int posicion){
-    vector_envios[posicion] = idMensaje;
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, int conexion){
+//    Catch mensaje;
+//    mensaje.pokemon = pokemon;
+//    mensaje.pos_x = pos_x;
+//    mensaje.pos_y = pos_y;
+	// TODO | Armar mensaje catch y enviarlo
+
+    //este mandar mensaje tambien deberia tener en cuenta la variable envio que posteriormente es la que identifica al entrenador que envio el mensaje
+    //mandar_mensaje(CATCH, &mensaje, conexion);
+    /*
+    if(suscripcion == 0){
+        suscribirse_a(CAUGHT);
+        suscripcion = 1;
+    }
+    */
+    sem_wait(&sem_envio);
+    vector_envios[posicion] = envio;
+    envio++;
+    sem_post(&sem_envio);
 }
 
 

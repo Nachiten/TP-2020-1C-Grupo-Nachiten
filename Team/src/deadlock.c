@@ -115,7 +115,7 @@ void inicializar_respuesta(elemento_respuesta* respuesta, int tamano){
         respuesta[i].posicion = -1;
         respuesta[i].pokemon = NULL;
     }
-    
+
 }
 
 void mostrar_respuesta(elemento_respuesta* respuesta, int tamano){
@@ -171,9 +171,9 @@ int detectar_deadlock(deadlock_entrenador* entrenadores, int cantidad, elemento_
                     if(alguno_de_se_encuentra_en(entrenadores[i].no_necesito, entrenadores[j].necesito, &(respuesta[0].pokemon)) == 1){
                         respuesta[1].posicion = j;
                         desde_pivote(entrenadores, cantidad, 1, respuesta, &corte);
-                    }                   
+                    }
                 }
-                j++;     
+                j++;
             }
             if(corte == 0){
                 respuesta[1].posicion = -1;
@@ -185,7 +185,7 @@ int detectar_deadlock(deadlock_entrenador* entrenadores, int cantidad, elemento_
     }
     if(corte == 0){respuesta[0].posicion = -1;}
     else{entrenadores[respuesta[0].posicion].en_deadlock = 1;}
-    
+
     return corte;
 }
 
@@ -230,7 +230,7 @@ void desde_pivote(deadlock_entrenador* entrenadores, int cantidad, int last_pos,
             while(*corte == 0 && i<cantidad){
                 if(entrenadores[i].en_deadlock == 0 && esta_en_respuesta(i, respuesta, cantidad) == 0 && alguno_de_se_encuentra_en(entrenadores[respuesta[last_pos-1].posicion].no_necesito, entrenadores[i].necesito, &(respuesta[last_pos-1].pokemon)) == 1){
                     respuesta[last_pos].posicion = i;//ver si se puede mejorar esta_en_int y pasarle last-pos en vez del tamano total(cantidad)
-                    desde_pivote(entrenadores, cantidad, last_pos, respuesta, corte);  
+                    desde_pivote(entrenadores, cantidad, last_pos, respuesta, corte);
                 }
                 i++;
             }
@@ -244,12 +244,12 @@ void desde_pivote(deadlock_entrenador* entrenadores, int cantidad, int last_pos,
 }
 
 ///////////////////-RECUPERACION DEADLOCK-/////////////////////
-void intercambiar(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* otro_entrenador, char* otro_pokemon){  
+void intercambiar(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* otro_entrenador, char* otro_pokemon){
     if(buscar_y_reemplazar_por_en_actuales_de(un_pokemon, otro_pokemon, un_entrenador) == -1){
-        printf("Error en intercambio, no se encontro pokemon %s\n", un_pokemon);  
+        printf("Error en intercambio, no se encontro pokemon %s\n", un_pokemon);
     }
     if(buscar_y_reemplazar_por_en_actuales_de(otro_pokemon, un_pokemon, otro_entrenador) == -1){
-        printf("Error en intercambio, no se encontro pokemon %s\n", otro_pokemon);  
+        printf("Error en intercambio, no se encontro pokemon %s\n", otro_pokemon);
     }
 }
 
@@ -266,8 +266,8 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
     deadlock_entrenador* deadlock_entrenadores = malloc(cant_deadlock_entrenadores * sizeof(deadlock_entrenador));
     int tamano_respuesta, cont;
     cont = 1;
-    
-    sacar_en_espera(deadlock_entrenadores, entrenadores, cant_entrenadores); 
+
+    sacar_en_espera(deadlock_entrenadores, entrenadores, cant_entrenadores);
     /*
     int index;for(index=0;index<4;index++){
         printf("entrenador %i", index);
@@ -276,12 +276,12 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
     }
     */
     inicializar_respuesta(respuesta, cant_deadlock_entrenadores);
-    
+
     tamano_respuesta = detectar_deadlock(deadlock_entrenadores, cant_deadlock_entrenadores, respuesta);
     if(tamano_respuesta > 0){
         //ver si esta bien llenar mensaje_deadlock una sola vez ya que en teoria le estamos pasando la direccion de memoria de los vectores asi que no deberia haber problema
         llenar_mensaje_deadlock(&mensaje_deadlock, entrenadores, deadlock_entrenadores);
-        do{            
+        do{
             printf("Iteracion %i\n", cont);
             tratar_circulos(deadlock_entrenadores, cant_deadlock_entrenadores, respuesta, tamano_respuesta, &mensaje_deadlock, hilos);
             reset_en_deadlock(deadlock_entrenadores, cant_deadlock_entrenadores);
@@ -292,7 +292,7 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
     printf("No se detectaron mas circulos deadlock\n");
     actualizar_estado_deadlock(entrenadores, deadlock_entrenadores, cant_deadlock_entrenadores);
     //informar_estado_actual(entrenadores, cant_entrenadores);
-    
+
     free(respuesta);
     liberar_temporal_comp(deadlock_entrenadores, cant_deadlock_entrenadores);
     free(deadlock_entrenadores);

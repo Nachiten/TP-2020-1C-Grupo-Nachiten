@@ -8,7 +8,8 @@
 #ifndef SRC_CONFIG_H_
 #define SRC_CONFIG_H_
 
-#include "Team.h"
+#include "estructurasTeam.h"
+#include"shared/cargador.h"
 
 int extraer_valores_config(t_config*, int*, int*, int*, int*, int*);
 int inicializar_entrenadores_con_config(t_config*, d_entrenador**, char***, int*, int*);

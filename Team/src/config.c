@@ -185,7 +185,7 @@ int calcular_tamano_objetivo_global(d_entrenador* entrenadores, int cant_entrena
     int i, j, cont, diferencia;
     cont = 0;
     for(i=0;i<cant_entrenadores;i++){
-        if(entrenadores[i].estado == NEW){
+        if(entrenadores[i].estado == ESTADO_NEW){
             j=0;
             while(entrenadores[i].objetivo[j] != NULL){
                 if(pokemon_se_repitio_antes_en_objetivo(entrenadores[i].objetivo[j], entrenadores[i].objetivo, j) == 0 && pokemon_se_repitio_antes_en_objetivos_entrenadores(entrenadores[i].objetivo[j], i, entrenadores) == 0){
@@ -238,7 +238,7 @@ void llenar_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, c
     int i, j, k, cont, diferencia;
     cont = 0;
     for(i=0;i<cant_entrenadores;i++){
-        if(entrenadores[i].estado == NEW){
+        if(entrenadores[i].estado == ESTADO_NEW){
             j=0;
             while(entrenadores[i].objetivo[j] != NULL){
                 if(pokemon_se_repitio_antes_en_objetivo(entrenadores[i].objetivo[j], entrenadores[i].objetivo, j) == 0 && pokemon_se_repitio_antes_en_objetivos_entrenadores(entrenadores[i].objetivo[j], i, entrenadores) == 0){

@@ -421,3 +421,36 @@
 [INFO] 23:39:42:517 GAMECARD/(5263:5282): Conexión establecida con socket de BROKER
 [INFO] 23:39:42:517 GAMECARD/(5263:5281): Conexión establecida con socket de BROKER
 [INFO] 23:39:42:517 GAMECARD/(5263:5280): Conexión establecida con socket de BROKER
+[INFO] 13:19:45:370 GAMECARD/(4484:4634): Conexión establecida con socket de BROKER
+[INFO] 13:20:39:927 GAMECARD/(4484:4634): Conexión establecida con socket de BROKER
+[INFO] 13:20:46:635 GAMECARD/(4484:4634): Conexión establecida con socket de BROKER
+[INFO] 14:00:51:970 GAMECARD/(6402:6408): Conexión establecida con socket de BROKER
+[INFO] 14:00:52:983 GAMECARD/(6402:6408): Conexión establecida con socket de BROKER
+[INFO] 14:00:53:984 GAMECARD/(6402:6408): Conexión establecida con socket de BROKER
+[INFO] 14:02:59:58 GAMECARD/(6540:6551): Conexión establecida con socket de BROKER
+[INFO] 14:03:16:358 GAMECARD/(6540:6551): Conexión establecida con socket de BROKER
+[INFO] 14:03:22:647 GAMECARD/(6540:6551): Conexión establecida con socket de BROKER
+[INFO] 14:04:43:890 GAMECARD/(6656:6664): Conexión establecida con socket de BROKER
+[INFO] 14:04:57:526 GAMECARD/(6656:6664): Conexión establecida con socket de BROKER
+[INFO] 14:05:08:302 GAMECARD/(6656:6664): Conexión establecida con socket de BROKER
+[INFO] 14:07:35:439 GAMECARD/(6801:6819): Conexión establecida con socket de BROKER
+[INFO] 14:07:38:847 GAMECARD/(6801:6819): Conexión establecida con socket de BROKER
+[INFO] 14:07:46:967 GAMECARD/(6801:6819): Conexión establecida con socket de BROKER
+[INFO] 14:11:47:75 GAMECARD/(6961:6967): Conexión establecida con socket de BROKER
+[INFO] 14:11:48:79 GAMECARD/(6961:6967): Conexión establecida con socket de BROKER
+[INFO] 14:11:49:80 GAMECARD/(6961:6967): Conexión establecida con socket de BROKER
+[INFO] 14:12:41:384 GAMECARD/(7098:7104): Conexión establecida con socket de BROKER
+[INFO] 14:12:42:385 GAMECARD/(7098:7104): Conexión establecida con socket de BROKER
+[INFO] 14:12:43:385 GAMECARD/(7098:7104): Conexión establecida con socket de BROKER
+[INFO] 14:14:38:467 GAMECARD/(7178:7184): Conexión establecida con socket de BROKER
+[INFO] 14:14:39:468 GAMECARD/(7178:7184): Conexión establecida con socket de BROKER
+[INFO] 14:14:40:469 GAMECARD/(7178:7184): Conexión establecida con socket de BROKER
+[INFO] 14:14:41:698 GAMECARD/(7178:7185): GET | Se encontraron coordenadas del pokemon Charmander
+[WARNING] 14:14:59:471 GAMECARD/(7178:7185): CATCH | Las coordenadas 3-5 no existen dentro del archivo Bulbasur
+[INFO] 14:15:14:231 GAMECARD/(7178:7185): NEW | Se agregara la linea 3-5=10 al pokemon Pikachu
+[INFO] 14:16:00:896 GAMECARD/(7245:7250): Conexión establecida con socket de BROKER
+[INFO] 14:16:01:897 GAMECARD/(7245:7250): Conexión establecida con socket de BROKER
+[INFO] 14:16:02:898 GAMECARD/(7245:7250): Conexión establecida con socket de BROKER
+[INFO] 14:16:10:77 GAMECARD/(7245:7251): NEW | Se modificara la linea existente 3-5 sumando 10 al pokemon Pikachu
+[WARNING] 14:16:12:695 GAMECARD/(7245:7251): CATCH | Las coordenadas 3-5 no existen dentro del archivo Bulbasur
+[INFO] 14:16:15:157 GAMECARD/(7245:7251): GET | Se encontraron coordenadas del pokemon Charmander

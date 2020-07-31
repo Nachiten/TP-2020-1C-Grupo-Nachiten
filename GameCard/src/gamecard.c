@@ -1252,14 +1252,12 @@ int main(void) {
 	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
 
 	pthread_t hiloBroker;
-
 	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
 
 	pthread_t hiloGameBoy;
-
     pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 
 //	// CIERRO HILOS

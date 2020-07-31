@@ -22413,3 +22413,31 @@
 [INFO] 10:55:57:747 Gameboy/(6268:6268): Conexión establecida con socket de BROKER
 [INFO] 10:55:57:747 Gameboy/(6268:6268): Suscripto a la cola de mensajes: 1
 [INFO] 10:55:57:749 Gameboy/(6268:6270): Recibido un nuevo mensaje en la cola: 1
+[INFO] 13:38:21:749 Gameboy/(5541:5541): Conexión establecida con socket de GAMECARD
+[INFO] 13:41:11:538 Gameboy/(5745:5745): Conexión establecida con socket de GAMECARD
+[INFO] 13:47:42:797 Gameboy/(5933:5933): Conexión establecida con socket de GAMECARD
+[INFO] 13:47:53:607 Gameboy/(5936:5936): Conexión establecida con socket de GAMECARD
+[INFO] 13:48:05:983 Gameboy/(5945:5945): Conexión establecida con socket de GAMECARD
+[INFO] 13:48:25:275 Gameboy/(5966:5966): Conexión establecida con socket de GAMECARD
+[INFO] 13:48:55:740 Gameboy/(6018:6018): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:08:94 Gameboy/(6102:6102): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:10:189 Gameboy/(6103:6103): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:11:331 Gameboy/(6104:6104): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:11:798 Gameboy/(6105:6105): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:12:117 Gameboy/(6106:6106): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:12:454 Gameboy/(6107:6107): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:13:70 Gameboy/(6108:6108): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:20:206 Gameboy/(6111:6111): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:21:41 Gameboy/(6112:6112): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:21:350 Gameboy/(6113:6113): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:28:277 Gameboy/(6114:6114): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:28:961 Gameboy/(6115:6115): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:29:226 Gameboy/(6116:6116): Conexión establecida con socket de GAMECARD
+[INFO] 13:50:29:486 Gameboy/(6117:6117): Conexión establecida con socket de GAMECARD
+[INFO] 14:12:46:206 Gameboy/(7112:7112): Conexión establecida con socket de GAMECARD
+[INFO] 14:14:41:602 Gameboy/(7192:7192): Conexión establecida con socket de GAMECARD
+[INFO] 14:14:59:442 Gameboy/(7199:7199): Conexión establecida con socket de GAMECARD
+[INFO] 14:15:14:203 Gameboy/(7201:7201): Conexión establecida con socket de GAMECARD
+[INFO] 14:16:10:76 Gameboy/(7259:7259): Conexión establecida con socket de GAMECARD
+[INFO] 14:16:12:694 Gameboy/(7261:7261): Conexión establecida con socket de GAMECARD
+[INFO] 14:16:15:156 Gameboy/(7263:7263): Conexión establecida con socket de GAMECARD

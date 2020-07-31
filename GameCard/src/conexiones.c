@@ -60,8 +60,8 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	pthread_create(&hiloNew  , NULL, (void*)esperarMensajes, &datosNew);
 	pthread_create(&hiloCatch, NULL, (void*)esperarMensajes, &datosCatch);
 
-	//pthread_join(hiloGet, NULL);
-	//pthread_join(hiloNew, NULL);
+	pthread_join(hiloGet, NULL);
+	pthread_join(hiloNew, NULL);
 	pthread_join(hiloCatch, NULL);
 
 //	pthread_detach(hiloGet);
@@ -205,6 +205,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
+				sleep(1);
 
 				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
 
@@ -225,6 +226,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
+				sleep(1);
 
 				// Corrigiendo...
 				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);

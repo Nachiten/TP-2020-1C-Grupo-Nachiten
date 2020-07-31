@@ -1,5 +1,5 @@
 #include "Team.h"
-
+/*
 char* puerto_team = "5002";
 char* ip_team = "127.0.0.1";
 int (*emitir_un_mensaje_catch)(mensaje_broker*);
@@ -75,17 +75,17 @@ void inicializar_comportamiento_conectado_catch(){
     asignar_comportamiento_conectado_broker();
 }
 
-void asignar_comportamiento_conectado_broker(){
-    emitir_un_mensaje_catch = &comportamiento_catch_broker_conectado;
-}
-
-void asignar_comportamiento_default(){
-    emitir_un_mensaje_catch = &comportamiento_catch_default;
-}
-
-void activar_hilo_emisor(){
-    activar_hilo(&hilo_emisor, emision_mensajes, NULL);
-}
+//void asignar_comportamiento_conectado_broker(){
+//    emitir_un_mensaje_catch = &comportamiento_catch_broker_conectado;
+//}
+//
+//void asignar_comportamiento_default(){
+//    emitir_un_mensaje_catch = &comportamiento_catch_default;
+//}
+//
+//void activar_hilo_emisor(){
+//    activar_hilo(&hilo_emisor, emision_mensajes, NULL);
+//}
 
 void cerrar_conexiones(){
     desactivar_flag_conexiones();
@@ -123,9 +123,9 @@ int se_pudo_conectar_socket(int socket){
 }
 
 ///////////////////-SERVIDOR-////////////////////
-void activar_servidor_team(){
-    activar_hilo(&hilo_servidor, iniciar_servidor_team, NULL);
-}
+//void activar_servidor_team(){
+//    activar_hilo(&hilo_servidor, iniciar_servidor_team, NULL);
+//}
 
 void* iniciar_servidor_team(void* parametros){
     int socket_servidor_team = activar_hilo_escucha(ip_team, puerto_team);//igual_que iniciar_server en game-watch-server pero sacando la partedel while(1)
@@ -150,16 +150,16 @@ void preparar_mensajes_suscripciones(){
     preparar_suscripcion_a_cola(LOCALIZED);
 }
 
-void preparar_suscripcion_a_cola(int cola){
-    Suscripcion mensaje = armar_mensaje_suscripcion(cola);
-    agregar_mensaje_suscripcion_a_cola_mensajes_broker(mensaje);
-}
+//void preparar_suscripcion_a_cola(int cola){
+//    Suscripcion mensaje = armar_mensaje_suscripcion(cola);
+//    agregar_mensaje_suscripcion_a_cola_mensajes_broker(mensaje);
+//}
 
-Suscripcion armar_mensaje_suscripcion(int cola){
-    Suscripcion mensaje;
-    mensaje.numeroCola = cola;
-    return mensaje;
-}
+//Suscripcion armar_mensaje_suscripcion(int cola){
+//    Suscripcion mensaje;
+//    mensaje.numeroCola = cola;
+//    return mensaje;
+//}
 
 int suscribirse_a_colas(){
     int cantidad_suscripciones, resultado_suscripciones;
@@ -443,4 +443,7 @@ int intento_reconexion(int* socket){
     int respuesta = 0;
     return respuesta;
 }
+*/
+
+
 

@@ -12,14 +12,6 @@
 #include <semaphore.h>
 #include"shared/estructuras.h"
 
-//typedef struct{
-//	int numeroCola;
-//}Suscripcion;
-//
-//typedef struct{
-//	int numeroCola;
-//}Dessuscripcion;
-
 typedef struct{
 	int posicion[2];
     int estado;

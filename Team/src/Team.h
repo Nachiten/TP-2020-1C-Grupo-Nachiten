@@ -8,20 +8,20 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>
-#include <windows.h>
+//#include <windows.h>
 #include <semaphore.h>
-#include "estructuras.h"    
+#include"shared/estructuras.h"
+
+//typedef struct{
+//	int numeroCola;
+//}Suscripcion;
+//
+//typedef struct{
+//	int numeroCola;
+//}Dessuscripcion;
 
 typedef struct{
-	int numeroCola;
-}Suscripcion;
-
-typedef struct{
-	int numeroCola;
-}Dessuscripcion;
-
-typedef struct{
-    int posicion[2];
+	int posicion[2];
     int estado;
     int estado_block;
     char** objetivo;
@@ -31,7 +31,7 @@ typedef struct{
 //cambiar las funciones que usan este tipo de dato y reemplazarlo por el Caught que se tiene en estructuras.h
 typedef struct{
 	int resultado;
-        int num_envio;//OJO el valor -1 esta reservado para mensaje de comportamiento default, en ese caso resultado es la posicion del entrenador
+	int num_envio;//OJO el valor -1 esta reservado para mensaje de comportamiento default, en ese caso resultado es la posicion del entrenador
 }mensaje_caught;
 
 typedef struct{
@@ -82,8 +82,8 @@ typedef struct{
     int id_mensaje;
 } elemento_objetivo;
 
-enum{NEW, READY, EXEC, BLOCKED, EXIT};
-enum{APPEARED, GET, LOCALIZED, CATCH, CAUGHT};
+enum{ESTADO_NEW, READY, EXEC, BLOCKED, EXIT};
+//enum{APPEARED, GET, LOCALIZED, CATCH, CAUGHT};
 enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
 enum{FIFO, RR, SJF_S, SJF_C};
 

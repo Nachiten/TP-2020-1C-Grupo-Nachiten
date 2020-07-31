@@ -46,7 +46,7 @@ void actualizar_cola_caught(){
 void agregar_a_cola_caught(Caught* contenido){
     elemento_cola_caught* nuevoMensaje = malloc(sizeof(elemento_cola_caught));
     nuevoMensaje->mensaje.num_envio = contenido->corrID;
-    nuevoMensaje->mensaje.resultado = contenido->resultado;
+    nuevoMensaje->mensaje.resultado = contenido->pudoAtrapar;
     nuevoMensaje->next = NULL;
     if(esta_vacia_cola_caught() == 1){
 	cola_caught.inicio = nuevoMensaje;

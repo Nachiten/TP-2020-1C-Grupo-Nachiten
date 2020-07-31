@@ -93,17 +93,17 @@ void eliminar_nodo_cola_mensajes_broker(nodo_cola_mensajes_broker* nodo){
     free(nodo);
 }
 
-void agregar_mensaje_get_a_cola_mensajes_broker(Get mensaje, int pos_en_objetivo_global){
+void agregar_mensaje_get_a_cola_mensajes_broker(Get* mensaje, int pos_en_objetivo_global){
     nodo_cola_mensajes_broker* nuevoMensaje = malloc(sizeof(nodo_cola_mensajes_broker));
-    nuevoMensaje->contenido->mensaje = malloc(sizeof(Get));
-    llenar_contenido_de_nodo_mensaje_broker(nuevoMensaje, &mensaje, pos_en_objetivo_global);
+    nuevoMensaje->contenido.mensaje = malloc(sizeof(Get));
+    llenar_contenido_de_nodo_mensaje_broker(nuevoMensaje, mensaje, pos_en_objetivo_global);
     nuevoMensaje->next = cola_mensajes_broker.lista_get;   
     cola_mensajes_broker.lista_get = nuevoMensaje;
 }
 
 void agregar_mensaje_catch_a_cola_mensajes_broker(Catch mensaje, int pos_entrenador){
     nodo_cola_mensajes_broker* nuevoMensaje = malloc(sizeof(nodo_cola_mensajes_broker));
-    nuevoMensaje->contenido->mensaje = malloc(sizeof(Catch));
+    nuevoMensaje->contenido.mensaje = malloc(sizeof(Catch));
     llenar_contenido_de_nodo_mensaje_broker(nuevoMensaje, &mensaje, pos_entrenador);
     nuevoMensaje->next = NULL;
     if(esta_vacia_cola_catch_mensajes_broker() == 1){
@@ -118,7 +118,7 @@ void agregar_mensaje_catch_a_cola_mensajes_broker(Catch mensaje, int pos_entrena
 
 void agregar_mensaje_suscripcion_a_cola_mensajes_broker(Suscripcion mensaje){
     nodo_cola_mensajes_broker* nuevoMensaje = malloc(sizeof(nodo_cola_mensajes_broker));
-    nuevoMensaje->contenido->mensaje = malloc(sizeof(Suscripcion));
+    nuevoMensaje->contenido.mensaje = malloc(sizeof(Suscripcion));
     llenar_contenido_de_nodo_mensaje_broker(nuevoMensaje, &mensaje, -1);
     nuevoMensaje->next = cola_mensajes_broker.lista_suscripciones.elementos;   
     cola_mensajes_broker.lista_suscripciones.elementos = nuevoMensaje;
@@ -163,7 +163,7 @@ void eliminar_pokemon_de_lista_get(char* pokemon){
     nodo_cola_mensajes_broker* actual = cola_mensajes_broker.lista_get;
     while(actual != NULL && resultado_eliminacion == 0){
 	unMensaje = (Get*)actual->contenido.mensaje;
-        if(son_iguales_char(pokemon, unMensaje->pokemon) == 1){
+        if(son_iguales_char(pokemon, unMensaje->nombrePokemon) == 1){
             if(anterior != NULL){
                 anterior->next = actual->next;
             }
@@ -203,7 +203,8 @@ void primero_cola_mensajes_broker(){
 }
 
 void primero_cola_catch_de_mensajes_broker(mensaje_broker* mensaje){
-    mensaje = cola_mensajes_broker.cola_catch.inicio->contenido;
+    //mensaje = cola_mensajes_broker.cola_catch.inicio->contenido;
+	// TODO | No entiendo bien que hay que hacer
 }
 
 int suscribirse_segun_lista_suscripciones(){
@@ -238,8 +239,13 @@ int esta_codigo_en_lista_suscipciones_mensajes_broker(int codigo){
     return resultado_busqueda;
 }
 
-int cola_de_mensaje_suscripcion(Suscripcion* mensaje){
-    return mensaje->numeroCola;
+int cola_de_mensaje_suscripcion(Suscripcion* mensajeDeFuncion){
+
+	//int numero = mensajeDeFuncion->
+	//int numero = mensaje->
+
+	return 1;
+    //return mensaje->; // TODO | Debe retornar numeroCola
 }
 
 int emitir_mensajes_segun_lista_get(){

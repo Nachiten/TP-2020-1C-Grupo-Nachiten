@@ -19,7 +19,7 @@ PARAMS:
 @objetivos: Cantidad de objetivos
 */
 
-int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion){
+int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion, char** ip, char** puerto){
     int respuesta = 1;
     char* algoritmo = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
     *algoritmo_planificacion = convertir_algoritmo(algoritmo);
@@ -31,6 +31,10 @@ int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* 
     *estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
     *retardo = config_get_int_value(config, "RETARDO_CICLO_CPU");
     *tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
+
+    *ip = config_get_string_value(config, "IP_BROKER");
+    *puerto = config_get_string_value(config, "PUERTO_BROKER");
+
     if(validar_datos(*quantum, *retardo, *tiempo_reconexion, *estimacion_inicial) == 0){
         printf("error en extraccion de datos ints\n");
         respuesta = -1;
@@ -235,7 +239,7 @@ int cantidad_de_en_pokemones_entrenadores(char* pokemon, d_entrenador* entrenado
     return cont;
 }
 
-void llenar_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, char** vector_objetivo_global, int cant_objetivos, char* vacio){
+void llenar_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, char** vector_objetivo_global, int cant_objetivos){
     int i, j, k, cont, diferencia;
     cont = 0;
     for(i=0;i<cant_entrenadores;i++){

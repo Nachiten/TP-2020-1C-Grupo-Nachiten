@@ -1,7 +1,7 @@
 #include "Team.h"
 
-int puerto_team = 5002;
-int ip_team = 127.0.0.1;
+char* puerto_team = "5002";
+char* ip_team = "127.0.0.1";
 int (*emitir_un_mensaje_catch)(mensaje_broker*);
 pthread_t* pool_hilos_suscripciones;
 pthread_t hilo_servidor, hilo_emisor, hilo_reconexion;
@@ -217,7 +217,7 @@ void recibir_mensajes_de_cola(int socket){
         else{respuesta_recepcion = 0;}
     }
 }
-//VER ESTA FUNCION//
+//VER ESTA FUNCION// | TODO
 int recibir_codigo(int socket){
     int codigo;
     recv(socket, &codigo, sizeof(codigo), 0);
@@ -362,7 +362,7 @@ void enviar_mensaje_catch(Catch mensaje, int pos_entrenador){
     pthread_mutex_unlock(&colaCatch_mutex);
     sem_post(&colaCatch_llenos);
 }
-//pendiente ver si se puede cambiar la espera activa
+//pendiente ver si se puede cambiar la espera activa | TODO
 int emitir_mensajes_catch(){
     int respuesta_mensajes_catch = 1;
     mensaje_broker* unMensajeCatch;
@@ -438,7 +438,7 @@ void* reconectarse_a_broker(void* parametros){
     matar_conexion(socket);
     return NULL;
 }
-//QUEDA POR HACER
+//QUEDA POR HACER | TODO
 int intento_reconexion(int* socket){
     int respuesta = 0;
     return respuesta;

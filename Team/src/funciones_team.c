@@ -60,27 +60,37 @@ void preparar_mensajes_get(elemento_objetivo* objetivo, int tamano){
 }
 
 void armar_preparar_mensaje_get(char* pokemon, int pos_en_objetivo_global){
-    Get mensaje = armar_mensaje_get(pokemon);
+
+    Get* mensaje = armar_mensaje_get(pokemon);
+
     agregar_mensaje_get_a_cola_mensajes_broker(mensaje, pos_en_objetivo_global);
 }
 
-Get armar_mensaje_get(char* unPokemon){
-    Get mensaje;
-    mensaje.pokemon = unPokemon;
+Get* armar_mensaje_get(char* unPokemon){
+    Get* mensaje = malloc(sizeof(Get) + strlen(unPokemon));
+
+    mensaje->ID = 0;
+    mensaje->corrID = 0;
+    mensaje->largoNombre = strlen(unPokemon);
+    mensaje->nombrePokemon = unPokemon;
+
     return mensaje;
 }
 
 void armar_enviar_registrar_mensaje_catch(char* pokemon, int pos_x, int pos_y, int posicion){
-    Catch mensaje = armar_mensaje_catch(pokemon, pos_x, pos_y);
-    int idMensaje = enviar_mensaje_catch(&mensaje);
+    Catch* mensaje = armar_mensaje_catch(pokemon, pos_x, pos_y);
+    int idMensaje = enviar_mensaje_catch(mensaje);
     registrar_id_mensaje_catch(idMensaje, posicion);
 }
 
-Catch armar_mensaje_catch(char* pokemon, int pos_x, int pos_y){
-    Catch mensaje;
-    mensaje.pokemon = pokemon;
-    mensaje.pos_x = pos_x;
-    mensaje.pos_y = pos_y;
+Catch* armar_mensaje_catch(char* pokemon, int pos_x, int pos_y){
+    Catch* mensaje = malloc(sizeof(Catch) + strlen(pokemon));
+    mensaje->nombrePokemon = pokemon;
+    mensaje->posPokemon.x = pos_x;
+    mensaje->posPokemon.y = pos_y;
+    mensaje->ID = 0;
+	mensaje->corrID = 0;
+	mensaje->largoNombre = strlen(pokemon);
     return mensaje;
 }
 /*
@@ -100,7 +110,8 @@ int cantidad_de_veces_en_objetivo_actual(char* pokemon, elemento_objetivo* objet
 }
 
 int cantidad_repeticiones_de(elemento_objetivo pokemon_objetivo){
-    return objetivo[i].repeticiones;
+    //return objetivo[i].repeticiones; // TODO | No entiendo que se debe hacer aca
+	return 1;
 }
 
 int eliminar_de_objetivo_global(char* pokemon, elemento_objetivo* objetivo_global, int tamano_objetivo){
@@ -141,7 +152,7 @@ void poner_a_punto_de_eliminacion_de_memoria(elemento_objetivo* pokemon_objetivo
     pokemon_objetivo->estado_en_memoria = 2;
 }
 
-void esta_en_memoria(elemento_objetivo pokemon_objetivo){
+int esta_en_memoria(elemento_objetivo pokemon_objetivo){
     int respuesta = 1;
     if(pokemon_objetivo.estado_en_memoria == 0){respuesta = 0;}
     return respuesta;
@@ -154,7 +165,7 @@ int pokemon_esta_por_eliminarse(elemento_objetivo pokemon_objetivo){
 }
 
 int buscar_pos_en_objetivo(char* pokemon, elemento_objetivo* objetivo, int tamano_objetivo){
-    int pos = 0:
+    int pos = 0;
     while(pos<tamano_objetivo && son_iguales_char(pokemon, objetivo[pos].pokemon) == 0){pos++;}
     if(pos == tamano_objetivo){
         pos = -1;
@@ -328,8 +339,15 @@ int filtrar_mensaje(void* mensaje, elemento_objetivo* objetivo_global, int taman
     return respuesta;
 }
 
-char* pokemon_de_mensaje(Appeared* mensaje){return mensaje->pokemon;}
-char* pokemon_de_mensaje(Localized* mensaje){return mensaje->pokemon;}
+
+// TODO | No se como se hace esto (segun entiendo quiere extraer el nombre de un mensaje independientemente de cual sea)
+//char* pokemon_de_mensaje(void* mensaje){return mensaje->nombrePokemon;}
+
+//char* pokemon_de_mensaje(Localized* mensaje){return mensaje->nombrePokemon;}
+
+// Version de andy: C no soporta sobrecarga de funciones de esta manera
+//char* pokemon_de_mensaje(Appeared* mensaje){return mensaje->pokemon;}
+//char* pokemon_de_mensaje(Localized* mensaje){return mensaje->pokemon;}
 
 ///////////////////-VECTORES CHAR-/////////////////////
 int esta_en_char(char* pokemon, char** vector, int tamano){
@@ -419,7 +437,7 @@ int calcular_mas_cerca_de(int pos_x, int pos_y, d_entrenador* entrenadores, int 
     pos_a_enviar = -1;
     distancia_minimo = -1;
     for(i=0;i<cantidad;i++){
-	if(entrenadores[i].estado == NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO)){
+	if(entrenadores[i].estado == ESTADO_NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO)){
             distancia = distancia_a(pos_x, pos_y, entrenadores[i].posicion[0], entrenadores[i].posicion[1]);
             if(distancia < distancia_minimo || distancia_minimo == -1){
                 distancia_minimo = distancia;

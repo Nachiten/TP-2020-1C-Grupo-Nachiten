@@ -8,6 +8,11 @@ char** objetivo_actual;
 elemento_objetivo* objetivo_global_team;
 int estado_team, conexion, objetivo_team, cantidad_objetivos, quantum, retardo;
 
+t_config* config;
+
+char* ip;
+char* puerto;
+
 int main() {
     printf("Inicio Team\n");
          
@@ -20,7 +25,9 @@ int main() {
     mensaje_server mensaje;
     int primer_extraccion, segunda_extraccion, algoritmo_planificacion, estimacion_inicial, tiempo_reconexion, cant_entrenadores;
     
-    primer_extraccion = extraer_valores_config(config, &algoritmo_planificacion, &quantum, &estimacion_inicial, &retardo, &tiempo_reconexion);
+    config = config_create("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team.config");
+
+    primer_extraccion = extraer_valores_config(config, &algoritmo_planificacion, &quantum, &estimacion_inicial, &retardo, &tiempo_reconexion, &ip, &puerto);
     segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
     if(primer_extraccion == 1 && segunda_extraccion > 0){
         
@@ -190,16 +197,16 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
  
         sem_wait(&sem_entrenadores[posicion]);
         cambiar_estado_a(entrenador, EXEC);
-        moverse_a(entrenador, mensaje.pos_x, mensaje.pos_y, posicion);
-        armar_enviar_registrar_mensaje_catch(mensaje.pokemon, mensaje.pos_x, mensaje.pos_y, posicion);
+        moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
+        armar_enviar_registrar_mensaje_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){
             pthread_mutex_lock(&objetivo_actual_mutex);
-            eliminacion = eliminar_de_objetivo_global(mensaje.pokemon, objetivo_global_team, cantidad_objetivos);
+            eliminacion = eliminar_de_objetivo_global(mensaje.nombrePokemon, objetivo_global_team, cantidad_objetivos);
             pthread_mutex_unlock(&objetivo_actual_mutex);
             if(eliminacion == 1){
-                agregar_captura(entrenador, mensaje.pokemon);
+                agregar_captura(entrenador, mensaje.nombrePokemon);
                 objetivo_individual--;
                 if(objetivo_individual == 0){//esta en el limite
                     //printf("esta en el limite\n");
@@ -213,7 +220,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
                 }
                 else{bloquear(entrenador, ACTIVO);}
                 objetivo_team-=1;
-                printf("Eliminado %s. La cantidad de objetivos es: %i\n", mensaje.pokemon, objetivo_team);
+                printf("Eliminado %s. La cantidad de objetivos es: %i\n", mensaje.nombrePokemon, objetivo_team);
             }
         }
         else{bloquear(entrenador, ACTIVO);}
@@ -244,7 +251,8 @@ void procesar_mensaje_caught(Caught* mensaje_rec){
 }
 
 void registrar_id_en_pos_objetivo_global(int id, int posicion){
-    objetivo_global_team[posicion].idMensaje = id;
+    //objetivo_global_team[posicion].idMensaje = id;
+	// TODO | No entiendo esto
 }
 
 ///////////////////-READY-/////////////////////

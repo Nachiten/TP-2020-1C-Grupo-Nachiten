@@ -10,6 +10,9 @@
 
 #include "Team.h"
 
+Get* armar_mensaje_get(char* unPokemon);
+Catch* armar_mensaje_catch(char* pokemon, int pos_x, int pos_y);
+
 void init_sem(sem_t*, int);
 void init_mutex(pthread_mutex_t*);
 void destroy_mutex(pthread_mutex_t*);
@@ -20,7 +23,7 @@ void activar_hilo_circulo_deadlock(parametros_deadlock*, pthread_t*);
 void join_hilo(pthread_t*);
 void join_hilos(pthread_t*, int);
 int esta_en_objetivo_actual(char*, char**, int);
-int cantidad_de_veces_en_objetivo_actual(char*, char**, int);
+int cantidad_de_veces_en_objetivo_actual(char* pokemon, elemento_objetivo* objetivo_global, int tamano_objetivo, int* pos_pokemon_en_objetivo);
 int eliminar_de_objetivo_actual(char*, char**, int);
 void cambiar_estado_a(d_entrenador*, int);
 void bloquear(d_entrenador*, int);
@@ -40,7 +43,7 @@ void agregar_captura(d_entrenador*, char*);
 int pokemon_se_repitio_antes_en_objetivo(char*, char**, int);
 int buscar_y_reemplazar_por_en_actuales_de(char*, char*, d_entrenador*);
 void actualizar_estado_entrenador(d_entrenador*, int);
-int filtrar_mensaje(mensaje_server*, char**, int);
+int filtrar_mensaje(void* mensaje, elemento_objetivo* objetivo_global, int tamano_objetivo);
 int esta_en_char(char*, char**, int);
 int se_encuentra_en_char(char*, char**, int);
 int esta_en_null(char*, char**);
@@ -58,4 +61,6 @@ int cant_en_espera(d_entrenador*, int);
 void llegar_por_eje(d_entrenador*, int, int);
 void llegar_por_eje_con_quantum(d_entrenador*, int, int, int, int*, int);
 void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador*, int, int, int);
+void armar_preparar_mensaje_get(char* pokemon, int pos_en_objetivo_global);
+
 #endif /* SRC_FUNCIONES_TEAM_H_ */

@@ -25,9 +25,9 @@ void primero_en_cola_mensajes(Appeared* msj){
 
 void llenar_con_primero(Appeared* msj){
     int index = cola_indices.inicio->num_posicion;
-    msj->pos_x = cola_indices.inicio->mensaje.posiciones[2*index];
-    msj->pos_y = cola_indices.inicio->mensaje.posiciones[(2*index)+1];
-    msj->pokemon = cola_indices.inicio->mensaje.pokemon;
+    msj->posPokemon.x = cola_indices.inicio->mensaje.posiciones[2*index];
+    msj->posPokemon.y = cola_indices.inicio->mensaje.posiciones[(2*index)+1];
+    msj->nombrePokemon = cola_indices.inicio->mensaje.pokemon;
 }
 
 void agregar_a_cola_mensajes(mensaje_server* contenido){

@@ -30,7 +30,13 @@ int main(void)
 	ip = config_get_string_value(config, "IP_BROKER");
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
 
-	//socket = crear_conexion(ip, puerto); Todo
+	//realizo conexion con Broker
+//	socketBroker = establecer_conexion(ip, puerto);//Todo esto TIENE que cambiar porque no deberia estar conectado desde el principio
+//	while((socketBroker == -1) || (socketBroker == 0))
+//	{
+//		sleep(tiempo_reconexion);
+//		socketBroker = establecer_conexion(ip, puerto);
+//	}
 
 	estado_team = 0;
 	d_entrenador* entrenadores;
@@ -204,7 +210,7 @@ void inicializar_hilos_entrenadores(d_entrenador* entrenadores, int cant_entrena
     for(i=0;i<cant_entrenadores;i++){
         mensaje_entrenador.entrenador = &entrenadores[i];
         mensaje_entrenador.pos = i;
-        pthread_create(&(hilos[i]), NULL, ciclo_vida_entrenador, &mensaje_entrenador);
+        pthread_create(&(hilos[i]), NULL, (void*)ciclo_vida_entrenador, &mensaje_entrenador);
         sem_wait(&datosHilo);
     }
 }
@@ -266,40 +272,50 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 void recepcion_mensajes(void* argumento_de_adorno){
     int bytes_recibidos = 0;
     codigo_operacion cod_op;
-	int estado_conexion_broker = 1;
+	int estado_conexion_broker = 1; //1 = activa, 0 = murio
 	pthread_t hilo_reconexion;
-	parametros_reconexion nuevosParametros;
+	parametros_reconexion* datosReconexion = malloc(sizeof(parametros_reconexion));
 
-	nuevosParametros.flag_conexion_broker = estado_conexion_broker;
-	nuevosParametros.tiempo_reconexion = tiempo_reconexion;
+	datosReconexion->flag_conexion_broker = estado_conexion_broker;
+	datosReconexion->tiempo_reconexion = tiempo_reconexion;
 
-	parametros_recepcion* parametros;
+	socketBroker = establecer_conexion(ip, puerto);
+	while((socketBroker == -1) || (socketBroker == 0))//todo esto no se si deberia volar a la mierda
+	{
+		sleep(tiempo_reconexion);
+		socketBroker = establecer_conexion(ip, puerto);
+	}
 
 
     while(estado_team == 0)
     {
-        bytes_recibidos = recv(parametros->socket, &cod_op, sizeof(cod_op), 0);
+        bytes_recibidos = recv(socketBroker, &cod_op, sizeof(cod_op), 0);
         if(bytes_recibidos < 0)
         {
             if(estado_conexion_broker == 1)
             {
                 printf("Se cayo conexion con broker\n");
                 estado_conexion_broker = 0;
-                activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
+                //activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
+                pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
             }
             else{
             	//todo y este else??? wtf???
             }
         }
-        else{procesar_mensaje(cod_op, parametros->socket);}
+        else
+        {
+        	procesar_mensaje(cod_op, socketBroker);
+        }
     }
+	free(datosReconexion);
 }
 
 void intento_reconexion(parametros_reconexion* parametros){
     while((parametros->flag_conexion_broker) != 1){
         sleep(parametros->tiempo_reconexion);
 
-        establecer_conexion("");
+        establecer_conexion(ip, puerto);//todo esto esta devolviendo a la nada
 
 
 
@@ -309,7 +325,7 @@ void intento_reconexion(parametros_reconexion* parametros){
     }
 }
 
-void procesar_mensaje(int codigo, int socket){
+void procesar_mensaje(codigo_operacion codigo, int32_t socket){
     void* mensaje_rec;
     int filtro;
     switch(codigo){
@@ -318,7 +334,7 @@ void procesar_mensaje(int codigo, int socket){
 
     }
     if(codigo == LOCALIZED || codigo == APPEARED){
-        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex
+        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
         filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
         pthread_mutex_unlock(&objetivo_actual_mutex);
         if(filtro == 1){

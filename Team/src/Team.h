@@ -14,8 +14,7 @@
 #include"colaReady.h"
 #include"colaMensajesTeam.h"
 #include"deadlock.h"
-
-//#include "recepcion.h"
+#include"shared/socket.h"
 #include "funciones_team.h"
 #include <pthread.h>
 
@@ -50,4 +49,5 @@ void moverse_sjf_con_d(d_entrenador*, int, int, int);
 // Hicimos las firmas nosotros | TODO
 void recepcion_mensajes(void* argumento_de_adorno);
 void intento_reconexion(parametros_reconexion* parametros);
+void procesar_mensaje(codigo_operacion codigo, int32_t socket);
 

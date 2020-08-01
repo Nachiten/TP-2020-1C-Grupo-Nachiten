@@ -453,6 +453,9 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		t_mensaje* new;
 		int32_t id = crear_id();
 		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -460,9 +463,22 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		}
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
-		borrar_mensajes(colaNew);
+		borrar_mensajes(colaNew);//todo ver si borra con ACK
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaNew->subs;
+		if(colaNew->subs->head != NULL)
+		{
+			for(int j = 0; j < colaNew->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaNew->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;//todo ver si hace falta el recibido
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaNew->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola New");
@@ -577,11 +593,10 @@ void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 }
 
 void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket){
-	t_sub* new; //= malloc(sizeof(t_sub));//de mas?
+	t_sub* new;
 	new = crear_sub(pId, elSocket);
 	list_add(cola->subs,new);
 	agregar_mensajes_viejos(pId,cola);
-	suscribir(new,cola);
 	mandar_mensajes_broker(cola);
 }
 

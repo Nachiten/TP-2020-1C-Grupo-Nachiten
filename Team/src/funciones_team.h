@@ -8,7 +8,11 @@
 #ifndef SRC_FUNCIONES_TEAM_H_
 #define SRC_FUNCIONES_TEAM_H_
 
-#include "Team.h"
+//#include "Team.h"
+#include "estructurasTeam.h"
+#include "semaphore.h"
+#include <pthread.h>
+
 
 void init_sem(sem_t*, int);
 void init_mutex(pthread_mutex_t*);

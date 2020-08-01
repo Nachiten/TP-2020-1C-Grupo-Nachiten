@@ -8,6 +8,7 @@
 #ifndef SRC_CONFIG_H_
 #define SRC_CONFIG_H_
 
+#include "funciones_team.h"
 #include "estructurasTeam.h"
 #include"shared/cargador.h"
 

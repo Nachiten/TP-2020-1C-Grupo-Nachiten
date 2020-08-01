@@ -7,81 +7,89 @@ pthread_mutex_t colaMensajes_mutex, objetivo_actual_mutex, colaReady_mutex, cola
 char** objetivo_actual;
 int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 
-int main(void) {
-
-	printf("Inicio de Team\n");
-
-	int conexion;//Todo esto se supone que es un socket
-//	char* ip;
-//	char* puerto;
-
+int main(void)
+{
+	int socket;//Todo se llamaba "conexion"
 	t_log* logger;
 	t_config* config;
 
 	//Cargo las configuraciones del .config
 	config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team.config");
-
 	if (config == NULL)
 	{
-		printf("No se pudo leer la config\n");
+		printf("No se pudo leer la config.\n");
 	}
 	else
 	{
-		printf("La config fue leida correctamente\n");
+		printf("La config fue leida correctamente.\n");
 	}
 
 	// Leer path del log
 	char* pathLogs = config_get_string_value(config,"LOG_FILE");
-
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "Team");
 	ip = config_get_string_value(config, "IP_BROKER");
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
 
-	//conexion = crear_conexion(ip, puerto); Todo
-	conexion = 0;
+	//socket = crear_conexion(ip, puerto); Todo
+
 	estado_team = 0;
 	d_entrenador* entrenadores;
 	pthread_t hilo_recibir_mensajes, hilo_cola_ready, hilo_cola_caught;
 	pthread_t* pool_hilos;
 	mensaje_server mensaje;
-
 	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, tiempo_reconexion, flag_finalizacion, i, pos_elegido, temp_cant;
 	int primer_extraccion, segunda_extraccion;
 
+	//saca Algoritmo planificacion, quantum, valor de estimacion inicial (para sjf), retardo de ciclo de CPU y espera antes de reconectarse
 	primer_extraccion = extraer_valores_config(config, &algoritmo_planificacion, &quantum, &estimacion_inicial, &retardo, &tiempo_reconexion);
-	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
-    if(primer_extraccion == 1 && segunda_extraccion == 1){
 
+	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
+
+	if(primer_extraccion == 1 && segunda_extraccion == 1)
+    {
         objetivo_team = cantidad_objetivos;
         pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
         sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
         asignar_funcion_moverse(algoritmo_planificacion);
 
-        //conexion = crear_conexion(ip, puerto); ToDo
+        //socket = crear_conexion(ip, puerto); ToDo
 
         inicializar_semaforos(cant_entrenadores);
         inicializar_cola_caught(cant_entrenadores);
-        if(algoritmo_planificacion == SJF_S || algoritmo_planificacion == SJF_C){inicializar_vector_estimaciones(estimacion_inicial, cant_entrenadores);}
+        if(algoritmo_planificacion == SJF_S || algoritmo_planificacion == SJF_C)
+        {
+        	inicializar_vector_estimaciones(estimacion_inicial, cant_entrenadores);
+        }
+
         inicializar_cola_ready();
         inicializar_cola_mensajes();
         inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
-        activar_hilo_administrador_cola_caught(&hilo_cola_caught);
-        activar_hilo_administrador_cola_ready(&hilo_cola_ready);
-        printf("Llego hasta aca \n");
+
+        //activar_hilo_administrador_cola_caught(&hilo_cola_caught);
+        pthread_create(&hilo_cola_caught, NULL, (void*)administrar_cola_caught, NULL); //este es el hilo que administra la cola caught
+
+        //activar_hilo_administrador_cola_ready(&hilo_cola_ready);
+        pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
+
         activar_hilo_recepcion(&hilo_recibir_mensajes);
 
+
+
         while(objetivo_team>0){
-            if(sem_trywait(&colaMensajes_llenos) != -1){
+            if(sem_trywait(&colaMensajes_llenos) != -1)
+            {
                 i=0;
                 datos_primero_cola_mensajes(&mensaje);
                 pthread_mutex_lock(&objetivo_actual_mutex);
                 flag_finalizacion = cantidad_de_veces_en_objetivo_actual(mensaje.pokemon, objetivo_actual, cantidad_objetivos);
                 pthread_mutex_unlock(&objetivo_actual_mutex);
                 while(flag_finalizacion != 0 && i<mensaje.cantidad_pos && objetivo_team>0){
-                    if(sem_trywait(&entrenadores_disponibles) != -1){
+                    if(sem_trywait(&entrenadores_disponibles) != -1)
+                    {
                         pos_elegido = calcular_mas_cerca_de(mensaje.posiciones[2*i], mensaje.posiciones[(2*i)+1], entrenadores, cant_entrenadores);
-                        if(pos_elegido != -1){
+                        if(pos_elegido != -1)
+                        {
                             printf("Entrenador %i para atrapar %s\n", pos_elegido, mensaje.pokemon);
                             sem_post(&sem_entrenadores[pos_elegido]);
                             sem_wait(&datosHilo);
@@ -107,7 +115,7 @@ int main(void) {
         eliminar_cola_mensajes();
         join_hilo(&hilo_cola_caught);
         eliminar_cola_caught();
-        //matar_conexion(conexion);ToDo ver
+        //matar_conexion(socket);ToDo ver
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
@@ -129,7 +137,10 @@ int main(void) {
         liberarConfig();
 
     }
-    else{printf("config con errores\n");}
+    else
+    {
+    	printf("Archivo .config con errores.\n");
+    }
 
     printf("Fin Team\n");
     return 0;
@@ -183,7 +194,7 @@ void destruir_sem_entrenadores(int cant_entrenadores){
     }
 }
 
-///////////////////-ENTRENADORES-/////////////////////
+///////////////////-ENTRENADORES-/////////////////////toDo esto PUEDE que este funcionando, no tocar entrenadores
 void inicializar_hilos_entrenadores(d_entrenador* entrenadores, int cant_entrenadores, pthread_t* hilos){
     int i;
     parametros_entrenador mensaje_entrenador;
@@ -204,8 +215,8 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
     int eliminacion, objetivo_individual;
     objetivo_individual = calcular_objetivo_propio(*entrenador);
 
-    while(entrenador->estado != EXIT && entrenador->estado_block != EN_ESPERA){
-
+    while(entrenador->estado != EXIT && entrenador->estado_block != EN_ESPERA)
+    {
         sem_post(&entrenadores_disponibles);//
         sem_wait(&sem_entrenadores[posicion]);
         pthread_mutex_lock(&colaMensajes_mutex);
@@ -217,8 +228,8 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         sem_wait(&sem_entrenadores[posicion]);
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
-        int conexion = 1; // TODO | Armar socket de conexion broker
-        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, conexion);
+        int socket = 1; // TODO | Armar socket de conexion broker
+        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, socket);
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){
@@ -244,7 +255,6 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
             }
         }
         else{bloquear(entrenador, ACTIVO);}
-
     }
     return NULL;
 }
@@ -315,7 +325,7 @@ void procesar_mensaje(int codigo, int socket){
 }
 
 ///////////////////-READY-/////////////////////ToDo SANTI
-void* administrar_cola_ready(void* parametros){
+void administrar_cola_ready(void* parametros){
     int posicion;
     while(estado_team < 2){
         if(sem_trywait(&colaReady_llenos) != -1){
@@ -326,7 +336,6 @@ void* administrar_cola_ready(void* parametros){
             sem_post(&sem_entrenadores[posicion]);
         }
     }
-    return NULL;
 }
 
 int comparar_estimaciones(int estimacion_entrenador_en_exec){
@@ -357,7 +366,7 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
 }
 
 ///////////////////-CAUGHT-/////////////////////
-void* administrar_cola_caught(void* parametros){
+void administrar_cola_caught(void* parametros){
     int posicion;
     while(estado_team == 0){
         if(sem_trywait(&colaCaught_llenos) != -1){
@@ -366,7 +375,6 @@ void* administrar_cola_caught(void* parametros){
             sem_wait(&extraccion_mensaje_caught);
         }
     }
-    return NULL;
 }
 
 int recibir_caught(int posicion){

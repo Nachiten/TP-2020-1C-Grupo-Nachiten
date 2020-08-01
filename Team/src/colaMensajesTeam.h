@@ -8,7 +8,7 @@
 #ifndef SRC_COLAMENSAJESTEAM_H_
 #define SRC_COLAMENSAJESTEAM_H_
 
-#include "Team.h"
+#include "estructurasTeam.h"
 
 typedef struct nodoColaM{
     mensaje_server mensaje;

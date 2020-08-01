@@ -8,7 +8,7 @@
 #ifndef SRC_COLAREADY_H_
 #define SRC_COLAREADY_H_
 
-#include "Team.h"
+#include <stddef.h>
 
 typedef struct{
     float real_ant;

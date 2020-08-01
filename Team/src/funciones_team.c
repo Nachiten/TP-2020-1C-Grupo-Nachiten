@@ -22,7 +22,7 @@ void destroy_mutex(pthread_mutex_t* mutex){
 
 ///////////////////-HILOS-/////////////////////
 void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
-    pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+    //pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
 
     // pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 }
@@ -33,23 +33,24 @@ void llenar_parametros_reconexion(parametros_reconexion* parametros, int tiempo,
 }
 
 void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){
-    pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
+    //pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
 }
 
-void activar_hilo_administrador_cola_ready(pthread_t* hilo_cola_ready){
-    pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
-}
+//void activar_hilo_administrador_cola_ready(pthread_t* hilo_cola_ready){ IGNORAR, YA NO SIRVE
+//    pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
+//}
 
-void activar_hilo_administrador_cola_caught(pthread_t* hilo_cola_caught){
-    pthread_create(hilo_cola_caught, NULL, administrar_cola_caught, NULL);
-}
+//void activar_hilo_administrador_cola_caught(pthread_t* hilo_cola_caught) IGNORAR, YA NO SIRVE
+//{
+//   pthread_create(hilo_cola_caught, NULL, administrar_cola_caught, NULL);
+//}
 
 void activar_hilo_circulo_deadlock(parametros_deadlock* parametros, pthread_t* hilo){
-    pthread_create(hilo, NULL, ciclo_deadlock, parametros);
+    //pthread_create(hilo, NULL, ciclo_deadlock, parametros);
 }
 
 void join_hilo(pthread_t* hilo){
-    pthread_join(*hilo, NULL);
+    //pthread_join(*hilo, NULL);
 }
 
 void join_hilos(pthread_t* hilos, int cantidad){
@@ -286,8 +287,10 @@ int esta_en_char_lleno(char* pokemon, char** vector, int tamano){
 int se_encuentra_en_char_lleno(char* pokemon, char** vector, int tamano){
     int i, resultado;
     resultado = 0;
-    for(i=0;i<tamano;i++){
-	if(strcmp(vector[i], pokemon) == 0){
+    for(i=0;i<tamano;i++)
+    {
+		if(strcmp(vector[i], pokemon) == 0)
+		{
             resultado++;
         }
     }

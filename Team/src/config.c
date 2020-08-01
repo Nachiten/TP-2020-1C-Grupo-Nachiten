@@ -22,15 +22,18 @@ int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* 
     int respuesta = 1;
     char* algoritmo = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
     *algoritmo_planificacion = convertir_algoritmo(algoritmo);
-    if(*algoritmo_planificacion == -1){
-        printf("error en extraccion de algoritmo de planificacion\n");
+    if(*algoritmo_planificacion == -1)
+    {
+        printf("Error en extraccion de algoritmo de planificacion\n");
         respuesta = 0;
     }
     *quantum = config_get_int_value(config, "QUANTUM");
     *estimacion_inicial = config_get_int_value(config, "ESTIMACION_INICIAL");
     *retardo = config_get_int_value(config, "RETARDO_CICLO_CPU");
     *tiempo_reconexion = config_get_int_value(config, "TIEMPO_RECONEXION");
-    if(validar_datos(*quantum, *retardo, *tiempo_reconexion, *estimacion_inicial) == 0){
+    //revisa que sean todas con valores mayores o iguales a 0
+    if(validar_datos(*quantum, *retardo, *tiempo_reconexion, *estimacion_inicial) == 0)
+    {
         printf("error en extraccion de datos ints\n");
         respuesta = -1;
     }
@@ -43,10 +46,11 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
     respuesta = 1;
     i=0;
 
+    //toma los valores de la config como arrays
     char** posicion_entrenador = config_get_array_value(config, "POSICIONES_ENTRENADORES");
-    char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
     char** pokemones_actuales = config_get_array_value(config, "POKEMON_ENTRENADORES");
-
+    char** objetivo = config_get_array_value(config, "OBJETIVOS_ENTRENADORES");
+    //verifica que las CANTIDADES sean las mismas y las anota en cant_posiciones
     cant_posiciones = validar_tamano_vectores_extraidos(posicion_entrenador, objetivo, pokemones_actuales);
 
     if(cant_posiciones > 0)
@@ -70,10 +74,10 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
             cant_objetivos = calcular_tamano_objetivo_global(entrenador, cant_posiciones);
             printf("La cantidad de objetivos es: %i\n", cant_objetivos);
             temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-            llenar_objetivo_global(entrenador, cant_posiciones, temp1, cant_objetivos);
+            llenar_objetivo_global(entrenador, cant_posiciones, temp1, cant_objetivos);//anota los pokemones que les faltan al team completo
             *entrenadores = entrenador;
             *cant_entrenadores = cant_posiciones;
-            *objetivo_global = temp1;
+            *objetivo_global = temp1;//aca quedan guardados cuales y cuantos pokemones faltan al team para terminar su trabajo
             *objetivos = cant_objetivos;
 	}
 	else{
@@ -184,13 +188,19 @@ int llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* ve
 int calcular_tamano_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores){
     int i, j, cont, diferencia;
     cont = 0;
-    for(i=0;i<cant_entrenadores;i++){
-        if(entrenadores[i].estado == ESTADO_NEW){
+    for(i=0;i<cant_entrenadores;i++)
+    {
+        if(entrenadores[i].estado == ESTADO_NEW)
+        {
             j=0;
-            while(entrenadores[i].objetivo[j] != NULL){
-                if(pokemon_se_repitio_antes_en_objetivo(entrenadores[i].objetivo[j], entrenadores[i].objetivo, j) == 0 && pokemon_se_repitio_antes_en_objetivos_entrenadores(entrenadores[i].objetivo[j], i, entrenadores) == 0){
+            while(entrenadores[i].objetivo[j] != NULL)
+            {
+                if(pokemon_se_repitio_antes_en_objetivo(entrenadores[i].objetivo[j], entrenadores[i].objetivo, j) == 0 && pokemon_se_repitio_antes_en_objetivos_entrenadores(entrenadores[i].objetivo[j], i, entrenadores) == 0)
+                {
+                	//calcula cuantos faltan de C/U de los pokemones objetivos
                     diferencia = diferencia_cantidad_de_en_objetivos_y_pokemones_entrenadores(entrenadores[i].objetivo[j], entrenadores, cant_entrenadores);
-                    if(diferencia < 0){
+                    if(diferencia < 0)
+                    {
                         printf("error pokemon %s encontrado en actuales mas veces que en objetivos de entrenador %i\n", entrenadores[i].pokemones_actuales[j], i);
                     }
                     else{cont = cont + diferencia;}
@@ -212,7 +222,12 @@ int pokemon_se_repitio_antes_en_objetivos_entrenadores(char* pokemon, int pos_en
 }
 
 int diferencia_cantidad_de_en_objetivos_y_pokemones_entrenadores(char* pokemon, d_entrenador* entrenadores, int cant_entrenadores){
-    int respuesta = cantidad_de_en_objetivos_entrenadores(pokemon, entrenadores, cant_entrenadores) - cantidad_de_en_pokemones_entrenadores(pokemon, entrenadores, cant_entrenadores);
+    //cuantos necesita de ESTE pokemon
+	int cant_objetivos = cantidad_de_en_objetivos_entrenadores(pokemon, entrenadores, cant_entrenadores);
+    //cuantos tienen los entrenadores de ESTE pokemon
+	int cant_en_entrenadores = cantidad_de_en_pokemones_entrenadores(pokemon, entrenadores, cant_entrenadores);
+    //cuantos faltan
+	int respuesta = cant_objetivos - cant_en_entrenadores;
     return respuesta;
 }
 
@@ -228,14 +243,25 @@ int cantidad_de_en_objetivos_entrenadores(char* pokemon, d_entrenador* entrenado
 int cantidad_de_en_pokemones_entrenadores(char* pokemon, d_entrenador* entrenadores, int cant_entrenadores){
     int i, cont;
     cont = 0;
+
+    int j = 0;
+
     for(i=0;i<cant_entrenadores;i++){
-        cont = cont + cantidad_de_veces_en_actuales(pokemon, entrenadores[i].pokemones_actuales);
+        //cont = cont + cantidad_de_veces_en_actuales(pokemon, entrenadores[i].pokemones_actuales);
+
+    	//Cuenta la cantidad de pokemones que tiene cada entrenador
+    	while(entrenadores[i].pokemones_actuales[j] != NULL)
+    	{
+    		j++;
+    	}
+    	cont = cont + cantidad_de_veces_en_actuales(pokemon, entrenadores[i].pokemones_actuales, j);
+    	j = 0;
     }
     return cont;
 }
 
 void llenar_objetivo_global(d_entrenador* entrenadores, int cant_entrenadores, char** vector_objetivo_global, int cant_objetivos){
-    int i, j, k, cont, diferencia;
+    int i, j, cont, diferencia;
     cont = 0;
     for(i=0;i<cant_entrenadores;i++){
         if(entrenadores[i].estado == ESTADO_NEW){

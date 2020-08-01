@@ -6,75 +6,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <string.h>
-#include <semaphore.h>
 #include"shared/estructuras.h"
-//#include"shared/cargador.h"
-#include"estructurasTeam.h"
+#include"estructurasTeam.h" //todo Estructuras que estaban declaradas aca en team.h volaron a estructurasTeam.h
 #include"config.h"
+#include"colaCaught.h"
+#include"colaReady.h"
+#include"colaMensajesTeam.h"
+#include"deadlock.h"
 
-//var globales
+//#include "recepcion.h"
+#include "funciones_team.h"
+#include <pthread.h>
+
+//variables globales
 char* ip;
 char* puerto;
-
-//typedef struct{
-//    int posicion[2];
-//    int estado;
-//    int estado_block;
-//    char** objetivo;
-//    char** pokemones_actuales;
-//} d_entrenador;
-//
-//typedef struct{
-//	int resultado;
-//        int num_envio;
-//}mensaje_caught;
-//
-//typedef struct{
-//    char* pokemon;
-//    int cantidad_pos;
-//    int* posiciones;
-//} mensaje_server;
-//
-//typedef struct{
-//    int ubicacion;
-//    char** no_necesito;
-//    char** necesito;
-//    int en_deadlock;
-//} deadlock_entrenador;
-//
-//typedef struct{
-//    int posicion;
-//    char* pokemon;
-//}elemento_respuesta;
-//
-//typedef struct{
-//    d_entrenador* entrenador;
-//    int pos;
-//    Appeared* mensaje;//
-//} parametros_entrenador;
-//
-//typedef struct{
-//    d_entrenador* entrenadores;
-//    deadlock_entrenador* temp_entrenadores;
-//    int tamano_respuesta;
-//    elemento_respuesta* respuesta;
-//} parametros_deadlock;
-//
-//typedef struct{
-//    int socket;
-//    int tiempo_reconexion;
-//} parametros_recepcion;
-//
-//typedef struct{
-//    int* flag_conexion_broker;
-//    int tiempo_reconexion;
-//} parametros_reconexion;
-//
-//enum{ESTADO_NEW, READY, EXEC, BLOCKED, EXIT};
-//enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};
-//enum{FIFO, RR, SJF_S, SJF_C};
 
 // Hicimos nosotros | TODO
 void recepcion_mensajes(parametros_recepcion* parametros);
@@ -87,11 +34,11 @@ void inicializar_sem_entrenadores(int, int);
 void destruir_sem_entrenadores(int);
 void inicializar_hilos_entrenadores(d_entrenador*, int, pthread_t*);
 void* ciclo_vida_entrenador(parametros_entrenador*);
-void* administrar_cola_ready(void*);
+void administrar_cola_ready(void*);
 int comparar_estimaciones(int);
 void libero_exec_me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
 void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
-void* administrar_cola_caught(void*);
+void administrar_cola_caught(void*);
 int recibir_caught(int);
 void* ciclo_deadlock(parametros_deadlock*);
 void realizar_intercambio_entre(d_entrenador*, char*, d_entrenador*, char*, int);

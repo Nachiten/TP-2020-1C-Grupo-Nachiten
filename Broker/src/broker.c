@@ -463,7 +463,7 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 		}
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
-		borrar_mensajes(colaNew);//todo ver si borra con ACK
+		borrar_mensajes(colaNew);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
 		if(colaNew->subs->head != NULL)
 		{
@@ -473,7 +473,7 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 				sub = list_get(colaNew->subs,j); // busca el j elemento de la lista subs
 				auxiliar->pID = sub->pID;
 				auxiliar->suscripto = sub->suscripto;
-				auxiliar->recibido = 0;//todo ver si hace falta el recibido
+				auxiliar->recibido = 0;
 				auxiliar->elSocket = sub->elSocket;
 				list_add(new->subs, auxiliar);
 			}
@@ -489,7 +489,11 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje){
 void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaAppeared) != -1){
 		t_mensaje* new;
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -499,7 +503,20 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaAppeared);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaAppeared->subs;
+		if(colaAppeared->subs->head != NULL)
+		{
+			for(int j = 0; j < colaAppeared->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaAppeared->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaAppeared->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Appeared");
@@ -510,7 +527,11 @@ void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje){
 void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaGet) != -1){
 		t_mensaje* new;
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -520,7 +541,20 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaGet);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaGet->subs;
+		if(colaGet->subs->head != NULL)
+		{
+			for(int j = 0; j < colaGet->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaGet->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaGet->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Get");
@@ -531,7 +565,11 @@ void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje){
 void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaLocalized) != -1){
 		t_mensaje* new;
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -541,7 +579,20 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaLocalized);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaLocalized->subs;
+		if(colaLocalized->subs->head != NULL)
+		{
+			for(int j = 0; j < colaLocalized->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaLocalized->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaLocalized->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Localized");
@@ -552,7 +603,11 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaCatch) != -1){
 		t_mensaje* new;
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
@@ -562,7 +617,20 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaCatch);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaCatch->subs;
+		if(colaCatch->subs->head != NULL)
+		{
+			for(int j = 0; j < colaCatch->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaCatch->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaCatch->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Catch");
@@ -573,18 +641,34 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje){
 	if(buscar_en_cola(mensaje->corrID, colaCaught) != -1){
 		t_mensaje* new;
-		int32_t id = crear_id(),idCorr;
+		int32_t id = crear_id();
+		int32_t idCorr;
+		t_sub* sub;
+		t_sub* auxiliar;
+
 		if(mensaje->corrID == -2){
 			idCorr = id;
 		}else{
 			idCorr = mensaje->corrID;
-			printf("adentro de agregar mensaje, ID correlativo: %i\n",mensaje->corrID);
 		}
 		mensaje->ID = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaCaught);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
-		new->subs = colaCaught->subs;
+		if(colaCaught->subs->head != NULL)
+		{
+			for(int j = 0; j < colaCaught->subs->elements_count; j++)
+			{ //avanza hasta el final de la cola de subs
+				auxiliar = malloc(sizeof(t_sub));
+				sub = list_get(colaCaught->subs,j); // busca el j elemento de la lista subs
+				auxiliar->pID = sub->pID;
+				auxiliar->suscripto = sub->suscripto;
+				auxiliar->recibido = 0;
+				auxiliar->elSocket = sub->elSocket;
+				list_add(new->subs, auxiliar);
+			}
+
+		}
 		list_add(colaCaught->mensajes,new);
 		sem_wait(semLog);
 		log_info(logger, "Se agrego un mensaje a la cola Caught");

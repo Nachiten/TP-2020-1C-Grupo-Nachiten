@@ -618,3 +618,10 @@
 [INFO] 16:13:48:781 GAMECARD/(29352:29360): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
 [INFO] 16:13:55:697 GAMECARD/(29352:29360): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
 [INFO] 16:14:02:602 GAMECARD/(29352:29360): NEW | Se modificara la linea existente 33-33 sumando 33 al pokemon Charmander
+[INFO] 16:23:04:830 GAMECARD/(29600:29601): Conexión establecida con socket de BROKER
+[INFO] 16:23:09:832 GAMECARD/(29600:29601): Conexión establecida con socket de BROKER
+[INFO] 16:23:14:834 GAMECARD/(29600:29601): Conexión establecida con socket de BROKER
+[WARNING] 16:23:31:182 GAMECARD/(29600:29617): CATCH | Las coordenadas 3-5 no existen dentro del archivo Charmander
+[WARNING] 16:23:49:274 GAMECARD/(29600:29617): CATCH | Las coordenadas 3-5 no existen dentro del archivo Charmander
+[INFO] 16:24:46:109 GAMECARD/(29600:29615): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 16:25:04:52 GAMECARD/(29600:29615): GET | Se encontraron coordenadas del pokemon Charmander

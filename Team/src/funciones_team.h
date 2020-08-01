@@ -12,6 +12,8 @@
 #include "estructurasTeam.h"
 #include "semaphore.h"
 #include <pthread.h>
+#include "Team.h"
+
 
 
 void init_sem(sem_t*, int);

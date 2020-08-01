@@ -38,6 +38,7 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int);
 void administrar_cola_caught(void*);
 int recibir_caught(int);
 void* ciclo_deadlock(parametros_deadlock*);
+
 void realizar_intercambio_entre(d_entrenador*, char*, d_entrenador*, char*, int);
 void tratar_circulos(deadlock_entrenador*, int, elemento_respuesta*, int, parametros_deadlock*, pthread_t*);
 void asignar_funcion_moverse(int);

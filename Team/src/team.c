@@ -51,46 +51,36 @@ int main(void)
 
 	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
 
-	//d_entrenador unEntrenador = entrenadores[0];
-
-	//printf("PosicionX: %i\n", unEntrenador.posicion[0]);
-
-	//printearEntrenadores(entrenadores, cant_entrenadores);
-
-
 
 	if(primer_extraccion == 1 && segunda_extraccion == 1)
     {
-		printf("La extraxion de la config fue correcta");
-		/*
-        objetivo_team = cantidad_objetivos;
-        pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
-        sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
-        asignar_funcion_moverse(algoritmo_planificacion);
+		objetivo_team = cantidad_objetivos;
+		pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
+		sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
+		asignar_funcion_moverse(algoritmo_planificacion);
 
-        //socket = crear_conexion(ip, puerto); ToDo
+		//socket = crear_conexion(ip, puerto); ToDo
 
-        inicializar_semaforos(cant_entrenadores);
-        inicializar_cola_caught(cant_entrenadores);
-        if(algoritmo_planificacion == SJF_S || algoritmo_planificacion == SJF_C)
-        {
-        	inicializar_vector_estimaciones(estimacion_inicial, cant_entrenadores);
-        }
+		inicializar_semaforos(cant_entrenadores);
+		inicializar_cola_caught(cant_entrenadores);
+		if(algoritmo_planificacion == SJF_S || algoritmo_planificacion == SJF_C)
+		{
+			inicializar_vector_estimaciones(estimacion_inicial, cant_entrenadores);
+		}
 
-        inicializar_cola_ready();
-        inicializar_cola_mensajes();
-        inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
-
+		inicializar_cola_ready();
+		inicializar_cola_mensajes();
+		inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
         //activar_hilo_administrador_cola_caught(&hilo_cola_caught);
-        pthread_create(&hilo_cola_caught, NULL, (void*)administrar_cola_caught, NULL); //este es el hilo que administra la cola caught
+        //pthread_create(&hilo_cola_caught, NULL, (void*)administrar_cola_caught, NULL); //este es el hilo que administra la cola caught
 
         //activar_hilo_administrador_cola_ready(&hilo_cola_ready);
-        pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
+        //pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
 
 
 
-        activar_hilo_recepcion(&hilo_recibir_mensajes);//toDo aca estoy (QUEDA OTRO MAS!!!)
-        pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+        //activar_hilo_recepcion(&hilo_recibir_mensajes);//toDo aca estoy (QUEDA OTRO MAS!!!)
+        //pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
 
 
 
@@ -127,7 +117,7 @@ int main(void)
                 pthread_mutex_unlock(&colaMensajes_mutex);
             }
         }
-		*/
+
 //        estado_team = 1;
 //        join_hilos(pool_hilos, cant_entrenadores);
 //        join_hilo(&hilo_recibir_mensajes);
@@ -136,6 +126,12 @@ int main(void)
 //        eliminar_cola_caught();
         //matar_conexion(socket);ToDo ver
         //informar_estado_actual(entrenadores, cant_entrenadores);
+
+		int k = 0;
+		while( k < cant_entrenadores ){
+			entrenadores[i].estado = BLOCKED;
+			k++;
+		}
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
         if(temp_cant > 1){
@@ -495,7 +491,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
         mostrar_respuesta(respuesta, tamano_respuesta);
         agregar_respuesta_tamano(mensaje_deadlock, respuesta, tamano_respuesta);
         activar_hilo_circulo_deadlock(mensaje_deadlock, &(hilos[num_circulo]));
-        sem_wait(&datosHilo);
+        //sem_wait(&datosHilo);
         actualizar_respuesta(respuesta, tamano_respuesta);
         num_circulo++;
         tamano_respuesta = detectar_deadlock(entrenadores, cant_entrenadores, respuesta);

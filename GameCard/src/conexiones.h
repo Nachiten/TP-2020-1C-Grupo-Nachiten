@@ -19,11 +19,6 @@ typedef struct datosHiloBroker{
 	t_log* logger;
 }datosHiloBroker;
 
-typedef struct datosHiloColas{
-	int socket;
-	codigo_operacion cola;
-}datosHiloColas;
-
 // Hilos de escucha
 void comenzarEscuchaGameBoy();
 void comenzarConexionConBroker(datosHiloBroker*);

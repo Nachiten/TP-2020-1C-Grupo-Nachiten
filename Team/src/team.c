@@ -9,8 +9,7 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 
 int main(void)
 {
-	intentando_reconexion = 0;
-	//int32_t socket;//Todo se llamaba "conexion"
+	uint32_t PID = getpid();
 	t_log* logger;
 	t_config* config;
 
@@ -50,8 +49,6 @@ int main(void)
         pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
         sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
         asignar_funcion_moverse(algoritmo_planificacion);
-
-        //socket = crear_conexion(ip, puerto); ToDo
 
         inicializar_semaforos(cant_entrenadores);
         inicializar_cola_caught(cant_entrenadores);
@@ -118,7 +115,7 @@ int main(void)
         eliminar_cola_mensajes();
         join_hilo(&hilo_cola_caught);
         eliminar_cola_caught();
-        //matar_conexion(socket);ToDo ver
+        //matar_conexion(socket);ToDo ver y agregar las 3 colas
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
@@ -263,79 +260,104 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 }
 
 ///////////////////-RECEPCION-/////////////////////ToDo LUCAS
-void recepcion_mensajes(void* argumento_de_adorno){
-    int bytes_recibidos = 0;
+void recepcion_mensajes(void* argumento_de_adorno)
+{
+	semConexionBroker= malloc(sizeof(sem_t));
+	sem_init(semConexionBroker, 0, 1);
+
+	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
+	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
+	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
+
+	pthread_t hiloApp;
+	pthread_t hiloLocal;
+	pthread_t hiloCaug;
+
+	datosHiloColas datosAppeared = {socketAppeared, APPEARED};
+	datosHiloColas datosLocalized = {socketAppeared, LOCALIZED};
+	datosHiloColas datosCaught = {socketAppeared, CAUGHT};
+
+	pthread_create(&hiloApp, NULL, (void*)escuchoMensajesBroker, &datosAppeared);
+	pthread_create(&hiloLocal, NULL, (void*)escuchoMensajesBroker, &datosLocalized);
+	pthread_create(&hiloCaug, NULL, (void*)escuchoMensajesBroker, &datosCaught);
+
+	pthread_detach(hiloApp);
+	pthread_detach(hiloLocal);
+	pthread_detach(hiloCaug);
+}
+
+void escuchoMensajesBroker(datosHiloColas parametros)
+{
+    int recibidosCodOP = 0;
+    int32_t recibidosSize = 0;
+	int32_t sizeAAllocar;
     codigo_operacion cod_op;
-	int estado_conexion_broker = 0; //1 = activa, 0 = murio
-	pthread_t hilo_reconexion;
-	parametros_reconexion* datosReconexion = malloc(sizeof(parametros_reconexion));
-	datosReconexion->tiempo_reconexion = tiempo_reconexion;
-	uint32_t PID = getpid();
+
+	while(estado_team == 0)//mientras no tenga todos los pokemones que necesita
+	{
+		//recibo codigo de op
+		recibidosCodOP = recv(parametros.socket, &cod_op, sizeof(cod_op), MSG_WAITALL);
+		bytesRecibidos(recibidosCodOP);
+
+		//si se cayo la conexion, intento reconectar
+		if(recibidosCodOP < 1)
+		{
+			printf("Se cayo la conexion con Broker.\n");
+			sem_wait(semConexionBroker);
+			parametros.socket = intento_reconexion(parametros.cola, PID);
+			sem_post(semConexionBroker);
+			if(parametros.socket > 1)
+			{
+				recibidosCodOP = recv(parametros.socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+				bytesRecibidos(recibidosCodOP);
+			}
+		}
+		//recibo tamaño de lo que sigue
+		recibidosSize = recv(parametros.socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
+		bytesRecibidos(recibidosSize);
+		//si se cayo la conexion, intento reconectar
+		if(recibidosSize < 1)
+		{
+			printf("Se cayo la conexion con Broker.\n");
+			sem_wait(semConexionBroker);
+			parametros.socket = intento_reconexion(parametros.cola, PID);
+			sem_post(semConexionBroker);
+			if(parametros.socket > 1)
+			{
+				recibidosSize = recv(parametros.socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
+				bytesRecibidos(recibidosSize);
+			}
+		}
+		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+
+		//mando lo que consegui para que lo procesen
+		procesar_mensaje(cod_op, sizeAAllocar, parametros.socket);
+	}
+}
+
+int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
+{
+	int32_t elSocket = -1;
 	Suscripcion* estructuraSuscripcion = malloc(sizeof(Suscripcion));
 	estructuraSuscripcion->pId = PID;
 
-	socketBroker = establecer_conexion(ip, puerto);//intento conectarme a Broker
-	//si no me conecte, intento reconectarme
-	if((socketBroker == -1) || (socketBroker == 0))
+	while(elSocket < 1)
 	{
-		datosReconexion->flag_conexion_broker = estado_conexion_broker;
-		//activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
-		pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
-		pthread_join(hilo_reconexion,NULL);
-
-
-	}
-
-	if(socketBroker > 0)//si me conecte
-	{
-		estado_conexion_broker = 1; //el estado de conexion queda activa
-		//y me suscribo a las colas
-		estructuraSuscripcion->numeroCola = 5;
-
-		mandar_mensaje(estructuraSuscripcion, SUSCRIPCION, socketBroker);
-
-		free(estructuraSuscripcion);
-	}
-
-    while(estado_team == 0)//mientras no tenga todos los pokemones que necesita
-    {
-        bytes_recibidos = recv(socketBroker, &cod_op, sizeof(cod_op), MSG_WAITALL);
-        bytesRecibidos(bytes_recibidos);
-        //si se cayo la conexion, intento reconectar
-        if(bytes_recibidos < 1 && intentando_reconexion != 1)
-        {
-        	intentando_reconexion = 1;
-        	estado_conexion_broker = 0;
-        	printf("Se cayo la conexion con Broker.\n");
-        	datosReconexion->flag_conexion_broker = estado_conexion_broker;
-        	pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
-			pthread_join(hilo_reconexion,NULL);
-        }
-        //si no se cayo, proceso el mensaje
-        else
-        {
-        	procesar_mensaje(cod_op, socketBroker);
-        }
-    }
-	free(datosReconexion);
-}
-
-void intento_reconexion(parametros_reconexion* parametros)
-{
-    while((parametros->flag_conexion_broker) == 0)
-    {
-        sleep(parametros->tiempo_reconexion);
-        socketBroker = establecer_conexion(ip, puerto);
-
-        if(socketBroker > 0)//si me conecte, el estado de conexion queda activa
+		sleep(tiempo_reconexion);
+		elSocket = establecer_conexion(ip, puerto);//intento conectarme a Broker
+		if(elSocket >= 1)//me suscribo a la cola
 		{
-        	parametros->flag_conexion_broker = 1;
-        	intentando_reconexion = 0;
+			estructuraSuscripcion->numeroCola = codigo;
+			mandar_mensaje(estructuraSuscripcion, SUSCRIPCION, elSocket);
+			sleep(1);
 		}
-    }
+	}
+	free(estructuraSuscripcion);
+	return elSocket;
 }
 
-void procesar_mensaje(codigo_operacion codigo, int32_t socket){
+void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket){
+
     void* mensaje_rec;
     int filtro;
     switch(codigo){

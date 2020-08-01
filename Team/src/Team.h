@@ -21,10 +21,13 @@
 //variables globales
 char* ip;
 char* puerto;
-int32_t socketBroker;
+int32_t socketAppeared;
+int32_t socketLocalized;
+int32_t socketCaught;
 uint32_t tiempo_reconexion;
-uint32_t intentando_reconexion;
+uint32_t PID;
 
+sem_t* semConexionBroker;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);
@@ -48,7 +51,8 @@ void moverse_sjf_sin_d(d_entrenador*, int, int, int);
 void moverse_sjf_con_d(d_entrenador*, int, int, int);
 
 // Hicimos las firmas nosotros | TODO
+void escuchoMensajesBroker(datosHiloColas parametros);
 void recepcion_mensajes(void* argumento_de_adorno);
-void intento_reconexion(parametros_reconexion* parametros);
-void procesar_mensaje(codigo_operacion codigo, int32_t socket);
+int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
+void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
 

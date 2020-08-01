@@ -52,6 +52,11 @@ typedef struct
 	t_buffer* buffer;
 } t_paquete;
 
+typedef struct datosHiloColas{
+	int socket;
+	codigo_operacion cola;
+}datosHiloColas;
+
 
 //estructuras del Broker -----------------------------------------------------------------------------------------------
 

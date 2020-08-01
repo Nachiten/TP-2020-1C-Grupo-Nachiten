@@ -24,7 +24,7 @@ void destroy_mutex(pthread_mutex_t* mutex){
 void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
     //pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);		//pasado a team.c todo estoy trabajando con recepcion y reconexion
 
-    // pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+    //pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 }
 
 void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){

@@ -12,7 +12,7 @@
 #include "estructurasTeam.h"
 #include"shared/cargador.h"
 
-int extraer_valores_config(t_config*, int*, int*, int*, int*, int*);
+int extraer_valores_config(t_config*, int*, int*, int*, int*, uint32_t*);
 int inicializar_entrenadores_con_config(t_config*, d_entrenador**, char***, int*, int*);
 int calcular_elementos_null(char**);
 int validar_tamano_vectores_extraidos(char**, char**, char**);

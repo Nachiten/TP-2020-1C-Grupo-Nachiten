@@ -18,7 +18,7 @@ PARAMS:
 @cant_entrenadores: Cantidad de entrenadores existentes
 @objetivos: Cantidad de objetivos
 */
-int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, int* tiempo_reconexion){
+int extraer_valores_config(t_config* config, int* algoritmo_planificacion, int* quantum, int* estimacion_inicial, int* retardo, uint32_t* tiempo_reconexion){
     int respuesta = 1;
     char* algoritmo = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
     *algoritmo_planificacion = convertir_algoritmo(algoritmo);

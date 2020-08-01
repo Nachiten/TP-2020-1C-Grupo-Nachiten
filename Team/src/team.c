@@ -9,7 +9,7 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 
 int main(void)
 {
-	int socket;//Todo se llamaba "conexion"
+	//int32_t socket;//Todo se llamaba "conexion"
 	t_log* logger;
 	t_config* config;
 
@@ -23,7 +23,6 @@ int main(void)
 	{
 		printf("La config fue leida correctamente.\n");
 	}
-
 	// Leer path del log
 	char* pathLogs = config_get_string_value(config,"LOG_FILE");
 	//Dejo cargado un logger para loguear los eventos.
@@ -38,7 +37,7 @@ int main(void)
 	pthread_t hilo_recibir_mensajes, hilo_cola_ready, hilo_cola_caught;
 	pthread_t* pool_hilos;
 	mensaje_server mensaje;
-	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, tiempo_reconexion, flag_finalizacion, i, pos_elegido, temp_cant;
+	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, flag_finalizacion, i, pos_elegido, temp_cant;
 	int primer_extraccion, segunda_extraccion;
 
 	//saca Algoritmo planificacion, quantum, valor de estimacion inicial (para sjf), retardo de ciclo de CPU y espera antes de reconectarse
@@ -72,7 +71,11 @@ int main(void)
         //activar_hilo_administrador_cola_ready(&hilo_cola_ready);
         pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
 
-        activar_hilo_recepcion(&hilo_recibir_mensajes);
+
+
+        activar_hilo_recepcion(&hilo_recibir_mensajes);//toDo aca estoy (QUEDA OTRO MAS!!!)
+        pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+
 
 
 
@@ -260,31 +263,40 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 }
 
 ///////////////////-RECEPCION-/////////////////////ToDo LUCAS
-void recepcion_mensajes(parametros_recepcion* parametros){
-    int bytes_recibidos, codigo, conexion_broker;
-    pthread_t hilo_reconexion;
-    parametros_reconexion nuevosParametros;
-    conexion_broker = 1;
-    llenar_parametros_reconexion(&nuevosParametros, parametros->tiempo_reconexion, &conexion_broker);
+void recepcion_mensajes(void* argumento_de_adorno){
+    int bytes_recibidos = 0;
+    codigo_operacion cod_op;
+	int estado_conexion_broker = 1;
+	pthread_t hilo_reconexion;
+	parametros_reconexion nuevosParametros;
 
-    while(estado_team == 0){
-        bytes_recibidos = recv(parametros->socket, &codigo, sizeof(codigo), 0);
-        if(bytes_recibidos < 0){
-            if(conexion_broker == 1){
+	nuevosParametros.flag_conexion_broker = estado_conexion_broker;
+	nuevosParametros.tiempo_reconexion = tiempo_reconexion;
+
+	parametros_recepcion* parametros;
+
+
+    while(estado_team == 0)
+    {
+        bytes_recibidos = recv(parametros->socket, &cod_op, sizeof(cod_op), 0);
+        if(bytes_recibidos < 0)
+        {
+            if(estado_conexion_broker == 1)
+            {
                 printf("Se cayo conexion con broker\n");
-                conexion_broker = 0;
+                estado_conexion_broker = 0;
                 activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
             }
             else{
-
+            	//todo y este else??? wtf???
             }
         }
-        else{procesar_mensaje(codigo, parametros->socket);}
+        else{procesar_mensaje(cod_op, parametros->socket);}
     }
 }
 
 void intento_reconexion(parametros_reconexion* parametros){
-    while(*(parametros->flag_conexion_broker) != 1){
+    while((parametros->flag_conexion_broker) != 1){
         sleep(parametros->tiempo_reconexion);
 
         establecer_conexion("");
@@ -292,7 +304,7 @@ void intento_reconexion(parametros_reconexion* parametros){
 
 
         //if(probar_conexion_con_broker() == 1){
-            *(parametros->flag_conexion_broker) = 1;
+            (parametros->flag_conexion_broker) = 1;
         //}
     }
 }

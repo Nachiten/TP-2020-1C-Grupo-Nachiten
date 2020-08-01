@@ -22,10 +22,8 @@
 //variables globales
 char* ip;
 char* puerto;
-
-// Hicimos nosotros | TODO
-void recepcion_mensajes(parametros_recepcion* parametros);
-void intento_reconexion(parametros_reconexion* parametros);
+int32_t socketBroker;
+uint32_t tiempo_reconexion;
 
 
 void inicializar_semaforos(int);
@@ -48,4 +46,8 @@ void moverse_fifo(d_entrenador*, int, int, int);
 void moverse_rr(d_entrenador*, int, int, int);
 void moverse_sjf_sin_d(d_entrenador*, int, int, int);
 void moverse_sjf_con_d(d_entrenador*, int, int, int);
+
+// Hicimos las firmas nosotros | TODO
+void recepcion_mensajes(void* argumento_de_adorno);
+void intento_reconexion(parametros_reconexion* parametros);
 

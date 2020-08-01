@@ -60,7 +60,7 @@ typedef struct{
 } parametros_recepcion;
 
 typedef struct{
-    int* flag_conexion_broker;
+    int flag_conexion_broker;
     int tiempo_reconexion;
 } parametros_reconexion;
 

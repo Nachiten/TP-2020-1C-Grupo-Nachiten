@@ -22,14 +22,9 @@ void destroy_mutex(pthread_mutex_t* mutex){
 
 ///////////////////-HILOS-/////////////////////
 void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
-    //pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+    //pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);				//pasado a team.c
 
     // pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
-}
-
-void llenar_parametros_reconexion(parametros_reconexion* parametros, int tiempo, int* flag){
-    parametros->tiempo_reconexion = tiempo;
-    parametros->flag_conexion_broker = flag;
 }
 
 void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){

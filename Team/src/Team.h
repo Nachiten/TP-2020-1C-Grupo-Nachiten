@@ -23,6 +23,7 @@ char* ip;
 char* puerto;
 int32_t socketBroker;
 uint32_t tiempo_reconexion;
+uint32_t intentando_reconexion;
 
 
 void inicializar_semaforos(int);

@@ -9,6 +9,7 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 
 int main(void)
 {
+	intentando_reconexion = 0;
 	//int32_t socket;//Todo se llamaba "conexion"
 	t_log* logger;
 	t_config* config;
@@ -29,14 +30,6 @@ int main(void)
 	logger = cargarUnLog(pathLogs, "Team");
 	ip = config_get_string_value(config, "IP_BROKER");
 	puerto = config_get_string_value(config, "PUERTO_BROKER");
-
-	//realizo conexion con Broker
-//	socketBroker = establecer_conexion(ip, puerto);//Todo esto TIENE que cambiar porque no deberia estar conectado desde el principio
-//	while((socketBroker == -1) || (socketBroker == 0))
-//	{
-//		sleep(tiempo_reconexion);
-//		socketBroker = establecer_conexion(ip, puerto);
-//	}
 
 	estado_team = 0;
 	d_entrenador* entrenadores;
@@ -73,19 +66,20 @@ int main(void)
 
         //activar_hilo_administrador_cola_caught(&hilo_cola_caught);
         pthread_create(&hilo_cola_caught, NULL, (void*)administrar_cola_caught, NULL); //este es el hilo que administra la cola caught
+        pthread_detach(hilo_cola_caught);
 
         //activar_hilo_administrador_cola_ready(&hilo_cola_ready);
         pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
-
-
+        pthread_detach(hilo_cola_ready);
 
         activar_hilo_recepcion(&hilo_recibir_mensajes);//toDo aca estoy (QUEDA OTRO MAS!!!)
         pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+        pthread_detach(hilo_recibir_mensajes);
 
 
 
-
-        while(objetivo_team>0){
+        while(objetivo_team>0)
+        {
             if(sem_trywait(&colaMensajes_llenos) != -1)
             {
                 i=0;
@@ -118,7 +112,7 @@ int main(void)
             }
         }
 
-        estado_team = 1;
+        estado_team = 1;//cumplio objetivo, empiezo a solucionar deadlocks
         join_hilos(pool_hilos, cant_entrenadores);
         join_hilo(&hilo_recibir_mensajes);
         eliminar_cola_mensajes();
@@ -136,7 +130,7 @@ int main(void)
         }
         else{printf("No es posible la existencia de deadlock\n");}
 
-        estado_team = 2;
+        estado_team = 2;//cumplio deadlocks
         join_hilo(&hilo_cola_ready);
         se_cumplio_objetivo(entrenadores, cant_entrenadores);
 
@@ -272,37 +266,52 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 void recepcion_mensajes(void* argumento_de_adorno){
     int bytes_recibidos = 0;
     codigo_operacion cod_op;
-	int estado_conexion_broker = 1; //1 = activa, 0 = murio
+	int estado_conexion_broker = 0; //1 = activa, 0 = murio
 	pthread_t hilo_reconexion;
 	parametros_reconexion* datosReconexion = malloc(sizeof(parametros_reconexion));
-
-	datosReconexion->flag_conexion_broker = estado_conexion_broker;
 	datosReconexion->tiempo_reconexion = tiempo_reconexion;
+	uint32_t PID = getpid();
+	Suscripcion* estructuraSuscripcion = malloc(sizeof(Suscripcion));
+	estructuraSuscripcion->pId = PID;
 
-	socketBroker = establecer_conexion(ip, puerto);
-	while((socketBroker == -1) || (socketBroker == 0))//todo esto no se si deberia volar a la mierda
+	socketBroker = establecer_conexion(ip, puerto);//intento conectarme a Broker
+	//si no me conecte, intento reconectarme
+	if((socketBroker == -1) || (socketBroker == 0))
 	{
-		sleep(tiempo_reconexion);
-		socketBroker = establecer_conexion(ip, puerto);
+		datosReconexion->flag_conexion_broker = estado_conexion_broker;
+		//activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
+		pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
+		pthread_join(hilo_reconexion,NULL);
+
+
 	}
 
+	if(socketBroker > 0)//si me conecte
+	{
+		estado_conexion_broker = 1; //el estado de conexion queda activa
+		//y me suscribo a las colas
+		estructuraSuscripcion->numeroCola = 5;
 
-    while(estado_team == 0)
+		mandar_mensaje(estructuraSuscripcion, SUSCRIPCION, socketBroker);
+
+		free(estructuraSuscripcion);
+	}
+
+    while(estado_team == 0)//mientras no tenga todos los pokemones que necesita
     {
-        bytes_recibidos = recv(socketBroker, &cod_op, sizeof(cod_op), 0);
-        if(bytes_recibidos < 0)
+        bytes_recibidos = recv(socketBroker, &cod_op, sizeof(cod_op), MSG_WAITALL);
+        bytesRecibidos(bytes_recibidos);
+        //si se cayo la conexion, intento reconectar
+        if(bytes_recibidos < 1 && intentando_reconexion != 1)
         {
-            if(estado_conexion_broker == 1)
-            {
-                printf("Se cayo conexion con broker\n");
-                estado_conexion_broker = 0;
-                //activar_hilo_reconexion(&hilo_reconexion, &nuevosParametros);
-                pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
-            }
-            else{
-            	//todo y este else??? wtf???
-            }
+        	intentando_reconexion = 1;
+        	estado_conexion_broker = 0;
+        	printf("Se cayo la conexion con Broker.\n");
+        	datosReconexion->flag_conexion_broker = estado_conexion_broker;
+        	pthread_create(&hilo_reconexion, NULL, (void*)intento_reconexion, datosReconexion);
+			pthread_join(hilo_reconexion,NULL);
         }
+        //si no se cayo, proceso el mensaje
         else
         {
         	procesar_mensaje(cod_op, socketBroker);
@@ -311,17 +320,18 @@ void recepcion_mensajes(void* argumento_de_adorno){
 	free(datosReconexion);
 }
 
-void intento_reconexion(parametros_reconexion* parametros){
-    while((parametros->flag_conexion_broker) != 1){
+void intento_reconexion(parametros_reconexion* parametros)
+{
+    while((parametros->flag_conexion_broker) == 0)
+    {
         sleep(parametros->tiempo_reconexion);
+        socketBroker = establecer_conexion(ip, puerto);
 
-        establecer_conexion(ip, puerto);//todo esto esta devolviendo a la nada
-
-
-
-        //if(probar_conexion_con_broker() == 1){
-            (parametros->flag_conexion_broker) = 1;
-        //}
+        if(socketBroker > 0)//si me conecte, el estado de conexion queda activa
+		{
+        	parametros->flag_conexion_broker = 1;
+        	intentando_reconexion = 0;
+		}
     }
 }
 

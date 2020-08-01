@@ -10,6 +10,8 @@
 
 #include "gamecard.h"
 
+sem_t* semConexionBroker;
+
 typedef struct datosHiloBroker{
 	char* IP_BROKER;
 	char* PUERTO_BROKER;

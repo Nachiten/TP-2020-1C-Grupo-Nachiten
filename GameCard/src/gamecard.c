@@ -61,7 +61,7 @@ t_config* leerConfig(char** PUNTO_MONTAJE){
 	TIEM_REIN_OPERACION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_OPERACION");
 	IP_BROKER = config_get_string_value(config, "IP_BROKER");
 	PUERTO_BROKER = config_get_string_value(config, "PUERTO_BROKER");
-	PUERTO_GAMEBOY = config_get_string_value(config, "PUERTO_GAMEBOY");
+	PUERTO_GAMECARD = config_get_string_value(config, "PUERTO_GAMECARD");
 
 	if (TIEM_REIN_CONEXION == NULL){
 		printf("No se ha podido leer el tiempo reintento conexion de la config");
@@ -1085,8 +1085,6 @@ int main(void) {
 
 	// Testing
 	//printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
-
-	// Inicializacion del logger... todavia no es necesario
 
 	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 

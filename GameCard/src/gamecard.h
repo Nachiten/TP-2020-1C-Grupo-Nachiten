@@ -39,7 +39,7 @@ int TIEM_REIN_OPERACION;
 int TIEM_REIN_CONEXION;
 char* IP_BROKER;
 char* PUERTO_BROKER;
-char* PUERTO_GAMEBOY;
+char* PUERTO_GAMECARD;
 
 int socketNew;
 int socketGet;

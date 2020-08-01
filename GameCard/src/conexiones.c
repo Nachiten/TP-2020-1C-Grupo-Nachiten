@@ -3,10 +3,10 @@
 // Hilo de escucha de gameboy
 void comenzarEscuchaGameBoy(){
 
-	printf("Puerto Gameboy:%s\n", PUERTO_GAMEBOY);
+	printf("Puerto Gamecard:%s.\n", PUERTO_GAMECARD);
 
-	// El PUERTO_GAMEBOY se lee de la config
-	int32_t socketoide = reservarSocket(PUERTO_GAMEBOY);
+	// El PUERTO_GAMECARD se lee de la config
+	int32_t socketoide = reservarSocket(PUERTO_GAMECARD);
 
 	listen(socketoide, SOMAXCONN);
 
@@ -18,34 +18,34 @@ void comenzarEscuchaGameBoy(){
 }
 
 // Hilo de escucha de broker
-void comenzarConexionConBroker(datosHiloBroker* datos){
-
+void comenzarConexionConBroker(datosHiloBroker* datos)
+{
 	// CONEXION Y ESPERAR MENSAJES DE BROKER
-	//char* IP_BROKER = datos->IP_BROKER;
-	//char* PUERTO_BROKER = datos->PUERTO_BROKER;
+	//semaforo suscripcion y demas
+	semConexionBroker= malloc(sizeof(sem_t));
+	sem_init(semConexionBroker, 0, 1);
+
 	int TIEM_REIN_CONEXION = datos->TIEM_REIN_CONEXION;
 
 	t_log* logger = datos->logger;
 
 	socketNew = conectarseABroker(logger, NEW);
-	sleep(1);
 	socketCatch = conectarseABroker(logger, CATCH);
-	sleep(1);
 	socketGet = conectarseABroker(logger, GET);
 
-	while ((socketNew == -1) || (socketNew == 0))
+	while (socketNew <= 0)
 	{
 		sleep(TIEM_REIN_CONEXION);
 		socketNew = conectarseABroker(logger, NEW);
 	}
 
-	while ((socketCatch == -1) || (socketCatch == 0))
+	while (socketCatch <= 0)
 	{
 		sleep(TIEM_REIN_CONEXION);
 		socketCatch = conectarseABroker(logger, CATCH);
 	}
 
-	while((socketGet == -1) || (socketGet == 0))
+	while(socketGet <= 0)
 	{
 		sleep(TIEM_REIN_CONEXION);
 		socketGet = conectarseABroker(logger, GET);
@@ -71,10 +71,6 @@ void comenzarConexionConBroker(datosHiloBroker* datos){
 	pthread_join(hiloGet, NULL);
 	pthread_join(hiloNew, NULL);
 	pthread_join(hiloCatch, NULL);
-
-//	pthread_detach(hiloGet);
-//	pthread_detach(hiloNew);
-//	pthread_detach(hiloCatch);
 
 	puts("sali de esperar mensaje (No tengo que llegar nunca)");
 }
@@ -126,10 +122,14 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 		printf("Recibi un mensaje de la cola %i.\n", nombreCola);
 
 		//en caso de que haya fallado la conexion del COD OP
-		while((recibidosCodOP == -1) || (recibidosCodOP == 0) || (desconexion == -1) || ((desconexion == 0)))
+		while((recibidosCodOP == -1) || (recibidosCodOP == 0) || (desconexion == -1))
 		{
 			sleep(TIEM_REIN_CONEXION);
+
+			sem_wait(semConexionBroker);
 			desconexion = conectarseABroker(logger, nombreCola);
+			sem_post(semConexionBroker);
+			socketCola = desconexion;
 			if((desconexion != -1) || (desconexion != 0))
 			{
 				recibidosCodOP = recv(socketCola, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
@@ -143,11 +143,14 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
 		//en caso de que haya fallado la conexion de la variable SIZE
-		while((recibidosSize == -1) || (recibidosSize == 0) || (desconexion == -1)|| ((desconexion == 0)))
+		while((recibidosSize == -1) || (desconexion == -1))
 		{
 			sleep(TIEM_REIN_CONEXION);
+			sem_wait(semConexionBroker);
 			desconexion = conectarseABroker(logger, nombreCola);
-			if(desconexion != -1)
+			sem_post(semConexionBroker);
+			socketCola = desconexion;
+			if((desconexion != -1) || (desconexion != 0))
 			{
 				recibidosSize = recv(socketCola, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
 				bytesRecibidos(recibidosSize);
@@ -170,7 +173,6 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
 				sleep(1);
-
 
 				char* pokemon = mensajeNewRecibido->nombrePokemon;
 				int posX = mensajeNewRecibido->posPokemon.x;
@@ -257,7 +259,10 @@ int conectarseABroker(t_log* logger, codigo_operacion nombreCola){
 
 	if ((socket != -1) && (socket != 0))
 	{
+		//sem_wait(semConexionBroker);
+		sleep(1);
 		suscribirseAUnaCola(socket, nombreCola);
+		//sem_post(semConexionBroker);
 	}
 
 	return socket;
@@ -321,6 +326,7 @@ void suscribirseAUnaCola(int32_t socket, codigo_operacion nombreCola){
 
 	//mandamos el mensaje pidiendo suscribirse a la cola
 	mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
+	sleep(1);
 
 	free(estructuraSuscribirse);
 }

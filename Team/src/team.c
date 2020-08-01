@@ -9,7 +9,14 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 
 int main(void)
 {
-	uint32_t PID = getpid();
+	uint32_t PID = getpid(); //ignorar warning, SI SE USA
+	datosAppeared = malloc(sizeof(datosHiloColas));
+	datosLocalized = malloc(sizeof(datosHiloColas));
+	datosCaught = malloc(sizeof(datosHiloColas));
+	datosAppeared->cola = APPEARED;
+	datosLocalized->cola = LOCALIZED;
+	datosCaught->cola = CAUGHT;
+
 	t_log* logger;
 	t_config* config;
 
@@ -273,20 +280,20 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	pthread_t hiloLocal;
 	pthread_t hiloCaug;
 
-	datosHiloColas datosAppeared = {socketAppeared, APPEARED};
-	datosHiloColas datosLocalized = {socketAppeared, LOCALIZED};
-	datosHiloColas datosCaught = {socketAppeared, CAUGHT};
+	datosAppeared->socket = socketAppeared;
+	datosLocalized->socket = socketLocalized;
+	datosCaught->socket = socketCaught;
 
-	pthread_create(&hiloApp, NULL, (void*)escuchoMensajesBroker, &datosAppeared);
-	pthread_create(&hiloLocal, NULL, (void*)escuchoMensajesBroker, &datosLocalized);
-	pthread_create(&hiloCaug, NULL, (void*)escuchoMensajesBroker, &datosCaught);
+	pthread_create(&hiloApp, NULL, (void*)escuchoMensajesBroker, datosAppeared);
+	pthread_create(&hiloLocal, NULL, (void*)escuchoMensajesBroker, datosLocalized);
+	pthread_create(&hiloCaug, NULL, (void*)escuchoMensajesBroker, datosCaught);
 
 	pthread_detach(hiloApp);
 	pthread_detach(hiloLocal);
 	pthread_detach(hiloCaug);
 }
 
-void escuchoMensajesBroker(datosHiloColas parametros)
+void escuchoMensajesBroker(datosHiloColas* parametros)
 {
     int recibidosCodOP = 0;
     int32_t recibidosSize = 0;
@@ -296,7 +303,7 @@ void escuchoMensajesBroker(datosHiloColas parametros)
 	while(estado_team == 0)//mientras no tenga todos los pokemones que necesita
 	{
 		//recibo codigo de op
-		recibidosCodOP = recv(parametros.socket, &cod_op, sizeof(cod_op), MSG_WAITALL);
+		recibidosCodOP = recv(parametros->socket, &cod_op, sizeof(cod_op), MSG_WAITALL);
 		bytesRecibidos(recibidosCodOP);
 
 		//si se cayo la conexion, intento reconectar
@@ -304,34 +311,34 @@ void escuchoMensajesBroker(datosHiloColas parametros)
 		{
 			printf("Se cayo la conexion con Broker.\n");
 			sem_wait(semConexionBroker);
-			parametros.socket = intento_reconexion(parametros.cola, PID);
+			parametros->socket = intento_reconexion(parametros->cola, PID);
 			sem_post(semConexionBroker);
-			if(parametros.socket > 1)
+			if(parametros->socket > 1)
 			{
-				recibidosCodOP = recv(parametros.socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
+				recibidosCodOP = recv(parametros->socket, &cod_op, sizeof(codigo_operacion), MSG_WAITALL);
 				bytesRecibidos(recibidosCodOP);
 			}
 		}
 		//recibo tamaño de lo que sigue
-		recibidosSize = recv(parametros.socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
+		recibidosSize = recv(parametros->socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
 		bytesRecibidos(recibidosSize);
 		//si se cayo la conexion, intento reconectar
 		if(recibidosSize < 1)
 		{
 			printf("Se cayo la conexion con Broker.\n");
 			sem_wait(semConexionBroker);
-			parametros.socket = intento_reconexion(parametros.cola, PID);
+			parametros->socket = intento_reconexion(parametros->cola, PID);
 			sem_post(semConexionBroker);
-			if(parametros.socket > 1)
+			if(parametros->socket > 1)
 			{
-				recibidosSize = recv(parametros.socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
+				recibidosSize = recv(parametros->socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
 				bytesRecibidos(recibidosSize);
 			}
 		}
 		printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
 		//mando lo que consegui para que lo procesen
-		procesar_mensaje(cod_op, sizeAAllocar, parametros.socket);
+		procesar_mensaje(cod_op, sizeAAllocar, parametros->socket);
 	}
 }
 
@@ -356,16 +363,75 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
 	return elSocket;
 }
 
-void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket){
+void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t socket){
+
+	Appeared* recibidoAppeared;
+	Localized* recibidoLocalized;
+	Caught* recibidoCaught;
+	confirmacionMensaje* mensajeConfirm;
+	int32_t socketAck;
+
+
 
     void* mensaje_rec;
     int filtro;
-    switch(codigo){
+
+
+    switch(cod_op){
         case APPEARED:
+        	recibidoAppeared = malloc(sizeAAllocar);
+
+			//mandamos confirmacion para no volver a recibir este mensaje
+			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+			mensajeConfirm->id_mensaje = recibidoAppeared->ID;
+			mensajeConfirm->colaMensajes = cod_op;
+			mensajeConfirm->pId = PID;
+			socketAck = establecer_conexion(ip, puerto);
+			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+			cerrar_conexion(socketAck);
+			free(mensajeConfirm);
+			sleep(1);
+
         	break;
 
+        case LOCALIZED:
+        	recibidoLocalized = malloc(sizeAAllocar);
+
+			//mandamos confirmacion para no volver a recibir este mensaje
+			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+			mensajeConfirm->id_mensaje = recibidoLocalized->ID;
+			mensajeConfirm->colaMensajes = cod_op;
+			mensajeConfirm->pId = PID;
+			socketAck = establecer_conexion(ip, puerto);
+			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+			cerrar_conexion(socketAck);
+			free(mensajeConfirm);
+			sleep(1);
+
+        	break;
+
+        case CAUGHT:
+        	recibidoCaught = malloc(sizeAAllocar);
+
+			//mandamos confirmacion para no volver a recibir este mensaje
+			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+			mensajeConfirm->id_mensaje = recibidoCaught->ID;
+			mensajeConfirm->colaMensajes = cod_op;
+			mensajeConfirm->pId = PID;
+			socketAck = establecer_conexion(ip, puerto);
+			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
+			cerrar_conexion(socketAck);
+			free(mensajeConfirm);
+			sleep(1);
+        	break;
+
+
+        default:
+        	break;
     }
-    if(codigo == LOCALIZED || codigo == APPEARED){
+
+
+    if(cod_op == LOCALIZED || cod_op == APPEARED){
         pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
         filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
         pthread_mutex_unlock(&objetivo_actual_mutex);
@@ -376,7 +442,9 @@ void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t soc
             sem_post(&colaMensajes_llenos);
         }
     }
-    if(codigo == CAUGHT){
+
+
+    if(cod_op == CAUGHT){
         pthread_mutex_lock(&colaCaught_mutex);
         agregar_a_cola_caught(mensaje_rec);
         pthread_mutex_unlock(&colaCaught_mutex);

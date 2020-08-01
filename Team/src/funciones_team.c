@@ -27,9 +27,9 @@ void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
     //pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 }
 
-void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){
-    //pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
-}
+//void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){ IGNORAR, YA NO SIRVE
+//    pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
+//}
 
 //void activar_hilo_administrador_cola_ready(pthread_t* hilo_cola_ready){ IGNORAR, YA NO SIRVE
 //    pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
@@ -218,7 +218,8 @@ void actualizar_estado_entrenador(d_entrenador* entrenador, int tipo_control){
 
 ///////////////////-COLA MENSAJES-/////////////////////
 //ver despues si se le puede pasar a esta funcon mensaje como copia de una estructura y no como un puntero a una estructura
-int filtrar_mensaje(mensaje_server* mensaje, char** objetivo_global, int tamano){
+int filtrar_mensaje(mensaje_server* mensaje, char** objetivo_global, int tamano)
+{
     int respuesta = esta_en_objetivo_actual(mensaje->pokemon, objetivo_global, tamano);
     return respuesta;
 }

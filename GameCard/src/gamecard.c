@@ -46,7 +46,7 @@
 //	printf("Hilo 3 cerro el archivo pikachu\n");
 //}
 
-t_config* leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** PUNTO_MONTAJE, char** IP_BROKER, char** PUERTO_BROKER){
+t_config* leerConfig(char** PUNTO_MONTAJE){
 
 	t_config* config = leerConfiguracion("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/GameCard.config");
 
@@ -55,11 +55,13 @@ t_config* leerConfig(int* TIEM_REIN_CONEXION, int* TIEM_REIN_OPERACION, char** P
 		exit(1);
 	}
 
-	*TIEM_REIN_CONEXION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_CONEXION");
-	*TIEM_REIN_OPERACION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_OPERACION");
 	*PUNTO_MONTAJE = config_get_string_value(config, "PUNTO_MONTAJE_TALLGRASS");
-	*IP_BROKER = config_get_string_value(config, "IP_BROKER");
-	*PUERTO_BROKER = config_get_string_value(config, "PUERTO_BROKER");
+
+	TIEM_REIN_CONEXION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_CONEXION");
+	TIEM_REIN_OPERACION = config_get_int_value(config, "TIEMPO_DE_REINTENTO_OPERACION");
+	IP_BROKER = config_get_string_value(config, "IP_BROKER");
+	PUERTO_BROKER = config_get_string_value(config, "PUERTO_BROKER");
+	PUERTO_GAMECARD = config_get_string_value(config, "PUERTO_GAMECARD");
 
 	if (TIEM_REIN_CONEXION == NULL){
 		printf("No se ha podido leer el tiempo reintento conexion de la config");
@@ -1079,12 +1081,10 @@ int main(void) {
 	//Inicializar lista de semaforos pokemon
 	listaSemPokemon = list_create();
 
-	t_config* config = leerConfig(&TIEM_REIN_CONEXION, &TIEM_REIN_OPERACION, &PUNTO_MONTAJE, &IP_BROKER, &PUERTO_BROKER);
+	t_config* config = leerConfig(&PUNTO_MONTAJE);
 
 	// Testing
 	//printf("Path punto montaje: %s\n", PUNTO_MONTAJE);
-
-	// Inicializacion del logger... todavia no es necesario
 
 	logger = cargarUnLog("/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/GameCard/Logs/GameCard.log", "GAMECARD");
 
@@ -1252,14 +1252,12 @@ int main(void) {
 	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
 
 	pthread_t hiloBroker;
-
 	pthread_create(&hiloBroker, NULL, (void*)comenzarConexionConBroker, &datosBroker);
 
 	// ****************************************************************
 	// Levanto hilo para escuchar mensajes directos de gameboy
 
 	pthread_t hiloGameBoy;
-
     pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 
 //	// CIERRO HILOS

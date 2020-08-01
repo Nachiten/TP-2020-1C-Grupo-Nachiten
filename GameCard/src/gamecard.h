@@ -39,6 +39,7 @@ int TIEM_REIN_OPERACION;
 int TIEM_REIN_CONEXION;
 char* IP_BROKER;
 char* PUERTO_BROKER;
+char* PUERTO_GAMECARD;
 
 int socketNew;
 int socketGet;
@@ -71,7 +72,7 @@ void crearPokemonSiNoExiste(char* );
 void escribirDatoEnBloque(char*, int);
 void escribirLineaNuevaPokemon(char*, int, int, int);
 void escribirLineasEnBloques(t_list*, t_list*);
-t_config* leerConfig(int*, int* ,char** ,char** ,char**);
+t_config* leerConfig(char**);
 t_config* leerMetadataBin(char* pathMetadata, int* BLOCKS, int* BLOCK_SIZE, char** MAGIC_NUMBER);
 
 int cantidadDeBloquesQueOcupa(int);

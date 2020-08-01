@@ -289,7 +289,7 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
             tamano_respuesta = detectar_deadlock(deadlock_entrenadores, cant_deadlock_entrenadores, respuesta);
         }while(tamano_respuesta > 0);
     }
-    printf("No se detectaron mas circulos deadlock\n");
+    printf("No se detectaron mas circulos deadlock (todo el deadlock esta resuelto)\n");
     actualizar_estado_deadlock(entrenadores, deadlock_entrenadores, cant_deadlock_entrenadores);
     //informar_estado_actual(entrenadores, cant_entrenadores);
 

@@ -51,8 +51,18 @@ int main(void)
 
 	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
 
+	//d_entrenador unEntrenador = entrenadores[0];
+
+	//printf("PosicionX: %i\n", unEntrenador.posicion[0]);
+
+	//printearEntrenadores(entrenadores, cant_entrenadores);
+
+
+
 	if(primer_extraccion == 1 && segunda_extraccion == 1)
     {
+		printf("La extraxion de la config fue correcta");
+		/*
         objetivo_team = cantidad_objetivos;
         pool_hilos = malloc(cant_entrenadores * sizeof(pthread_t));
         sem_entrenadores = malloc(cant_entrenadores * sizeof(sem_t));
@@ -117,13 +127,13 @@ int main(void)
                 pthread_mutex_unlock(&colaMensajes_mutex);
             }
         }
-
-        estado_team = 1;
-        join_hilos(pool_hilos, cant_entrenadores);
-        join_hilo(&hilo_recibir_mensajes);
-        eliminar_cola_mensajes();
-        join_hilo(&hilo_cola_caught);
-        eliminar_cola_caught();
+		*/
+//        estado_team = 1;
+//        join_hilos(pool_hilos, cant_entrenadores);
+//        join_hilo(&hilo_recibir_mensajes);
+//        eliminar_cola_mensajes();
+//        join_hilo(&hilo_cola_caught);
+//        eliminar_cola_caught();
         //matar_conexion(socket);ToDo ver
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
@@ -136,14 +146,14 @@ int main(void)
         }
         else{printf("No es posible la existencia de deadlock\n");}
 
-        estado_team = 2;
-        join_hilo(&hilo_cola_ready);
-        se_cumplio_objetivo(entrenadores, cant_entrenadores);
-
-        eliminar_cola_ready();
-        free(pool_hilos);
-        destruir_semaforos(cant_entrenadores);
-        liberarConfig();
+//        estado_team = 2;
+//        join_hilo(&hilo_cola_ready);
+//        se_cumplio_objetivo(entrenadores, cant_entrenadores);
+//
+//        eliminar_cola_ready();
+//        free(pool_hilos);
+//        destruir_semaforos(cant_entrenadores);
+//        liberarConfig();
 
     }
     else
@@ -153,6 +163,37 @@ int main(void)
 
     printf("Fin Team\n");
     return 0;
+}
+
+void printearEntrenadores(d_entrenador* entrenadores, int cant_entrenadores){
+	int k = 0;
+	while( k < cant_entrenadores ){
+		printf("Entrenador numero: %i\n", k);
+		printf("Posicion X: %i", entrenadores[k].posicion[0]);
+		printf(" Posicion Y: %i\n", entrenadores[k].posicion[1]);
+		printf("Estado Actual: %i\n", entrenadores[k].estado);
+
+		printf("Pokemones actuales:\n");
+		int j = 0;
+		while( entrenadores[k].pokemones_actuales[j] != NULL){
+			printf(" %s,", entrenadores[k].pokemones_actuales[j]);
+			j++;
+		}
+
+		printf("\n");
+
+		j = 0;
+		printf("Pokemones objetivo:\n");
+		while( entrenadores[k].objetivo[j] != NULL){
+
+			printf(" %s,", entrenadores[k].objetivo[j]);
+			j++;
+		}
+		k++;
+
+		printf("\n");
+	}
+
 }
 
 ///////////////////-SEMAFOROS-/////////////////////

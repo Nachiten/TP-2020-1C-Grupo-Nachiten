@@ -131,12 +131,12 @@ int main(void)
         //matar_conexion(socket);ToDo ver y agregar las 3 colas
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
-        // TODO | Hardcodeado para q ande lo de deadlock
-		int k = 0;
-		while( k < cant_entrenadores ){
-			entrenadores[k].estado = BLOCKED;
-			k++;
-		}
+        // TODO | Este while lo puso NACHO para q probar lo de deadlock ******************IMPORTANTE: CON ESTO EL PROGRAMA PASA DIRECTAMENTE A DETECCION Y RECUPERACION*************
+//		int k = 0;
+//		while( k < cant_entrenadores ){
+//			entrenadores[k].estado = BLOCKED;
+//			k++;
+//		}
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
         if(temp_cant > 1){

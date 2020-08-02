@@ -31,14 +31,7 @@ uint32_t PID;
 
 int retardo;
 
-//cola_mensajes_team* cola_indices;
-
-
 mensaje_server* mensaje_rec;
-
-
-
-
 
 datosHiloColas* datosAppeared;
 datosHiloColas* datosAppearedGameboy;

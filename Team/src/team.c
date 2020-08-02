@@ -129,7 +129,7 @@ int main(void)
 
 		int k = 0;
 		while( k < cant_entrenadores ){
-			entrenadores[i].estado = BLOCKED;
+			entrenadores[k].estado = BLOCKED;
 			k++;
 		}
 
@@ -426,7 +426,7 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
     agregar_a_ready(pos);
     pthread_mutex_unlock(&colaReady_mutex);
     sem_post(&colaReady_llenos);
-    sem_wait(&sem_entrenadores[pos]);
+    //sem_wait(&sem_entrenadores[pos]);
     cambiar_estado_a(entrenador, EXEC);
 }
 

@@ -41,11 +41,12 @@ void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
 //}
 
 void activar_hilo_circulo_deadlock(parametros_deadlock* parametros, pthread_t* hilo){
-    //pthread_create(hilo, NULL, ciclo_deadlock, parametros);
+    //pthread_create(hilo, NULL, (void*)ciclo_deadlock, parametros);
+	ciclo_deadlock(parametros);
 }
 
 void join_hilo(pthread_t* hilo){
-    //pthread_join(*hilo, NULL);
+    pthread_join(*hilo, NULL);
 }
 
 void join_hilos(pthread_t* hilos, int cantidad){

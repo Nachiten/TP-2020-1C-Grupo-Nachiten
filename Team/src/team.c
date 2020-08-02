@@ -55,6 +55,7 @@ int main(void)
 
 	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
 
+
 	if(primer_extraccion == 1 && segunda_extraccion == 1)
     {
         objetivo_team = cantidad_objetivos;
@@ -130,6 +131,12 @@ int main(void)
         //matar_conexion(socket);ToDo ver y agregar las 3 colas
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
+		int k = 0;
+		while( k < cant_entrenadores ){
+			entrenadores[k].estado = BLOCKED;
+			k++;
+		}
+
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
         if(temp_cant > 1){
             printf("\nInicio proceso deadlock\n");
@@ -156,6 +163,37 @@ int main(void)
 
     printf("Fin Team\n");
     return 0;
+}
+
+void printearEntrenadores(d_entrenador* entrenadores, int cant_entrenadores){
+	int k = 0;
+	while( k < cant_entrenadores ){
+		printf("Entrenador numero: %i\n", k);
+		printf("Posicion X: %i", entrenadores[k].posicion[0]);
+		printf(" Posicion Y: %i\n", entrenadores[k].posicion[1]);
+		printf("Estado Actual: %i\n", entrenadores[k].estado);
+
+		printf("Pokemones actuales:\n");
+		int j = 0;
+		while( entrenadores[k].pokemones_actuales[j] != NULL){
+			printf(" %s,", entrenadores[k].pokemones_actuales[j]);
+			j++;
+		}
+
+		printf("\n");
+
+		j = 0;
+		printf("Pokemones objetivo:\n");
+		while( entrenadores[k].objetivo[j] != NULL){
+
+			printf(" %s,", entrenadores[k].objetivo[j]);
+			j++;
+		}
+		k++;
+
+		printf("\n");
+	}
+
 }
 
 ///////////////////-SEMAFOROS-/////////////////////
@@ -590,7 +628,7 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
     agregar_a_ready(pos);
     pthread_mutex_unlock(&colaReady_mutex);
     sem_post(&colaReady_llenos);
-    sem_wait(&sem_entrenadores[pos]);
+    //sem_wait(&sem_entrenadores[pos]);
     cambiar_estado_a(entrenador, EXEC);
 }
 
@@ -655,7 +693,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
         mostrar_respuesta(respuesta, tamano_respuesta);
         agregar_respuesta_tamano(mensaje_deadlock, respuesta, tamano_respuesta);
         activar_hilo_circulo_deadlock(mensaje_deadlock, &(hilos[num_circulo]));
-        sem_wait(&datosHilo);
+        //sem_wait(&datosHilo);
         actualizar_respuesta(respuesta, tamano_respuesta);
         num_circulo++;
         tamano_respuesta = detectar_deadlock(entrenadores, cant_entrenadores, respuesta);

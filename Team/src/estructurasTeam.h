@@ -10,6 +10,24 @@
 
 #include"shared/estructuras.h"
 
+
+typedef struct{
+    char* pokemon;
+    int cantidad_pos;
+    int* posiciones;
+} mensaje_server;
+
+typedef struct nodoColaM{
+    mensaje_server* mensaje;
+    int num_posicion;
+    struct nodoColaM* next;
+}mensaje_cola_team;
+
+typedef struct{
+    mensaje_cola_team* inicio;
+    mensaje_cola_team* fondo;
+}cola_mensajes_team;
+
 typedef struct{
     int posicion[2];
     int estado;
@@ -23,11 +41,6 @@ typedef struct{
         int num_envio;
 }mensaje_caught;
 
-typedef struct{
-    char* pokemon;
-    int cantidad_pos;
-    int* posiciones;
-} mensaje_server;
 
 typedef struct{
     int ubicacion;

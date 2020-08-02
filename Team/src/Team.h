@@ -30,6 +30,15 @@ uint32_t tiempo_reconexion;
 uint32_t PID;
 t_log* logger;
 
+//cola_mensajes_team* cola_indices;
+
+
+mensaje_server* mensaje_rec;
+
+
+
+
+
 datosHiloColas* datosAppeared;
 datosHiloColas* datosAppearedGameboy;
 datosHiloColas* datosLocalized;

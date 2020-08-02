@@ -315,14 +315,17 @@ int calcular_mas_cerca_de(int pos_x, int pos_y, d_entrenador* entrenadores, int 
     int i, distancia, distancia_minimo, pos_a_enviar;
     pos_a_enviar = -1;
     distancia_minimo = -1;
-    for(i=0;i<cantidad;i++){
-	if(entrenadores[i].estado == NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO)){
-            distancia = distancia_a(pos_x, pos_y, entrenadores[i].posicion[0], entrenadores[i].posicion[1]);
-            if(distancia < distancia_minimo || distancia_minimo == -1){
-                distancia_minimo = distancia;
-		pos_a_enviar = i;
-            }
-	}
+    for(i=0;i<cantidad;i++)
+    {
+		if(entrenadores[i].estado == ESTADO_NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO))
+		{
+			distancia = distancia_a(pos_x, pos_y, entrenadores[i].posicion[0], entrenadores[i].posicion[1]);
+			if(distancia < distancia_minimo || distancia_minimo == -1)
+			{
+				distancia_minimo = distancia;
+				pos_a_enviar = i;
+			}
+		}
     }
     return pos_a_enviar;
 }

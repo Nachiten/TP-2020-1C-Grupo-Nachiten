@@ -59,6 +59,7 @@ void join_hilos(pthread_t* hilos, int cantidad){
 }
 
 //////////////////-OBJETIVO ACTUAL-/////////////////////
+//se fija si el nombre del pokemon que recibio es parte del objetivo del team (entiendo)
 int esta_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetivos){
     int respuesta = esta_en_char(pokemon, objetivo, cantidad_objetivos);
     return respuesta;
@@ -217,8 +218,8 @@ void actualizar_estado_entrenador(d_entrenador* entrenador, int tipo_control){
 }
 
 ///////////////////-COLA MENSAJES-/////////////////////
-//ver despues si se le puede pasar a esta funcon mensaje como copia de una estructura y no como un puntero a una estructura
-int filtrar_mensaje(mensaje_server* mensaje, char** objetivo_global, int tamano)
+//revisa si le sirve el mensaje en base al nombre del pokemon (se fija si es parte del objetivo global o no)
+int filtrar_mensaje(mensaje_server* mensaje, char** objetivo_global, int tamano)//ver despues si se le puede pasar a esta funcon mensaje como copia de una estructura y no como un puntero a una estructura
 {
     int respuesta = esta_en_objetivo_actual(mensaje->pokemon, objetivo_global, tamano);
     return respuesta;

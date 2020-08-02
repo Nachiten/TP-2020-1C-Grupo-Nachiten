@@ -363,23 +363,23 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
 	return elSocket;
 }
 
-void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t socket){
-
+void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t socket)
+{
 	Appeared* recibidoAppeared;
 	Localized* recibidoLocalized;
 	Caught* recibidoCaught;
 	confirmacionMensaje* mensajeConfirm;
+	mensaje_server* mensaje_rec = malloc(sizeof(mensaje_server));
 	int32_t socketAck;
+	int32_t iterador = 0;
+	int32_t filtro;
 
 
-
-    void* mensaje_rec;
-    int filtro;
-
-
-    switch(cod_op){
+    switch(cod_op)
+    {
         case APPEARED:
         	recibidoAppeared = malloc(sizeAAllocar);
+        	recibir_mensaje(recibidoAppeared, cod_op, socket);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -392,10 +392,39 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			free(mensajeConfirm);
 			sleep(1);
 
+			//le asigno todos los datos a la estructura que maneja team
+			mensaje_rec->pokemon = malloc(recibidoAppeared->largoNombre);
+			mensaje_rec->pokemon = recibidoAppeared->nombrePokemon;
+			mensaje_rec->cantidad_pos = 1; //1 por ser Appeared
+			mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
+
+			while(iterador < mensaje_rec->cantidad_pos)
+			{
+				mensaje_rec->posiciones[iterador] = recibidoAppeared->posPokemon.x;
+				iterador++;
+				mensaje_rec->posiciones[iterador] = recibidoAppeared->posPokemon.y;
+				iterador++;
+			}
+
+			//ahora que lo traducimos a "idioma team" ya puede continuar el funcionamiento de team
+			pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
+			filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);//me fijo si este mensaje me sirve
+			pthread_mutex_unlock(&objetivo_actual_mutex);
+			if(filtro == 1)
+			{
+				pthread_mutex_lock(&colaMensajes_mutex);
+				agregar_a_cola_mensajes(mensaje_rec);//el mensaje me sirve y lo agrego a la cola de los mensajes que si sirven
+				pthread_mutex_unlock(&colaMensajes_mutex);
+				sem_post(&colaMensajes_llenos);
+			}
+
+			free(recibidoAppeared->nombrePokemon);
+			free(recibidoAppeared);
         	break;
 
         case LOCALIZED:
         	recibidoLocalized = malloc(sizeAAllocar);
+        	recibir_mensaje(recibidoLocalized, cod_op, socket);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -408,10 +437,28 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			free(mensajeConfirm);
 			sleep(1);
 
+			//le asigno todos los datos a la estructura que maneja team
+			mensaje_rec->pokemon = malloc(recibidoLocalized->largoNombre);
+			mensaje_rec->pokemon = recibidoLocalized->nombrePokemon;
+			mensaje_rec->cantidad_pos = 1; //1 por ser Appeared
+			mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
+
+			while(iterador < mensaje_rec->cantidad_pos)
+			{
+				mensaje_rec->posiciones[iterador] = recibidoLocalized->posPokemon.x;
+				iterador++;
+				mensaje_rec->posiciones[iterador] = recibidoLocalized->posPokemon.y;
+				iterador++;
+			}
+
+
+
+
         	break;
 
         case CAUGHT:
         	recibidoCaught = malloc(sizeAAllocar);
+        	recibir_mensaje(recibidoCaught, cod_op, socket);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -427,6 +474,8 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 
 
         default:
+        	mensaje_rec->posiciones = malloc(sizeof(int));
+        	mensaje_rec->pokemon = malloc(sizeof(char*));
         	break;
     }
 
@@ -450,6 +499,10 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
         pthread_mutex_unlock(&colaCaught_mutex);
         sem_post(&colaCaught_llenos);
     }
+
+    free(mensaje_rec->posiciones);
+    free(mensaje_rec->pokemon);
+    free(mensaje_rec);
 }
 
 ///////////////////-READY-/////////////////////ToDo SANTI

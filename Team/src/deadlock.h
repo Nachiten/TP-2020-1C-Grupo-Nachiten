@@ -33,5 +33,6 @@ void intercambiar(d_entrenador*, char*, d_entrenador*, char*);
 void actualizar_estado_deadlock(d_entrenador*, deadlock_entrenador*, int);
 void deteccion_y_recuperacion(d_entrenador*, int, int, pthread_t*);
 
+t_log* logger;
 
 #endif /* SRC_DEADLOCK_H_ */

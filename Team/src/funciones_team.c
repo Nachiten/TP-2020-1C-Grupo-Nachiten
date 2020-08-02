@@ -88,7 +88,31 @@ int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
 
 //////////////////-ENTRENADORES-/////////////////////
 void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
-    entrenador->estado = nuevo_estado;
+    char* stringAPrintear;
+
+    //ESTADO_NEW, READY, EXEC, BLOCKED, EXIT
+
+    switch(nuevo_estado){
+    case ESTADO_NEW:
+    	stringAPrintear = "NEW";
+    	break;
+    case READY:
+    	stringAPrintear = "READY";
+       	break;
+    case EXEC:
+    	stringAPrintear = "EXEC";
+       	break;
+    case BLOCKED:
+    	stringAPrintear = "BLOCKED";
+       	break;
+    case EXIT:
+    	stringAPrintear = "EXIT";
+       	break;
+    }
+
+    log_info(logger, "El entrenador numero [%i] cambia al estado %s", entrenador->numeroEntrenador, stringAPrintear);
+
+	entrenador->estado = nuevo_estado;
 }
 
 void bloquear(d_entrenador* entrenador, int estado_bloqueado){
@@ -381,18 +405,20 @@ int cant_en_espera(d_entrenador* entrenadores, int cantidad){
 ///////////////////-MOVERSE-/////////////////////
 void llegar_por_eje(d_entrenador* entrenador, int pos, int eje){
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
-	if((entrenador->posicion[eje] - pos) > 0){
-            entrenador->posicion[eje]-=1;
-	}
-	else{entrenador->posicion[eje]+=1;}
+    	//Retardo antes de moverse
+    	sleep(retardo);
+		if((entrenador->posicion[eje] - pos) > 0){
+				entrenador->posicion[eje]-=1;
+		}
+		else{entrenador->posicion[eje]+=1;}
     }
 }
 
 void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int rafagas, int* resto, int entrenador_pos){
     int cont = rafagas - (*resto);
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if(cont < rafagas){
             if((entrenador->posicion[eje] - pos) > 0){
                 entrenador->posicion[eje]-=1;
@@ -410,10 +436,11 @@ void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int 
 
 void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador* entrenador, int pos, int eje, int entrenador_pos){
     while(entrenador->posicion[eje] != pos){
-	//Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if((entrenador->posicion[eje] - pos) > 0){
             entrenador->posicion[eje]-=1;
-	}
+        }
 	else{entrenador->posicion[eje]+=1;}
         if(incrementar_rafaga_actual_en_exec(entrenador_pos) == -1){
             printf("desalojo entrenador%i\n", entrenador_pos);

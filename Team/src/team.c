@@ -336,11 +336,6 @@ void esperar_conexiones_Gameboy(int32_t miSocket)
 
 	datosAppearedGameboy->socket = socket_cliente;
 
-//	if(socket_cliente >= 1)
-//	{
-//		escuchoMensajesGameboy(datosAppearedGameboy);
-//	}
-
 	if((socket_cliente >= 1) && (estado_team == 0))
 	{
 		escuchoMensajesGameboy(datosAppearedGameboy);

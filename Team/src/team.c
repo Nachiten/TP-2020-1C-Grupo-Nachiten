@@ -10,6 +10,8 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
 int main(void)
 {
 	uint32_t PID = getpid(); //ignorar warning, SI SE USA
+
+	//inicializamos datos para los hilos de recibir mensajes
 	datosAppeared = malloc(sizeof(datosHiloColas));
 	datosLocalized = malloc(sizeof(datosHiloColas));
 	datosCaught = malloc(sizeof(datosHiloColas));
@@ -17,7 +19,10 @@ int main(void)
 	datosLocalized->cola = LOCALIZED;
 	datosCaught->cola = CAUGHT;
 
-	t_log* logger;
+	//inicializamos semaforo para loguear eventos
+	semLog = malloc(sizeof(sem_t));
+	sem_init(semLog, 0, 1);
+
 	t_config* config;
 
 	//Cargo las configuraciones del .config
@@ -370,16 +375,21 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 	Caught* recibidoCaught;
 	confirmacionMensaje* mensajeConfirm;
 	mensaje_server* mensaje_rec = malloc(sizeof(mensaje_server));
+	mensaje_caught* elResultado = malloc(sizeof(mensaje_caught));
 	int32_t socketAck;
 	int32_t iterador = 0;
 	int32_t filtro;
-
 
     switch(cod_op)
     {
         case APPEARED:
         	recibidoAppeared = malloc(sizeAAllocar);
         	recibir_mensaje(recibidoAppeared, cod_op, socket);
+
+        	//logueamos la llegada de un mensaje nuevo
+    		sem_wait(semLog);
+    		log_info(logger, "LLego un mensaje Appeared, datos:\n nombre:%s\nPos X: u%\nPos Y: u%\nID: %i\nID Correlativa: %i.", recibidoAppeared->nombrePokemon, recibidoAppeared->posPokemon.x, recibidoAppeared->posPokemon.y, recibidoAppeared->ID, recibidoAppeared->corrID);
+    		sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -417,6 +427,12 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 				pthread_mutex_unlock(&colaMensajes_mutex);
 				sem_post(&colaMensajes_llenos);
 			}
+			else //el mensaje no sirve y lo vuelo a la mierda
+			{
+			    free(mensaje_rec->pokemon);
+			    free(mensaje_rec->posiciones);
+			    free(mensaje_rec);
+			}
 
 			free(recibidoAppeared->nombrePokemon);
 			free(recibidoAppeared);
@@ -425,6 +441,11 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
         case LOCALIZED:
         	recibidoLocalized = malloc(sizeAAllocar);
         	recibir_mensaje(recibidoLocalized, cod_op, socket);
+
+        	//logueamos la llegada de un mensaje nuevo
+			sem_wait(semLog);
+			log_info(logger, "LLego un mensaje Localized, datos:\n nombre:%s\nCantidad Posiciones: u%\nID: %i\nID Correlativa: %i.", recibidoLocalized->nombrePokemon, recibidoLocalized->cantPosciciones, recibidoLocalized->ID, recibidoLocalized->corrID);
+			sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -440,25 +461,45 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			//le asigno todos los datos a la estructura que maneja team
 			mensaje_rec->pokemon = malloc(recibidoLocalized->largoNombre);
 			mensaje_rec->pokemon = recibidoLocalized->nombrePokemon;
-			mensaje_rec->cantidad_pos = 1; //1 por ser Appeared
+			mensaje_rec->cantidad_pos = recibidoLocalized->cantPosciciones;
 			mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
 
-			while(iterador < mensaje_rec->cantidad_pos)
+			while(iterador < ((mensaje_rec->cantidad_pos*2)-1))
 			{
-				mensaje_rec->posiciones[iterador] = recibidoLocalized->posPokemon.x;
-				iterador++;
-				mensaje_rec->posiciones[iterador] = recibidoLocalized->posPokemon.y;
+				mensaje_rec->posiciones[iterador] = recibidoLocalized->coords[iterador];
 				iterador++;
 			}
 
+			//ahora que lo traducimos a "idioma team" ya puede continuar el funcionamiento de team
+			pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
+			filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);//me fijo si este mensaje me sirve
+			pthread_mutex_unlock(&objetivo_actual_mutex);
+			if(filtro == 1)
+			{
+				pthread_mutex_lock(&colaMensajes_mutex);
+				agregar_a_cola_mensajes(mensaje_rec);//el mensaje me sirve y lo agrego a la cola de los mensajes que si sirven
+				pthread_mutex_unlock(&colaMensajes_mutex);
+				sem_post(&colaMensajes_llenos);
+			}
+			else //el mensaje no sirve y lo vuelo a la mierda
+			{
+			    free(mensaje_rec->pokemon);
+			    free(mensaje_rec->posiciones);
+			    free(mensaje_rec);
+			}
 
-
-
+			free(recibidoLocalized->nombrePokemon);
+			free(recibidoLocalized);
         	break;
 
         case CAUGHT:
         	recibidoCaught = malloc(sizeAAllocar);
         	recibir_mensaje(recibidoCaught, cod_op, socket);
+
+        	//logueamos la llegada de un mensaje nuevo
+			sem_wait(semLog);
+			log_info(logger, "LLego un mensaje Caught, datos:\n nombre:%s\nIntento de atrapar: i%\nID: %i\nID Correlativa: %i.", recibidoCaught->nombrePokemon, recibidoCaught->pudoAtrapar, recibidoCaught->ID, recibidoCaught->corrID);
+			sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
@@ -470,39 +511,46 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			cerrar_conexion(socketAck);
 			free(mensajeConfirm);
 			sleep(1);
-        	break;
 
+			//le asigno todos los datos a la estructura que maneja team
+			elResultado->resultado = recibidoCaught->pudoAtrapar;
+			elResultado->num_envio = recibidoCaught->corrID;//todo hay que revisar si lo que le interesa es la ID correlativa o la ID
+
+			//ahora que lo traducimos a "idioma team" ya puede continuar el funcionamiento de team
+			pthread_mutex_lock(&colaCaught_mutex);
+			agregar_a_cola_caught(elResultado);//toda respuesta la guarda en la cola caught o "cola de resultados"
+			pthread_mutex_unlock(&colaCaught_mutex);
+			sem_post(&colaCaught_llenos);
+
+			free(recibidoCaught->nombrePokemon);
+			free(recibidoCaught);
+        	break;
 
         default:
-        	mensaje_rec->posiciones = malloc(sizeof(int));
-        	mensaje_rec->pokemon = malloc(sizeof(char*));
+            free(mensaje_rec);
+            free(elResultado);
         	break;
     }
 
 
-    if(cod_op == LOCALIZED || cod_op == APPEARED){
-        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
-        filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
-        pthread_mutex_unlock(&objetivo_actual_mutex);
-        if(filtro == 1){
-            pthread_mutex_lock(&colaMensajes_mutex);
-            agregar_a_cola_mensajes(mensaje_rec);
-            pthread_mutex_unlock(&colaMensajes_mutex);
-            sem_post(&colaMensajes_llenos);
-        }
-    }
+//    if(cod_op == LOCALIZED || cod_op == APPEARED){
+//        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex  lo habra revisto? hay que comprobarlo
+//        filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
+//        pthread_mutex_unlock(&objetivo_actual_mutex);
+//        if(filtro == 1){
+//            pthread_mutex_lock(&colaMensajes_mutex);
+//            agregar_a_cola_mensajes(mensaje_rec);
+//            pthread_mutex_unlock(&colaMensajes_mutex);
+//            sem_post(&colaMensajes_llenos);
+//        }
+//    }
 
-
-    if(cod_op == CAUGHT){
-        pthread_mutex_lock(&colaCaught_mutex);
-        agregar_a_cola_caught(mensaje_rec);
-        pthread_mutex_unlock(&colaCaught_mutex);
-        sem_post(&colaCaught_llenos);
-    }
-
-    free(mensaje_rec->posiciones);
-    free(mensaje_rec->pokemon);
-    free(mensaje_rec);
+//    if(cod_op == CAUGHT){
+//        pthread_mutex_lock(&colaCaught_mutex);
+//        agregar_a_cola_caught(mensaje_rec);
+//        pthread_mutex_unlock(&colaCaught_mutex);
+//        sem_post(&colaCaught_llenos);
+//    }
 }
 
 ///////////////////-READY-/////////////////////ToDo SANTI

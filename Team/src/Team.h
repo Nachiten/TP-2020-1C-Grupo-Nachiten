@@ -26,12 +26,14 @@ int32_t socketLocalized;
 int32_t socketCaught;
 uint32_t tiempo_reconexion;
 uint32_t PID;
+t_log* logger;
 
 datosHiloColas* datosAppeared;
 datosHiloColas* datosLocalized;
 datosHiloColas* datosCaught;
 
 sem_t* semConexionBroker;
+sem_t* semLog;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);

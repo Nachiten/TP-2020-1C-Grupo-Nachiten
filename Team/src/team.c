@@ -12,9 +12,11 @@ int main(void)
 	uint32_t PID = getpid(); //ignorar warning, SI SE USA
 
 	//inicializamos datos para los hilos de recibir mensajes
+	datosAppearedGameboy = malloc(sizeof(datosHiloColas));
 	datosAppeared = malloc(sizeof(datosHiloColas));
 	datosLocalized = malloc(sizeof(datosHiloColas));
 	datosCaught = malloc(sizeof(datosHiloColas));
+	datosAppearedGameboy->cola = APPEARED;
 	datosAppeared->cola = APPEARED;
 	datosLocalized->cola = LOCALIZED;
 	datosCaught->cola = CAUGHT;
@@ -316,6 +318,64 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 ///////////////////-RECEPCION-/////////////////////ToDo LUCAS
 void recepcion_Gameboy(void* argumento_de_adorno)
 {
+	miSocket = reservarSocket(PUERTOTEAM);
+
+	while(1)
+	{
+		esperar_conexiones_Gameboy(miSocket);
+	}
+}
+
+void esperar_conexiones_Gameboy(int32_t miSocket)
+{
+	struct sockaddr_in dir_cliente;
+	socklen_t tam_direccion = sizeof(struct sockaddr_in);
+
+	//espera una conexion
+	int32_t socket_cliente = accept(miSocket, (void*) &dir_cliente, &tam_direccion);
+
+	datosAppearedGameboy->socket = socket_cliente;
+
+//	if(socket_cliente >= 1)
+//	{
+//		escuchoMensajesGameboy(datosAppearedGameboy);
+//	}
+
+	if((socket_cliente >= 1) && (estado_team == 0))
+	{
+		escuchoMensajesGameboy(datosAppearedGameboy);
+	}
+}
+
+void escuchoMensajesGameboy(datosHiloColas* parametros)
+{
+    int recibidosCodOP = 0;
+    int32_t recibidosSize = 0;
+	int32_t sizeAAllocar;
+    codigo_operacion cod_op;
+
+	//recibo codigo de op
+	recibidosCodOP = recv(parametros->socket, &cod_op, sizeof(cod_op), MSG_WAITALL);
+	bytesRecibidos(recibidosCodOP);
+
+	//si se cayo la conexion, intento reconectar
+	if(recibidosCodOP < 1)
+	{
+		cod_op = 0;
+	}
+	//recibo tamaño de lo que sigue
+	recibidosSize = recv(parametros->socket, &sizeAAllocar, sizeof(int32_t), MSG_WAITALL);
+	bytesRecibidos(recibidosSize);
+
+	//si se cayo la conexion, intento reconectar
+	if(recibidosSize < 1)
+	{
+		sizeAAllocar = 0;
+	}
+	printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+
+	//mando lo que consegui para que lo procesen
+	procesar_mensaje(cod_op, sizeAAllocar, parametros->socket);
 
 }
 

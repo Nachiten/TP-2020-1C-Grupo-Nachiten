@@ -63,3 +63,15 @@ Nombre:Default
 Intento de atrapar: 1
 ID: 1
 ID Correlativa: 2.
+[INFO] 15:16:25:125 Team/(6681:6703): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 15:28:21:340 Team/(7101:7124): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.

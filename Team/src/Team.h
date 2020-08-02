@@ -25,11 +25,13 @@ char* PUERTOTEAM;
 int32_t socketAppeared;
 int32_t socketLocalized;
 int32_t socketCaught;
+int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
 t_log* logger;
 
 datosHiloColas* datosAppeared;
+datosHiloColas* datosAppearedGameboy;
 datosHiloColas* datosLocalized;
 datosHiloColas* datosCaught;
 
@@ -60,8 +62,10 @@ void moverse_sjf_con_d(d_entrenador*, int, int, int);
 
 // Hicimos las firmas nosotros | TODO
 void escuchoMensajesBroker(datosHiloColas* parametros);
+void escuchoMensajesGameboy(datosHiloColas* parametros);
 void recepcion_mensajes(void* argumento_de_adorno);
 void recepcion_Gameboy(void* argumento_de_adorno);
+void esperar_conexiones_Gameboy(int32_t miSocket);
 int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
 void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
 

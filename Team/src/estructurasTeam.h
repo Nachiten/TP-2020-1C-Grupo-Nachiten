@@ -11,6 +11,7 @@
 #include"shared/estructuras.h"
 
 typedef struct{
+	int numeroEntrenador;
     int posicion[2];
     int estado;
     int estado_block;
@@ -63,6 +64,8 @@ typedef struct{
     int flag_conexion_broker;
     int tiempo_reconexion;
 } parametros_reconexion;
+
+
 
 enum{ESTADO_NEW, READY, EXEC, BLOCKED, EXIT};
 enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};

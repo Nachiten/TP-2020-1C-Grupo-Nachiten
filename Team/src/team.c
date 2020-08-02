@@ -5,7 +5,7 @@ sem_t* sem_entrenadores;
 sem_t colaMensajes_llenos, datosHilo, enExec, entrenadores_disponibles, colaReady_llenos, colaCaught_llenos, extraccion_mensaje_caught;
 pthread_mutex_t colaMensajes_mutex, objetivo_actual_mutex, colaReady_mutex, colaCaught_mutex;
 char** objetivo_actual;
-int estado_team, objetivo_team, cantidad_objetivos, quantum, retardo;
+int estado_team, objetivo_team, cantidad_objetivos, quantum;
 
 int main(void)
 {
@@ -145,12 +145,15 @@ int main(void)
 
         temp_cant = cant_en_espera(entrenadores, cant_entrenadores);
         if(temp_cant > 1){
-            printf("\nInicio proceso deadlock\n");
+            //printf("\nInicio proceso deadlock\n");
             printf("en_espera: %i\n", temp_cant);
 
+            log_info(logger, "DEADLOCK | Iniciando deteccion y recuperacion de deadlock");
             deteccion_y_recuperacion(entrenadores, cant_entrenadores, temp_cant, pool_hilos);
         }
-        else{printf("No es posible la existencia de deadlock\n");}
+        else{
+        	log_info(logger, "DEADLOCK | No existe deadlock en el sistema");
+        }
 
         estado_team = 2;//cumplio deadlocks
         join_hilo(&hilo_cola_ready);
@@ -789,26 +792,42 @@ void asignar_funcion_moverse(int algoritmo_planificacion){
     }
 }
 
+void loguearInicioMovimiento(d_entrenador* entrenador, int posXObjetivo, int posYObjetivo){
+	log_info(logger, "MOVIMIENTO | Entrenador numero [%i] comienza a moverse a la posicion %i,%i", entrenador->numeroEntrenador, posXObjetivo, posYObjetivo);
+}
+
+void loguearFinMovimiento(d_entrenador* entrenador, int posXObjetivo, int posYObjetivo){
+	log_info(logger, "MOVIMIENTO | Entrenador numero [%i] terminó de moverse a la posicion %i,%i", entrenador->numeroEntrenador, posXObjetivo, posYObjetivo);
+}
+
 void moverse_fifo(d_entrenador* entrenador, int pos_x, int pos_y, int entrenador_pos){
-    llegar_por_eje(entrenador, pos_x, 0);
+	loguearInicioMovimiento(entrenador, pos_x, pos_y);
+	llegar_por_eje(entrenador, pos_x, 0);
     llegar_por_eje(entrenador, pos_y, 1);
+    loguearFinMovimiento(entrenador, pos_x, pos_y);
 }
 
 void moverse_rr(d_entrenador* entrenador, int pos_x, int pos_y, int entrenador_pos){
     int resto = quantum;
+    loguearInicioMovimiento(entrenador, pos_x, pos_y);
     llegar_por_eje_con_quantum(entrenador, pos_x, 0, quantum, &resto, entrenador_pos);
     llegar_por_eje_con_quantum(entrenador, pos_y, 1, quantum, &resto, entrenador_pos);
+    loguearFinMovimiento(entrenador, pos_x, pos_y);
 }
 
 void moverse_sjf_sin_d(d_entrenador* entrenador, int pos_x, int pos_y, int entrenador_pos){
     int rafagas = distancia_a(entrenador->posicion[0], entrenador->posicion[1], pos_x, pos_y);//printf("entrenador %i rafagas %i\n", entrenador_pos, rafagas);
+    loguearInicioMovimiento(entrenador, pos_x, pos_y);
     moverse_fifo(entrenador, pos_x, pos_y, entrenador_pos);
     notificar_rafagas_reales(entrenador_pos, rafagas);
+    loguearFinMovimiento(entrenador, pos_x, pos_y);
 }
 
 void moverse_sjf_con_d(d_entrenador* entrenador, int pos_x, int pos_y, int entrenador_pos){
+	loguearInicioMovimiento(entrenador, pos_x, pos_y);
     llegar_por_eje_con_seguimiento_de_rafaga(entrenador, pos_x, 0, entrenador_pos);
     llegar_por_eje_con_seguimiento_de_rafaga(entrenador, pos_y, 1, entrenador_pos);
+    loguearFinMovimiento(entrenador, pos_x, pos_y);
 }
 
 

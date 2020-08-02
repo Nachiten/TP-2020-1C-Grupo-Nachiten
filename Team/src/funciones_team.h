@@ -14,6 +14,8 @@
 #include <pthread.h>
 #include "Team.h"
 
+
+
 //*********************************************hilos que ya no sirven (fueron recodeados)
 //void activar_hilo_recepcion(pthread_t*);
 //void activar_hilo_administrador_cola_ready(pthread_t*);

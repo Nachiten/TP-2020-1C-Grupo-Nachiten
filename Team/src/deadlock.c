@@ -258,6 +258,8 @@ void intercambiar(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* o
     if(buscar_y_reemplazar_por_en_actuales_de(otro_pokemon, un_pokemon, otro_entrenador) == -1){
         printf("Error en intercambio, no se encontro pokemon %s\n", otro_pokemon);
     }
+
+    log_info(logger, "INTERCAMBIO | Entrenador [%i] entrega pokemon %s, entrenador [%i] entrega pokemon %s", un_entrenador->numeroEntrenador,  un_pokemon, otro_entrenador->numeroEntrenador, otro_pokemon);
 }
 
 void actualizar_estado_deadlock(d_entrenador* entrenadores, deadlock_entrenador* temp_entrenadores, int cantidad){
@@ -296,7 +298,8 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
             tamano_respuesta = detectar_deadlock(deadlock_entrenadores, cant_deadlock_entrenadores, respuesta);
         }while(tamano_respuesta > 0);
     }
-    printf("No se detectaron mas circulos deadlock (todo el deadlock esta resuelto)\n");
+    //printf("No se detectaron mas circulos deadlock (todo el deadlock esta resuelto)\n");
+    log_info(logger, "DEADLOCK | Todo el deadlock fue resuelto correctamente");
     actualizar_estado_deadlock(entrenadores, deadlock_entrenadores, cant_deadlock_entrenadores);
     //informar_estado_actual(entrenadores, cant_entrenadores);
 

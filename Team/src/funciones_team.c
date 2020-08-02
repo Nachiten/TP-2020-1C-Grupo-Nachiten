@@ -378,18 +378,20 @@ int cant_en_espera(d_entrenador* entrenadores, int cantidad){
 ///////////////////-MOVERSE-/////////////////////
 void llegar_por_eje(d_entrenador* entrenador, int pos, int eje){
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
-	if((entrenador->posicion[eje] - pos) > 0){
-            entrenador->posicion[eje]-=1;
-	}
-	else{entrenador->posicion[eje]+=1;}
+    	//Retardo antes de moverse
+    	sleep(retardo);
+		if((entrenador->posicion[eje] - pos) > 0){
+				entrenador->posicion[eje]-=1;
+		}
+		else{entrenador->posicion[eje]+=1;}
     }
 }
 
 void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int rafagas, int* resto, int entrenador_pos){
     int cont = rafagas - (*resto);
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if(cont < rafagas){
             if((entrenador->posicion[eje] - pos) > 0){
                 entrenador->posicion[eje]-=1;
@@ -407,10 +409,11 @@ void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int 
 
 void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador* entrenador, int pos, int eje, int entrenador_pos){
     while(entrenador->posicion[eje] != pos){
-	//Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if((entrenador->posicion[eje] - pos) > 0){
             entrenador->posicion[eje]-=1;
-	}
+        }
 	else{entrenador->posicion[eje]+=1;}
         if(incrementar_rafaga_actual_en_exec(entrenador_pos) == -1){
             printf("desalojo entrenador%i\n", entrenador_pos);

@@ -28,7 +28,8 @@ int32_t socketCaught;
 int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
-t_log* logger;
+
+int retardo;
 
 datosHiloColas* datosAppeared;
 datosHiloColas* datosAppearedGameboy;

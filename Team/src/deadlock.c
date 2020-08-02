@@ -163,13 +163,15 @@ int detectar_deadlock(deadlock_entrenador* entrenadores, int cantidad, elemento_
     corte = 0;
     i = 0;
     while(corte == 0 && i<cantidad){
-        if(entrenadores[i].en_deadlock == 0){
+        if(entrenadores[i].en_deadlock == 0)
+        {
             j = i+1;
-            respuesta[0].posicion = i;
+            respuesta[0].posicion = i; // El primer entrenador que va a participar en el intercambio y va a dar un pokemon
             while(corte == 0 && j<cantidad){
                 if(entrenadores[j].en_deadlock == 0){
+                	// Si alguno de los pokemones que no necesita el primero, lo necesita el segundo
                     if(alguno_de_se_encuentra_en(entrenadores[i].no_necesito, entrenadores[j].necesito, &(respuesta[0].pokemon)) == 1){
-                        respuesta[1].posicion = j;
+                        respuesta[1].posicion = j; // El segundo entrenador que va a participar y recibir el pokemon
                         desde_pivote(entrenadores, cantidad, 1, respuesta, &corte);
                     }
                 }
@@ -189,6 +191,8 @@ int detectar_deadlock(deadlock_entrenador* entrenadores, int cantidad, elemento_
     return corte;
 }
 
+// un_vector = no necesita el primer entrenador, otro_vector = los que necesita el segundo entrenador
+// Pega en interseccion el pokemon que encontro y necesita el segundo entrenador. Y devuelve 1 si encontro, devuelve 0 si no
 int alguno_de_se_encuentra_en(char** un_vector, char** otro_vector, char** interseccion){
     int i, respuesta;
     i = 0;
@@ -202,15 +206,18 @@ int alguno_de_se_encuentra_en(char** un_vector, char** otro_vector, char** inter
     return respuesta;
 }
 
+// pokemon = un pokemon que no necesita el primer entrenador, vector = los que necesita el segundo entrenador
 int deadlock_esta_en_null(char* pokemon, char** vector){
     int i, corte;
     i = 0;
     corte = 0;
     while(vector[i] != NULL && deadlock_es_pokemon(vector[i], pokemon) == 0){i++;}
     if(vector[i] != NULL){corte = 1;}
+    // Devuelve un 1 si encontro un pokemon que le sirve, 0 sino
     return corte;
 }
 
+// Si devuelve 1 es un pokemon que necesita el segundo entrenador
 int deadlock_es_pokemon(char* unString, char* pokemon){
     int respuesta = 0;
     if(son_iguales_char(unString, VACIO) == 0 && son_iguales_char(unString, pokemon) == 1){

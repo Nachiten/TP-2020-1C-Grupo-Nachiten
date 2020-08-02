@@ -88,7 +88,31 @@ int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
 
 //////////////////-ENTRENADORES-/////////////////////
 void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
-    entrenador->estado = nuevo_estado;
+    char* stringAPrintear;
+
+    //ESTADO_NEW, READY, EXEC, BLOCKED, EXIT
+
+    switch(nuevo_estado){
+    case ESTADO_NEW:
+    	stringAPrintear = "NEW";
+    	break;
+    case READY:
+    	stringAPrintear = "READY";
+       	break;
+    case EXEC:
+    	stringAPrintear = "EXEC";
+       	break;
+    case BLOCKED:
+    	stringAPrintear = "BLOCKED";
+       	break;
+    case EXIT:
+    	stringAPrintear = "EXIT";
+       	break;
+    }
+
+    log_info(logger, "El entrenador numero [%i] cambia al estado %s", entrenador->numeroEntrenador, stringAPrintear);
+
+	entrenador->estado = nuevo_estado;
 }
 
 void bloquear(d_entrenador* entrenador, int estado_bloqueado){

@@ -21,23 +21,23 @@ void destroy_mutex(pthread_mutex_t* mutex){
 }
 
 ///////////////////-HILOS-/////////////////////
-void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){
-    //pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);		//pasado a team.c todo estoy trabajando con recepcion y reconexion
-
-    //pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
-}
+//void activar_hilo_recepcion(pthread_t* hilo_recibir_mensajes){	IGNORAR, YA NO SIRVE
+//	pthread_create(hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
+//
+//	pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
+//}
 
 //void activar_hilo_reconexion(pthread_t* hilo_reconexion, parametros_reconexion* parametros){ IGNORAR, YA NO SIRVE
-//    pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
+//   pthread_create(hilo_reconexion, NULL, intento_reconexion, parametros);
 //}
 
 //void activar_hilo_administrador_cola_ready(pthread_t* hilo_cola_ready){ IGNORAR, YA NO SIRVE
-//    pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
+//   pthread_create(hilo_cola_ready, NULL, administrar_cola_ready, NULL);
 //}
 
 //void activar_hilo_administrador_cola_caught(pthread_t* hilo_cola_caught) IGNORAR, YA NO SIRVE
 //{
-//   pthread_create(hilo_cola_caught, NULL, administrar_cola_caught, NULL);
+//  pthread_create(hilo_cola_caught, NULL, administrar_cola_caught, NULL);
 //}
 
 void activar_hilo_circulo_deadlock(parametros_deadlock* parametros, pthread_t* hilo){

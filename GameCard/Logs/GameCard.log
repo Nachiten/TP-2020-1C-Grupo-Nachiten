@@ -625,3 +625,19 @@
 [WARNING] 16:23:49:274 GAMECARD/(29600:29617): CATCH | Las coordenadas 3-5 no existen dentro del archivo Charmander
 [INFO] 16:24:46:109 GAMECARD/(29600:29615): GET | Se encontraron coordenadas del pokemon Pikachu
 [INFO] 16:25:04:52 GAMECARD/(29600:29615): GET | Se encontraron coordenadas del pokemon Charmander
+[INFO] 13:09:40:511 GAMECARD/(31303:31304): Conexión establecida con socket de BROKER
+[INFO] 13:09:42:513 GAMECARD/(31303:31304): Conexión establecida con socket de BROKER
+[INFO] 13:09:44:514 GAMECARD/(31303:31304): Conexión establecida con socket de BROKER
+[INFO] 13:10:29:659 GAMECARD/(31303:31310): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 13:23:57:541 GAMECARD/(31592:31593): Conexión establecida con socket de BROKER
+[INFO] 13:23:59:544 GAMECARD/(31592:31593): Conexión establecida con socket de BROKER
+[INFO] 13:24:01:546 GAMECARD/(31592:31593): Conexión establecida con socket de BROKER
+[INFO] 13:24:12:18 GAMECARD/(31592:31599): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 13:31:09:17 GAMECARD/(2191:2192): Conexión establecida con socket de BROKER
+[INFO] 13:31:11:19 GAMECARD/(2191:2192): Conexión establecida con socket de BROKER
+[INFO] 13:31:13:20 GAMECARD/(2191:2192): Conexión establecida con socket de BROKER
+[INFO] 13:31:55:845 GAMECARD/(2214:2215): Conexión establecida con socket de BROKER
+[INFO] 13:32:00:848 GAMECARD/(2214:2215): Conexión establecida con socket de BROKER
+[INFO] 13:32:05:851 GAMECARD/(2214:2215): Conexión establecida con socket de BROKER
+[INFO] 13:32:11:954 GAMECARD/(2214:2251): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
+[INFO] 13:32:16:842 GAMECARD/(2214:2251): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur

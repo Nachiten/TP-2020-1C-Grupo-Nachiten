@@ -39,12 +39,13 @@ int main(void)
 	char* pathLogs = config_get_string_value(config,"LOG_FILE");
 	//Dejo cargado un logger para loguear los eventos.
 	logger = cargarUnLog(pathLogs, "Team");
-	ip = config_get_string_value(config, "IP_BROKER");
-	puerto = config_get_string_value(config, "PUERTO_BROKER");
+	IP = config_get_string_value(config, "IP_BROKER");
+	PUERTO = config_get_string_value(config, "PUERTO_BROKER");
+	PUERTOTEAM = config_get_string_value(config, "PUERTO_TEAM");
 
 	estado_team = 0;
 	d_entrenador* entrenadores;
-	pthread_t hilo_recibir_mensajes, hilo_cola_ready, hilo_cola_caught;
+	pthread_t hilo_recibir_mensajes,hilo_recibir_mensajes_gameboy, hilo_cola_ready, hilo_cola_caught;
 	pthread_t* pool_hilos;
 	mensaje_server mensaje;
 	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, flag_finalizacion, i, pos_elegido, temp_cant;
@@ -74,21 +75,23 @@ int main(void)
         inicializar_cola_mensajes();
         inicializar_hilos_entrenadores(entrenadores, cant_entrenadores, pool_hilos);
 
-        //activar_hilo_administrador_cola_caught(&hilo_cola_caught);
+        //activar_hilo_administrador_cola_caught(&hilo_cola_caught);ya no sirve
         pthread_create(&hilo_cola_caught, NULL, (void*)administrar_cola_caught, NULL); //este es el hilo que administra la cola caught
         pthread_detach(hilo_cola_caught);
 
-        //activar_hilo_administrador_cola_ready(&hilo_cola_ready);
+        //activar_hilo_administrador_cola_ready(&hilo_cola_ready); ya no sirve
         pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
         pthread_detach(hilo_cola_ready);
 
-        activar_hilo_recepcion(&hilo_recibir_mensajes);//toDo aca estoy (QUEDA OTRO MAS!!!)
+        //activar_hilo_recepcion(&hilo_recibir_mensajes); ya no sirve
+        //activamos los hilos para que TEAM pueda recibir mensajes de Broker
         pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
         pthread_detach(hilo_recibir_mensajes);
+        //activamos los hilos para que TEAM pueda recibir mensajes de Gameboy
+        pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
+        pthread_detach(hilo_recibir_mensajes_gameboy);
 
-
-
-        while(objetivo_team>0)
+		while(objetivo_team>0)
         {
             if(sem_trywait(&colaMensajes_llenos) != -1)
             {
@@ -311,6 +314,11 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
 }
 
 ///////////////////-RECEPCION-/////////////////////ToDo LUCAS
+void recepcion_Gameboy(void* argumento_de_adorno)
+{
+
+}
+
 void recepcion_mensajes(void* argumento_de_adorno)
 {
 	semConexionBroker= malloc(sizeof(sem_t));
@@ -395,7 +403,7 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
 	while(elSocket < 1)
 	{
 		sleep(tiempo_reconexion);
-		elSocket = establecer_conexion(ip, puerto);//intento conectarme a Broker
+		elSocket = establecer_conexion(IP, PUERTO);//intento conectarme a Broker
 		if(elSocket >= 1)//me suscribo a la cola
 		{
 			estructuraSuscripcion->numeroCola = codigo;
@@ -427,7 +435,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 
         	//logueamos la llegada de un mensaje nuevo
     		sem_wait(semLog);
-    		log_info(logger, "LLego un mensaje Appeared, datos:\n Nombre:%s\nPos X: %u\nPos Y: %u\nID: %i\nID Correlativa: %i.", recibidoAppeared->nombrePokemon, recibidoAppeared->posPokemon.x, recibidoAppeared->posPokemon.y, recibidoAppeared->ID, recibidoAppeared->corrID);
+    		log_info(logger, "LLego un mensaje Appeared, datos:\nNombre:%s\nPos X: %u\nPos Y: %u\nID: %i\nID Correlativa: %i.", recibidoAppeared->nombrePokemon, recibidoAppeared->posPokemon.x, recibidoAppeared->posPokemon.y, recibidoAppeared->ID, recibidoAppeared->corrID);
     		sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
@@ -435,7 +443,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			mensajeConfirm->id_mensaje = recibidoAppeared->ID;
 			mensajeConfirm->colaMensajes = cod_op;
 			mensajeConfirm->pId = PID;
-			socketAck = establecer_conexion(ip, puerto);
+			socketAck = establecer_conexion(IP, PUERTO);
 			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 			cerrar_conexion(socketAck);
 			free(mensajeConfirm);
@@ -483,7 +491,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 
         	//logueamos la llegada de un mensaje nuevo
 			sem_wait(semLog);
-			log_info(logger, "LLego un mensaje Localized, datos:\n nombre:%s\nCantidad Posiciones: %u\nID: %i\nID Correlativa: %i.", recibidoLocalized->nombrePokemon, recibidoLocalized->cantPosciciones, recibidoLocalized->ID, recibidoLocalized->corrID);
+			log_info(logger, "LLego un mensaje Localized, datos:\nNombre:%s\nCantidad Posiciones: %u\nID: %i\nID Correlativa: %i.", recibidoLocalized->nombrePokemon, recibidoLocalized->cantPosciciones, recibidoLocalized->ID, recibidoLocalized->corrID);
 			sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
@@ -491,7 +499,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			mensajeConfirm->id_mensaje = recibidoLocalized->ID;
 			mensajeConfirm->colaMensajes = cod_op;
 			mensajeConfirm->pId = PID;
-			socketAck = establecer_conexion(ip, puerto);
+			socketAck = establecer_conexion(IP, PUERTO);
 			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 			cerrar_conexion(socketAck);
 			free(mensajeConfirm);
@@ -537,7 +545,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 
         	//logueamos la llegada de un mensaje nuevo
 			sem_wait(semLog);
-			log_info(logger, "LLego un mensaje Caught, datos:\n nombre:%s\nIntento de atrapar: %i\nID: %i\nID Correlativa: %i.", recibidoCaught->nombrePokemon, recibidoCaught->pudoAtrapar, recibidoCaught->ID, recibidoCaught->corrID);
+			log_info(logger, "LLego un mensaje Caught, datos:\nNombre:%s\nIntento de atrapar: %i\nID: %i\nID Correlativa: %i.", recibidoCaught->nombrePokemon, recibidoCaught->pudoAtrapar, recibidoCaught->ID, recibidoCaught->corrID);
 			sem_post(semLog);
 
 			//mandamos confirmacion para no volver a recibir este mensaje
@@ -545,7 +553,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			mensajeConfirm->id_mensaje = recibidoCaught->ID;
 			mensajeConfirm->colaMensajes = cod_op;
 			mensajeConfirm->pId = PID;
-			socketAck = establecer_conexion(ip, puerto);
+			socketAck = establecer_conexion(IP, PUERTO);
 			mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 			cerrar_conexion(socketAck);
 			free(mensajeConfirm);

@@ -14,14 +14,16 @@
 #include <pthread.h>
 #include "Team.h"
 
+//*********************************************hilos que ya no sirven (fueron recodeados)
+//void activar_hilo_recepcion(pthread_t*);
+//void activar_hilo_administrador_cola_ready(pthread_t*);
+//void activar_hilo_administrador_cola_caught(pthread_t*);
+
 
 
 void init_sem(sem_t*, int);
 void init_mutex(pthread_mutex_t*);
 void destroy_mutex(pthread_mutex_t*);
-void activar_hilo_recepcion(pthread_t*);
-void activar_hilo_administrador_cola_ready(pthread_t*);
-void activar_hilo_administrador_cola_caught(pthread_t*);
 void activar_hilo_circulo_deadlock(parametros_deadlock*, pthread_t*);
 void join_hilo(pthread_t*);
 void join_hilos(pthread_t*, int);

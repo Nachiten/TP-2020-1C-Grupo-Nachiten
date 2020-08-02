@@ -699,7 +699,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
         num_circulo++;
         tamano_respuesta = detectar_deadlock(entrenadores, cant_entrenadores, respuesta);
     }while(tamano_respuesta > 0);
-    join_hilos(hilos, num_circulo);
+    //join_hilos(hilos, num_circulo);
 }
 
 ///////////////////-MOVERSE-/////////////////////ToDo

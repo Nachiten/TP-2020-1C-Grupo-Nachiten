@@ -35,6 +35,7 @@ typedef enum
 	SUSCRIPCION,
 	DESSUSCRIPCION,
 	CONFIRMACION,
+	IDMENSAJE,
 	TEST = 404,
 	ERROR = -1,
 	DESCONEXION = 0
@@ -110,6 +111,10 @@ typedef struct particionesCandidatas{
 }particionesCandidatas;
 
 // Structs para los tipos de mensaje ------------------------------------------------------------------------------------
+
+typedef struct {
+	int32_t id_mensaje;
+}idMensaje;
 
 typedef struct {
 	int32_t id_mensaje;

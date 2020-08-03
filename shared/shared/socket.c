@@ -162,6 +162,12 @@ void* serializar_paquete(t_paquete* paquete, void* mensaje, codigo_operacion tip
 			paquete->buffer->stream = malloc(sizeof(confirmacionMensaje));
 			size_ya_armado = serializar_paquete_confirmacion(paquete, mensaje);
 			break;
+		case IDMENSAJE:
+			paquete->buffer->stream = malloc(sizeof(idMensaje));
+			size_ya_armado = serializar_paquete_idMensaje(paquete, mensaje);
+			break;
+		default:
+			break;
 	}
 
 	//ahora me preparo para meter en el buffer "posta", el choclo que va a enviar mandar_mensaje
@@ -532,6 +538,24 @@ uint32_t serializar_paquete_confirmacion(t_paquete* paquete, confirmacionMensaje
 	return size;
 }
 
+uint32_t serializar_paquete_idMensaje(t_paquete* paquete, idMensaje* idMensaje){
+	uint32_t size = 0;
+	uint32_t desplazamiento = 0;
+
+	//meto la ID del mensaje en el buffer del paquete
+	memcpy(paquete->buffer->stream + desplazamiento, &(idMensaje->id_mensaje), sizeof(idMensaje->id_mensaje));
+	desplazamiento += sizeof(idMensaje->id_mensaje);
+
+	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
+	paquete->buffer->size = sizeof(idMensaje->id_mensaje);
+
+	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
+	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
+
+	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
+	return size;
+}
+
 void eliminar_paquete(t_paquete* paquete)
 {
 	free(paquete->buffer->stream);
@@ -599,6 +623,11 @@ void desserializar_mensaje (void* estructura, codigo_operacion tipoMensaje, int3
 
 		case CONFIRMACION:
 			desserializar_confirmacion(estructura, socket_cliente);
+			break;
+		case IDMENSAJE:
+			desserializar_idMensaje(estructura, socket_cliente);
+			break;
+		default:
 			break;
 	}
 }
@@ -825,3 +854,13 @@ void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_
 	printf("la PID del proceso: %u\n", estructura->pId);
 }
 
+void desserializar_idMensaje(confirmacionMensaje* estructura, int32_t socket_cliente)
+{
+	//saco la COLA de la confirmacion del mensaje
+	bytesRecibidos(recv(socket_cliente, &(estructura->colaMensajes), sizeof(estructura->colaMensajes), MSG_WAITALL));
+
+	//saco ID del mensaje que confirmo
+	bytesRecibidos(recv(socket_cliente, &(estructura->id_mensaje), sizeof(estructura->id_mensaje), MSG_WAITALL));
+
+	printf("la ID del mensaje en broker es: %u\n", estructura->id_mensaje);
+}

@@ -600,7 +600,7 @@ void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje){
 	}
 }
 
-void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
+void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje, idMensaje* idCatch){
 	if(buscar_en_cola(mensaje->corrID, colaCatch) != -1){
 		t_mensaje* new;
 		int32_t id = crear_id();
@@ -614,6 +614,7 @@ void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje){
 			idCorr = mensaje->corrID;
 		}
 		mensaje->ID = id;
+		idCatch->id_mensaje = id;
 		mensaje->corrID = idCorr;
 		borrar_mensajes(colaCatch);
 		new = crear_mensaje(id,idCorr,mensaje, sizeMensaje);
@@ -1054,6 +1055,7 @@ void desuscribir(uint32_t pID, t_cola* cola){
 
 void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t sizeAAllocar) {
 	uint32_t sizeMensajeParaCache;
+	idMensaje* idCatch;
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
 	Get* mensajeGet;
@@ -1106,11 +1108,13 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeAAllocar);
+			idCatch = malloc(sizeof(idMensaje));
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
-			agregar_mensaje_catch(mensajeCatch,sizeAAllocar);
+			agregar_mensaje_catch(mensajeCatch,sizeAAllocar,idCatch);
 			agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajeCatch, sizeMensajeParaCache, cod_op, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
+			mandar_mensaje(idCatch,IDMENSAJE,socket_cliente);
 			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
 			puts("termine mi case Catch");

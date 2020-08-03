@@ -87,6 +87,9 @@ int main(void)
         pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
         pthread_detach(hilo_cola_ready);
 
+        semSubTerminada= malloc(sizeof(sem_t));
+        sem_init(semSubTerminada, 0, 0);
+
         //activar_hilo_recepcion(&hilo_recibir_mensajes); ya no sirve
         //activamos los hilos para que TEAM pueda recibir mensajes de Broker
         pthread_create(&hilo_recibir_mensajes, NULL, (void*)recepcion_mensajes, NULL);
@@ -95,14 +98,14 @@ int main(void)
         pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
-
+        // Breakpoint
 
         //todo Nacho aca va mandar los mensajes GET, poner un semaforo para que sepa cuando se suscribio a la cola
         //y recien ahi que empiece a mandar los get
 
         //el envio mensajes GET, tendria que ser un pthread join?
 
-
+        enviarMensajesGet();
 
         //no se si seria obligatorio el pthread join, este while se queda a la espera de que llegue algo que necesita
 
@@ -149,7 +152,8 @@ int main(void)
         //matar_conexion(socket);ToDo ver y agregar las 3 colas
         //informar_estado_actual(entrenadores, cant_entrenadores);
 
-        // TODO | Este while lo puso NACHO para q probar lo de deadlock ******************IMPORTANTE: CON ESTO EL PROGRAMA PASA DIRECTAMENTE A DETECCION Y RECUPERACION*************
+        // TODO | Este while lo puso NACHO para q probar lo de deadlock
+        // IMPORTANTE: CON ESTO EL PROGRAMA PASA DIRECTAMENTE A DETECCION Y RECUPERACION
 //		int k = 0;
 //		while( k < cant_entrenadores ){
 //			entrenadores[k].estado = BLOCKED;
@@ -186,6 +190,43 @@ int main(void)
     printf("Fin Team\n");
     return 0;
 }
+
+void enviarMensajesGet(){
+
+	printf("Intentando enviar mensaje:\n");
+	sem_wait(semSubTerminada);
+	printf("Pude comenzar a enviar el mensaje:\n");
+
+	int i = 0;
+	while (objetivo_actual[i] != NULL){
+		printf("Pokemon: %s\n", objetivo_actual[i]);
+		enviarMensajeGet(objetivo_actual[i]);
+		i++;
+		sleep(2);
+	}
+
+	printf("Termine de enviar todos los mensajes:\n");
+
+}
+
+void enviarMensajeGet(char* pokemon){
+
+	Get* structGet = malloc(sizeof(Get) + strlen(pokemon) + 1);
+
+	structGet->largoNombre = strlen(pokemon);
+	structGet->nombrePokemon = pokemon;
+	structGet->ID = 0;
+	structGet->corrID = -2;
+
+	int socketGet = establecer_conexion(IP, PUERTO);
+
+	mandar_mensaje(structGet, GET, socketGet);
+
+	cerrar_conexion(socketGet);
+
+	free(structGet);
+}
+
 
 void printearEntrenadores(d_entrenador* entrenadores, int cant_entrenadores){
 	int k = 0;
@@ -395,11 +436,12 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	semConexionBroker= malloc(sizeof(sem_t));
 	sem_init(semConexionBroker, 0, 1);
 
+
 	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
 	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
 	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
 
-
+	sem_post(semSubTerminada);
 
 	pthread_t hiloApp;
 	pthread_t hiloLocal;

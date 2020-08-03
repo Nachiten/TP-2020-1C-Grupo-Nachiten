@@ -39,6 +39,7 @@ datosHiloColas* datosCaught;
 
 sem_t* semConexionBroker;
 sem_t* semLog;
+sem_t* semSubTerminada;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);
@@ -70,4 +71,6 @@ void recepcion_Gameboy(void* argumento_de_adorno);
 void esperar_conexiones_Gameboy(int32_t miSocket);
 int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
 void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
+void enviarMensajesGet();
+void enviarMensajeGet(char*);
 

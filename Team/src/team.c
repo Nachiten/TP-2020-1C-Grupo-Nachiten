@@ -186,7 +186,7 @@ int main(void)
     {
     	printf("Archivo .config con errores.\n");
     }
-	printf("La cantidad de ciclos totales de CPU es: %i", ciclosCPUTotales);
+	log_info(logger, "La cantidad de ciclos totales de CPU es: %i", ciclosCPUTotales);
 
     printf("Fin Team\n");
     return 0;
@@ -805,6 +805,7 @@ void tratar_circulos(deadlock_entrenador* entrenadores, int cant_entrenadores, e
         tamano_respuesta = detectar_deadlock(entrenadores, cant_entrenadores, respuesta);
     }while(tamano_respuesta > 0);
     //join_hilos(hilos, num_circulo); todo ojo con esto
+    log_info(logger, "DEADLOCK | Cantidad de ciclos totales resueltos: %i", num_circulo);
 }
 
 ///////////////////-MOVERSE-/////////////////////ToDo

@@ -66,12 +66,13 @@ int esta_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetiv
     return respuesta;
 }
 
+//cantidad de veces que esta ese pokemon entre los objetivos del team
 int cantidad_de_veces_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetivos){
     int respuesta = se_encuentra_en_char(pokemon, objetivo, cantidad_objetivos);
     return respuesta;
 }
 
-//ver si se puede pasar objetivo como doble puntero y no como triple(cuando se implementen las conexiones con otros modulos)
+//ver si se puede pasar objetivo como doble puntero y no como triple(cuando se implementen las conexiones con otros modulos) //todo CHAN!
 int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
     int i = 0;
     int corte = 0;
@@ -82,7 +83,7 @@ int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
 	}
 	i++;
     }
-    if(corte == 0){printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues
+    if(corte == 0){printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues todo??
     return corte;
 }
 

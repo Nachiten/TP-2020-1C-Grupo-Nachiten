@@ -289,7 +289,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         sem_wait(&sem_entrenadores[posicion]);
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
-        int socket = 1; // TODO | Armar socket de conexion broker
+        //int socket = 1; // TODO | Armar socket de conexion broker ESTO ESTA AL PEDO
         armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, socket);
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
@@ -387,6 +387,8 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
 	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
 	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
+
+
 
 	pthread_t hiloApp;
 	pthread_t hiloLocal;
@@ -635,26 +637,6 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
             free(elResultado);
         	break;
     }
-
-
-//    if(cod_op == LOCALIZED || cod_op == APPEARED){
-//        pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex  lo habra revisto? hay que comprobarlo
-//        filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);
-//        pthread_mutex_unlock(&objetivo_actual_mutex);
-//        if(filtro == 1){
-//            pthread_mutex_lock(&colaMensajes_mutex);
-//            agregar_a_cola_mensajes(mensaje_rec);
-//            pthread_mutex_unlock(&colaMensajes_mutex);
-//            sem_post(&colaMensajes_llenos);
-//        }
-//    }
-
-//    if(cod_op == CAUGHT){
-//        pthread_mutex_lock(&colaCaught_mutex);
-//        agregar_a_cola_caught(mensaje_rec);
-//        pthread_mutex_unlock(&colaCaught_mutex);
-//        sem_post(&colaCaught_llenos);
-//    }
 }
 
 ///////////////////-READY-/////////////////////ToDo SANTI

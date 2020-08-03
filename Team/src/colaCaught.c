@@ -98,27 +98,41 @@ void liberar_vector_envios(){
     free(vector_envios);
 }
 
-void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, int conexion){
-//    Catch mensaje;
-//    mensaje.pokemon = pokemon;
-//    mensaje.pos_x = pos_x;
-//    mensaje.pos_y = pos_y;
-	// TODO | Armar mensaje catch y enviarlo
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, int conexion){//todo cambiar definicion de funcion
 
-    //este mandar mensaje tambien deberia tener en cuenta la variable envio que posteriormente es la que identifica al entrenador que envio el mensaje
-    //mandar_mensaje(CATCH, &mensaje, conexion);
+	Catch* mensaje = malloc(sizeof(Catch));
+    mensaje->largoNombre = strlen(pokemon);
+    mensaje->nombrePokemon = pokemon;
+    mensaje->posPokemon.x = pos_x;
+    mensaje->posPokemon.y = pos_y;
+	mensaje->ID = 0;
+	mensaje->corrID = -2;
+
+	int32_t elSocketoide = establecer_conexion(IP,PUERTO);
+
+	if(elSocketoide > 0)
+	{
+		//este mandar mensaje tambien deberia tener en cuenta la variable envio que posteriormente es la que identifica al entrenador que envio el mensaje
+		mandar_mensaje(mensaje, CATCH, elSocketoide);
+
+
+		//todo aca tiene que recibir la ID del catch, para poder compara la respuesta
+
+	}
+	else
+	{
+		//poner que lo atrapo
+	}
+
+
     /*
     if(suscripcion == 0){
-        suscribirse_a(CAUGHT);
+        suscribirse_a(CAUGHT);wtf???
         suscripcion = 1;
     }
     */
     sem_wait(&sem_envio);
-    vector_envios[posicion] = envio;
+    vector_envios[posicion] = envio;//aca entiendo que va la ID para comparar la respuesta
     envio++;
     sem_post(&sem_envio);
 }
-
-
-
-

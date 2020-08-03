@@ -9,7 +9,8 @@
 #define SRC_COLACAUGHT_H_
 
 #include"estructurasTeam.h"
-#include <semaphore.h>
+#include "semaphore.h"
+#include "Team.h"
 
 typedef struct nodoColaC{
     mensaje_caught mensaje;

@@ -28,10 +28,9 @@ int32_t socketCaught;
 int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
-
 int retardo;
 
-mensaje_server* mensaje_rec;
+mensaje_server* mensaje_rec;//hacer que ya no sea global?
 
 datosHiloColas* datosAppeared;
 datosHiloColas* datosAppearedGameboy;

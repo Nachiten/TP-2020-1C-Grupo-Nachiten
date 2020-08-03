@@ -196,3 +196,50 @@ Pos X: 2
 Pos Y: 2
 ID: 1
 ID Correlativa: 55.
+[INFO] 22:48:15:343 Team/(20931:21103): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: 7.
+[INFO] 22:48:19:939 Team/(20931:21051): El entrenador numero [2] cambia al estado READY
+[INFO] 22:52:31:295 Team/(20931:21051): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:52:31:296 Team/(20931:21051): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:52:45:530 Team/(20931:21051): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:52:45:530 Team/(20931:21051): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 23:08:19:98 Team/(21478:21496): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: 7.
+[INFO] 23:08:20:100 Team/(21478:21484): El entrenador numero [2] cambia al estado READY
+[INFO] 23:08:20:110 Team/(21478:21484): El entrenador numero [2] cambia al estado EXEC
+[INFO] 23:08:20:110 Team/(21478:21484): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 23:08:24:110 Team/(21478:21484): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 23:08:24:111 Team/(21478:21484): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 00:31:12:574 Team/(23669:23797): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 0
+ID Correlativa: 77.
+[INFO] 00:33:07:162 Team/(23669:23797): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 0
+ID Correlativa: 77.
+[INFO] 00:34:10:475 Team/(23959:23981): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 0
+ID Correlativa: 77.
+[INFO] 00:43:02:951 Team/(24190:24211): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: 7.
+[INFO] 00:43:09:944 Team/(24190:24200): El entrenador numero [2] cambia al estado READY
+[INFO] 00:43:17:810 Team/(24190:24200): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:44:05:623 Team/(24190:24200): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:44:16:998 Team/(24190:24200): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5

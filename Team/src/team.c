@@ -95,6 +95,17 @@ int main(void)
         pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
+
+
+        //todo Nacho aca va mandar los mensajes GET, poner un semaforo para que sepa cuando se suscribio a la cola
+        //y recien ahi que empiece a mandar los get
+
+        //el envio mensajes GET, tendria que ser un pthread join?
+
+
+
+        //no se si seria obligatorio el pthread join, este while se queda a la espera de que llegue algo que necesita
+
 		while(objetivo_team>0)
         {
             if(sem_trywait(&colaMensajes_llenos) != -1)//todo cambiar a wait?
@@ -290,7 +301,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
         //int socket = 1; // TODO | Armar socket de conexion broker ESTO ESTA AL PEDO
-        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, socket);
+        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, socket);//todo ver de volar a la mierda ese socket
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){

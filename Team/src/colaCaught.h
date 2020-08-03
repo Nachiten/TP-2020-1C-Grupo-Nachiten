@@ -9,7 +9,8 @@
 #define SRC_COLACAUGHT_H_
 
 #include"estructurasTeam.h"
-#include <semaphore.h>
+#include "semaphore.h"
+#include "Team.h"
 
 typedef struct nodoColaC{
     mensaje_caught mensaje;
@@ -30,6 +31,6 @@ int resultado_primero_cola_caught();
 int posicion_primero_cola_caught();
 void inicializar_vector_envios(int);
 void liberar_vector_envios();
-void armar_enviar_catch(char*, int, int, int, int);
+void armar_enviar_catch(char*, int, int, int);
 
 #endif /* SRC_COLACAUGHT_H_ */

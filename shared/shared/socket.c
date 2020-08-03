@@ -725,9 +725,6 @@ void desserializar_localized(Localized* estructura, int32_t socket_cliente)
 	//saco cantidad de posiciones donde hay pokemons
 	bytesRecibidos(recv(socket_cliente, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones), MSG_WAITALL));
 
-	//estructura->coords = malloc(sizeof(estructura->coords[0]) * 2 * estructura->cantPosciciones);
-	//estructura->coords[estructura->cantPosciciones];
-
 	//saco pares de coordenadas donde hay pokemons
 		while(iterador <= (estructura->cantPosciciones * 2 - 1))
 		{

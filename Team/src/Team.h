@@ -28,7 +28,10 @@ int32_t socketCaught;
 int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
-t_log* logger;
+uint32_t ciclosCPUTotales;
+int retardo;
+
+mensaje_server* mensaje_rec;//hacer que ya no sea global?
 
 datosHiloColas* datosAppeared;
 datosHiloColas* datosAppearedGameboy;
@@ -37,6 +40,8 @@ datosHiloColas* datosCaught;
 
 sem_t* semConexionBroker;
 sem_t* semLog;
+sem_t* semSubTerminada;
+sem_t* semCiclosCPU;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);
@@ -68,4 +73,6 @@ void recepcion_Gameboy(void* argumento_de_adorno);
 void esperar_conexiones_Gameboy(int32_t miSocket);
 int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
 void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
+void enviarMensajesGet();
+void enviarMensajeGet(char*);
 

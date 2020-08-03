@@ -66,12 +66,13 @@ int esta_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetiv
     return respuesta;
 }
 
+//cantidad de veces que esta ese pokemon entre los objetivos del team
 int cantidad_de_veces_en_objetivo_actual(char* pokemon, char** objetivo, int cantidad_objetivos){
     int respuesta = se_encuentra_en_char(pokemon, objetivo, cantidad_objetivos);
     return respuesta;
 }
 
-//ver si se puede pasar objetivo como doble puntero y no como triple(cuando se implementen las conexiones con otros modulos)
+//ver si se puede pasar objetivo como doble puntero y no como triple(cuando se implementen las conexiones con otros modulos) //todo CHAN!
 int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
     int i = 0;
     int corte = 0;
@@ -82,13 +83,37 @@ int eliminar_de_objetivo_actual(char* pokemon, char*** objetivo, int tamano){
 	}
 	i++;
     }
-    if(corte == 0){printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues
+    if(corte == 0){printf("Error pokemon %s no se ecuentra en objetivo_actual\n", pokemon);}//cambiar por el logger despues todo??
     return corte;
 }
 
 //////////////////-ENTRENADORES-/////////////////////
 void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
-    entrenador->estado = nuevo_estado;
+    char* stringAPrintear;
+
+    //ESTADO_NEW, READY, EXEC, BLOCKED, EXIT
+
+    switch(nuevo_estado){
+    case ESTADO_NEW:
+    	stringAPrintear = "NEW";
+    	break;
+    case READY:
+    	stringAPrintear = "READY";
+       	break;
+    case EXEC:
+    	stringAPrintear = "EXEC";
+       	break;
+    case BLOCKED:
+    	stringAPrintear = "BLOCKED";
+       	break;
+    case EXIT:
+    	stringAPrintear = "EXIT";
+       	break;
+    }
+
+    log_info(logger, "El entrenador numero [%i] cambia al estado %s", entrenador->numeroEntrenador, stringAPrintear);
+
+	entrenador->estado = nuevo_estado;
 }
 
 void bloquear(d_entrenador* entrenador, int estado_bloqueado){
@@ -315,14 +340,17 @@ int calcular_mas_cerca_de(int pos_x, int pos_y, d_entrenador* entrenadores, int 
     int i, distancia, distancia_minimo, pos_a_enviar;
     pos_a_enviar = -1;
     distancia_minimo = -1;
-    for(i=0;i<cantidad;i++){
-	if(entrenadores[i].estado == NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO)){
-            distancia = distancia_a(pos_x, pos_y, entrenadores[i].posicion[0], entrenadores[i].posicion[1]);
-            if(distancia < distancia_minimo || distancia_minimo == -1){
-                distancia_minimo = distancia;
-		pos_a_enviar = i;
-            }
-	}
+    for(i=0;i<cantidad;i++)
+    {
+		if(entrenadores[i].estado == ESTADO_NEW || (entrenadores[i].estado == BLOCKED && entrenadores[i].estado_block == ACTIVO))
+		{
+			distancia = distancia_a(pos_x, pos_y, entrenadores[i].posicion[0], entrenadores[i].posicion[1]);
+			if(distancia < distancia_minimo || distancia_minimo == -1)
+			{
+				distancia_minimo = distancia;
+				pos_a_enviar = i;
+			}
+		}
     }
     return pos_a_enviar;
 }
@@ -378,23 +406,33 @@ int cant_en_espera(d_entrenador* entrenadores, int cantidad){
 ///////////////////-MOVERSE-/////////////////////
 void llegar_por_eje(d_entrenador* entrenador, int pos, int eje){
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
-	if((entrenador->posicion[eje] - pos) > 0){
-            entrenador->posicion[eje]-=1;
-	}
-	else{entrenador->posicion[eje]+=1;}
+    	//Retardo antes de moverse
+    	sleep(retardo);
+		if((entrenador->posicion[eje] - pos) > 0){
+			entrenador->posicion[eje]-=1;
+			sumarUnCicloCPU();
+		}
+		else{
+			entrenador->posicion[eje]+=1;
+			sumarUnCicloCPU();
+		}
     }
 }
 
 void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int rafagas, int* resto, int entrenador_pos){
     int cont = rafagas - (*resto);
     while(entrenador->posicion[eje] != pos){
-        //Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if(cont < rafagas){
             if((entrenador->posicion[eje] - pos) > 0){
                 entrenador->posicion[eje]-=1;
+                sumarUnCicloCPU();
             }
-            else{entrenador->posicion[eje]+=1;}
+            else{
+            	entrenador->posicion[eje]+=1;
+            	sumarUnCicloCPU();
+            }
             cont++;
         }
         else{
@@ -407,16 +445,28 @@ void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int 
 
 void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador* entrenador, int pos, int eje, int entrenador_pos){
     while(entrenador->posicion[eje] != pos){
-	//Sleep(1000);//delay X segundos por configuracion
+    	//Retardo antes de moverse
+    	sleep(retardo);
         if((entrenador->posicion[eje] - pos) > 0){
             entrenador->posicion[eje]-=1;
-	}
-	else{entrenador->posicion[eje]+=1;}
+            sumarUnCicloCPU();
+        }
+		else{
+			entrenador->posicion[eje]+=1;
+			sumarUnCicloCPU();
+		}
         if(incrementar_rafaga_actual_en_exec(entrenador_pos) == -1){
             printf("desalojo entrenador%i\n", entrenador_pos);
             libero_exec_me_agrego_a_ready_y_espero(entrenador, entrenador_pos);
         }
     }
+}
+
+void sumarUnCicloCPU(){
+	printf("Sumando un ciclo de cpu..\n");
+	sem_wait(semCiclosCPU);
+	ciclosCPUTotales++;
+	sem_post(semCiclosCPU);
 }
 
 

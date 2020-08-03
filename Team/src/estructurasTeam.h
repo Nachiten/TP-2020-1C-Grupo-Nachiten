@@ -10,7 +10,26 @@
 
 #include"shared/estructuras.h"
 
+
 typedef struct{
+    char* pokemon;
+    int cantidad_pos;
+    int* posiciones;
+} mensaje_server;
+
+typedef struct nodoColaM{
+    mensaje_server* mensaje;
+    int num_posicion;
+    struct nodoColaM* next;
+}mensaje_cola_team;
+
+typedef struct{
+    mensaje_cola_team* inicio;
+    mensaje_cola_team* fondo;
+}cola_mensajes_team;
+
+typedef struct{
+	int numeroEntrenador;
     int posicion[2];
     int estado;
     int estado_block;
@@ -23,11 +42,6 @@ typedef struct{
         int num_envio;
 }mensaje_caught;
 
-typedef struct{
-    char* pokemon;
-    int cantidad_pos;
-    int* posiciones;
-} mensaje_server;
 
 typedef struct{
     int ubicacion;
@@ -63,6 +77,8 @@ typedef struct{
     int flag_conexion_broker;
     int tiempo_reconexion;
 } parametros_reconexion;
+
+
 
 enum{ESTADO_NEW, READY, EXEC, BLOCKED, EXIT};
 enum{ESPERA_CAUGHT, EN_ESPERA, ACTIVO, EN_DEADLOCK};

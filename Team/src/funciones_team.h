@@ -14,6 +14,8 @@
 #include <pthread.h>
 #include "Team.h"
 
+// Funciones agregadas por nacho
+void sumarUnCicloCPU();
 
 
 //*********************************************hilos que ya no sirven (fueron recodeados)

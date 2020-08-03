@@ -27,6 +27,11 @@ int main(void)
 	semLog = malloc(sizeof(sem_t));
 	sem_init(semLog, 0, 1);
 
+	// Contador de ciclos de CPU y su semaforo
+	semCiclosCPU = malloc(sizeof(sem_t));
+	sem_init(semCiclosCPU, 0, 1);
+	ciclosCPUTotales = 0;
+
 	t_config* config;
 
 	//Cargo las configuraciones del .config
@@ -98,15 +103,10 @@ int main(void)
         pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
-        // Breakpoint
 
-        //todo Nacho aca va mandar los mensajes GET, poner un semaforo para que sepa cuando se suscribio a la cola
-        //y recien ahi que empiece a mandar los get
-
-        //el envio mensajes GET, tendria que ser un pthread join?
-
+        // TODO | Debe ir como un hilo? ver
         enviarMensajesGet();
-
+        //el envio mensajes GET, tendria que ser un pthread join?
         //no se si seria obligatorio el pthread join, este while se queda a la espera de que llegue algo que necesita
 
 		while(objetivo_team>0)
@@ -186,6 +186,7 @@ int main(void)
     {
     	printf("Archivo .config con errores.\n");
     }
+	printf("La cantidad de ciclos totales de CPU es: %i", ciclosCPUTotales);
 
     printf("Fin Team\n");
     return 0;
@@ -193,15 +194,19 @@ int main(void)
 
 void enviarMensajesGet(){
 
-	printf("Intentando enviar mensaje:\n");
+	printf("Intentando enviar mensajes GET:\n");
+
+	// Espera a que se termine de suscribir a todas las colas
 	sem_wait(semSubTerminada);
 	printf("Pude comenzar a enviar el mensaje:\n");
 
 	int i = 0;
+	// objetivo_actual es una lista de strings con cada pokemon que team necesita
 	while (objetivo_actual[i] != NULL){
-		printf("Pokemon: %s\n", objetivo_actual[i]);
+		//printf("Pokemon: %s\n", objetivo_actual[i]);
 		enviarMensajeGet(objetivo_actual[i]);
 		i++;
+		// Sleep para no hacerlo reventar al broker
 		sleep(2);
 	}
 
@@ -342,7 +347,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
         //int socket = 1; // TODO | Armar socket de conexion broker ESTO ESTA AL PEDO
-        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion, socket);//todo ver de volar a la mierda ese socket
+        armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){
@@ -831,7 +836,7 @@ void loguearFinMovimiento(d_entrenador* entrenador, int posXObjetivo, int posYOb
 
 void moverse_fifo(d_entrenador* entrenador, int pos_x, int pos_y, int entrenador_pos){
 	loguearInicioMovimiento(entrenador, pos_x, pos_y);
-	llegar_por_eje(entrenador, pos_x, 0);
+	llegar_por_eje(entrenador, pos_x, 0); // EJE 0 = X, EJE 1 = Y
     llegar_por_eje(entrenador, pos_y, 1);
     loguearFinMovimiento(entrenador, pos_x, pos_y);
 }

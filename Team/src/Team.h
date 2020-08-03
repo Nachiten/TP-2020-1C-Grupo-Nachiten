@@ -28,6 +28,7 @@ int32_t socketCaught;
 int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
+uint32_t ciclosCPUTotales;
 int retardo;
 
 mensaje_server* mensaje_rec;//hacer que ya no sea global?
@@ -40,6 +41,7 @@ datosHiloColas* datosCaught;
 sem_t* semConexionBroker;
 sem_t* semLog;
 sem_t* semSubTerminada;
+sem_t* semCiclosCPU;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);

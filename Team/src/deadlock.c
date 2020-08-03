@@ -259,6 +259,13 @@ void intercambiar(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* o
         printf("Error en intercambio, no se encontro pokemon %s\n", otro_pokemon);
     }
 
+    sleep(retardo * 5);
+    sumarUnCicloCPU();
+    sumarUnCicloCPU();
+    sumarUnCicloCPU();
+    sumarUnCicloCPU();
+    sumarUnCicloCPU();
+
     log_info(logger, "INTERCAMBIO | Entrenador [%i] entrega pokemon %s, entrenador [%i] entrega pokemon %s", un_entrenador->numeroEntrenador,  un_pokemon, otro_entrenador->numeroEntrenador, otro_pokemon);
 }
 
@@ -277,7 +284,7 @@ void deteccion_y_recuperacion(d_entrenador* entrenadores, int cant_entrenadores,
     cont = 1;
 
     sacar_en_espera(deadlock_entrenadores, entrenadores, cant_entrenadores);
-    /*ToDo
+    /*
     int index;for(index=0;index<4;index++){
         printf("entrenador %i", index);
         printf("   necesarios %s", deadlock_entrenadores[index].necesito[0]);

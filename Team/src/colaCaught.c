@@ -98,7 +98,7 @@ void liberar_vector_envios(){
     free(vector_envios);
 }
 
-void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, int conexion){//todo cambiar definicion de funcion
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//todo cambiar definicion de funcion
 
 	Catch* mensaje = malloc(sizeof(Catch));
     mensaje->largoNombre = strlen(pokemon);
@@ -116,12 +116,18 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, int c
 		mandar_mensaje(mensaje, CATCH, elSocketoide);
 
 
-		//todo aca tiene que recibir la ID del catch, para poder compara la respuesta
-
+		//todo | aca tiene que recibir la ID del catch, para poder compara la respuesta. Ver con NICO
 	}
 	else
 	{
-		//poner que lo atrapo
+		Caught* mensajeDefault = malloc(sizeof(Caught) + strlen(pokemon) + 1);
+
+		mensajeDefault->ID = 0;
+		mensajeDefault->largoNombre = strlen(pokemon);
+		mensajeDefault->nombrePokemon = pokemon;
+		mensajeDefault->pudoAtrapar = 1;
+
+		// En el caso default se supone que el pokemon SI se atrapó
 	}
 
 

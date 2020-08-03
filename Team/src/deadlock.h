@@ -9,6 +9,7 @@
 #define SRC_DEADLOCK_H_
 
 #include"estructurasTeam.h"
+#include"Team.h"
 
 void sacar_en_espera(deadlock_entrenador*, d_entrenador*, int);
 int calcular_necesarios(d_entrenador);

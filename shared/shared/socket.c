@@ -318,12 +318,13 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 
 	if(pokemon->cantPosciciones == 0)
 	{
-		while(iterador <= 1)
-		{
-			memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[iterador]), sizeof(pokemon->coords[iterador]));
-			desplazamiento += sizeof(pokemon->coords[iterador]);
-			iterador++;
-		}
+		memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[0]), sizeof(pokemon->coords[0]));
+		desplazamiento += sizeof(pokemon->coords[0]);
+		iterador++;
+
+		memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[1]), sizeof(pokemon->coords[1]));
+		desplazamiento += sizeof(pokemon->coords[1]);
+		iterador++;
 	}
 
 	else
@@ -359,6 +360,7 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
+    /*
 	puts("---------------------------------------------------");
 	printf("el largo del nombre del pokemon es: %i\n", pokemon->largoNombre);
 	printf("el nombre del pokemon es: %s\n", pokemon->nombrePokemon);
@@ -380,6 +382,7 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	printf("la ID del mensaje es: %u\n", pokemon->ID);
 	printf("la ID correlativa del mensaje es: %i\n", pokemon->corrID);
 	puts("---------------------------------------------------");
+	*/
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;

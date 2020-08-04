@@ -517,6 +517,7 @@ void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket){
 	new = crear_sub(pId, elSocket);
 	list_add(cola->subs,new);
 	agregar_mensajes_viejos(pId,cola);
+	suscribir(new, cola);
 	mandar_mensajes_broker(cola);
 }
 
@@ -577,7 +578,7 @@ int sub_presente(uint32_t pId, t_mensaje* mensaje){
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensajes_broker(t_cola* cola){
 	t_sub* sub;
-	int s = 0;
+	int contadorSubs;
 	if(cola->mensajes->head != NULL && cola->subs->head != NULL){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje;
@@ -585,17 +586,13 @@ void mandar_mensajes_broker(t_cola* cola){
 			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima, semCache) == 0)
 			{
 				mensaje = list_remove(cola->mensajes,i);
-				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
+				liberar_estructuras(mensaje->mensaje, cola->tipoCola); //todo explota cuando quiere liberar aca
 
-				while(mensaje->subs->elements_count > s)
-				{
-					s++;
-				}
-				s--;
-				for(; s > 0;s--)
-				{
-					sub = list_remove(mensaje->subs,s); // busca el S elemento de la lista subs
+				contadorSubs = (mensaje->subs->elements_count) - 1;
+				while(contadorSubs > -1){
+					sub = list_get(mensaje->subs,contadorSubs);
 					free(sub);
+					contadorSubs--;
 				}
 				free(mensaje);
 			}
@@ -606,7 +603,7 @@ void mandar_mensajes_broker(t_cola* cola){
 						sem_wait(semLog);
 						log_info(logger, "Envio un mensaje a uno de los suscriptores");
 						sem_post(semLog);
-						sleep(1);
+						//sleep(1);
 						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->elSocket);
 					}
 					else
@@ -614,7 +611,7 @@ void mandar_mensajes_broker(t_cola* cola){
 						log_info(logger,"este mensaje no lo envio porque fue confirmado");
 					}
 				}
-			borrar_datos(cola,mensaje);
+			//borrar_datos(cola,mensaje); todo descomentar
 			}
 		}
 	}
@@ -682,7 +679,7 @@ void borrar_datos_localized(Localized* mensaje){
 	mensaje->nombrePokemon = "aca no hay nada papu";
 
 
-	uint32_t iterador = mensaje->cantPosciciones-1;
+	uint32_t iterador = mensaje->cantPosciciones-1;//todo aca estaba
 	mensaje->cantPosciciones = 0;
 
 	for(; iterador>= 0;iterador--)
@@ -961,7 +958,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			mandar_mensaje(idCatch,IDMENSAJE,socket_cliente);
 			mandar_mensajes_broker(colaCatch);
 			sem_post(semCatch);
-			puts("termine mi case Catch");
 			break;
 		case CAUGHT:
 			mensajeCaught = malloc(sizeAAllocar);
@@ -1101,6 +1097,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case ERROR:
 			pthread_exit(NULL);
 		default:
+			pthread_exit(NULL);
 			break;
 		}
 }
@@ -1120,15 +1117,20 @@ void serve_client(int32_t* socket)
 			recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
 			bytesRecibidos(recibidosSize);
 			printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
+
+			process_request(cod_op, *socket, sizeAAllocar);
 		}
 
-		if(recibidos < 1  || recibidosSize < 1)
+		//if(recibidos < 1  || recibidosSize < 1)
+		else
 		{
-			cod_op = -1;
-			sizeAAllocar = 0;
+			pthread_exit(NULL);
+//			cod_op = -1;
+//			sizeAAllocar = 0;
+
 		}
 
-		process_request(cod_op, *socket, sizeAAllocar);
+		//process_request(cod_op, *socket, sizeAAllocar);
 		recibidosSize = 0;
 		recibidos = 0;
 	}

@@ -746,3 +746,11 @@
 [INFO] 21:49:12:60 GAMECARD/(9838:9839): Conexión establecida con socket de BROKER
 [INFO] 21:49:14:61 GAMECARD/(9838:9839): Conexión establecida con socket de BROKER
 [WARNING] 21:49:50:369 GAMECARD/(9838:9844): GET | El pokemon Buldfghjkl no existe
+[INFO] 22:06:36:329 GAMECARD/(10243:10244): Conexión establecida con socket de BROKER
+[INFO] 22:06:38:330 GAMECARD/(10243:10244): Conexión establecida con socket de BROKER
+[INFO] 22:06:40:331 GAMECARD/(10243:10244): Conexión establecida con socket de BROKER
+[INFO] 22:08:08:50 GAMECARD/(10243:10256): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 22:09:17:802 GAMECARD/(10342:10343): Conexión establecida con socket de BROKER
+[INFO] 22:09:19:805 GAMECARD/(10342:10343): Conexión establecida con socket de BROKER
+[INFO] 22:09:21:806 GAMECARD/(10342:10343): Conexión establecida con socket de BROKER
+[INFO] 22:09:35:491 GAMECARD/(10342:10348): GET | Se encontraron coordenadas del pokemon Bulbasur

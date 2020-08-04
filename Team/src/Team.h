@@ -30,6 +30,7 @@ uint32_t tiempo_reconexion;
 uint32_t PID;
 uint32_t ciclosCPUTotales;
 int retardo;
+uint32_t conexionInicialEstablecida;
 
 mensaje_server* mensaje_rec;//hacer que ya no sea global?
 
@@ -38,6 +39,12 @@ datosHiloColas* datosAppearedGameboy;
 datosHiloColas* datosLocalized;
 datosHiloColas* datosCaught;
 
+uint32_t iDFalsaTeam;
+sem_t* semIDFALSATEAM;
+pthread_mutex_t colaCaught_mutex;
+sem_t colaCaught_llenos;
+
+sem_t* semConexionInicialEstablecida;
 sem_t* semConexionBroker;
 sem_t* semLog;
 sem_t* semSubTerminada;

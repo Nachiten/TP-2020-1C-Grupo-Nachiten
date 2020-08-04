@@ -72,11 +72,16 @@ int posicion_primero_cola_caught(){
     num_envio = cola_caught.inicio->mensaje.num_envio;
 
     sem_wait(&sem_envio);
-    while(pos < tamano_maximo && vector_envios[pos] != num_envio){pos++;}
+
+    while(pos < tamano_maximo && vector_envios[pos] != num_envio)
+    {
+    	pos++;
+    }
+
     sem_post(&sem_envio);
     if(pos == tamano_maximo){
         pos = -1;
-        printf("error ningun entrenador figura que haya hecho el envio %i\n", num_envio);
+        printf("Error: ningún entrenador figura que haya hecho el envio: %i\n", num_envio);
     }
 
     return pos;
@@ -98,12 +103,11 @@ void liberar_vector_envios(){
     free(vector_envios);
 }
 
-void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//todo cambiar definicion de funcion
-
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion)
+{
 	int32_t size = 1;
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
-
 	idMensaje* estructura = malloc(sizeof(idMensaje));
 
 	Catch* mensaje = malloc(sizeof(Catch));
@@ -114,13 +118,17 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//tod
 	mensaje->ID = 0;
 	mensaje->corrID = -2;
 
+
+    //logueamos el intento de atrapar un Pokemon
+	sem_wait(semLog);
+	log_info(logger, "El entrenador [%i] está intentando atrapar un %s!! en las coordenadas [%i,%i].", (posicion+1), pokemon, pos_x, pos_y);
+	sem_post(semLog);
+
 	int32_t elSocketoide = establecer_conexion(IP,PUERTO);
 
 	if(elSocketoide > 0)
 	{
-		//este mandar mensaje tambien deberia tener en cuenta la variable envio que posteriormente es la que identifica al entrenador que envio el mensaje
 		mandar_mensaje(mensaje, CATCH, elSocketoide);
-		sleep(1);
 
 		tamanioRecibido = recv(elSocketoide, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
@@ -129,25 +137,43 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//tod
 		bytesRecibidos(tamanioRecibido);
 
 		recibir_mensaje(estructura, IDMENSAJE, elSocketoide);
+
+		sem_wait(semLog);
+		log_info(logger, "LLego un mensaje IDMENSAJE, datos:\nID del mensaje guardado en Broker:%i.", estructura->id_mensaje);
+		sem_post(semLog);
+
+	    sem_wait(&sem_envio);
+	    vector_envios[posicion] = estructura->id_mensaje;
+	    //envio++;
+	    sem_post(&sem_envio);
 	}
 
 	//Broker no esta andando, va a comportamiento x default
 	else
 	{
-		Caught* mensajeDefault = malloc(sizeof(Caught) + strlen(pokemon) + 1);
-
-		mensajeDefault->ID = 0;
-		mensajeDefault->largoNombre = strlen(pokemon);
-		mensajeDefault->nombrePokemon = pokemon;
-		mensajeDefault->pudoAtrapar = 1;
+		sem_wait(semLog);
+		log_info(logger, "Conexión a Broker fallida, Se inicia operación por default: Asumir que el Entrenador logró atrapar al Pokemon.");
+		sem_post(semLog);
 
 		// En el caso default se supone que el pokemon SI se atrapó
+		mensaje_caught* resultadoExitosoTrucho = malloc(sizeof(mensaje_caught));
+		resultadoExitosoTrucho->resultado = 1;
+
+		//le invento una ID que solo existe en TEAM
+		sem_wait(&semIDFALSATEAM);
+		iDFalsaTeam++;
+		resultadoExitosoTrucho->num_envio = iDFalsaTeam;
+		sem_post(&semIDFALSATEAM);
+
+	    sem_wait(&sem_envio);
+	    //vector_envios[posicion] = iDFalsaTeam;
+	    vector_envios[posicion] = resultadoExitosoTrucho->num_envio;
+	    sem_post(&sem_envio);
+
+		pthread_mutex_lock(&colaCaught_mutex);
+		agregar_a_cola_caught(resultadoExitosoTrucho);//toda respuesta la guarda en la cola caught o "cola de resultados"
+		pthread_mutex_unlock(&colaCaught_mutex);
+		sem_post(&colaCaught_llenos);
 	}
-
-    sem_wait(&sem_envio);
-    vector_envios[posicion] = estructura->id_mensaje;//aca entiendo que va la ID para comparar la respuesta
-    //envio++;
-    sem_post(&sem_envio);
-
     free(estructura);
 }

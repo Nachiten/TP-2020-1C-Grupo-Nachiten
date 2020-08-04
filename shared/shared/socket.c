@@ -864,13 +864,10 @@ void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_
 	printf("la PID del proceso: %u\n", estructura->pId);
 }
 
-void desserializar_idMensaje(confirmacionMensaje* estructura, int32_t socket_cliente)
+void desserializar_idMensaje(idMensaje* estructura, int32_t socket_cliente)
 {
-	//saco la COLA de la confirmacion del mensaje
-	bytesRecibidos(recv(socket_cliente, &(estructura->colaMensajes), sizeof(estructura->colaMensajes), MSG_WAITALL));
-
-	//saco ID del mensaje que confirmo
+	//saco ID del mensaje que se envio al Broker
 	bytesRecibidos(recv(socket_cliente, &(estructura->id_mensaje), sizeof(estructura->id_mensaje), MSG_WAITALL));
 
-	printf("la ID del mensaje en broker es: %u\n", estructura->id_mensaje);
+	printf("La ID CORRELATIVA del mensaje a esperar de broker es: %u\n", estructura->id_mensaje);
 }

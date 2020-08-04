@@ -386,8 +386,18 @@ void enviarMensajeLocalized(char* pokemon, Localized* structAEnviar, int IDMensa
 
 Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMensaje){
 
+	// Cantidad de pares ordenados de coordenadas
 	int cantidadCoords =  list_size(listaCoords) / 2;
+
+	// Cantidad de numeros (coords) en total
 	int tamanioArray = list_size(listaCoords);
+
+	int hay0Coordenadas = 0;
+
+	if(tamanioArray == 0){
+		tamanioArray = 1;
+		hay0Coordenadas = 1;
+	}
 
 	Localized* structLocalized = malloc(sizeof(struct Localized) + tamanioArray * sizeof(uint32_t) + strlen(pokemon) + 1);
 
@@ -397,6 +407,11 @@ Localized* generarStructLocalized(char* pokemon, t_list* listaCoords, int IDMens
 		int* coordenadaActual = list_get(listaCoords, i);
 		structLocalized->coords[i] = *coordenadaActual;
 
+	}
+
+	if (hay0Coordenadas == 1){
+		structLocalized->coords[0] = 0;
+		structLocalized->coords[1] = 0;
 	}
 
 	structLocalized->cantPosciciones = cantidadCoords;

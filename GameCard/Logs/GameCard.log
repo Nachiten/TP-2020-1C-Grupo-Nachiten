@@ -792,3 +792,52 @@
 [INFO] 18:46:48:110 GAMECARD/(8961:8969): Conexión establecida con socket de BROKER
 [INFO] 18:46:50:112 GAMECARD/(8961:8969): Conexión establecida con socket de BROKER
 [WARNING] 18:48:11:621 GAMECARD/(8961:8976): GET | El pokemon Pi no existe
+[INFO] 19:41:05:278 GAMECARD/(11072:11083): Conexión establecida con socket de BROKER
+[INFO] 19:41:07:284 GAMECARD/(11072:11083): Conexión establecida con socket de BROKER
+[INFO] 19:41:09:285 GAMECARD/(11072:11083): Conexión establecida con socket de BROKER
+[WARNING] 19:41:24:386 GAMECARD/(11072:11089): GET | El pokemon b no existe
+[INFO] 19:42:39:848 GAMECARD/(11072:11089): Conexión establecida con socket de BROKER
+[INFO] 19:42:41:851 GAMECARD/(11072:11090): Conexión establecida con socket de BROKER
+[INFO] 19:42:43:854 GAMECARD/(11072:11091): Conexión establecida con socket de BROKER
+[WARNING] 19:42:59:515 GAMECARD/(11072:11089): GET | El pokemon b no existe
+[INFO] 19:53:10:520 GAMECARD/(11431:11439): Conexión establecida con socket de BROKER
+[INFO] 19:53:12:522 GAMECARD/(11431:11439): Conexión establecida con socket de BROKER
+[INFO] 19:53:14:526 GAMECARD/(11431:11439): Conexión establecida con socket de BROKER
+[WARNING] 19:53:17:551 GAMECARD/(11431:11452): GET | El pokemon b no existe
+[INFO] 20:00:06:819 GAMECARD/(11672:11678): Conexión establecida con socket de BROKER
+[INFO] 20:00:08:821 GAMECARD/(11672:11678): Conexión establecida con socket de BROKER
+[INFO] 20:00:10:824 GAMECARD/(11672:11678): Conexión establecida con socket de BROKER
+[WARNING] 20:00:22:226 GAMECARD/(11672:11683): GET | El pokemon b no existe
+[INFO] 20:00:35:262 GAMECARD/(11672:11683): Conexión establecida con socket de BROKER
+[INFO] 20:00:37:265 GAMECARD/(11672:11684): Conexión establecida con socket de BROKER
+[INFO] 20:00:39:267 GAMECARD/(11672:11685): Conexión establecida con socket de BROKER
+[WARNING] 20:00:57:409 GAMECARD/(11672:11683): GET | El pokemon abc no existe
+[INFO] 20:03:02:723 GAMECARD/(11921:11922): Conexión establecida con socket de BROKER
+[INFO] 20:03:04:726 GAMECARD/(11921:11922): Conexión establecida con socket de BROKER
+[INFO] 20:03:06:727 GAMECARD/(11921:11922): Conexión establecida con socket de BROKER
+[INFO] 20:03:49:834 GAMECARD/(11921:11929): Conexión establecida con socket de BROKER
+[INFO] 20:03:51:838 GAMECARD/(11921:11930): Conexión establecida con socket de BROKER
+[INFO] 20:03:53:840 GAMECARD/(11921:11931): Conexión establecida con socket de BROKER
+[WARNING] 20:04:03:404 GAMECARD/(11921:11929): GET | El pokemon abc no existe
+[INFO] 20:05:42:539 GAMECARD/(11921:11931): Conexión establecida con socket de BROKER
+[INFO] 20:05:44:546 GAMECARD/(11921:11930): Conexión establecida con socket de BROKER
+[INFO] 20:05:46:549 GAMECARD/(11921:11929): Conexión establecida con socket de BROKER
+[WARNING] 20:05:51:2 GAMECARD/(11921:11929): GET | El pokemon abc no existe
+[INFO] 20:10:05:993 GAMECARD/(11921:11929): Conexión establecida con socket de BROKER
+[INFO] 20:10:07:994 GAMECARD/(11921:11931): Conexión establecida con socket de BROKER
+[INFO] 20:10:09:997 GAMECARD/(11921:11930): Conexión establecida con socket de BROKER
+[WARNING] 20:10:20:406 GAMECARD/(11921:11929): GET | El pokemon abc no existe
+[INFO] 20:11:29:909 GAMECARD/(11921:11930): Conexión establecida con socket de BROKER
+[INFO] 20:11:31:911 GAMECARD/(11921:11931): Conexión establecida con socket de BROKER
+[INFO] 20:11:33:913 GAMECARD/(11921:11929): Conexión establecida con socket de BROKER
+[WARNING] 20:11:38:63 GAMECARD/(11921:11929): GET | El pokemon abc no existe
+[INFO] 20:15:33:410 GAMECARD/(12385:12386): Conexión establecida con socket de BROKER
+[INFO] 20:15:38:412 GAMECARD/(12385:12386): Conexión establecida con socket de BROKER
+[INFO] 20:15:43:415 GAMECARD/(12385:12386): Conexión establecida con socket de BROKER
+[WARNING] 20:15:57:835 GAMECARD/(12385:12457): GET | El pokemon abc no existe
+[WARNING] 20:21:30:267 GAMECARD/(12385:12457): GET | El pokemon abc no existe
+[INFO] 20:21:54:48 GAMECARD/(12385:12457): Conexión establecida con socket de BROKER
+[INFO] 20:21:56:53 GAMECARD/(12385:12458): Conexión establecida con socket de BROKER
+[INFO] 20:21:58:54 GAMECARD/(12385:12459): Conexión establecida con socket de BROKER
+[WARNING] 20:22:03:643 GAMECARD/(12385:12457): GET | El pokemon abc no existe
+[WARNING] 20:25:05:991 GAMECARD/(12385:12457): GET | El pokemon abc no existe

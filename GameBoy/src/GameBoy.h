@@ -17,6 +17,9 @@
 #include"shared/estructuras.h"
 #include"shared/utilidades.h"
 
+char* IP;
+char* PUERTO;
+
 typedef struct mensajesRecibidos{
 	int32_t ID_MENSAJE_RECIBIDO;
 	struct mensajesRecibidos* siguiente;

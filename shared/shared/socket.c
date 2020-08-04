@@ -354,13 +354,22 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->corrID), sizeof(pokemon->corrID));
 	desplazamiento += sizeof(pokemon->corrID);
 
-	//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
-	paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->cantPosciciones) + (sizeof(pokemon->coords[0]) * 2 * pokemon->cantPosciciones) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+	if(pokemon->cantPosciciones == 0) //si no hay posiciones, solo hay que calcular 2 coordenadas en el tamaño
+	{
+		//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
+		paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->cantPosciciones) + (sizeof(int32_t) * 2) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+	}
+
+	else
+	{
+		//le meto al size del buffer el tamaño de lo que acabo de meter en el buffer
+		paquete->buffer->size = sizeof(pokemon->largoNombre) + (pokemon->largoNombre +1) + sizeof(pokemon->cantPosciciones) + (sizeof(int32_t) * 2 * pokemon->cantPosciciones) + sizeof(pokemon->ID) + sizeof(pokemon->corrID);
+	}
 
 	//el tamaño del mensaje entero es el codigo de operacion + la variable donde me guarde el size del buffer + lo que pesa el buffer
 	size = sizeof(codigo_operacion) + sizeof(paquete->buffer->size) + paquete->buffer->size;
 
-    /*
+
 	puts("---------------------------------------------------");
 	printf("el largo del nombre del pokemon es: %i\n", pokemon->largoNombre);
 	printf("el nombre del pokemon es: %s\n", pokemon->nombrePokemon);
@@ -382,7 +391,7 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	printf("la ID del mensaje es: %u\n", pokemon->ID);
 	printf("la ID correlativa del mensaje es: %i\n", pokemon->corrID);
 	puts("---------------------------------------------------");
-	*/
+
 
 	//devuelvo el tamaño de lo que meti en el paquete para poder hacer el malloc
 	return size;
@@ -748,11 +757,21 @@ void desserializar_localized(Localized* estructura, int32_t socket_cliente)
 	bytesRecibidos(recv(socket_cliente, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones), MSG_WAITALL));
 
 	//saco pares de coordenadas donde hay pokemons
+	if(estructura->cantPosciciones == 0)
+	{
+		bytesRecibidos(recv(socket_cliente, &(estructura->coords[0]), sizeof(estructura->coords[0]), MSG_WAITALL));
+
+		bytesRecibidos(recv(socket_cliente, &(estructura->coords[1]), sizeof(estructura->coords[1]), MSG_WAITALL));
+	}
+
+	else
+	{
 		while(iterador <= (estructura->cantPosciciones * 2 - 1))
 		{
 			bytesRecibidos(recv(socket_cliente, &(estructura->coords[iterador]), sizeof(estructura->coords[iterador]), MSG_WAITALL));
 			iterador++;
 		}
+	}
 
 	//saco el largo del nombre del pokemon
 	bytesRecibidos(recv(socket_cliente, &(estructura->largoNombre), sizeof(estructura->largoNombre), MSG_WAITALL));
@@ -772,7 +791,13 @@ void desserializar_localized(Localized* estructura, int32_t socket_cliente)
 	printf("el nombre del pokemon es: %s\n", estructura->nombrePokemon);
 	printf("la cantidad de posiciones es: %u\n", estructura->cantPosciciones);
 	iterador = 0;
-	while(iterador < (estructura->cantPosciciones * 2 - 1))
+
+	int numeroMaximo = estructura->cantPosciciones * 2 - 1;
+		if (numeroMaximo < 0){
+			numeroMaximo = 0;
+		}
+
+	while(iterador < numeroMaximo)
 	{
 		printf("posicion en X es: %u\n", estructura->coords[iterador]);
 		iterador++;

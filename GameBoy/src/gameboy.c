@@ -5,8 +5,8 @@ int main(int cantArg, char* arg[]) {
 	t_log* logger;
 	t_config* config;
 	int32_t socket = 0;
-	char* IP;
-	char* PUERTO;
+//	char* IP;
+//	char* PUERTO;
 	char* LOG_PATH;
 	uint32_t switcher = DEFAULT; //para usar el switch case.
 	if(cantArg < 3) //esto es por si ingresan menos argumentos de los necesarios.
@@ -447,11 +447,18 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 					recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
 					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+
+					//mandamos confirmacion para no volver a recibir este mensaje
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 					mensajeConfirm->id_mensaje = mensajeNew->ID;
 					mensajeConfirm->colaMensajes = cod_op;
 					mensajeConfirm->pId = estructura->pID;
-					printf("mande confirmacion, ID: %u", estructura->pID);
+					estructura->conexion = establecer_conexion(IP, PUERTO);
 					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					cerrar_conexion(estructura->conexion);
+					free(mensajeConfirm);
+					//sleep(1);
+
 					free(mensajeNew->nombrePokemon);
 					free(mensajeNew);
 					free(mensajeConfirm);

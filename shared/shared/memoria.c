@@ -1156,12 +1156,24 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
 	desplazamiento += sizeof(estructura->cantPosciciones);
 
-	//meto pares de coordenadas donde hay pokemons en CACHE
-	while(iterador <= (estructura->cantPosciciones * 2) - 1)
+	if(estructura->cantPosciciones == 0)
 	{
-		memcpy(CACHE + desplazamiento, &(estructura->coords[iterador]), sizeof(estructura->coords[iterador]));
-		desplazamiento += sizeof(estructura->coords[iterador]);
-		iterador++;
+		memcpy(CACHE + desplazamiento, &(estructura->coords[0]), sizeof(estructura->coords[0]));
+		desplazamiento += sizeof(estructura->coords[0]);
+
+		memcpy(CACHE + desplazamiento, &(estructura->coords[0]), sizeof(estructura->coords[0]));
+		desplazamiento += sizeof(estructura->coords[0]);
+	}
+
+	else
+	{
+		//meto pares de coordenadas donde hay pokemons en CACHE
+		while(iterador <= (estructura->cantPosciciones * 2) - 1)
+		{
+			memcpy(CACHE + desplazamiento, &(estructura->coords[iterador]), sizeof(estructura->coords[iterador]));
+			desplazamiento += sizeof(estructura->coords[iterador]);
+			iterador++;
+		}
 	}
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);

@@ -364,7 +364,13 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	printf("el nombre del pokemon es: %s\n", pokemon->nombrePokemon);
 	printf("la cantidad de posiciones es: %u\n", pokemon->cantPosciciones);
 	iterador = 0;
-	while(iterador < (pokemon->cantPosciciones * 2 - 1))
+
+	int numeroMaximo = pokemon->cantPosciciones * 2 - 1;
+	if (numeroMaximo < 0){
+		numeroMaximo = 0;
+	}
+
+	while(iterador < numeroMaximo)
 	{
 		printf("posicion en X es: %u\n", pokemon->coords[iterador]);
 		iterador++;

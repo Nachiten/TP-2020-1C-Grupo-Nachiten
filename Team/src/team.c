@@ -64,7 +64,7 @@ int main(void)
 
 	estado_team = 0;
 	d_entrenador* entrenadores;
-	pthread_t hilo_recibir_mensajes,hilo_recibir_mensajes_gameboy, hilo_cola_ready, hilo_cola_caught;
+	pthread_t hilo_recibir_mensajes,hilo_recibir_mensajes_gameboy, hilo_cola_ready, hilo_cola_caught, hilo_mensajes_get;
 	pthread_t* pool_hilos;
 	mensaje_server* mensaje = malloc(sizeof(mensaje_server));
 	int cant_entrenadores, algoritmo_planificacion, estimacion_inicial, flag_finalizacion, i, pos_elegido, temp_cant;
@@ -114,7 +114,8 @@ int main(void)
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
         // TODO | el envio mensajes GET, tendria que ser un pthread detach
-        //enviarMensajesGet();
+        pthread_create(&hilo_mensajes_get, NULL, (void*)enviarMensajesGet, NULL);
+        pthread_detach(hilo_mensajes_get);
 
 		while(objetivo_team>0)//"mientras que todavia haya pokemones que atrapar"
         {

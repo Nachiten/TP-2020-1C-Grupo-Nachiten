@@ -63,10 +63,10 @@ t_config* leerConfig(char** PUNTO_MONTAJE){
 	PUERTO_BROKER = config_get_string_value(config, "PUERTO_BROKER");
 	PUERTO_GAMECARD = config_get_string_value(config, "PUERTO_GAMECARD");
 
-	if (TIEM_REIN_CONEXION == NULL){
+	if (TIEM_REIN_CONEXION < 0){
 		printf("No se ha podido leer el tiempo reintento conexion de la config");
 	}
-	if (TIEM_REIN_OPERACION == NULL){
+	if (TIEM_REIN_OPERACION < 0){
 		printf("No se ha podido leer el tiempo reintento operacion de la config");
 	}
 	if (PUNTO_MONTAJE == NULL){

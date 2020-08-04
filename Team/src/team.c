@@ -113,11 +113,8 @@ int main(void)
         pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
-
         // TODO | el envio mensajes GET, tendria que ser un pthread detach
         //enviarMensajesGet();
-
-
 
 		while(objetivo_team>0)//"mientras que todavia haya pokemones que atrapar"
         {
@@ -192,6 +189,17 @@ int main(void)
         join_hilo(&hilo_cola_ready);
         se_cumplio_objetivo(entrenadores, cant_entrenadores);
 
+        // LOGUEAR RESULTADOS FINALES
+
+        log_info(logger, "La cantidad de ciclos totales de CPU es: %i", ciclosCPUTotales);
+
+        int numEntrenador = 0;
+
+		while(numEntrenador < cant_entrenadores){
+			log_info(logger, "El entrenador numero [%i] realizo [%i] ciclos de CPU", entrenadores[numEntrenador].numeroEntrenador, entrenadores[numEntrenador].cantCiclosCPU);
+			numEntrenador++;
+		}
+
         eliminar_cola_ready();
         free(pool_hilos);
         destruir_semaforos(cant_entrenadores);
@@ -201,7 +209,10 @@ int main(void)
     {
     	printf("Archivo .config con errores.\n");
     }
-	log_info(logger, "La cantidad de ciclos totales de CPU es: %i", ciclosCPUTotales);
+
+
+
+
 
     printf("Fin Team\n");
     return 0;

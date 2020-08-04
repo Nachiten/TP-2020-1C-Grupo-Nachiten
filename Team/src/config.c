@@ -64,7 +64,8 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 		entrenador[i].estado_block = ACTIVO;
 		entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
 		entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
-		entrenador[i].numeroEntrenador = i + 1;
+		entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
+		entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
 		if(llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]) == 0)
 		{
 			respuesta = -3;

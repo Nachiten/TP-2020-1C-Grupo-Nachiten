@@ -103,7 +103,7 @@ void liberar_vector_envios(){
     free(vector_envios);
 }
 
-void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion)
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, d_entrenador* entrenador)
 {
 	int32_t size = 1;
 	int32_t tamanioRecibido = 1;
@@ -118,11 +118,13 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion)
 	mensaje->ID = 0;
 	mensaje->corrID = -2;
 
-
     //logueamos el intento de atrapar un Pokemon
 	sem_wait(semLog);
 	log_info(logger, "El entrenador [%i] está intentando atrapar un %s!! en las coordenadas [%i,%i].", (posicion+1), pokemon, pos_x, pos_y);
 	sem_post(semLog);
+
+	sleep(retardo);
+	sumarUnCicloCPU(entrenador);
 
 	int32_t elSocketoide = establecer_conexion(IP,PUERTO);
 

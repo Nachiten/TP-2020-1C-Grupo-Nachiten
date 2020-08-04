@@ -31,6 +31,6 @@ int resultado_primero_cola_caught();
 int posicion_primero_cola_caught();
 void inicializar_vector_envios(int);
 void liberar_vector_envios();
-void armar_enviar_catch(char*, int, int, int);
+void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion, d_entrenador* entrenador);
 
 #endif /* SRC_COLACAUGHT_H_ */

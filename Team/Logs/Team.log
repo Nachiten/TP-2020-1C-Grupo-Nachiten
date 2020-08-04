@@ -543,3 +543,26 @@ ID Correlativa: -2.
 [INFO] 01:13:36:622 Team/(15897:15905): El entrenador numero [1] cambia al estado EXIT
 [INFO] 01:13:36:627 Team/(15897:15897): DEADLOCK | No existe deadlock en el sistema
 [INFO] 01:13:36:627 Team/(15897:15897): La cantidad de ciclos totales de CPU es: 5
+[INFO] 20:49:38:399 Team/(13286:13299): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 10
+Pos Y: 10
+ID: 0
+ID Correlativa: -2.
+[INFO] 20:50:39:171 Team/(13374:13387): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 10
+Pos Y: 10
+ID: 0
+ID Correlativa: -2.
+[INFO] 20:50:40:177 Team/(13374:13383): El entrenador numero [1] cambia al estado READY
+[INFO] 20:50:40:177 Team/(13374:13383): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:50:40:177 Team/(13374:13383): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 10,10
+[INFO] 20:51:14:184 Team/(13374:13383): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 10,10
+[INFO] 20:51:14:184 Team/(13374:13383): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [10,10].
+[INFO] 20:51:14:184 Team/(13374:13383): Conexión a Broker fallida, Se inicia operación por default: Asumir que el Entrenador logró atrapar al Pokemon.
+[INFO] 20:51:14:184 Team/(13374:13383): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 20:51:14:186 Team/(13374:13383): El entrenador numero [1] cambia al estado EXIT
+[INFO] 20:51:14:199 Team/(13374:13374): DEADLOCK | No existe deadlock en el sistema
+[INFO] 20:51:14:200 Team/(13374:13374): La cantidad de ciclos totales de CPU es: 18
+[INFO] 20:51:14:200 Team/(13374:13374): El entrenador numero [1] realizo [18] ciclos de CPU

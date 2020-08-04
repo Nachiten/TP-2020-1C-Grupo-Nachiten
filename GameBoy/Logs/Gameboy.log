@@ -22628,3 +22628,99 @@
 [INFO] 01:01:05:936 Gameboy/(15552:15552): Conexión establecida con socket de TEAM
 [INFO] 01:02:21:274 Gameboy/(15640:15640): Conexión establecida con socket de TEAM
 [INFO] 01:13:20:469 Gameboy/(15920:15920): Conexión establecida con socket de TEAM
+[INFO] 11:47:26:413 Gameboy/(4602:4602): Conexión establecida con socket de BROKER
+[INFO] 11:47:34:430 Gameboy/(4604:4604): Conexión establecida con socket de BROKER
+[INFO] 11:47:34:431 Gameboy/(4604:4604): Suscripto a la cola de mensajes: 1
+[INFO] 11:49:33:347 Gameboy/(4664:4664): Conexión establecida con socket de BROKER
+[INFO] 11:49:43:764 Gameboy/(4666:4666): Conexión establecida con socket de BROKER
+[INFO] 11:49:43:765 Gameboy/(4666:4666): Suscripto a la cola de mensajes: 1
+[INFO] 11:51:43:183 Gameboy/(4759:4759): Conexión establecida con socket de BROKER
+[INFO] 11:51:47:60 Gameboy/(4761:4761): Conexión establecida con socket de BROKER
+[INFO] 11:51:47:61 Gameboy/(4761:4761): Suscripto a la cola de mensajes: 1
+[INFO] 11:51:48:62 Gameboy/(4761:4763): Recibido un nuevo mensaje en la cola: 1
+[INFO] 11:51:54:194 Gameboy/(4764:4764): Conexión establecida con socket de BROKER
+[INFO] 11:51:56:66 Gameboy/(4766:4766): Conexión establecida con socket de BROKER
+[INFO] 11:51:57:937 Gameboy/(4768:4768): Conexión establecida con socket de BROKER
+[INFO] 12:03:26:693 Gameboy/(4978:4978): Conexión establecida con socket de BROKER
+[INFO] 12:03:29:379 Gameboy/(4980:4980): Conexión establecida con socket de BROKER
+[INFO] 12:03:32:255 Gameboy/(4982:4982): Conexión establecida con socket de BROKER
+[INFO] 12:03:34:87 Gameboy/(4984:4984): Conexión establecida con socket de BROKER
+[INFO] 12:03:39:102 Gameboy/(4986:4986): Conexión establecida con socket de BROKER
+[INFO] 12:03:44:388 Gameboy/(4988:4988): Conexión establecida con socket de BROKER
+[INFO] 12:10:02:133 Gameboy/(5152:5152): Conexión establecida con socket de BROKER
+[INFO] 12:10:03:253 Gameboy/(5154:5154): Conexión establecida con socket de BROKER
+[INFO] 12:10:04:286 Gameboy/(5156:5156): Conexión establecida con socket de BROKER
+[INFO] 12:10:05:455 Gameboy/(5158:5158): Conexión establecida con socket de BROKER
+[INFO] 12:10:12:397 Gameboy/(5162:5162): Conexión establecida con socket de BROKER
+[INFO] 12:12:41:157 Gameboy/(5243:5243): Conexión establecida con socket de BROKER
+[INFO] 12:12:42:62 Gameboy/(5245:5245): Conexión establecida con socket de BROKER
+[INFO] 12:12:42:950 Gameboy/(5247:5247): Conexión establecida con socket de BROKER
+[INFO] 12:12:44:22 Gameboy/(5249:5249): Conexión establecida con socket de BROKER
+[INFO] 12:13:02:618 Gameboy/(5276:5276): Conexión establecida con socket de BROKER
+[INFO] 12:13:03:639 Gameboy/(5278:5278): Conexión establecida con socket de BROKER
+[INFO] 12:13:04:634 Gameboy/(5280:5280): Conexión establecida con socket de BROKER
+[INFO] 12:13:05:699 Gameboy/(5282:5282): Conexión establecida con socket de BROKER
+[INFO] 12:13:06:667 Gameboy/(5284:5284): Conexión establecida con socket de BROKER
+[INFO] 12:13:07:563 Gameboy/(5288:5288): Conexión establecida con socket de BROKER
+[INFO] 12:13:08:387 Gameboy/(5290:5290): Conexión establecida con socket de BROKER
+[INFO] 12:13:13:284 Gameboy/(5292:5292): Conexión establecida con socket de BROKER
+[INFO] 12:13:13:284 Gameboy/(5292:5292): Suscripto a la cola de mensajes: 1
+[INFO] 12:16:24:20 Gameboy/(5332:5332): Conexión establecida con socket de BROKER
+[INFO] 12:16:27:741 Gameboy/(5334:5334): Conexión establecida con socket de BROKER
+[INFO] 12:16:27:741 Gameboy/(5334:5334): Suscripto a la cola de mensajes: 1
+[INFO] 12:16:28:742 Gameboy/(5334:5336): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:16:35:998 Gameboy/(5337:5337): Conexión establecida con socket de BROKER
+[INFO] 12:16:35:998 Gameboy/(5337:5337): Suscripto a la cola de mensajes: 1
+[INFO] 12:16:36:999 Gameboy/(5337:5339): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:16:41:295 Gameboy/(5340:5340): Conexión establecida con socket de BROKER
+[INFO] 12:16:43:639 Gameboy/(5342:5342): Conexión establecida con socket de BROKER
+[INFO] 12:16:45:103 Gameboy/(5344:5344): Conexión establecida con socket de BROKER
+[INFO] 12:16:45:104 Gameboy/(5344:5344): Suscripto a la cola de mensajes: 1
+[INFO] 12:16:46:104 Gameboy/(5344:5346): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:16:47:105 Gameboy/(5344:5346): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:16:47:275 Gameboy/(5344:5346): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:24:423 Gameboy/(5550:5550): Conexión establecida con socket de BROKER
+[INFO] 12:27:25:375 Gameboy/(5552:5552): Conexión establecida con socket de BROKER
+[INFO] 12:27:29:806 Gameboy/(5554:5554): Conexión establecida con socket de BROKER
+[INFO] 12:27:29:806 Gameboy/(5554:5554): Suscripto a la cola de mensajes: 1
+[INFO] 12:27:30:807 Gameboy/(5554:5556): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:31:808 Gameboy/(5554:5556): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:34:445 Gameboy/(5557:5557): Conexión establecida con socket de BROKER
+[INFO] 12:27:35:455 Gameboy/(5554:5556): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:36:940 Gameboy/(5559:5559): Conexión establecida con socket de BROKER
+[INFO] 12:27:37:944 Gameboy/(5554:5556): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:38:945 Gameboy/(5554:5556): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:42:812 Gameboy/(5561:5561): Conexión establecida con socket de BROKER
+[INFO] 12:27:42:813 Gameboy/(5561:5561): Suscripto a la cola de mensajes: 1
+[INFO] 12:27:44:814 Gameboy/(5561:5563): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:27:45:816 Gameboy/(5561:5563): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:33:05:50 Gameboy/(5661:5661): Conexión establecida con socket de BROKER
+[INFO] 12:33:06:170 Gameboy/(5663:5663): Conexión establecida con socket de BROKER
+[INFO] 12:33:07:67 Gameboy/(5665:5665): Conexión establecida con socket de BROKER
+[INFO] 12:33:07:795 Gameboy/(5667:5667): Conexión establecida con socket de BROKER
+[INFO] 12:33:08:667 Gameboy/(5671:5671): Conexión establecida con socket de BROKER
+[INFO] 12:33:12:860 Gameboy/(5673:5673): Conexión establecida con socket de BROKER
+[INFO] 12:33:12:860 Gameboy/(5673:5673): Suscripto a la cola de mensajes: 1
+[INFO] 12:36:41:647 Gameboy/(5786:5786): Conexión establecida con socket de BROKER
+[INFO] 12:36:41:648 Gameboy/(5786:5786): Suscripto a la cola de mensajes: 1
+[INFO] 12:36:50:205 Gameboy/(5793:5793): Conexión establecida con socket de BROKER
+[INFO] 12:36:58:111 Gameboy/(5786:5788): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:36:59:42 Gameboy/(5801:5801): Conexión establecida con socket de BROKER
+[INFO] 12:37:07:131 Gameboy/(5786:5788): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:37:08:132 Gameboy/(5786:5788): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:37:08:810 Gameboy/(5812:5812): Conexión establecida con socket de BROKER
+[INFO] 12:37:43:962 Gameboy/(5786:5788): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:49:54:537 Gameboy/(6005:6005): Conexión establecida con socket de BROKER
+[INFO] 12:49:55:681 Gameboy/(6007:6007): Conexión establecida con socket de BROKER
+[INFO] 12:49:56:694 Gameboy/(6009:6009): Conexión establecida con socket de BROKER
+[INFO] 12:49:57:470 Gameboy/(6012:6012): Conexión establecida con socket de BROKER
+[INFO] 12:49:58:591 Gameboy/(6014:6014): Conexión establecida con socket de BROKER
+[INFO] 12:49:58:591 Gameboy/(6014:6014): Suscripto a la cola de mensajes: 1
+[INFO] 12:49:59:616 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:50:00:624 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:50:01:626 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:50:11:201 Gameboy/(6019:6019): Conexión establecida con socket de BROKER
+[INFO] 12:50:25:252 Gameboy/(6026:6026): Conexión establecida con socket de BROKER
+[INFO] 12:50:26:259 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:50:27:262 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1
+[INFO] 12:50:29:264 Gameboy/(6014:6016): Recibido un nuevo mensaje en la cola: 1

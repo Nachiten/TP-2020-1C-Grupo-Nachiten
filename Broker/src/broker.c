@@ -517,6 +517,7 @@ void agregar_sub(uint32_t pId, t_cola* cola, int32_t elSocket){
 	new = crear_sub(pId, elSocket);
 	list_add(cola->subs,new);
 	agregar_mensajes_viejos(pId,cola);
+	suscribir(new, cola);
 	mandar_mensajes_broker(cola);
 }
 
@@ -577,7 +578,7 @@ int sub_presente(uint32_t pId, t_mensaje* mensaje){
 //manda todos mensajes sin leer de una cola, si no hay mensajes no hace nada
 void mandar_mensajes_broker(t_cola* cola){
 	t_sub* sub;
-	int s = 0;
+	int contadorSubs;
 	if(cola->mensajes->head != NULL && cola->subs->head != NULL){
 		for(int i = 0; i < cola->mensajes->elements_count; i++){ //avanza hasta el final de la cola de mensajes
 			t_mensaje* mensaje;
@@ -587,15 +588,11 @@ void mandar_mensajes_broker(t_cola* cola){
 				mensaje = list_remove(cola->mensajes,i);
 				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
 
-				while(mensaje->subs->elements_count > s)
-				{
-					s++;
-				}
-				s--;
-				for(; s > 0;s--)
-				{
-					sub = list_remove(mensaje->subs,s); // busca el S elemento de la lista subs
+				contadorSubs = (mensaje->subs->elements_count) - 1;
+				while(contadorSubs > -1){
+					sub = list_get(mensaje->subs,contadorSubs);
 					free(sub);
+					contadorSubs--;
 				}
 				free(mensaje);
 			}

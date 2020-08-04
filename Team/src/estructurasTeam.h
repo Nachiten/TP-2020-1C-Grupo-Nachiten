@@ -30,6 +30,7 @@ typedef struct{
 
 typedef struct{
 	int numeroEntrenador;
+	int cantCiclosCPU;
     int posicion[2];
     int estado;
     int estado_block;

@@ -260,11 +260,11 @@ void intercambiar(d_entrenador* un_entrenador, char* un_pokemon, d_entrenador* o
     }
 
     sleep(retardo * 5);
-    sumarUnCicloCPU();
-    sumarUnCicloCPU();
-    sumarUnCicloCPU();
-    sumarUnCicloCPU();
-    sumarUnCicloCPU();
+    sumarUnCicloCPU(un_entrenador);
+    sumarUnCicloCPU(un_entrenador);
+    sumarUnCicloCPU(un_entrenador);
+    sumarUnCicloCPU(un_entrenador);
+    sumarUnCicloCPU(un_entrenador);
 
     log_info(logger, "INTERCAMBIO | Entrenador [%i] entrega pokemon %s, entrenador [%i] entrega pokemon %s", un_entrenador->numeroEntrenador,  un_pokemon, otro_entrenador->numeroEntrenador, otro_pokemon);
 }

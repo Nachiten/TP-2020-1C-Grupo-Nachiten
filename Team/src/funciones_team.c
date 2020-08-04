@@ -410,11 +410,11 @@ void llegar_por_eje(d_entrenador* entrenador, int pos, int eje){
     	sleep(retardo);
 		if((entrenador->posicion[eje] - pos) > 0){
 			entrenador->posicion[eje]-=1;
-			sumarUnCicloCPU();
+			sumarUnCicloCPU(entrenador);
 		}
 		else{
 			entrenador->posicion[eje]+=1;
-			sumarUnCicloCPU();
+			sumarUnCicloCPU(entrenador);
 		}
     }
 }
@@ -427,11 +427,11 @@ void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int 
         if(cont < rafagas){
             if((entrenador->posicion[eje] - pos) > 0){
                 entrenador->posicion[eje]-=1;
-                sumarUnCicloCPU();
+                sumarUnCicloCPU(entrenador);
             }
             else{
             	entrenador->posicion[eje]+=1;
-            	sumarUnCicloCPU();
+            	sumarUnCicloCPU(entrenador);
             }
             cont++;
         }
@@ -449,11 +449,11 @@ void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador* entrenador, int pos,
     	sleep(retardo);
         if((entrenador->posicion[eje] - pos) > 0){
             entrenador->posicion[eje]-=1;
-            sumarUnCicloCPU();
+            sumarUnCicloCPU(entrenador);
         }
 		else{
 			entrenador->posicion[eje]+=1;
-			sumarUnCicloCPU();
+			sumarUnCicloCPU(entrenador);
 		}
         if(incrementar_rafaga_actual_en_exec(entrenador_pos) == -1){
             printf("desalojo entrenador%i\n", entrenador_pos);
@@ -462,11 +462,13 @@ void llegar_por_eje_con_seguimiento_de_rafaga(d_entrenador* entrenador, int pos,
     }
 }
 
-void sumarUnCicloCPU(){
+void sumarUnCicloCPU(d_entrenador* unEntrenador){
 	printf("Sumando un ciclo de cpu..\n");
 	sem_wait(semCiclosCPU);
 	ciclosCPUTotales++;
 	sem_post(semCiclosCPU);
+
+	unEntrenador->cantCiclosCPU++;
 }
 
 

@@ -15,7 +15,7 @@
 #include "Team.h"
 
 // Funciones agregadas por nacho
-void sumarUnCicloCPU();
+void sumarUnCicloCPU(d_entrenador*);
 
 
 //*********************************************hilos que ya no sirven (fueron recodeados)

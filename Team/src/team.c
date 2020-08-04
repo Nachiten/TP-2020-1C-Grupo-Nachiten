@@ -261,7 +261,6 @@ void printearEntrenadores(d_entrenador* entrenadores, int cant_entrenadores){
 
 		printf("\n");
 	}
-
 }
 
 ///////////////////-SEMAFOROS-/////////////////////
@@ -347,7 +346,11 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
         cambiar_estado_a(entrenador, EXEC);
         moverse_a(entrenador, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
         //int socket = 1; // TODO | Armar socket de conexion broker ESTO ESTA AL PEDO
+
+
         armar_enviar_catch(mensaje.nombrePokemon, mensaje.posPokemon.x, mensaje.posPokemon.y, posicion);
+
+
         bloquear(entrenador, ESPERA_CAUGHT);
         sem_post(&enExec);
         if(recibir_caught(posicion) == 1){
@@ -624,34 +627,37 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			free(mensajeConfirm);
 			sleep(1);
 
-			//le asigno todos los datos a la estructura que maneja team
-			mensaje_rec->pokemon = malloc(recibidoLocalized->largoNombre+1);
-			mensaje_rec->pokemon = recibidoLocalized->nombrePokemon;
-			mensaje_rec->cantidad_pos = recibidoLocalized->cantPosciciones;
-			mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
+			if(recibidoLocalized->cantPosciciones != 0)//si la cantidad de posiciones es 0, ignorarlo
+			{
+				//le asigno todos los datos a la estructura que maneja team
+				mensaje_rec->pokemon = malloc(recibidoLocalized->largoNombre+1);
+				mensaje_rec->pokemon = recibidoLocalized->nombrePokemon;
+				mensaje_rec->cantidad_pos = recibidoLocalized->cantPosciciones;
+				mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
 
-			while(iterador < ((mensaje_rec->cantidad_pos*2)-1))
-			{
-				mensaje_rec->posiciones[iterador] = recibidoLocalized->coords[iterador];
-				iterador++;
-			}
+				while(iterador < ((mensaje_rec->cantidad_pos*2)-1))
+				{
+					mensaje_rec->posiciones[iterador] = recibidoLocalized->coords[iterador];
+					iterador++;
+				}
 
-			//ahora que lo traducimos a "idioma team" ya puede continuar el funcionamiento de team
-			pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
-			filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);//me fijo si este mensaje me sirve
-			pthread_mutex_unlock(&objetivo_actual_mutex);
-			if(filtro == 1)
-			{
-				pthread_mutex_lock(&colaMensajes_mutex);
-				agregar_a_cola_mensajes(mensaje_rec);//el mensaje me sirve y lo agrego a la cola de los mensajes que si sirven
-				pthread_mutex_unlock(&colaMensajes_mutex);
-				sem_post(&colaMensajes_llenos);
-			}
-			else //el mensaje no sirve y lo vuelo a la mierda
-			{
-			    free(mensaje_rec->pokemon);
-			    free(mensaje_rec->posiciones);
-			    free(mensaje_rec);
+				//ahora que lo traducimos a "idioma team" ya puede continuar el funcionamiento de team
+				pthread_mutex_lock(&objetivo_actual_mutex);//reveer este mutex todo lo habra revisto? hay que comprobarlo
+				filtro = filtrar_mensaje(mensaje_rec, objetivo_actual, cantidad_objetivos);//me fijo si este mensaje me sirve
+				pthread_mutex_unlock(&objetivo_actual_mutex);
+				if(filtro == 1)
+				{
+					pthread_mutex_lock(&colaMensajes_mutex);
+					agregar_a_cola_mensajes(mensaje_rec);//el mensaje me sirve y lo agrego a la cola de los mensajes que si sirven
+					pthread_mutex_unlock(&colaMensajes_mutex);
+					sem_post(&colaMensajes_llenos);
+				}
+				else //el mensaje no sirve y lo vuelo a la mierda
+				{
+					free(mensaje_rec->pokemon);
+					free(mensaje_rec->posiciones);
+					free(mensaje_rec);
+				}
 			}
 
 			free(recibidoLocalized);
@@ -750,7 +756,7 @@ void administrar_cola_caught(void* parametros){
     }
 }
 
-int recibir_caught(int posicion){
+int recibir_caught(int posicion){ //wtf?? todo revisar
     int resultado;
     sem_wait(&sem_entrenadores[posicion]);
     pthread_mutex_lock(&colaCaught_mutex);

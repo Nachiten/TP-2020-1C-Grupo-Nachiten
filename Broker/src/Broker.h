@@ -95,7 +95,7 @@ void agregar_mensaje_new(New* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_appeared(Appeared* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_get(Get* mensaje, uint32_t sizeMensaje);
 void agregar_mensaje_localized(Localized* mensaje, uint32_t sizeMensaje);
-void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje);
+void agregar_mensaje_catch(Catch* mensaje, uint32_t sizeMensaje, idMensaje* idCatch);
 void agregar_mensaje_caught(Caught* mensaje, uint32_t sizeMensaje);
 
 void agregar_descarte (t_cola* cola, t_mensaje* descarte);

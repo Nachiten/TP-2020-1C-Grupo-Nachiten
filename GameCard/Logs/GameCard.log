@@ -641,3 +641,108 @@
 [INFO] 13:32:05:851 GAMECARD/(2214:2215): Conexión establecida con socket de BROKER
 [INFO] 13:32:11:954 GAMECARD/(2214:2251): NEW | Se modificara la linea existente 11-11 sumando 11 al pokemon Pikachu
 [INFO] 13:32:16:842 GAMECARD/(2214:2251): NEW | Se modificara la linea existente 22-22 sumando 22 al pokemon Bulbasur
+[INFO] 19:53:44:413 GAMECARD/(6539:6540): Conexión establecida con socket de BROKER
+[INFO] 19:53:46:419 GAMECARD/(6539:6540): Conexión establecida con socket de BROKER
+[INFO] 19:53:48:421 GAMECARD/(6539:6540): Conexión establecida con socket de BROKER
+[INFO] 19:54:07:257 GAMECARD/(6539:6545): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 20:00:05:594 GAMECARD/(6953:6954): Conexión establecida con socket de BROKER
+[INFO] 20:00:07:596 GAMECARD/(6953:6954): Conexión establecida con socket de BROKER
+[INFO] 20:00:09:598 GAMECARD/(6953:6954): Conexión establecida con socket de BROKER
+[INFO] 20:00:48:315 GAMECARD/(6953:6964): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 20:00:50:405 GAMECARD/(6953:6964): GET | Se encontraron coordenadas del pokemon Charmander
+[INFO] 20:03:20:186 GAMECARD/(7240:7242): Conexión establecida con socket de BROKER
+[INFO] 20:03:22:188 GAMECARD/(7240:7242): Conexión establecida con socket de BROKER
+[INFO] 20:03:24:189 GAMECARD/(7240:7242): Conexión establecida con socket de BROKER
+[WARNING] 20:03:49:957 GAMECARD/(7240:7253): GET | El pokemon Pikachu no existe
+[INFO] 20:06:33:708 GAMECARD/(7321:7322): Conexión establecida con socket de BROKER
+[INFO] 20:06:35:710 GAMECARD/(7321:7322): Conexión establecida con socket de BROKER
+[INFO] 20:06:37:712 GAMECARD/(7321:7322): Conexión establecida con socket de BROKER
+[WARNING] 20:07:04:708 GAMECARD/(7321:7323): GET | El pokemon Charmander no existe
+[INFO] 20:07:23:275 GAMECARD/(7339:7340): Conexión establecida con socket de BROKER
+[INFO] 20:07:25:276 GAMECARD/(7339:7340): Conexión establecida con socket de BROKER
+[INFO] 20:07:27:277 GAMECARD/(7339:7340): Conexión establecida con socket de BROKER
+[INFO] 20:07:47:282 GAMECARD/(7339:7346): NEW | Escribiendo nueva linea 33-33=33 en pokemon vacio Charmander
+[WARNING] 20:08:11:867 GAMECARD/(7339:7345): GET | El pokemon Pikachu no existe
+[INFO] 20:09:18:306 GAMECARD/(7418:7419): Conexión establecida con socket de BROKER
+[INFO] 20:09:20:310 GAMECARD/(7418:7419): Conexión establecida con socket de BROKER
+[INFO] 20:09:22:311 GAMECARD/(7418:7419): Conexión establecida con socket de BROKER
+[INFO] 20:09:46:495 GAMECARD/(7436:7437): Conexión establecida con socket de BROKER
+[INFO] 20:09:48:603 GAMECARD/(7436:7437): Conexión establecida con socket de BROKER
+[INFO] 20:09:50:609 GAMECARD/(7436:7437): Conexión establecida con socket de BROKER
+[INFO] 20:10:42:110 GAMECARD/(7436:7443): NEW | Se modificara la linea existente 33-33 sumando 33 al pokemon Charmander
+[INFO] 20:11:16:945 GAMECARD/(7436:7438): GET | Se encontraron coordenadas del pokemon Charmander
+[WARNING] 20:12:20:272 GAMECARD/(7436:7442): GET | El pokemon Bulbasaur no existe
+[INFO] 20:29:30:348 GAMECARD/(7925:7926): Conexión establecida con socket de BROKER
+[INFO] 20:29:32:435 GAMECARD/(7925:7926): Conexión establecida con socket de BROKER
+[INFO] 20:48:36:552 GAMECARD/(8191:8192): Conexión establecida con socket de BROKER
+[INFO] 20:48:38:554 GAMECARD/(8191:8192): Conexión establecida con socket de BROKER
+[INFO] 20:48:40:555 GAMECARD/(8191:8192): Conexión establecida con socket de BROKER
+[INFO] 20:50:18:755 GAMECARD/(8216:8217): Conexión establecida con socket de BROKER
+[INFO] 20:50:20:757 GAMECARD/(8216:8217): Conexión establecida con socket de BROKER
+[INFO] 20:50:22:759 GAMECARD/(8216:8217): Conexión establecida con socket de BROKER
+[INFO] 20:53:29:243 GAMECARD/(8258:8259): Conexión establecida con socket de BROKER
+[INFO] 20:53:31:245 GAMECARD/(8258:8259): Conexión establecida con socket de BROKER
+[INFO] 20:53:33:246 GAMECARD/(8258:8259): Conexión establecida con socket de BROKER
+[INFO] 20:54:29:476 GAMECARD/(8323:8324): Conexión establecida con socket de BROKER
+[INFO] 20:54:31:477 GAMECARD/(8323:8324): Conexión establecida con socket de BROKER
+[INFO] 20:54:33:479 GAMECARD/(8323:8324): Conexión establecida con socket de BROKER
+[INFO] 20:57:17:480 GAMECARD/(8370:8371): Conexión establecida con socket de BROKER
+[INFO] 20:57:19:481 GAMECARD/(8370:8371): Conexión establecida con socket de BROKER
+[INFO] 20:57:21:483 GAMECARD/(8370:8371): Conexión establecida con socket de BROKER
+[WARNING] 20:57:30:601 GAMECARD/(8370:8376): GET | El pokemon Bulbasaur no existe
+[INFO] 20:58:02:436 GAMECARD/(8386:8387): Conexión establecida con socket de BROKER
+[INFO] 20:58:07:437 GAMECARD/(8386:8387): Conexión establecida con socket de BROKER
+[INFO] 20:58:12:438 GAMECARD/(8386:8387): Conexión establecida con socket de BROKER
+[INFO] 20:59:45:797 GAMECARD/(8386:8394): NEW | Escribiendo nueva linea 22-22=22 en pokemon vacio Bulbasur
+[INFO] 21:00:47:749 GAMECARD/(8386:8394): NEW | Escribiendo nueva linea 11-11=11 en pokemon vacio Pikachu
+[INFO] 21:01:00:813 GAMECARD/(8386:8394): NEW | Se modificara la linea existente 33-33 sumando 33 al pokemon Charmander
+[WARNING] 21:01:20:994 GAMECARD/(8386:8393): GET | El pokemon Bulbasaur no existe
+[INFO] 21:01:38:747 GAMECARD/(8439:8440): Conexión establecida con socket de BROKER
+[INFO] 21:01:40:749 GAMECARD/(8439:8440): Conexión establecida con socket de BROKER
+[INFO] 21:01:42:751 GAMECARD/(8439:8440): Conexión establecida con socket de BROKER
+[WARNING] 21:02:12:802 GAMECARD/(8439:8445): GET | El pokemon Bulbasaur no existe
+[INFO] 21:03:56:190 GAMECARD/(8467:8468): Conexión establecida con socket de BROKER
+[INFO] 21:03:58:192 GAMECARD/(8467:8468): Conexión establecida con socket de BROKER
+[INFO] 21:04:00:192 GAMECARD/(8467:8468): Conexión establecida con socket de BROKER
+[INFO] 21:04:29:202 GAMECARD/(8467:8476): Conexión establecida con socket de BROKER
+[INFO] 21:04:31:208 GAMECARD/(8467:8475): Conexión establecida con socket de BROKER
+[INFO] 21:04:33:210 GAMECARD/(8467:8474): Conexión establecida con socket de BROKER
+[INFO] 21:04:54:735 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:07:19:290 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:07:20:300 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 21:07:21:353 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:07:22:367 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 21:07:23:388 GAMECARD/(8467:8474): GET | Se encontraron coordenadas del pokemon Charmander
+[INFO] 21:10:04:554 GAMECARD/(8780:8781): Conexión establecida con socket de BROKER
+[INFO] 21:10:06:559 GAMECARD/(8780:8781): Conexión establecida con socket de BROKER
+[INFO] 21:10:08:561 GAMECARD/(8780:8781): Conexión establecida con socket de BROKER
+[INFO] 21:10:33:255 GAMECARD/(8780:8786): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 21:10:34:942 GAMECARD/(8780:8786): GET | Se encontraron coordenadas del pokemon Pikachu
+[INFO] 21:10:35:952 GAMECARD/(8780:8786): GET | Se encontraron coordenadas del pokemon Charmander
+[INFO] 21:30:39:414 GAMECARD/(9169:9170): Conexión establecida con socket de BROKER
+[INFO] 21:30:41:420 GAMECARD/(9169:9170): Conexión establecida con socket de BROKER
+[INFO] 21:30:43:421 GAMECARD/(9169:9170): Conexión establecida con socket de BROKER
+[INFO] 21:31:14:182 GAMECARD/(9169:9175): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:32:03:654 GAMECARD/(9196:9197): Conexión establecida con socket de BROKER
+[INFO] 21:32:05:659 GAMECARD/(9196:9197): Conexión establecida con socket de BROKER
+[INFO] 21:32:07:661 GAMECARD/(9196:9197): Conexión establecida con socket de BROKER
+[INFO] 21:32:46:18 GAMECARD/(9196:9202): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:41:44:806 GAMECARD/(9563:9564): Conexión establecida con socket de BROKER
+[INFO] 21:41:46:810 GAMECARD/(9563:9564): Conexión establecida con socket de BROKER
+[INFO] 21:41:48:811 GAMECARD/(9563:9564): Conexión establecida con socket de BROKER
+[INFO] 21:42:03:557 GAMECARD/(9563:9569): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:43:35:73 GAMECARD/(9563:9569): Conexión establecida con socket de BROKER
+[INFO] 21:43:37:74 GAMECARD/(9563:9571): Conexión establecida con socket de BROKER
+[INFO] 21:43:39:76 GAMECARD/(9563:9570): Conexión establecida con socket de BROKER
+[INFO] 21:44:18:746 GAMECARD/(9563:9570): Conexión establecida con socket de BROKER
+[INFO] 21:44:20:748 GAMECARD/(9563:9571): Conexión establecida con socket de BROKER
+[INFO] 21:44:22:750 GAMECARD/(9563:9569): Conexión establecida con socket de BROKER
+[INFO] 21:44:38:132 GAMECARD/(9563:9569): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:47:08:266 GAMECARD/(9563:9569): Conexión establecida con socket de BROKER
+[INFO] 21:47:10:268 GAMECARD/(9563:9570): Conexión establecida con socket de BROKER
+[INFO] 21:47:12:270 GAMECARD/(9563:9571): Conexión establecida con socket de BROKER
+[INFO] 21:47:33:330 GAMECARD/(9563:9569): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 21:49:10:58 GAMECARD/(9838:9839): Conexión establecida con socket de BROKER
+[INFO] 21:49:12:60 GAMECARD/(9838:9839): Conexión establecida con socket de BROKER
+[INFO] 21:49:14:61 GAMECARD/(9838:9839): Conexión establecida con socket de BROKER
+[WARNING] 21:49:50:369 GAMECARD/(9838:9844): GET | El pokemon Buldfghjkl no existe

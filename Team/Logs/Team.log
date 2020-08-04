@@ -243,3 +243,57 @@ ID Correlativa: 7.
 [INFO] 00:43:17:810 Team/(24190:24200): El entrenador numero [2] cambia al estado EXEC
 [INFO] 00:44:05:623 Team/(24190:24200): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
 [INFO] 00:44:16:998 Team/(24190:24200): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 19:34:48:546 Team/(5724:5744): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 19:35:28:563 Team/(5724:5739): El entrenador numero [2] cambia al estado READY
+[INFO] 19:35:34:346 Team/(5724:5739): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:35:34:346 Team/(5724:5739): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 19:35:40:507 Team/(5724:5739): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 19:45:29:851 Team/(6117:6146): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 3
+ID Correlativa: 77.
+[INFO] 19:46:12:773 Team/(6117:6146): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 4
+ID Correlativa: 7.
+[INFO] 19:47:48:235 Team/(6221:6247): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 0
+ID Correlativa: 7.
+[INFO] 19:54:07:271 Team/(6504:6561): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 6
+ID: 1
+ID Correlativa: 0.
+[INFO] 20:00:49:331 Team/(7135:7163): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 6
+ID: 2
+ID Correlativa: 0.
+[INFO] 20:00:52:296 Team/(7135:7146): El entrenador numero [2] cambia al estado READY
+[INFO] 20:00:52:310 Team/(7135:7146): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:00:52:310 Team/(7135:7146): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 1,15
+[INFO] 21:07:22:436 Team/(8726:8743): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 4
+ID Correlativa: 2.
+[INFO] 21:07:23:447 Team/(8726:8733): El entrenador numero [3] cambia al estado READY
+[INFO] 21:07:23:461 Team/(8726:8733): El entrenador numero [3] cambia al estado EXEC
+[INFO] 21:07:23:461 Team/(8726:8733): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 11,-1279260784
+[INFO] 21:10:35:546 Team/(8810:8827): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 2
+ID Correlativa: 0.
+[INFO] 21:10:36:554 Team/(8810:8817): El entrenador numero [3] cambia al estado READY
+[INFO] 21:10:36:556 Team/(8810:8817): El entrenador numero [3] cambia al estado EXEC
+[INFO] 21:10:36:556 Team/(8810:8817): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 11,-1280309360

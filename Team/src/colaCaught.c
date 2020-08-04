@@ -9,7 +9,7 @@
 
 int tamano_maximo;
 int suscripcion = 0;
-int envio = 0;
+//int envio = 0;
 sem_t sem_envio;
 
 int* vector_envios;
@@ -100,6 +100,12 @@ void liberar_vector_envios(){
 
 void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//todo cambiar definicion de funcion
 
+	int32_t size = 1;
+	int32_t tamanioRecibido = 1;
+	codigo_operacion cod_op;
+
+	idMensaje* estructura = malloc(sizeof(idMensaje));
+
 	Catch* mensaje = malloc(sizeof(Catch));
     mensaje->largoNombre = strlen(pokemon);
     mensaje->nombrePokemon = pokemon;
@@ -114,10 +120,18 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//tod
 	{
 		//este mandar mensaje tambien deberia tener en cuenta la variable envio que posteriormente es la que identifica al entrenador que envio el mensaje
 		mandar_mensaje(mensaje, CATCH, elSocketoide);
+		sleep(1);
 
+		tamanioRecibido = recv(elSocketoide, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
+		bytesRecibidos(tamanioRecibido);
 
-		//todo | aca tiene que recibir la ID del catch, para poder compara la respuesta. Ver con NICO
+		tamanioRecibido = recv(elSocketoide, &size, sizeof(int32_t),MSG_WAITALL);
+		bytesRecibidos(tamanioRecibido);
+
+		recibir_mensaje(estructura, IDMENSAJE, elSocketoide);
 	}
+
+	//Broker no esta andando, va a comportamiento x default
 	else
 	{
 		Caught* mensajeDefault = malloc(sizeof(Caught) + strlen(pokemon) + 1);
@@ -130,15 +144,10 @@ void armar_enviar_catch(char* pokemon, int pos_x, int pos_y, int posicion){//tod
 		// En el caso default se supone que el pokemon SI se atrapó
 	}
 
-
-    /*
-    if(suscripcion == 0){
-        suscribirse_a(CAUGHT);wtf???
-        suscripcion = 1;
-    }
-    */
     sem_wait(&sem_envio);
-    vector_envios[posicion] = envio;//aca entiendo que va la ID para comparar la respuesta
-    envio++;
+    vector_envios[posicion] = estructura->id_mensaje;//aca entiendo que va la ID para comparar la respuesta
+    //envio++;
     sem_post(&sem_envio);
+
+    free(estructura);
 }

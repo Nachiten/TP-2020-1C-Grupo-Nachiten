@@ -72,14 +72,6 @@ int main(void) {
 		printf("El puerto fue leido correctamente\n");
 	}
 
-//desde aca tengo lo de memoria (ToDo)
-
-	//va para declaraciones
-//	uint32_t TAMANIO_MEM;
-//	uint32_t TAMANIO_MIN_PART;
-//	char* ADMIN_MEMORIA;
-//	char* ALGOR_REEMPLAZO;
-//	char* ALGOR_ASIGN_PARTICION;
 	hoja_de_particiones = malloc(sizeof(lista_particiones));
 	PARTICIONES_ELIMINADAS = 0;
 	NUMERO_VICTIMA = 0;
@@ -110,163 +102,6 @@ int main(void) {
 
 	//Preparo la lista de referencias a las particiones dentro de CACHE
 	inicializar_lista_particiones(hoja_de_particiones, ADMIN_MEMORIA, TAMANIO_MEM);
-
-	// *************************************************
-	//TESTING AGREGAR MENSAJES A CACHE
-//	codigo_operacion codigoPrueba = 1; //poner aca el tipo de mensaje a probar
-//	codigo_operacion codigoPrueba2 = 2;
-//	codigo_operacion codigoPrueba3 = 3;
-//	codigo_operacion codigoPrueba4 = 4;
-//	codigo_operacion codigoPrueba5 = 5;
-//	codigo_operacion codigoPrueba6 = 6;
-//
-//	uint32_t sizeDelMensajeNew = 0;
-//	uint32_t sizeDelMensajeAppeared = 0;
-//	uint32_t sizeDelMensajeGet = 0;
-//	uint32_t sizeDelMensajeLocalized = 0;
-//	uint32_t sizeDelMensajeCatch = 0;
-//	uint32_t sizeDelMensajeCaught = 0;
-//
-//	New* pokemonNew = malloc(sizeof(New));
-//
-//	pokemonNew->nombrePokemon = "pikachu";
-//	pokemonNew->largoNombre = strlen(pokemonNew->nombrePokemon);
-//	pokemonNew->posPokemon.x = 5;
-//	pokemonNew->posPokemon.y = 6;
-//	pokemonNew->cantPokemon = 1;
-//	pokemonNew->ID = 5;
-//	pokemonNew->corrID = 4;
-//
-//	Appeared* pokemonAppeared = malloc(sizeof(Appeared));
-//
-//	pokemonAppeared->nombrePokemon = "Bulbasur";
-//	pokemonAppeared->largoNombre = strlen(pokemonAppeared->nombrePokemon);
-//	pokemonAppeared->posPokemon.x = 1;
-//	pokemonAppeared->posPokemon.y = 1;
-//	pokemonAppeared->ID = 30;
-//	pokemonAppeared->corrID = 4;
-//
-//	Get* pokemonGet = malloc(sizeof(Get));
-//	pokemonGet->nombrePokemon = malloc(11);
-//	pokemonGet->nombrePokemon = "Charmander";
-//	pokemonGet->largoNombre = strlen(pokemonGet->nombrePokemon);
-//	pokemonGet->ID = 11;
-//	pokemonGet->corrID = 10;
-//
-//	Localized* pokemonLocalized = malloc(sizeof(Localized));
-//	pokemonLocalized->nombrePokemon = "Charmander";
-//	pokemonLocalized->largoNombre = strlen(pokemonLocalized->nombrePokemon);
-//	pokemonLocalized->cantPosciciones = 3;
-//	pokemonLocalized->coords[0] = 0;
-//	pokemonLocalized->coords[1] = 1;
-//	pokemonLocalized->coords[2] = 2;
-//	pokemonLocalized->coords[3] = 3;
-//	pokemonLocalized->coords[4] = 4;
-//	pokemonLocalized->coords[5] = 5;
-//	pokemonLocalized->ID = 12;
-//	pokemonLocalized->corrID = 12;
-//
-//	Catch* pokemonCatch = malloc(sizeof(Catch));
-//	pokemonCatch->nombrePokemon = "unnumeromayora32";
-//	pokemonCatch->largoNombre = strlen(pokemonCatch->nombrePokemon);
-//	pokemonCatch->posPokemon.x = 1;
-//	pokemonCatch->posPokemon.y = 1;
-//	pokemonCatch->ID = 102;
-//	pokemonCatch->corrID = 12;
-//
-//	Caught* pokemonCaught = malloc(sizeof(Caught));
-//	pokemonCaught->nombrePokemon = "Catch";
-//	pokemonCaught->largoNombre = strlen(pokemonCaught->nombrePokemon);
-//	pokemonCaught->pudoAtrapar = 1;
-//	pokemonCaught->ID = 22;
-//	pokemonCaught->corrID = 12;
-//
-//	t_mensaje* mensajePrueba = malloc(sizeof(t_mensaje));
-//	mensajePrueba->id = pokemonNew->ID;
-//	mensajePrueba->id_correlativo = pokemonNew->corrID;
-//	mensajePrueba->mensaje = pokemonNew;
-//	mensajePrueba->tamanioMensaje = sizeDelMensajeNew;
-//
-//	t_mensaje* mensajePrueba2 = malloc(sizeof(t_mensaje));
-//	mensajePrueba2->id = pokemonAppeared->ID;
-//	mensajePrueba2->id_correlativo = pokemonAppeared->corrID;
-//	mensajePrueba2->mensaje = pokemonAppeared;
-//	mensajePrueba2->tamanioMensaje = sizeDelMensajeAppeared;
-//
-//	t_mensaje* mensajePrueba3 = malloc(sizeof(t_mensaje));
-//	mensajePrueba3->id = pokemonGet->ID;
-//	mensajePrueba3->mensaje = pokemonGet;
-//	mensajePrueba3->tamanioMensaje = sizeDelMensajeGet;
-//
-//	t_mensaje* mensajePrueba4 = malloc(sizeof(t_mensaje));
-//	mensajePrueba4->id = pokemonLocalized->ID;
-//	mensajePrueba4->mensaje = pokemonLocalized;
-//	mensajePrueba4->tamanioMensaje = sizeDelMensajeLocalized;
-//
-//	t_mensaje* mensajePrueba5 = malloc(sizeof(t_mensaje));
-//	mensajePrueba5->id = pokemonCatch->ID;
-//	mensajePrueba5->mensaje = pokemonCatch;
-//	mensajePrueba5->tamanioMensaje = sizeDelMensajeCatch;
-//
-//	t_mensaje* mensajePrueba6 = malloc(sizeof(t_mensaje));
-//	mensajePrueba6->id = pokemonCaught->ID;
-//	mensajePrueba6->mensaje = pokemonCaught;
-//	mensajePrueba6->tamanioMensaje = sizeDelMensajeCaught;
-//
-//	//para calcular el tamaño que va a tener que guardar agregar mensaje
-//	sizeDelMensajeNew = calcular_bytes_utiles_de_mensaje(mensajePrueba->mensaje, codigoPrueba);
-//	sizeDelMensajeAppeared = calcular_bytes_utiles_de_mensaje(mensajePrueba2->mensaje, codigoPrueba2);
-//	sizeDelMensajeGet = calcular_bytes_utiles_de_mensaje(mensajePrueba3->mensaje, codigoPrueba3);
-//	sizeDelMensajeLocalized = calcular_bytes_utiles_de_mensaje(mensajePrueba4->mensaje, codigoPrueba4);
-//	sizeDelMensajeCatch = calcular_bytes_utiles_de_mensaje(mensajePrueba5->mensaje, codigoPrueba5);
-//	sizeDelMensajeCaught = calcular_bytes_utiles_de_mensaje(mensajePrueba6->mensaje, codigoPrueba6);
-
-	//pesa 24
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba->mensaje, sizeDelMensajeNew, codigoPrueba, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//pesa 21
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba2->mensaje, sizeDelMensajeAppeared, codigoPrueba2, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//pesa 15
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba3->mensaje, sizeDelMensajeGet, codigoPrueba3, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//ESTE ES LOCALIZED
-	//pesa 19
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba4->mensaje, sizeDelMensajeLocalized, codigoPrueba4, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//pesa 29
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba5->mensaje, sizeDelMensajeCatch, codigoPrueba5, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//pesa 14
-	//agregar_mensaje_a_Cache(CACHE, TAMANIO_MEM, TAMANIO_MIN_PART, ADMIN_MEMORIA, hoja_de_particiones, ALGOR_ASIGN_PARTICION, mensajePrueba6->mensaje, sizeDelMensajeCaught, codigoPrueba6, &NUMERO_VICTIMA, FRECUEN_COMPACT, &PARTICIONES_ELIMINADAS, logger, semLog, semCache, semParticiones, semNumeroVictima, semParticionesEliminadas);
-
-	//para pruebas de borrado
-	//lista_particiones* particion0 = hoja_de_particiones;
-//	lista_particiones* particion1 = hoja_de_particiones->sig_particion;
-//	lista_particiones* particion2 = hoja_de_particiones->sig_particion->sig_particion;
-//	lista_particiones* particion3 = hoja_de_particiones->sig_particion->sig_particion->sig_particion;
-//	lista_particiones* particion4 = hoja_de_particiones->sig_particion->sig_particion->sig_particion->sig_particion;
-
-	//borrarReferenciaAParticion(hoja_de_particiones, particion0, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion1, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion2, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion3, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-	//borrarReferenciaAParticion(hoja_de_particiones, particion4, &PARTICIONES_ELIMINADAS, ADMIN_MEMORIA);
-
-//	compactacion(CACHE, hoja_de_particiones);
-
-	//para pruebas de lectura
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba->mensaje, mensajePrueba->id, codigoPrueba, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba2->mensaje, mensajePrueba2->id, codigoPrueba2, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba3->mensaje, mensajePrueba3->id, codigoPrueba3, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba4->mensaje, mensajePrueba4->id, codigoPrueba4, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba5->mensaje, mensajePrueba5->id, codigoPrueba5, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-//	sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensajePrueba6->mensaje, mensajePrueba6->id, codigoPrueba6, &NUMERO_VICTIMA, ALGOR_REEMPLAZO);
-
-	//para ver como quedan las particiones luego de "manosearlas"
-	//revision_lista_particiones(hoja_de_particiones, TAMANIO_MEM);
-
-	// *************************************************
 
 	//Arranco el Broker como servidor.
 	puts("Arrancando servidor Broker...\n");
@@ -771,7 +606,12 @@ void mandar_mensajes_broker(t_cola* cola){
 						sem_wait(semLog);
 						log_info(logger, "Envio un mensaje a uno de los suscriptores");
 						sem_post(semLog);
+						sleep(1);
 						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->elSocket);
+					}
+					else
+					{
+						log_info(logger,"este mensaje no lo envio porque fue confirmado");
 					}
 				}
 			borrar_datos(cola,mensaje);
@@ -840,13 +680,17 @@ void borrar_datos_get(Get* mensaje){
 void borrar_datos_localized(Localized* mensaje){
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
-	uint32_t iterador = mensaje->cantPosciciones-1;
-	mensaje->cantPosciciones = 0;
 
-	for(; iterador>= 0;iterador--)
-	{
-		mensaje->coords[iterador] = 0;
-	}
+
+	uint32_t iterador = mensaje->cantPosciciones-1;
+//	mensaje->cantPosciciones = 0;
+//
+//	for(; iterador>= 0;iterador--)
+//	{
+//		mensaje->coords[iterador] = 0;
+//	}
+
+
 }
 
 void borrar_datos_catch(Catch* mensaje){
@@ -1190,7 +1034,6 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 		case DESSUSCRIPCION:
 			mensajeDessuscrip = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeDessuscrip, cod_op, socket_cliente);
-
 			switch(mensajeDessuscrip->numeroCola){
 			case NEW:
 				sem_wait(semNew);

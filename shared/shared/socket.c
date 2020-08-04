@@ -316,12 +316,25 @@ uint32_t serializar_paquete_localized(t_paquete* paquete, Localized* pokemon)
 	memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->cantPosciciones), sizeof(pokemon->cantPosciciones));
 	desplazamiento += sizeof(pokemon->cantPosciciones);
 
-	//meto pares de coordenadas donde hay pokemons en el buffer del paquete
-	while(iterador <= (paresDeCoordenadas - 1))
+	if(pokemon->cantPosciciones == 0)
 	{
-		memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[iterador]), sizeof(pokemon->coords[iterador]));
-		desplazamiento += sizeof(pokemon->coords[iterador]);
-		iterador++;
+		while(iterador <= 1)
+		{
+			memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[iterador]), sizeof(pokemon->coords[iterador]));
+			desplazamiento += sizeof(pokemon->coords[iterador]);
+			iterador++;
+		}
+	}
+
+	else
+	{
+		//meto pares de coordenadas donde hay pokemons en el buffer del paquete
+		while((iterador <= (paresDeCoordenadas - 1)))
+		{
+			memcpy(paquete->buffer->stream + desplazamiento, &(pokemon->coords[iterador]), sizeof(pokemon->coords[iterador]));
+			desplazamiento += sizeof(pokemon->coords[iterador]);
+			iterador++;
+		}
 	}
 
 	//meto el largo del nombre del pokemon

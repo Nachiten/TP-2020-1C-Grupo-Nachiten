@@ -251,7 +251,7 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 void mensajeGet(char* pokemon, int IDMensaje){
 
 	printf("Pokemon buscado: %s\n", pokemon);
-	printf("Id Mensaje: %i", IDMensaje);
+	printf("Id Mensaje: %i\n", IDMensaje);
 
 	t_list* listaCoords = list_create();
 

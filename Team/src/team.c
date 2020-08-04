@@ -114,7 +114,7 @@ int main(void)
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
         // TODO | el envio mensajes GET, tendria que ser un pthread detach
-        //enviarMensajesGet();
+        enviarMensajesGet();
 
 		while(objetivo_team>0)//"mientras que todavia haya pokemones que atrapar"
         {
@@ -251,9 +251,16 @@ void enviarMensajeGet(char* pokemon){
 
 	int socketGet = establecer_conexion(IP, PUERTO);
 
-	mandar_mensaje(structGet, GET, socketGet);
+	if(socketGet > 0)
+	{
+		mandar_mensaje(structGet, GET, socketGet);
 
-	cerrar_conexion(socketGet);
+		cerrar_conexion(socketGet);
+	}
+	else
+	{
+		puts("Se tiene que poner el comportamiento por default de GET");
+	}
 
 	free(structGet);
 }

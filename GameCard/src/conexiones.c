@@ -247,7 +247,7 @@ void esperar_conexiones(int32_t socket_servidor)
 	int32_t socket_cliente = accept(socket_servidor, (void*) &dir_cliente, &tam_direccion);
 
 	if(socket_cliente >= 1)
-	{//ToDo semaforos para manejar mensajes entrantes?
+	{
 		serve_client(&socket_cliente);
 	}
 }

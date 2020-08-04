@@ -438,110 +438,115 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 		tamanioRecibido = recv(estructura->conexion, &size, sizeof(int32_t),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
-		//tomo la ID del mensaje para saber si llego uno nuevo
-		switch(cod_op){
-			case NEW:;
-				mensajeNew = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				printf("mande confirmacion, ID: %u", estructura->pID);
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeNew->nombrePokemon);
-				free(mensajeNew);
-				free(mensajeConfirm);
-				break;
+		while(tamanioRecibido > 0 || size > 0)
+		{
+			//tomo la ID del mensaje para saber si llego uno nuevo
+			switch(cod_op){
+				case NEW:;
+					mensajeNew = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					printf("mande confirmacion, ID: %u", estructura->pID);
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeNew->nombrePokemon);
+					free(mensajeNew);
+					free(mensajeConfirm);
+					break;
 
-			case APPEARED:
-				mensajeAppeared = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeAppeared->nombrePokemon);
-				free(mensajeAppeared);
-				free(mensajeConfirm);
-				break;
+				case APPEARED:
+					mensajeAppeared = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeAppeared->nombrePokemon);
+					free(mensajeAppeared);
+					free(mensajeConfirm);
+					break;
 
-			case GET:
-				mensajeGet = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeGet->nombrePokemon);
-				free(mensajeGet);
-				free(mensajeConfirm);
-				break;
+				case GET:
+					mensajeGet = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeGet->nombrePokemon);
+					free(mensajeGet);
+					free(mensajeConfirm);
+					break;
 
-			case LOCALIZED:
-				mensajeLocalized = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeLocalized->nombrePokemon);
-				free(mensajeLocalized);
-				free(mensajeConfirm);
-				break;
+				case LOCALIZED:
+					mensajeLocalized = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeLocalized->nombrePokemon);
+					free(mensajeLocalized);
+					free(mensajeConfirm);
+					break;
 
-			case CATCH:
-				mensajeCatch = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeCatch->nombrePokemon);
-				free(mensajeCatch);
-				free(mensajeConfirm);
-				break;
+				case CATCH:
+					mensajeCatch = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeCatch->nombrePokemon);
+					free(mensajeCatch);
+					free(mensajeConfirm);
+					break;
 
-			case CAUGHT:
-				mensajeCaught = malloc(size);
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
-				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
-				mensajeConfirm->colaMensajes = cod_op;
-				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-				free(mensajeCaught->nombrePokemon);
-				free(mensajeCaught);
-				free(mensajeConfirm);
-				break;
+				case CAUGHT:
+					mensajeCaught = malloc(size);
+					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+					recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
+					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+					mensajeConfirm->id_mensaje = mensajeNew->ID;
+					mensajeConfirm->colaMensajes = cod_op;
+					mensajeConfirm->pId = estructura->pID;
+					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+					free(mensajeCaught->nombrePokemon);
+					free(mensajeCaught);
+					free(mensajeConfirm);
+					break;
 
-			case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
-				break;
+				case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+					break;
 
-			case SUSCRIPCION:
-				break;
+				case SUSCRIPCION:
+					break;
 
-			case DESSUSCRIPCION:
-				break;
+				case DESSUSCRIPCION:
+					break;
 
-			case DESCONEXION:
-				break;
+				case DESCONEXION:
+					break;
 
-			case ERROR:
-				break;
+				case ERROR:
+					break;
 
-			case CONFIRMACION:
-				break;
+				case CONFIRMACION:
+					break;
+				default:
+					break;
+			}
 		}
 	}
 }

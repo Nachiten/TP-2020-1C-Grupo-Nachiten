@@ -754,3 +754,41 @@
 [INFO] 22:09:19:805 GAMECARD/(10342:10343): Conexión establecida con socket de BROKER
 [INFO] 22:09:21:806 GAMECARD/(10342:10343): Conexión establecida con socket de BROKER
 [INFO] 22:09:35:491 GAMECARD/(10342:10348): GET | Se encontraron coordenadas del pokemon Bulbasur
+[INFO] 18:25:32:900 GAMECARD/(7717:7718): Conexión establecida con socket de BROKER
+[INFO] 18:25:34:927 GAMECARD/(7717:7718): Conexión establecida con socket de BROKER
+[INFO] 18:25:36:928 GAMECARD/(7717:7718): Conexión establecida con socket de BROKER
+[INFO] 18:28:10:525 GAMECARD/(7717:7723): GET | Se encontraron coordenadas del pokemon Pikachu
+[WARNING] 18:29:07:475 GAMECARD/(7717:7723): GET | El pokemon fgyhgjygfu no existe
+[INFO] 18:29:55:493 GAMECARD/(7994:8002): Conexión establecida con socket de BROKER
+[INFO] 18:29:57:494 GAMECARD/(7994:8002): Conexión establecida con socket de BROKER
+[INFO] 18:29:59:499 GAMECARD/(7994:8002): Conexión establecida con socket de BROKER
+[INFO] 18:30:32:584 GAMECARD/(7994:8017): Conexión establecida con socket de BROKER
+[INFO] 18:30:34:587 GAMECARD/(7994:8018): Conexión establecida con socket de BROKER
+[INFO] 18:30:36:589 GAMECARD/(7994:8019): Conexión establecida con socket de BROKER
+[WARNING] 18:30:42:352 GAMECARD/(7994:8017): GET | El pokemon fgyhgjygfu no existe
+[INFO] 18:31:34:195 GAMECARD/(8113:8123): Conexión establecida con socket de BROKER
+[INFO] 18:31:36:199 GAMECARD/(8113:8123): Conexión establecida con socket de BROKER
+[INFO] 18:31:38:201 GAMECARD/(8113:8123): Conexión establecida con socket de BROKER
+[WARNING] 18:31:41:221 GAMECARD/(8113:8130): GET | El pokemon fgyhgjygfu no existe
+[INFO] 18:32:02:268 GAMECARD/(8113:8130): Conexión establecida con socket de BROKER
+[INFO] 18:32:04:271 GAMECARD/(8113:8131): Conexión establecida con socket de BROKER
+[INFO] 18:32:06:275 GAMECARD/(8113:8133): Conexión establecida con socket de BROKER
+[WARNING] 18:32:48:222 GAMECARD/(8113:8130): GET | El pokemon fgyhgjygfu no existe
+[INFO] 18:35:22:129 GAMECARD/(8458:8459): Conexión establecida con socket de BROKER
+[INFO] 18:35:24:130 GAMECARD/(8458:8459): Conexión establecida con socket de BROKER
+[INFO] 18:35:26:132 GAMECARD/(8458:8459): Conexión establecida con socket de BROKER
+[INFO] 18:36:34:798 GAMECARD/(8458:8547): NEW | Se modificara la linea existente 33-33 sumando 33 al pokemon Charmander
+[WARNING] 18:38:55:595 GAMECARD/(8458:8460): CATCH | El pokemon B no existe
+[WARNING] 18:39:44:372 GAMECARD/(8458:8548): CATCH | El pokemon C no existe
+[WARNING] 18:40:12:376 GAMECARD/(8458:8546): GET | El pokemon Pi no existe
+[INFO] 18:42:14:485 GAMECARD/(8787:8795): Conexión establecida con socket de BROKER
+[INFO] 18:42:19:488 GAMECARD/(8787:8795): Conexión establecida con socket de BROKER
+[INFO] 18:42:24:489 GAMECARD/(8787:8795): Conexión establecida con socket de BROKER
+[WARNING] 18:42:34:165 GAMECARD/(8787:8820): GET | El pokemon Pi no existe
+[INFO] 18:42:42:542 GAMECARD/(8787:8820): Conexión establecida con socket de BROKER
+[INFO] 18:42:44:544 GAMECARD/(8787:8821): Conexión establecida con socket de BROKER
+[INFO] 18:42:46:546 GAMECARD/(8787:8822): Conexión establecida con socket de BROKER
+[INFO] 18:46:46:108 GAMECARD/(8961:8969): Conexión establecida con socket de BROKER
+[INFO] 18:46:48:110 GAMECARD/(8961:8969): Conexión establecida con socket de BROKER
+[INFO] 18:46:50:112 GAMECARD/(8961:8969): Conexión establecida con socket de BROKER
+[WARNING] 18:48:11:621 GAMECARD/(8961:8976): GET | El pokemon Pi no existe

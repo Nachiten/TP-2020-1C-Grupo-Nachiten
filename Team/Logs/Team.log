@@ -297,3 +297,249 @@ ID Correlativa: 0.
 [INFO] 21:10:36:554 Team/(8810:8817): El entrenador numero [3] cambia al estado READY
 [INFO] 21:10:36:556 Team/(8810:8817): El entrenador numero [3] cambia al estado EXEC
 [INFO] 21:10:36:556 Team/(8810:8817): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 11,-1280309360
+[INFO] 22:16:28:973 Team/(10592:10592): El entrenador numero [1] cambia al estado EXIT
+[INFO] 22:16:28:973 Team/(10592:10592): El entrenador numero [2] cambia al estado EXIT
+[INFO] 22:16:28:973 Team/(10592:10592): El entrenador numero [3] cambia al estado EXIT
+[INFO] 22:16:29:11 Team/(10592:10592): DEADLOCK | No existe deadlock en el sistema
+[INFO] 22:16:29:11 Team/(10592:10592): La cantidad de ciclos totales de CPU es: 0
+[INFO] 22:17:58:575 Team/(10672:10672): El entrenador numero [1] cambia al estado EXIT
+[INFO] 22:17:58:576 Team/(10672:10672): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 22:17:58:576 Team/(10672:10672): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 22:17:58:611 Team/(10672:10672): DEADLOCK | Iniciando deteccion y recuperacion de deadlock
+[INFO] 22:17:58:611 Team/(10672:10672): El entrenador numero [2] cambia al estado READY
+[INFO] 22:17:58:612 Team/(10672:10672): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:17:58:612 Team/(10672:10672): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,2
+[INFO] 22:18:08:618 Team/(10672:10672): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,2
+[INFO] 22:18:18:618 Team/(10672:10672): INTERCAMBIO | Entrenador [2] entrega pokemon Charmander, entrenador [3] entrega pokemon Bulbasaur
+[INFO] 22:18:18:619 Team/(10672:10672): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 22:18:18:619 Team/(10672:10672): DEADLOCK | Cantidad de ciclos totales resueltos: 1
+[INFO] 22:18:18:619 Team/(10672:10672): DEADLOCK | Todo el deadlock fue resuelto correctamente
+[INFO] 22:18:18:619 Team/(10672:10672): El entrenador numero [2] cambia al estado EXIT
+[INFO] 22:18:18:619 Team/(10672:10672): El entrenador numero [3] cambia al estado EXIT
+[INFO] 22:18:18:619 Team/(10672:10672): La cantidad de ciclos totales de CPU es: 10
+[INFO] 22:24:47:696 Team/(10760:10779): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:24:48:698 Team/(10760:10774): El entrenador numero [2] cambia al estado READY
+[INFO] 22:24:48:709 Team/(10760:10774): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:24:48:709 Team/(10760:10774): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:24:52:710 Team/(10760:10774): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:28:05:881 Team/(10760:10792): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 1
+ID Correlativa: 0.
+[INFO] 22:33:22:63 Team/(11061:11076): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:33:23:64 Team/(11061:11071): El entrenador numero [2] cambia al estado READY
+[INFO] 22:33:23:70 Team/(11061:11071): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:33:23:70 Team/(11061:11071): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:33:27:71 Team/(11061:11071): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:36:44:511 Team/(11195:11216): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:36:45:526 Team/(11195:11211): El entrenador numero [2] cambia al estado READY
+[INFO] 22:36:45:528 Team/(11195:11211): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:36:45:528 Team/(11195:11211): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:36:49:529 Team/(11195:11211): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:37:35:467 Team/(11274:11288): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:37:36:478 Team/(11274:11283): El entrenador numero [2] cambia al estado READY
+[INFO] 22:37:36:490 Team/(11274:11283): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:37:36:490 Team/(11274:11283): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:37:40:492 Team/(11274:11283): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:40:52:136 Team/(11382:11397): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:40:53:139 Team/(11382:11392): El entrenador numero [2] cambia al estado READY
+[INFO] 22:40:53:147 Team/(11382:11392): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:40:53:148 Team/(11382:11392): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:40:57:150 Team/(11382:11392): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:45:23:23 Team/(11582:11596): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:45:49:536 Team/(11582:11591): El entrenador numero [2] cambia al estado READY
+[INFO] 22:46:05:610 Team/(11582:11591): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:46:05:611 Team/(11582:11591): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:46:10:478 Team/(11582:11591): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 22:48:36:285 Team/(11815:11829): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:48:37:286 Team/(11815:11824): El entrenador numero [2] cambia al estado READY
+[INFO] 22:48:40:578 Team/(11815:11824): El entrenador numero [2] cambia al estado EXEC
+[INFO] 22:48:40:579 Team/(11815:11824): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 22:48:44:580 Team/(11815:11824): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:00:41:737 Team/(13405:13420): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:01:03:569 Team/(13405:13415): El entrenador numero [2] cambia al estado READY
+[INFO] 00:01:09:54 Team/(13405:13415): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:01:09:54 Team/(13405:13415): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:01:13:822 Team/(13405:13415): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:27:33:340 Team/(14403:14414): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:27:34:341 Team/(14403:14409): El entrenador numero [2] cambia al estado READY
+[INFO] 00:27:34:342 Team/(14403:14409): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:27:34:342 Team/(14403:14409): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:27:38:343 Team/(14403:14409): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:27:38:343 Team/(14403:14409): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 00:29:02:453 Team/(14481:14499): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:29:42:476 Team/(14481:14494): El entrenador numero [2] cambia al estado READY
+[INFO] 00:29:48:170 Team/(14481:14494): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:29:48:170 Team/(14481:14494): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:29:53:370 Team/(14481:14494): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:29:59:483 Team/(14481:14494): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:3.
+[INFO] 00:29:59:483 Team/(14481:14494): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 00:31:41:784 Team/(14675:14689): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:31:42:785 Team/(14675:14684): El entrenador numero [2] cambia al estado READY
+[INFO] 00:31:46:472 Team/(14675:14684): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:31:46:472 Team/(14675:14684): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:31:50:473 Team/(14675:14684): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:31:50:473 Team/(14675:14684): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 00:43:02:749 Team/(14997:15012): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:43:03:749 Team/(14997:15007): El entrenador numero [2] cambia al estado READY
+[INFO] 00:43:03:754 Team/(14997:15007): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:43:03:755 Team/(14997:15007): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:43:07:756 Team/(14997:15007): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:47:10:884 Team/(15150:15166): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:47:11:887 Team/(15150:15161): El entrenador numero [2] cambia al estado READY
+[INFO] 00:47:11:891 Team/(15150:15161): El entrenador numero [2] cambia al estado EXEC
+[INFO] 00:47:11:891 Team/(15150:15161): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 00:47:15:893 Team/(15150:15161): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 00:47:41:834 Team/(15150:15161): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 00:49:10:184 Team/(15150:15166): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:49:11:185 Team/(15150:15162): El entrenador numero [3] cambia al estado READY
+[INFO] 00:49:11:194 Team/(15150:15162): El entrenador numero [3] cambia al estado EXEC
+[INFO] 00:49:11:194 Team/(15150:15162): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 3,5
+[INFO] 00:49:17:196 Team/(15150:15162): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 3,5
+[INFO] 00:49:23:670 Team/(15150:15162): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 00:49:58:55 Team/(15150:15166): LLego un mensaje Appeared, datos:
+Nombre:Charmander
+Pos X: 20
+Pos Y: 20
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:49:59:55 Team/(15150:15160): El entrenador numero [1] cambia al estado READY
+[INFO] 00:49:59:56 Team/(15150:15160): El entrenador numero [1] cambia al estado EXEC
+[INFO] 00:49:59:56 Team/(15150:15160): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 20,20
+[INFO] 00:51:13:78 Team/(15150:15160): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 20,20
+[INFO] 00:51:13:78 Team/(15150:15160): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 00:54:46:597 Team/(15318:15328): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:54:47:598 Team/(15318:15324): El entrenador numero [1] cambia al estado READY
+[INFO] 00:54:47:598 Team/(15318:15324): El entrenador numero [1] cambia al estado EXEC
+[INFO] 00:54:47:598 Team/(15318:15324): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 00:54:57:601 Team/(15318:15324): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 00:54:57:601 Team/(15318:15324): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 00:54:57:604 Team/(15318:15324): El entrenador numero [1] cambia al estado EXIT
+[INFO] 00:56:31:831 Team/(15389:15401): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 00:56:32:832 Team/(15389:15397): El entrenador numero [1] cambia al estado READY
+[INFO] 00:56:38:809 Team/(15389:15397): El entrenador numero [1] cambia al estado EXEC
+[INFO] 00:56:38:809 Team/(15389:15397): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 00:57:10:388 Team/(15389:15397): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 00:57:10:388 Team/(15389:15397): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 00:57:10:388 Team/(15389:15397): El entrenador numero [1] cambia al estado EXIT
+[INFO] 01:01:05:937 Team/(15523:15542): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 01:01:06:938 Team/(15523:15538): El entrenador numero [1] cambia al estado READY
+[INFO] 01:01:17:685 Team/(15523:15538): El entrenador numero [1] cambia al estado EXEC
+[INFO] 01:01:17:685 Team/(15523:15538): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 01:01:40:12 Team/(15523:15538): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 01:01:40:12 Team/(15523:15538): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 01:01:40:12 Team/(15523:15538): El entrenador numero [1] cambia al estado EXIT
+[INFO] 01:02:23:196 Team/(15620:15632): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 01:02:25:611 Team/(15620:15628): El entrenador numero [1] cambia al estado READY
+[INFO] 01:02:27:193 Team/(15620:15628): El entrenador numero [1] cambia al estado EXEC
+[INFO] 01:02:27:193 Team/(15620:15628): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 01:02:38:459 Team/(15620:15628): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 01:02:38:459 Team/(15620:15628): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 01:02:38:461 Team/(15620:15628): El entrenador numero [1] cambia al estado EXIT
+[INFO] 01:13:20:473 Team/(15897:15909): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 01:13:21:502 Team/(15897:15905): El entrenador numero [1] cambia al estado READY
+[INFO] 01:13:26:614 Team/(15897:15905): El entrenador numero [1] cambia al estado EXEC
+[INFO] 01:13:26:615 Team/(15897:15905): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 01:13:36:618 Team/(15897:15905): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 01:13:36:618 Team/(15897:15905): El entrenador [0] está intentando atrapar un Bulbasaur!! en las coordenadas [3,5].
+[INFO] 01:13:36:618 Team/(15897:15905): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 01:13:36:622 Team/(15897:15905): El entrenador numero [1] cambia al estado EXIT
+[INFO] 01:13:36:627 Team/(15897:15897): DEADLOCK | No existe deadlock en el sistema
+[INFO] 01:13:36:627 Team/(15897:15897): La cantidad de ciclos totales de CPU es: 5

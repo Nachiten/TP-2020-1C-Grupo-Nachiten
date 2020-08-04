@@ -683,12 +683,12 @@ void borrar_datos_localized(Localized* mensaje){
 
 
 	uint32_t iterador = mensaje->cantPosciciones-1;
-//	mensaje->cantPosciciones = 0;
-//
-//	for(; iterador>= 0;iterador--)
-//	{
-//		mensaje->coords[iterador] = 0;
-//	}
+	mensaje->cantPosciciones = 0;
+
+	for(; iterador>= 0;iterador--)
+	{
+		mensaje->coords[iterador] = 0;
+	}
 
 
 }

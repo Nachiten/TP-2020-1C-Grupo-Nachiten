@@ -22595,3 +22595,36 @@
 [INFO] 21:47:50:351 Gameboy/(9822:9822): Conexión establecida con socket de BROKER
 [INFO] 21:47:50:352 Gameboy/(9822:9822): Suscripto a la cola de mensajes: 4
 [INFO] 21:49:48:364 Gameboy/(9856:9856): Conexión establecida con socket de BROKER
+[INFO] 22:06:26:959 Gameboy/(10240:10240): Conexión establecida con socket de BROKER
+[INFO] 22:06:26:960 Gameboy/(10240:10240): Suscripto a la cola de mensajes: 4
+[INFO] 22:08:05:39 Gameboy/(10281:10281): Conexión establecida con socket de BROKER
+[INFO] 22:08:09:54 Gameboy/(10240:10242): Recibido un nuevo mensaje en la cola: 4
+[INFO] 22:09:29:58 Gameboy/(10351:10351): Conexión establecida con socket de BROKER
+[INFO] 22:09:29:59 Gameboy/(10351:10351): Suscripto a la cola de mensajes: 4
+[INFO] 22:09:33:482 Gameboy/(10354:10354): Conexión establecida con socket de BROKER
+[INFO] 22:09:36:495 Gameboy/(10351:10353): Recibido un nuevo mensaje en la cola: 4
+[INFO] 22:09:36:827 Gameboy/(10351:10353): Recibido un nuevo mensaje en la cola: 4
+[INFO] 22:24:47:694 Gameboy/(10811:10811): Conexión establecida con socket de TEAM
+[INFO] 22:28:04:876 Gameboy/(10873:10873): Conexión establecida con socket de BROKER
+[INFO] 22:33:22:62 Gameboy/(11092:11092): Conexión establecida con socket de TEAM
+[INFO] 22:36:44:509 Gameboy/(11226:11226): Conexión establecida con socket de TEAM
+[INFO] 22:37:35:466 Gameboy/(11296:11296): Conexión establecida con socket de TEAM
+[INFO] 22:40:52:135 Gameboy/(11417:11417): Conexión establecida con socket de TEAM
+[INFO] 22:44:10:835 Gameboy/(11531:11531): Conexión establecida con socket de TEAM
+[INFO] 22:45:21:123 Gameboy/(11629:11629): Conexión establecida con socket de TEAM
+[INFO] 22:48:36:284 Gameboy/(11839:11839): Conexión establecida con socket de TEAM
+[INFO] 00:00:41:736 Gameboy/(13431:13431): Conexión establecida con socket de TEAM
+[INFO] 00:27:33:339 Gameboy/(14416:14416): Conexión establecida con socket de TEAM
+[INFO] 00:29:02:452 Gameboy/(14502:14502): Conexión establecida con socket de TEAM
+[INFO] 00:31:41:783 Gameboy/(14694:14694): Conexión establecida con socket de TEAM
+[INFO] 00:36:16:757 Gameboy/(14838:14838): Conexión establecida con socket de BROKER
+[INFO] 00:36:22:452 Gameboy/(14840:14840): Conexión establecida con socket de BROKER
+[INFO] 00:43:02:748 Gameboy/(15023:15023): Conexión establecida con socket de TEAM
+[INFO] 00:47:10:883 Gameboy/(15169:15169): Conexión establecida con socket de TEAM
+[INFO] 00:49:06:312 Gameboy/(15235:15235): Conexión establecida con socket de TEAM
+[INFO] 00:49:58:50 Gameboy/(15254:15254): Conexión establecida con socket de TEAM
+[INFO] 00:54:46:596 Gameboy/(15338:15338): Conexión establecida con socket de TEAM
+[INFO] 00:56:31:830 Gameboy/(15404:15404): Conexión establecida con socket de TEAM
+[INFO] 01:01:05:936 Gameboy/(15552:15552): Conexión establecida con socket de TEAM
+[INFO] 01:02:21:274 Gameboy/(15640:15640): Conexión establecida con socket de TEAM
+[INFO] 01:13:20:469 Gameboy/(15920:15920): Conexión establecida con socket de TEAM

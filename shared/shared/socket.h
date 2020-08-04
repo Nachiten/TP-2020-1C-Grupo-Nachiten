@@ -70,7 +70,7 @@ void desserializar_caught(Caught* estructura, int32_t socket_cliente);
 void desserializar_suscripcion(Suscripcion* estructura, int32_t socket_cliente);
 void desserializar_dessuscripcion(Dessuscripcion* estructura, int32_t socket_cliente);
 void desserializar_confirmacion(confirmacionMensaje* estructura, int32_t socket_cliente);
-void desserializar_idMensaje(confirmacionMensaje* estructura, int32_t socket_cliente);
+void desserializar_idMensaje(idMensaje* estructura, int32_t socket_cliente);
 
 void recibir_mensaje_cliente(Hilo* estructura);
 

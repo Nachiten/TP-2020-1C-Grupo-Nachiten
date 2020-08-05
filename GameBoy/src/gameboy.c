@@ -446,19 +446,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-
-				//mandamos confirmacion para no volver a recibir este mensaje
-				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				mensajeConfirm->id_mensaje = mensajeNew->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-
 				socketConfirm = establecer_conexion(IP, PUERTO);
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
 				cerrar_conexion(socketConfirm);
-
-				//sleep(1);
-
 				free(mensajeNew->nombrePokemon);
 				free(mensajeNew);
 				free(mensajeConfirm);
@@ -469,10 +462,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->id_mensaje = mensajeAppeared->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
 				free(mensajeAppeared->nombrePokemon);
 				free(mensajeAppeared);
 				free(mensajeConfirm);
@@ -483,10 +478,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->id_mensaje = mensajeGet->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
 				free(mensajeGet->nombrePokemon);
 				free(mensajeGet);
 				free(mensajeConfirm);
@@ -497,10 +494,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->id_mensaje = mensajeLocalized->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
 				free(mensajeLocalized->nombrePokemon);
 				free(mensajeLocalized);
 				free(mensajeConfirm);
@@ -511,10 +510,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->id_mensaje = mensajeCatch->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
 				free(mensajeCatch->nombrePokemon);
 				free(mensajeCatch);
 				free(mensajeConfirm);
@@ -525,10 +526,12 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
 				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->id_mensaje = mensajeCaught->ID;
 				mensajeConfirm->colaMensajes = cod_op;
 				mensajeConfirm->pId = estructura->pID;
-				mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
 				free(mensajeCaught->nombrePokemon);
 				free(mensajeCaught);
 				free(mensajeConfirm);

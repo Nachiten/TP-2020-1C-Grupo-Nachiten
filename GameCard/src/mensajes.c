@@ -329,7 +329,6 @@ void enviarMensajeAppeared(char* pokemon, int posX, int posY, int IDMensaje){
 
 	cerrar_conexion(socketAppeared);
 
-	// TODO | Liberar nombre pokemon
 	free(structAEnviar);
 }
 

@@ -224,7 +224,6 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				free(mensajeConfirm);
 				sleep(1);
 
-				// Corrigiendo... Todo lo corregiste?
 				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
 
 				free(mensajeCatchRecibido->nombrePokemon);
@@ -282,7 +281,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 		mensajeNewRecibido = malloc(tamanioDatos);
 		recibir_mensaje(mensajeNewRecibido, cod_op, socket_cliente);
 
-		//ya te llegaron los datos y llamas a tus funciones ToDO (esto no lo tenias echo Nacho, te lo agregue yo, lo tenes que revisar)
+		//ya te llegaron los datos y llamas a tus funciones
 		mensajeNew(mensajeNewRecibido->nombrePokemon, mensajeNewRecibido->posPokemon.x, mensajeNewRecibido->posPokemon.y, mensajeNewRecibido->cantPokemon, mensajeNewRecibido->ID);
 
 		free(mensajeNewRecibido->nombrePokemon);
@@ -293,7 +292,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 		mensajeGetRecibido = malloc(tamanioDatos);
 		recibir_mensaje(mensajeGetRecibido, cod_op, socket_cliente);
 
-		//ya te llegaron los datos y llamas a tus funciones toDo(esto no lo tenias echo Nacho, te lo agregue yo, lo tenes que revisar)
+		//ya te llegaron los datos y llamas a tus funciones
 		mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
 
 		free(mensajeGetRecibido->nombrePokemon);
@@ -304,7 +303,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 		mensajeCatchRecibido = malloc(tamanioDatos);
 		recibir_mensaje(mensajeCatchRecibido, cod_op, socket_cliente);
 
-		//ya te llegaron los datos y llamas a tus funciones toDo(esto no lo tenias echo Nacho, te lo agregue yo, lo tenes que revisar)
+		//ya te llegaron los datos y llamas a tus funciones
 		mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
 
 		free(mensajeCatchRecibido->nombrePokemon);

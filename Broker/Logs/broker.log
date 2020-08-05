@@ -1306,3 +1306,212 @@
 [INFO] 20:25:05:996 Broker/(12726:12773): Agregando mensaje a Cache...
 
 [INFO] 20:25:05:996 Broker/(12726:12773): Inicio de la partición elegida: 32.
+[INFO] 21:13:34:183 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:13:35:185 Broker/(14057:14070): Se suscribio a la cola New
+[INFO] 21:13:39:186 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:13:40:190 Broker/(14057:14072): Se suscribio a la cola Catch
+[INFO] 21:13:44:191 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:13:45:198 Broker/(14057:14073): Se suscribio a la cola Get
+[INFO] 21:14:01:831 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:14:01:866 Broker/(14057:14078): Se agrego un mensaje a la cola Get
+[INFO] 21:14:01:867 Broker/(14057:14078): Agregando mensaje a Cache...
+
+[INFO] 21:14:01:869 Broker/(14057:14078): Inicio de la partición elegida: 0.
+[INFO] 21:14:01:874 Broker/(14057:14078): Envio un mensaje a uno de los suscriptores
+[INFO] 21:14:01:874 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:14:01:875 Broker/(14057:14078): Se confirmo un mensaje de la cola Get
+[INFO] 21:14:02:875 Broker/(14057:14057): Un proceso se conecto
+[INFO] 21:14:02:885 Broker/(14057:14086): Se agrego un mensaje a la cola Localized
+[INFO] 21:14:02:886 Broker/(14057:14086): Agregando mensaje a Cache...
+
+[INFO] 21:14:02:888 Broker/(14057:14086): Inicio de la partición elegida: 14.
+[INFO] 21:18:12:286 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:13:290 Broker/(14209:14215): Se suscribio a la cola New
+[INFO] 21:18:14:290 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:15:292 Broker/(14209:14221): Se suscribio a la cola Get
+[INFO] 21:18:16:292 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:17:294 Broker/(14209:14222): Se suscribio a la cola Catch
+[INFO] 21:18:23:879 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:23:885 Broker/(14209:14226): Se agrego un mensaje a la cola Get
+[INFO] 21:18:23:885 Broker/(14209:14226): Agregando mensaje a Cache...
+
+[INFO] 21:18:23:885 Broker/(14209:14226): Inicio de la partición elegida: 0.
+[INFO] 21:18:23:899 Broker/(14209:14226): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:23:900 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:23:901 Broker/(14209:14226): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:24:901 Broker/(14209:14209): Un proceso se conecto
+[INFO] 21:18:24:902 Broker/(14209:14228): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:24:902 Broker/(14209:14228): Agregando mensaje a Cache...
+
+[INFO] 21:18:24:902 Broker/(14209:14228): Inicio de la partición elegida: 14.
+[INFO] 21:20:26:923 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:20:27:925 Broker/(14271:14277): Se suscribio a la cola Catch
+[INFO] 21:20:28:925 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:20:29:927 Broker/(14271:14278): Se suscribio a la cola Get
+[INFO] 21:20:30:928 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:20:31:930 Broker/(14271:14279): Se suscribio a la cola New
+[INFO] 21:20:59:684 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:20:59:690 Broker/(14271:14288): Se agrego un mensaje a la cola Catch
+[INFO] 21:20:59:690 Broker/(14271:14288): Agregando mensaje a Cache...
+
+[INFO] 21:20:59:690 Broker/(14271:14288): Inicio de la partición elegida: 0.
+[INFO] 21:20:59:691 Broker/(14271:14288): Envio un mensaje a uno de los suscriptores
+[INFO] 21:20:59:713 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:20:59:713 Broker/(14271:14288): Se confirmo un mensaje de la cola Catch
+[INFO] 21:21:00:714 Broker/(14271:14271): Un proceso se conecto
+[INFO] 21:21:00:717 Broker/(14271:14290): Se agrego un mensaje a la cola Caught
+[INFO] 21:21:00:717 Broker/(14271:14290): Agregando mensaje a Cache...
+
+[INFO] 21:21:00:717 Broker/(14271:14290): Inicio de la partición elegida: 23.
+[INFO] 21:21:29:745 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:21:30:746 Broker/(14316:14322): Se suscribio a la cola New
+[INFO] 21:21:31:747 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:21:32:748 Broker/(14316:14323): Se suscribio a la cola Get
+[INFO] 21:21:33:749 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:21:34:750 Broker/(14316:14324): Se suscribio a la cola Catch
+[INFO] 21:24:55:89 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:24:55:95 Broker/(14316:14355): Se agrego un mensaje a la cola New
+[INFO] 21:24:55:95 Broker/(14316:14355): Agregando mensaje a Cache...
+
+[INFO] 21:24:55:95 Broker/(14316:14355): Inicio de la partición elegida: 0.
+[INFO] 21:24:55:96 Broker/(14316:14355): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:55:115 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:24:55:116 Broker/(14316:14355): Se confirmo un mensaje de la cola New
+[INFO] 21:24:56:133 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:24:56:134 Broker/(14316:14357): Se agrego un mensaje a la cola Appeared
+[INFO] 21:24:56:134 Broker/(14316:14357): Agregando mensaje a Cache...
+
+[INFO] 21:24:56:134 Broker/(14316:14357): Inicio de la partición elegida: 34.
+[INFO] 21:27:38:411 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:27:38:412 Broker/(14316:14373): Se suscribio a la cola New
+[INFO] 21:27:38:412 Broker/(14316:14373): este mensaje no lo envio porque fue confirmado
+[INFO] 21:27:38:412 Broker/(14316:14373): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:38:415 Broker/(14316:14316): Un proceso se conecto
+[INFO] 21:27:38:416 Broker/(14316:14375): Se confirmo un mensaje de la cola New
+[INFO] 21:29:13:643 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:13:644 Broker/(14525:14534): Se suscribio a la cola New
+[INFO] 21:29:18:163 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:169 Broker/(14525:14538): Se agrego un mensaje a la cola New
+[INFO] 21:29:18:169 Broker/(14525:14538): Agregando mensaje a Cache...
+
+[INFO] 21:29:18:169 Broker/(14525:14538): Inicio de la partición elegida: 0.
+[INFO] 21:29:18:169 Broker/(14525:14538): Envio un mensaje a uno de los suscriptores
+[INFO] 21:29:18:170 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:171 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:174 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:175 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:175 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:175 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:176 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:176 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:176 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:177 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:177 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:178 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:178 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:179 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:193 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:29:18:195 Broker/(14525:14525): Un proceso se conecto
+[INFO] 21:31:18:490 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:18:492 Broker/(14602:14614): Se suscribio a la cola New
+[INFO] 21:31:25:556 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:573 Broker/(14602:14619): Se agrego un mensaje a la cola New
+[INFO] 21:31:25:573 Broker/(14602:14619): Agregando mensaje a Cache...
+
+[INFO] 21:31:25:573 Broker/(14602:14619): Inicio de la partición elegida: 0.
+[INFO] 21:31:25:573 Broker/(14602:14619): Envio un mensaje a uno de los suscriptores
+[INFO] 21:31:25:574 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:575 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:575 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:575 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:576 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:577 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:577 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:578 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:579 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:579 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:580 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:580 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:582 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:583 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:584 Broker/(14602:14619): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:584 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:585 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:586 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:587 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:590 Broker/(14602:14631): Agregando mensaje a Cache...
+
+[INFO] 21:31:25:591 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:591 Broker/(14602:14631): Inicio de la partición elegida: 34.
+[INFO] 21:31:25:594 Broker/(14602:14631): este mensaje no lo envio porque fue confirmado
+[INFO] 21:31:25:596 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:601 Broker/(14602:14636): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:601 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:602 Broker/(14602:14637): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:603 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:603 Broker/(14602:14638): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:603 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:606 Broker/(14602:14639): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:606 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:607 Broker/(14602:14640): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:611 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:611 Broker/(14602:14641): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:612 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:614 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:615 Broker/(14602:14643): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:615 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:616 Broker/(14602:14644): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:616 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:617 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:617 Broker/(14602:14645): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:617 Broker/(14602:14645): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:618 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:622 Broker/(14602:14647): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:622 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:623 Broker/(14602:14647): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:623 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:624 Broker/(14602:14649): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:624 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:625 Broker/(14602:14650): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:625 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:630 Broker/(14602:14650): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:631 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:631 Broker/(14602:14652): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:632 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:632 Broker/(14602:14653): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:633 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:633 Broker/(14602:14654): Se confirmo un mensaje de la cola New
+[INFO] 21:31:25:656 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:657 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:658 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:659 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:659 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:660 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:660 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:660 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:663 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:664 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:664 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:664 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:665 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:666 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:670 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:31:25:671 Broker/(14602:14602): Un proceso se conecto
+[INFO] 21:33:18:85 Broker/(14817:14817): Un proceso se conecto
+[INFO] 21:33:18:91 Broker/(14817:14824): Se suscribio a la cola New
+[INFO] 21:33:21:518 Broker/(14817:14817): Un proceso se conecto
+[INFO] 21:33:21:524 Broker/(14817:14829): Se agrego un mensaje a la cola New
+[INFO] 21:33:21:524 Broker/(14817:14829): Agregando mensaje a Cache...
+
+[INFO] 21:33:21:524 Broker/(14817:14829): Inicio de la partición elegida: 0.
+[INFO] 21:33:21:525 Broker/(14817:14829): Envio un mensaje a uno de los suscriptores
+[INFO] 21:33:21:525 Broker/(14817:14817): Un proceso se conecto
+[INFO] 21:33:21:545 Broker/(14817:14829): Se confirmo un mensaje de la cola New
+[INFO] 21:33:34:198 Broker/(14817:14817): Un proceso se conecto
+[INFO] 21:33:34:203 Broker/(14817:14837): Se agrego un mensaje a la cola New
+[INFO] 21:33:34:203 Broker/(14817:14837): Agregando mensaje a Cache...
+
+[INFO] 21:33:34:203 Broker/(14817:14837): Inicio de la partición elegida: 34.
+[INFO] 21:33:34:204 Broker/(14817:14837): Envio un mensaje a uno de los suscriptores
+[INFO] 21:33:34:205 Broker/(14817:14817): Un proceso se conecto
+[INFO] 21:33:34:206 Broker/(14817:14837): Se confirmo un mensaje de la cola New

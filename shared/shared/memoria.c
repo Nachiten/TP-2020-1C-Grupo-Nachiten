@@ -1788,7 +1788,14 @@ uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura)
 	totalAAsignar += sizeof(estructura->largoNombre);
 	totalAAsignar += estructura->largoNombre + 1;
 	totalAAsignar += sizeof(estructura->cantPosciciones);
-	totalAAsignar += sizeof(estructura->coords[0]) * 2 * estructura->cantPosciciones;
+	if(estructura->cantPosciciones == 0)
+	{
+		totalAAsignar += sizeof(estructura->coords[0]) * 2;
+	}
+	else
+	{
+		totalAAsignar += sizeof(estructura->coords[0]) * 2 * estructura->cantPosciciones;
+	}
 
 	return totalAAsignar;
 }

@@ -678,16 +678,21 @@ void borrar_datos_localized(Localized* mensaje){
 	mensaje->largoNombre = 100;
 	mensaje->nombrePokemon = "aca no hay nada papu";
 
-
-	uint32_t iterador = mensaje->cantPosciciones-1;//todo aca estaba
-	mensaje->cantPosciciones = 0;
-
-	for(; iterador>= 0;iterador--)
+	if(mensaje->cantPosciciones == 0)
 	{
-		mensaje->coords[iterador] = 0;
+		mensaje->coords[0] = 0;
+		mensaje->coords[1] = 0;
 	}
 
-
+	else
+	{
+//		uint32_t iterador = mensaje->cantPosciciones-1;//todo falta revisar
+//		for(; iterador>= 0;iterador--)
+//		{
+//			mensaje->coords[iterador] = 0;
+//		}
+	}
+	mensaje->cantPosciciones = 0;
 }
 
 void borrar_datos_catch(Catch* mensaje){

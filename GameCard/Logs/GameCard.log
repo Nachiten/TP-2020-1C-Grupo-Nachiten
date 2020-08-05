@@ -841,3 +841,19 @@
 [INFO] 20:21:58:54 GAMECARD/(12385:12459): Conexión establecida con socket de BROKER
 [WARNING] 20:22:03:643 GAMECARD/(12385:12457): GET | El pokemon abc no existe
 [WARNING] 20:25:05:991 GAMECARD/(12385:12457): GET | El pokemon abc no existe
+[INFO] 21:13:34:183 GAMECARD/(14066:14067): Conexión establecida con socket de BROKER
+[INFO] 21:13:39:186 GAMECARD/(14066:14067): Conexión establecida con socket de BROKER
+[INFO] 21:13:44:191 GAMECARD/(14066:14067): Conexión establecida con socket de BROKER
+[WARNING] 21:14:02:875 GAMECARD/(14066:14074): GET | El pokemon Localized no existe
+[INFO] 21:18:12:286 GAMECARD/(14066:14075): Conexión establecida con socket de BROKER
+[INFO] 21:18:14:291 GAMECARD/(14066:14074): Conexión establecida con socket de BROKER
+[INFO] 21:18:16:293 GAMECARD/(14066:14076): Conexión establecida con socket de BROKER
+[WARNING] 21:18:24:901 GAMECARD/(14066:14074): GET | El pokemon Localized no existe
+[INFO] 21:20:26:924 GAMECARD/(14066:14076): Conexión establecida con socket de BROKER
+[INFO] 21:20:28:926 GAMECARD/(14066:14074): Conexión establecida con socket de BROKER
+[INFO] 21:20:30:928 GAMECARD/(14066:14075): Conexión establecida con socket de BROKER
+[WARNING] 21:21:00:714 GAMECARD/(14066:14076): CATCH | Las coordenadas 3-5 no existen dentro del archivo Charmander
+[INFO] 21:21:29:745 GAMECARD/(14066:14075): Conexión establecida con socket de BROKER
+[INFO] 21:21:31:747 GAMECARD/(14066:14074): Conexión establecida con socket de BROKER
+[INFO] 21:21:33:749 GAMECARD/(14066:14076): Conexión establecida con socket de BROKER
+[INFO] 21:24:56:132 GAMECARD/(14066:14075): NEW | Escribiendo nueva linea 6-6=6 en pokemon vacio LocalizedSeLaCome

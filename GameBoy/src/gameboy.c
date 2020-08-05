@@ -421,6 +421,7 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 	int32_t size = 1;
 	int32_t tamanioRecibido = 1;
 	codigo_operacion cod_op;
+	int32_t socketConfirm;
 
 	New* mensajeNew;
 	Appeared* mensajeAppeared;
@@ -438,122 +439,107 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 		tamanioRecibido = recv(estructura->conexion, &size, sizeof(int32_t),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
-		while(tamanioRecibido > 0 || size > 0)
-		{
-			//tomo la ID del mensaje para saber si llego uno nuevo
-			switch(cod_op){
-				case NEW:;
-					mensajeNew = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+		//tomo la ID del mensaje para saber si llego uno nuevo
+		switch(cod_op){
+			case NEW:;
+				mensajeNew = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeNew,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeNew->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeNew->nombrePokemon);
+				free(mensajeNew);
+				free(mensajeConfirm);
+				break;
 
-					//mandamos confirmacion para no volver a recibir este mensaje
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					estructura->conexion = establecer_conexion(IP, PUERTO);
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					cerrar_conexion(estructura->conexion);
-					free(mensajeConfirm);
-					//sleep(1);
+			case APPEARED:
+				mensajeAppeared = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeAppeared->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeAppeared->nombrePokemon);
+				free(mensajeAppeared);
+				free(mensajeConfirm);
+				break;
 
-					free(mensajeNew->nombrePokemon);
-					free(mensajeNew);
-					free(mensajeConfirm);
-					break;
+			case GET:
+				mensajeGet = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeGet->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeGet->nombrePokemon);
+				free(mensajeGet);
+				free(mensajeConfirm);
+				break;
 
-				case APPEARED:
-					mensajeAppeared = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeAppeared,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					free(mensajeAppeared->nombrePokemon);
-					free(mensajeAppeared);
-					free(mensajeConfirm);
-					break;
+			case LOCALIZED:
+				mensajeLocalized = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeLocalized->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeLocalized->nombrePokemon);
+				free(mensajeLocalized);
+				free(mensajeConfirm);
+				break;
 
-				case GET:
-					mensajeGet = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeGet,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					free(mensajeGet->nombrePokemon);
-					free(mensajeGet);
-					free(mensajeConfirm);
-					break;
+			case CATCH:
+				mensajeCatch = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeCatch->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeCatch->nombrePokemon);
+				free(mensajeCatch);
+				free(mensajeConfirm);
+				break;
 
-				case LOCALIZED:
-					mensajeLocalized = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeLocalized,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					free(mensajeLocalized->nombrePokemon);
-					free(mensajeLocalized);
-					free(mensajeConfirm);
-					break;
+			case CAUGHT:
+				mensajeCaught = malloc(size);
+				mensajeConfirm = malloc(sizeof(confirmacionMensaje));
+				recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
+				log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
+				mensajeConfirm->id_mensaje = mensajeCaught->ID;
+				mensajeConfirm->colaMensajes = cod_op;
+				mensajeConfirm->pId = estructura->pID;
+				socketConfirm = establecer_conexion(IP, PUERTO);
+				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketConfirm);
+				cerrar_conexion(socketConfirm);
+				free(mensajeCaught->nombrePokemon);
+				free(mensajeCaught);
+				free(mensajeConfirm);
+				break;
 
-				case CATCH:
-					mensajeCatch = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeCatch,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					free(mensajeCatch->nombrePokemon);
-					free(mensajeCatch);
-					free(mensajeConfirm);
-					break;
+			default:
+				break;
 
-				case CAUGHT:
-					mensajeCaught = malloc(size);
-					mensajeConfirm = malloc(sizeof(confirmacionMensaje));
-					recibir_mensaje(mensajeCaught,cod_op,estructura->conexion);
-					log_info(estructura->log, "Recibido un nuevo mensaje en la cola: %u",estructura->cola);
-					mensajeConfirm->id_mensaje = mensajeNew->ID;
-					mensajeConfirm->colaMensajes = cod_op;
-					mensajeConfirm->pId = estructura->pID;
-					mandar_mensaje(mensajeConfirm, CONFIRMACION, estructura->conexion);
-					free(mensajeCaught->nombrePokemon);
-					free(mensajeCaught);
-					free(mensajeConfirm);
-					break;
-
-				case TEST://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
-					break;
-
-				case SUSCRIPCION:
-					break;
-
-				case DESSUSCRIPCION:
-					break;
-
-				case DESCONEXION:
-					break;
-
-				case ERROR:
-					break;
-
-				case CONFIRMACION:
-					break;
-				default:
-					break;
-			}
 		}
 	}
 }

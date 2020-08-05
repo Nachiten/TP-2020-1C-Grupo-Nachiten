@@ -904,3 +904,9 @@
 [INFO] 20:26:50:195 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
 [WARNING] 20:26:57:404 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
 [WARNING] 20:27:25:877 GAMECARD/(1514:1593): GET | El pokemon tuVieja no existe
+[INFO] 20:30:59:724 GAMECARD/(2754:2755): Conexión establecida con socket de BROKER
+[INFO] 20:31:01:727 GAMECARD/(2754:2755): Conexión establecida con socket de BROKER
+[INFO] 20:31:03:729 GAMECARD/(2754:2755): Conexión establecida con socket de BROKER
+[WARNING] 20:31:14:202 GAMECARD/(2754:2760): GET | El pokemon tuVieja no existe
+[INFO] 20:31:25:195 GAMECARD/(2754:2760): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:32:16:588 GAMECARD/(2754:2760): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda

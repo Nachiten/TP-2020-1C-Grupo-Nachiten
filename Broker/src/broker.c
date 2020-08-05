@@ -591,7 +591,7 @@ void mandar_mensajes_broker(t_cola* cola){
 				contadorSubs = (mensaje->subs->elements_count) - 1;
 				while(contadorSubs > -1){
 					sub = list_get(mensaje->subs,contadorSubs);
-					free(sub);
+					free(sub);//esto mata
 					contadorSubs--;
 				}
 				free(mensaje);
@@ -608,10 +608,10 @@ void mandar_mensajes_broker(t_cola* cola){
 					}
 					else
 					{
-						log_info(logger,"este mensaje no lo envio porque fue confirmado");
+						log_info(logger,"este mensaje no lo envio porque fue confirmado");//todo no lo envio
 					}
 				}
-			//borrar_datos(cola,mensaje); todo descomentar
+			borrar_datos(cola,mensaje);
 			}
 		}
 	}

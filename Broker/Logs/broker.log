@@ -1903,3 +1903,57 @@
 [INFO] 20:27:25:879 Broker/(2515:2554): Envio un mensaje a uno de los suscriptores
 [INFO] 20:27:25:880 Broker/(2515:2515): Un proceso se conecto
 [INFO] 20:27:25:881 Broker/(2515:2554): Se confirmo un mensaje de la cola Localized
+[INFO] 20:30:59:724 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:00:725 Broker/(2746:2757): Se suscribio a la cola New
+[INFO] 20:31:01:726 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:02:728 Broker/(2746:2758): Se suscribio a la cola Catch
+[INFO] 20:31:03:729 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:04:730 Broker/(2746:2759): Se suscribio a la cola Get
+[INFO] 20:31:09:571 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:09:573 Broker/(2746:2764): Se suscribio a la cola Localized
+[INFO] 20:31:13:194 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:13:199 Broker/(2746:2767): Se agrego un mensaje a la cola Get
+[INFO] 20:31:13:199 Broker/(2746:2767): Agregando mensaje a Cache...
+
+[INFO] 20:31:13:200 Broker/(2746:2767): Inicio de la partición elegida: 0.
+[INFO] 20:31:13:200 Broker/(2746:2767): Envio un mensaje a uno de los suscriptores
+[INFO] 20:31:13:201 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:13:201 Broker/(2746:2767): Se confirmo un mensaje de la cola Get
+[INFO] 20:31:14:202 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:14:207 Broker/(2746:2769): Se agrego un mensaje a la cola Localized
+[INFO] 20:31:14:207 Broker/(2746:2769): Agregando mensaje a Cache...
+
+[INFO] 20:31:14:207 Broker/(2746:2769): Inicio de la partición elegida: 12.
+[INFO] 20:31:14:208 Broker/(2746:2769): Envio un mensaje a uno de los suscriptores
+[INFO] 20:31:14:209 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:14:210 Broker/(2746:2769): Se confirmo un mensaje de la cola Localized
+[INFO] 20:31:24:187 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:24:192 Broker/(2746:2772): Se agrego un mensaje a la cola Get
+[INFO] 20:31:24:193 Broker/(2746:2772): Agregando mensaje a Cache...
+
+[INFO] 20:31:24:193 Broker/(2746:2772): Inicio de la partición elegida: 36.
+[INFO] 20:31:24:193 Broker/(2746:2772): Envio un mensaje a uno de los suscriptores
+[INFO] 20:31:24:194 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:24:194 Broker/(2746:2772): Se confirmo un mensaje de la cola Get
+[INFO] 20:31:25:196 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:25:197 Broker/(2746:2774): Se agrego un mensaje a la cola Localized
+[INFO] 20:31:25:197 Broker/(2746:2774): Agregando mensaje a Cache...
+
+[INFO] 20:31:25:197 Broker/(2746:2774): Inicio de la partición elegida: 61.
+[INFO] 20:31:25:197 Broker/(2746:2774): Envio un mensaje a uno de los suscriptores
+[INFO] 20:31:25:198 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:31:25:198 Broker/(2746:2774): Se confirmo un mensaje de la cola Localized
+[INFO] 20:32:15:580 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:32:15:585 Broker/(2746:2829): Se agrego un mensaje a la cola Get
+[INFO] 20:32:15:585 Broker/(2746:2829): Agregando mensaje a Cache...
+
+[INFO] 20:32:15:585 Broker/(2746:2829): Inicio de la partición elegida: 98.
+[INFO] 20:32:15:586 Broker/(2746:2829): Envio un mensaje a uno de los suscriptores
+[INFO] 20:32:15:586 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:32:15:587 Broker/(2746:2829): Se confirmo un mensaje de la cola Get
+[INFO] 20:32:16:590 Broker/(2746:2746): Un proceso se conecto
+[INFO] 20:32:16:594 Broker/(2746:2831): Se agrego un mensaje a la cola Localized
+[INFO] 20:32:16:594 Broker/(2746:2831): Agregando mensaje a Cache...
+
+[INFO] 20:32:16:595 Broker/(2746:2831): Inicio de la partición elegida: 123.
+[INFO] 20:32:16:595 Broker/(2746:2831): Envio un mensaje a uno de los suscriptores

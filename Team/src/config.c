@@ -54,7 +54,7 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
     cant_posiciones = validar_tamano_vectores_extraidos(posicion_entrenador, objetivo, pokemones_actuales);
 
     // Calculo cuanto mide el array de pokemons actuales
-    int cantidadPokemonsActuales = calcular_elementos_null(pokemones_actuales);
+    int cantidadElementosEnPokemonsActuales = calcular_elementos_null(pokemones_actuales);
 
     if(cant_posiciones > 0)
     {
@@ -70,8 +70,11 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 			entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
 			entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
 
-
-			llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]);
+			if (i < cantidadElementosEnPokemonsActuales){
+				llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]);
+			} else {
+				llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], NULL);
+			}
 
 			i++;
 		}
@@ -188,7 +191,7 @@ int llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* ve
 		aux_cont = 0;
 	}
 
-	if(aux_cont <= cont && aux_cont > 0){
+	if(aux_cont <= cont){
 		// Se hace malloc para los pokemons actuales
 		entrenador->pokemones_actuales = malloc(cont * sizeof(char*));
 
@@ -273,11 +276,12 @@ int cantidad_de_en_pokemones_entrenadores(char* pokemon, d_entrenador* entrenado
     for(i=0;i<cant_entrenadores;i++){
         //cont = cont + cantidad_de_veces_en_actuales(pokemon, entrenadores[i].pokemones_actuales);
 
-    	//Cuenta la cantidad de pokemones que tiene cada entrenador
-    	while(entrenadores[i].pokemones_actuales[j] != NULL)
-    	{
-    		j++;
-    	}
+		//Cuenta la cantidad de pokemones que tiene cada entrenador
+		while(entrenadores[i].pokemones_actuales[j] != NULL)
+		{
+			j++;
+		}
+
     	cont = cont + cantidad_de_veces_en_actuales(pokemon, entrenadores[i].pokemones_actuales, j);
     	j = 0;
     }

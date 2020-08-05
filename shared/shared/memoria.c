@@ -1004,7 +1004,7 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 				poner_CAUGHT_en_particion(CACHE, particionElegida, estructura, NUMERO_VICTIMA, semNumeroVictima, tipoMensaje);
 				break;
 
-			case SUSCRIPCION://Estos 6 están solo para que no salga el WARNING, no sirven para nada aca
+			case SUSCRIPCION://Estos 7 están solo para que no salga el WARNING, no sirven para nada aca
 				break;
 
 			case DESSUSCRIPCION:
@@ -1020,6 +1020,9 @@ void poner_en_particion(void* CACHE, lista_particiones* particionElegida, void* 
 				break;
 
 			case CONFIRMACION:
+				break;
+
+			case IDMENSAJE:
 				break;
 	}
 
@@ -1572,13 +1575,27 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 	printf("cantidad pos: %u\n", estructura->cantPosciciones);
 
 	//saco pares de coordenadas donde hay pokemons en CACHE
-	while(iterador <= (estructura->cantPosciciones * 2) - 1)
+	if(estructura->cantPosciciones == 0)
 	{
-		memcpy(&estructura->coords[iterador], CACHE + desplazamiento, sizeof(estructura->coords[iterador]));
-		desplazamiento += sizeof(estructura->coords[iterador]);
+		memcpy(&estructura->coords[0], CACHE + desplazamiento, sizeof(estructura->coords[0]));
+		desplazamiento += sizeof(estructura->coords[0]);
+		printf("coordenada: %u\n", estructura->coords[0]);
 
-		printf("coordenada: %u\n", estructura->coords[iterador]);
-		iterador++;
+		memcpy(&estructura->coords[1], CACHE + desplazamiento, sizeof(estructura->coords[1]));
+		desplazamiento += sizeof(estructura->coords[1]);
+		printf("coordenada: %u\n", estructura->coords[1]);
+	}
+
+	else
+	{
+		while(iterador <= (estructura->cantPosciciones * 2) - 1)
+		{
+			memcpy(&estructura->coords[iterador], CACHE + desplazamiento, sizeof(estructura->coords[iterador]));
+			desplazamiento += sizeof(estructura->coords[iterador]);
+
+			printf("coordenada: %u\n", estructura->coords[iterador]);
+			iterador++;
+		}
 	}
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)

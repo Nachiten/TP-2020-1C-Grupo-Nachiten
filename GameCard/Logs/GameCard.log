@@ -857,3 +857,50 @@
 [INFO] 21:21:31:747 GAMECARD/(14066:14074): Conexión establecida con socket de BROKER
 [INFO] 21:21:33:749 GAMECARD/(14066:14076): Conexión establecida con socket de BROKER
 [INFO] 21:24:56:132 GAMECARD/(14066:14075): NEW | Escribiendo nueva linea 6-6=6 en pokemon vacio LocalizedSeLaCome
+[INFO] 13:57:36:67 GAMECARD/(28717:28718): Conexión establecida con socket de BROKER
+[INFO] 13:57:38:69 GAMECARD/(28717:28718): Conexión establecida con socket de BROKER
+[INFO] 13:57:40:71 GAMECARD/(28717:28718): Conexión establecida con socket de BROKER
+[INFO] 13:58:13:272 GAMECARD/(28717:28724): NEW | Escribiendo nueva linea 2-2=2 en pokemon vacio LocalizedesUnaMierda
+[INFO] 13:59:12:375 GAMECARD/(28717:28723): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:04:48:596 GAMECARD/(1514:1515): Conexión establecida con socket de BROKER
+[INFO] 20:04:53:599 GAMECARD/(1514:1515): Conexión establecida con socket de BROKER
+[INFO] 20:04:58:602 GAMECARD/(1514:1515): Conexión establecida con socket de BROKER
+[INFO] 20:05:17:237 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:09:54:354 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:10:48:470 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:10:50:471 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:10:52:474 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[INFO] 20:10:58:869 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:11:07:246 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:11:11:574 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:12:09:614 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[INFO] 20:12:11:616 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:12:13:618 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:12:26:493 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:12:41:517 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:13:24:667 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 20:13:32:946 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[INFO] 20:13:55:756 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:13:57:758 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:13:59:760 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[WARNING] 20:14:13:218 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[INFO] 20:14:28:35 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:15:11:451 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[INFO] 20:15:13:453 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:15:15:455 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:15:26:435 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 20:15:34:227 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[INFO] 20:18:14:996 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:18:16:998 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:18:18:999 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[WARNING] 20:18:24:223 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[INFO] 20:20:11:35 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[INFO] 20:20:13:38 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:20:15:40 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[WARNING] 20:20:28:201 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[INFO] 20:26:18:73 GAMECARD/(1514:1594): Conexión establecida con socket de BROKER
+[INFO] 20:26:20:75 GAMECARD/(1514:1595): Conexión establecida con socket de BROKER
+[INFO] 20:26:22:78 GAMECARD/(1514:1593): Conexión establecida con socket de BROKER
+[INFO] 20:26:50:195 GAMECARD/(1514:1593): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 20:26:57:404 GAMECARD/(1514:1593): GET | El pokemon Lo no existe
+[WARNING] 20:27:25:877 GAMECARD/(1514:1593): GET | El pokemon tuVieja no existe

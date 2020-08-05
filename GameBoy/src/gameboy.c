@@ -431,13 +431,18 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 	Caught* mensajeCaught;
 	confirmacionMensaje* mensajeConfirm;
 
-	while(tamanioRecibido > 0 || size > 0)
+	while(1)
 	{
 		tamanioRecibido = recv(estructura->conexion, &cod_op, sizeof(codigo_operacion),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
 
 		tamanioRecibido = recv(estructura->conexion, &size, sizeof(int32_t),MSG_WAITALL);
 		bytesRecibidos(tamanioRecibido);
+
+		if(tamanioRecibido < 1)
+		{
+			cod_op = 0;
+		}
 
 		//tomo la ID del mensaje para saber si llego uno nuevo
 		switch(cod_op){

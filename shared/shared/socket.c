@@ -766,7 +766,7 @@ void desserializar_localized(Localized* estructura, int32_t socket_cliente)
 
 	else
 	{
-		while(iterador <= (estructura->cantPosciciones * 2 - 1))
+		while(iterador <= ((estructura->cantPosciciones * 2) - 1))
 		{
 			bytesRecibidos(recv(socket_cliente, &(estructura->coords[iterador]), sizeof(estructura->coords[iterador]), MSG_WAITALL));
 			iterador++;

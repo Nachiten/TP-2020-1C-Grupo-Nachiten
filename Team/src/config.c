@@ -55,36 +55,38 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 
     if(cant_posiciones > 0)
     {
-    printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
-	entrenador = malloc(cant_posiciones * sizeof(d_entrenador));
+		printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
+		entrenador = malloc(cant_posiciones * sizeof(d_entrenador));
 
-	while(i<cant_posiciones && respuesta == 1)
-	{
-		entrenador[i].estado = ESTADO_NEW;
-		entrenador[i].estado_block = ACTIVO;
-		entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
-		entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
-		entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
-		entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
-		if(llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]) == 0)
+		while(i<cant_posiciones && respuesta == 1)
 		{
-			respuesta = -3;
+			entrenador[i].estado = ESTADO_NEW;
+			entrenador[i].estado_block = ACTIVO;
+			entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
+			entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
+			entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
+			entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
+			if(llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]) == 0)
+			{
+				respuesta = -3;
+			}
+			i++;
 		}
-		i++;
-	}
-	if(respuesta == 1){
-            cant_objetivos = calcular_tamano_objetivo_global(entrenador, cant_posiciones);
-            printf("La cantidad de objetivos es: %i\n", cant_objetivos);
-            temp1 = malloc((cant_objetivos+1) * sizeof(char*));
-            llenar_objetivo_global(entrenador, cant_posiciones, temp1, cant_objetivos);//anota los pokemones que les faltan al team completo
-            *entrenadores = entrenador;
-            *cant_entrenadores = cant_posiciones;
-            *objetivo_global = temp1;//aca quedan guardados cuales y cuantos pokemones faltan al team para terminar su trabajo
-            *objetivos = cant_objetivos;
-	}
-	else{
-            printf("error en llenado de objetivos y actuales de entrenador %i\n", i-1);
-        }
+		if(respuesta == 1)
+		{
+			cant_objetivos = calcular_tamano_objetivo_global(entrenador, cant_posiciones);
+			printf("La cantidad de objetivos es: %i\n", cant_objetivos);
+			temp1 = malloc((cant_objetivos+1) * sizeof(char*));
+			llenar_objetivo_global(entrenador, cant_posiciones, temp1, cant_objetivos);//anota los pokemones que les faltan al team completo
+			*entrenadores = entrenador;
+			*cant_entrenadores = cant_posiciones;
+			*objetivo_global = temp1;//aca quedan guardados cuales y cuantos pokemones faltan al team para terminar su trabajo
+			*objetivos = cant_objetivos;
+		}
+		else
+		{
+			printf("error en llenado de objetivos y actuales de entrenador %i\n", i-1);
+		}
     }
     else{
         printf("error en validacion de vectores extraidos\n");
@@ -110,7 +112,8 @@ int validar_tamano_vectores_extraidos(char** posicion_entrenador, char** objetiv
 	cant_pokemones = calcular_elementos_null(pokemones_actuales);
 	cant_posiciones = calcular_elementos_null(posicion_entrenador);
 	cant_objetivos = calcular_elementos_null(objetivo);
-	respuesta = niguno_es_cero_y_son_todos_iguales(cant_pokemones, cant_posiciones, cant_objetivos);
+	//respuesta = niguno_es_cero_y_son_todos_iguales(cant_pokemones, cant_posiciones, cant_objetivos);
+	respuesta = cant_posiciones;
 	return respuesta;
 }
 
@@ -161,28 +164,44 @@ int llenar_objetivos_y_actuales_de_entrenador(d_entrenador* entrenador, char* ve
 	char** vector;
 	respuesta = 1;
 
+	// vetor_objetivos es tipo: Pikachu|Bulbasaur
+	// vector_pokemones es idem anterior pero para los pokemones actuales
+
 	vector = string_split(vector_objetivos, "|");
 	cont = calcular_elementos_null(vector);
+
 	entrenador->objetivo = malloc((cont+1) * sizeof(char*));
+
+	// Llenar los objetivos del pokemon
 	for(i=0;i<(cont+1);i++){
 		entrenador->objetivo[i] = vector[i];
 	}
 
-	vector = string_split(vector_pokemones, "|");
-	aux_cont = calcular_elementos_null(vector);
-	if(aux_cont <= cont){
+	if(vector_pokemones != NULL ){
+		vector = string_split(vector_pokemones, "|");
+		// Cantidad de elementos de
+		aux_cont = calcular_elementos_null(vector);
+	} else {
+		aux_cont = 0;
+	}
+
+	if(aux_cont <= cont && aux_cont > 0){
+		// Se hace malloc para los pokemons actuales
 		entrenador->pokemones_actuales = malloc(cont * sizeof(char*));
+
+		// Se llenan los pokemons actuales
 		for(i=0;i<aux_cont;i++){
 			entrenador->pokemones_actuales[i] = vector[i];
 		}
-                if(aux_cont < cont){
-                    for(i=aux_cont;i<cont;i++){
-			entrenador->pokemones_actuales[i] = NULL;
-                    }
-                }
-                else{actualizar_estado_entrenador(entrenador, 1);}
+
+		if(aux_cont < cont){
+			for(i=aux_cont;i<cont;i++){
+				entrenador->pokemones_actuales[i] = NULL;
+			}
+		}
+		else{actualizar_estado_entrenador(entrenador, 1);}
 	}
-	else{respuesta = 0;}
+	else{respuesta = 1;}
 
 	return respuesta;
 }

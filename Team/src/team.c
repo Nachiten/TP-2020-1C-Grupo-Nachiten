@@ -75,7 +75,6 @@ int main(void)
 
 	segunda_extraccion = inicializar_entrenadores_con_config(config, &entrenadores, &objetivo_actual, &cant_entrenadores, &cantidad_objetivos);
 
-
 	if(primer_extraccion == 1 && segunda_extraccion == 1)
     {
         objetivo_team = cantidad_objetivos;
@@ -632,6 +631,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			}
 			else //el mensaje no sirve y lo vuelo a la mierda
 			{
+				printf("APPEARED | El pokemon %s que recibi no me sirve\n", mensaje_rec->pokemon);
 			    free(mensaje_rec->pokemon);
 			    free(mensaje_rec->posiciones);
 			    free(mensaje_rec);

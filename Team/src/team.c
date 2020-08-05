@@ -8,6 +8,7 @@ char** objetivo_actual;
 int estado_team, objetivo_team, cantidad_objetivos, quantum;
 
 int main(void)
+
 {
 	uint32_t PID = getpid(); //ignorar warning, SI SE USA
 
@@ -774,10 +775,12 @@ void libero_exec_me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
 
 void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
     pthread_mutex_lock(&colaReady_mutex);
+    cambiar_estado_a(entrenador, READY);
     agregar_a_ready(pos);
     pthread_mutex_unlock(&colaReady_mutex);
     sem_post(&colaReady_llenos);
-    //sem_wait(&sem_entrenadores[pos]);
+
+    sem_wait(&sem_entrenadores[pos]); // TODO | Semaforo que quite
     cambiar_estado_a(entrenador, EXEC);
 }
 

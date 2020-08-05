@@ -422,7 +422,7 @@ void llegar_por_eje(d_entrenador* entrenador, int pos, int eje){
 }
 
 void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int rafagas, int* resto, int entrenador_pos){
-    int cont = rafagas - (*resto);
+    int cont = rafagas - (*resto); // EJE 0 = x EJE 1 = Y
     while(entrenador->posicion[eje] != pos){
     	//Retardo antes de moverse
     	sleep(retardo);
@@ -438,7 +438,7 @@ void llegar_por_eje_con_quantum(d_entrenador* entrenador, int pos, int eje, int 
             cont++;
         }
         else{
-            cont = 0;printf("quantum acabado entrenador %i\n", entrenador_pos);
+            cont = 0;printf("Quantum acabado entrenador [%i]\n", entrenador_pos + 1);
             libero_exec_me_agrego_a_ready_y_espero(entrenador, entrenador_pos);
         }
     }

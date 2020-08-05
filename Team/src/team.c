@@ -42,6 +42,12 @@ int main(void)
 	sem_init(semCiclosCPU, 0, 1);
 	ciclosCPUTotales = 0;
 
+	// Contador de cambios de contexto totales
+	semCambiosContexto = malloc(sizeof(sem_t));
+	sem_init(semCambiosContexto, 0, 1);
+	cambiosContextoTotales = 0;
+
+
 	t_config* config;
 
 	//Cargo las configuraciones del .config
@@ -200,6 +206,8 @@ int main(void)
 			numEntrenador++;
 		}
 
+		log_info(logger, "La cantidad de cambios de contexto totales es: %i", cambiosContextoTotales);
+
         eliminar_cola_ready();
         free(pool_hilos);
         destruir_semaforos(cant_entrenadores);
@@ -209,10 +217,6 @@ int main(void)
     {
     	printf("Archivo .config con errores.\n");
     }
-
-
-
-
 
     printf("Fin Team\n");
     return 0;

@@ -16,7 +16,7 @@
 
 // Funciones agregadas por nacho
 void sumarUnCicloCPU(d_entrenador*);
-
+void sumarUnCambioContexto();
 
 //*********************************************hilos que ya no sirven (fueron recodeados)
 //void activar_hilo_recepcion(pthread_t*);

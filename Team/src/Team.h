@@ -28,7 +28,7 @@ int32_t socketCaught;
 int32_t miSocket;
 uint32_t tiempo_reconexion;
 uint32_t PID;
-uint32_t ciclosCPUTotales;
+uint32_t ciclosCPUTotales, cambiosContextoTotales;
 int retardo;
 uint32_t conexionInicialEstablecida;
 
@@ -49,6 +49,7 @@ sem_t* semConexionBroker;
 sem_t* semLog;
 sem_t* semSubTerminada;
 sem_t* semCiclosCPU;
+sem_t* semCambiosContexto;
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);

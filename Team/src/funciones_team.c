@@ -113,6 +113,8 @@ void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
 
     log_info(logger, "El entrenador numero [%i] cambia al estado %s", entrenador->numeroEntrenador, stringAPrintear);
 
+    sumarUnCambioContexto();
+
 	entrenador->estado = nuevo_estado;
 }
 
@@ -469,6 +471,12 @@ void sumarUnCicloCPU(d_entrenador* unEntrenador){
 	sem_post(semCiclosCPU);
 
 	unEntrenador->cantCiclosCPU++;
+}
+
+void sumarUnCambioContexto(){
+	sem_wait(semCambiosContexto);
+	cambiosContextoTotales++;
+	sem_post(semCambiosContexto);
 }
 
 

@@ -53,6 +53,9 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
     //verifica que las CANTIDADES sean las mismas y las anota en cant_posiciones
     cant_posiciones = validar_tamano_vectores_extraidos(posicion_entrenador, objetivo, pokemones_actuales);
 
+    // Calculo cuanto mide el array de pokemons actuales
+    int cantidadPokemonsActuales = calcular_elementos_null(pokemones_actuales);
+
     if(cant_posiciones > 0)
     {
 		printf("La cantidad de entrenadores es: %i\n", cant_posiciones);
@@ -66,10 +69,10 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 			entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
 			entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
 			entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
-			if(llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]) == 0)
-			{
-				respuesta = -3;
-			}
+
+
+			llenar_objetivos_y_actuales_de_entrenador(&(entrenador[i]), objetivo[i], pokemones_actuales[i]);
+
 			i++;
 		}
 		if(respuesta == 1)

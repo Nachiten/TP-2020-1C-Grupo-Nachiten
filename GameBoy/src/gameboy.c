@@ -31,7 +31,7 @@ int main(int cantArg, char* arg[]) {
 				{					
 					if(cantArg != 6)
 					{
-						puts("La sintáxis correcta es: ./GameBoy TEAM APPEARED_POKEMON [POKEMON] [POSX] [POSY]");
+						puts("La sintáxis correcta es: ./gameboy TEAM APPEARED_POKEMON [POKEMON] [POSX] [POSY]");
 						return EXIT_FAILURE;
 					}
 					else
@@ -83,7 +83,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 7)
 							{
-								puts("La sintáxis correcta es: ./GameBoy BROKER NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD]");
+								puts("La sintáxis correcta es: ./gameboy BROKER NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD]");
 								return EXIT_FAILURE;
 							}
 							else
@@ -111,7 +111,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 7)
 							{
-								puts("La sintáxis correcta es: ./GameBoy BROKER APPEARED_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE_CORRELATIVO]");
+								puts("La sintáxis correcta es: ./gameboy BROKER APPEARED_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE_CORRELATIVO]");
 								return EXIT_FAILURE;
 							}
 
@@ -139,7 +139,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 6)
 							{
-								puts("La sintáxis correcta es: ./GameBoy BROKER CATCH_POKEMON [POKEMON] [POSX] [POSY]");
+								puts("La sintáxis correcta es: ./gameboy BROKER CATCH_POKEMON [POKEMON] [POSX] [POSY]");
 								return EXIT_FAILURE;
 							}
 
@@ -167,7 +167,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 5)
 							{
-								puts("La sintáxis correcta es: ./GameBoy BROKER CAUGHT_POKEMON [ID_MENSAJE_CORRELATIVO] [OK/FAIL]");
+								puts("La sintáxis correcta es: ./gameboy BROKER CAUGHT_POKEMON [ID_MENSAJE_CORRELATIVO] [OK/FAIL]");
 								return EXIT_FAILURE;
 							}
 
@@ -208,7 +208,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 4)
 							{
-								puts("La sintáxis correcta es: ./GameBoy BROKER GET_POKEMON [POKEMON]");
+								puts("La sintáxis correcta es: ./gameboy BROKER GET_POKEMON [POKEMON]");
 								return EXIT_FAILURE;
 							}
 
@@ -253,7 +253,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 8)
 							{
-								puts("La sintáxis correcta es: ./GameBoy GAMECARD NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD] [ID_MENSAJE]");
+								puts("La sintáxis correcta es: ./gameboy GAMECARD NEW_POKEMON [POKEMON] [POSX] [POSY] [CANTIDAD] [ID_MENSAJE]");
 								return EXIT_FAILURE;
 							}
 							else
@@ -282,7 +282,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 7)
 							{
-								puts("La sintáxis correcta es: ./GameBoy GAMECARD CATCH_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE]");
+								puts("La sintáxis correcta es: ./gameboy GAMECARD CATCH_POKEMON [POKEMON] [POSX] [POSY] [ID_MENSAJE]");
 								return EXIT_FAILURE;
 							}
 
@@ -310,7 +310,7 @@ int main(int cantArg, char* arg[]) {
 						{
 							if(cantArg != 5)
 							{
-								puts("La sintáxis correcta es: ./GameBoy GAMECARD GET_POKEMON [POKEMON] [ID_MENSAJE]");
+								puts("La sintáxis correcta es: ./gameboy GAMECARD GET_POKEMON [POKEMON] [ID_MENSAJE]");
 								return EXIT_FAILURE;
 							}
 
@@ -344,7 +344,7 @@ int main(int cantArg, char* arg[]) {
 		case SUSCRIPTOR://colas de mensajes de 1 a 6
 				if(cantArg != 4)
 				{
-					puts("La sintáxis correcta es: ./GameBoy SUSCRIPTOR [COLA_DE_MENSAJES] [TIEMPO]");
+					puts("La sintáxis correcta es: ./gameboy SUSCRIPTOR [COLA_DE_MENSAJES] [TIEMPO]");
 					return EXIT_FAILURE;
 				}
 				else

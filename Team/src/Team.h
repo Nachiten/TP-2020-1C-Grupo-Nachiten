@@ -44,7 +44,6 @@ sem_t* semIDFALSATEAM;
 pthread_mutex_t colaCaught_mutex;
 sem_t colaCaught_llenos;
 
-sem_t* semConexionInicialEstablecida;
 sem_t* semConexionBroker;
 sem_t* semLog;
 sem_t* semSubTerminada;
@@ -82,5 +81,5 @@ void esperar_conexiones_Gameboy(int32_t miSocket);
 int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
 void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
 void enviarMensajesGet();
-void enviarMensajeGet(char*);
+void enviarMensajeGet(char*, int32_t socketMandarGets);
 

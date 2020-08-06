@@ -1027,3 +1027,5 @@
 [INFO] 21:35:56:239 GAMECARD/(4876:4928): Conexión establecida con socket de BROKER
 [INFO] 21:35:58:240 GAMECARD/(4876:4929): Conexión establecida con socket de BROKER
 [WARNING] 21:36:02:714 GAMECARD/(4876:4927): GET | El pokemon E no existe
+[INFO] 00:39:53:952 GAMECARD/(10316:10317): Conexión establecida con socket de BROKER
+[WARNING] 00:40:13:463 GAMECARD/(10316:10318): CATCH | El pokemon Zergling no existe

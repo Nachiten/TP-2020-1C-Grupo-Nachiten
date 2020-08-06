@@ -69,7 +69,8 @@ int resultado_primero_cola_caught(){
 int posicion_primero_cola_caught(){
     int pos, num_envio;
     pos = 0;
-    num_envio = cola_caught.inicio->mensaje.num_envio;
+    num_envio = cola_caught.inicio->mensaje.num_envio;//todo SOLO SACA EL PRIMERO, SI ESE NO SIRVE LO SIGUE SACANDO ETERNAMENTE CADA VEZ QUE LLEGUE OTRO CAUGHT
+    //HAY QUE BORRAR EL DATO SI NO SIRVE
 
     sem_wait(&sem_envio);
 

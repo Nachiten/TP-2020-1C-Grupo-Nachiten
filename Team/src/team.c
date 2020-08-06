@@ -22,11 +22,6 @@ int main(void)
 	datosLocalized->cola = LOCALIZED;
 	datosCaught->cola = CAUGHT;
 
-	conexionInicialEstablecida = 0; //flag que se pone en 1 cuando se logro establecer conexion con Broker por 1RA VEZ (para saber cuando loguear errores de comunicacion y cuando no)
-	//inicializamos semaforo para var global del flag conexionInicialEstablecida
-	semConexionInicialEstablecida = malloc(sizeof(sem_t));
-	sem_init(semConexionInicialEstablecida, 0, 1);
-
 	cola_indices = malloc(sizeof(cola_mensajes_team)); //inicializacion de cola de mensajes
 
 	//inicializamos semaforo para loguear eventos
@@ -119,13 +114,12 @@ int main(void)
         pthread_create(&hilo_recibir_mensajes_gameboy, NULL, (void*)recepcion_Gameboy, NULL);
         pthread_detach(hilo_recibir_mensajes_gameboy);
 
-        // TODO | el envio mensajes GET, tendria que ser un pthread detach
         pthread_create(&hilo_mensajes_get, NULL, (void*)enviarMensajesGet, NULL);
         pthread_detach(hilo_mensajes_get);
 
 		while(objetivo_team>0)//"mientras que todavia haya pokemones que atrapar"
         {
-            if(sem_trywait(&colaMensajes_llenos) != -1)//todo cambiar a wait parece no terminar si es un wait?
+            if(sem_trywait(&colaMensajes_llenos) != -1)//todo parece no terminar si es un wait?
 			//if(sem_wait(&colaMensajes_llenos) != -1)
             {
                 i=0;
@@ -223,53 +217,48 @@ int main(void)
     return 0;
 }
 
-void enviarMensajesGet(){
+void enviarMensajesGet()
+{
+	puts("Estableciendo Conexion para mandar mensajes GET...");
+	int32_t socketMandarGets = establecer_conexion(IP,PUERTO);
 
-	printf("Intentando enviar mensajes GET:\n");
+	if(socketMandarGets > 0)
+	{
+		// Espera a que se termine de suscribir a todas las colas
+		sem_wait(semSubTerminada);
 
-	// Espera a que se termine de suscribir a todas las colas
-	sem_wait(semSubTerminada);
-	printf("Pude comenzar a enviar el mensaje:\n");
+		int i = 0;
+		// objetivo_actual es una lista de strings con cada pokemon que team necesita
+		while (objetivo_actual[i] != NULL)
+		{
+			//printf("Pokemon: %s\n", objetivo_actual[i]);
+			enviarMensajeGet(objetivo_actual[i], socketMandarGets);
+			i++;
+		}
 
-	int i = 0;
-	// objetivo_actual es una lista de strings con cada pokemon que team necesita
-	while (objetivo_actual[i] != NULL){
-		//printf("Pokemon: %s\n", objetivo_actual[i]);
-		enviarMensajeGet(objetivo_actual[i]);
-		i++;
-		// Sleep para no hacerlo reventar al broker
-		sleep(2);
+		close(socketMandarGets);
 	}
 
-	printf("Termine de enviar todos los mensajes:\n");
-
+	else
+	{
+		sem_wait(semLog);
+		log_info(logger, "Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.");
+		sem_post(semLog);
+	}
 }
 
-void enviarMensajeGet(char* pokemon){
-
+void enviarMensajeGet(char* pokemon, int32_t socketMandarGets)
+{
 	Get* structGet = malloc(sizeof(Get) + strlen(pokemon) + 1);
-
 	structGet->largoNombre = strlen(pokemon);
 	structGet->nombrePokemon = pokemon;
 	structGet->ID = 0;
 	structGet->corrID = -2;
 
-	int socketGet = establecer_conexion(IP, PUERTO);
-
-	if(socketGet > 0)
-	{
-		mandar_mensaje(structGet, GET, socketGet);
-
-		cerrar_conexion(socketGet);
-	}
-	else
-	{
-		puts("Se tiene que poner el comportamiento por default de GET");
-	}
+	mandar_mensaje(structGet, GET, socketMandarGets);
 
 	free(structGet);
 }
-
 
 void printearEntrenadores(d_entrenador* entrenadores, int cant_entrenadores){
 	int k = 0;
@@ -349,7 +338,7 @@ void destruir_sem_entrenadores(int cant_entrenadores){
     }
 }
 
-///////////////////-ENTRENADORES-/////////////////////toDo esto PARECE que estA funcionando, no tocar entrenadores
+///////////////////-ENTRENADORES-/////////////////////
 void inicializar_hilos_entrenadores(d_entrenador* entrenadores, int cant_entrenadores, pthread_t* hilos){
     int i;
     parametros_entrenador mensaje_entrenador;
@@ -477,7 +466,6 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	semConexionBroker= malloc(sizeof(sem_t));
 	sem_init(semConexionBroker, 0, 1);
 
-
 	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
 	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
 	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
@@ -558,17 +546,25 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
 
 	while(elSocket < 1 && estado_team !=1)
 	{
+		sem_wait(semLog);
+		log_info(logger, "Intentando Conexión a Broker...");
+		sem_post(semLog);
+
 		sleep(tiempo_reconexion);
 		elSocket = establecer_conexion(IP, PUERTO);//intento conectarme a Broker
 		if(elSocket >= 1)//me suscribo a la cola
 		{
+			sem_wait(semLog);
+			log_info(logger, "Conexión con Broker establecida, apostemos cuánto dura...");
+			sem_post(semLog);
 			estructuraSuscripcion->numeroCola = codigo;
 			mandar_mensaje(estructuraSuscripcion, SUSCRIPCION, elSocket);
-			sleep(1);
-//			//seteamos el flag en 1 para que de ahora en adelante nos pongamos a loguear intentos de RECONEXION
-//			sem_wait(semConexionInicialEstablecida);
-//			conexionInicialEstablecida = 1;TODO EN ESPERA A VER QUE ME RESPONDEN LOS AYUDANTES EN CUANTO AL LOG DE RECONEXION
-//			sem_post(semConexionInicialEstablecida);
+		}
+		else
+		{
+			sem_wait(semLog);
+			log_error(logger,"Intento de conexión fallido, intentando de nuevo en %u segundo/s.", tiempo_reconexion);
+			sem_post(semLog);
 		}
 	}
 	free(estructuraSuscripcion);
@@ -741,7 +737,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
     }
 }
 
-///////////////////-READY-/////////////////////ToDo SANTI
+///////////////////-READY-/////////////////////
 void administrar_cola_ready(void* parametros){
     int posicion;
     while(estado_team < 2){
@@ -787,11 +783,16 @@ void me_agrego_a_ready_y_espero(d_entrenador* entrenador, int pos){
 ///////////////////-CAUGHT-/////////////////////
 void administrar_cola_caught(void* parametros){
     int posicion;
-    while(estado_team == 0){
-        if(sem_trywait(&colaCaught_llenos) != -1){
-            posicion = posicion_primero_cola_caught();
-            sem_post(&sem_entrenadores[posicion]);
-            sem_wait(&extraccion_mensaje_caught);
+    while(estado_team == 0)
+    {
+        if(sem_trywait(&colaCaught_llenos) != -1)
+        {
+            posicion = posicion_primero_cola_caught();//todo arreglar
+            if(posicion != -1)
+            {
+            	sem_post(&sem_entrenadores[posicion]);
+				sem_wait(&extraccion_mensaje_caught);
+            }
         }
     }
 }
@@ -806,7 +807,7 @@ int recibir_caught(int posicion){
     return resultado;
 }
 
-///////////////////-DEADLOCK-/////////////////////ToDo NACHO
+///////////////////-DEADLOCK-/////////////////////
 void* ciclo_deadlock(parametros_deadlock* parametros){
     int tamano = parametros->tamano_respuesta;
     elemento_respuesta* respuesta = malloc(tamano * sizeof(elemento_respuesta));

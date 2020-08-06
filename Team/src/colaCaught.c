@@ -81,7 +81,7 @@ int posicion_primero_cola_caught(){
     sem_post(&sem_envio);
     if(pos == tamano_maximo){
         pos = -1;
-        printf("Error: ningún entrenador figura que haya hecho el envio: %i\n", num_envio);
+        printf("Ningún entrenador figura que haya hecho el envio: %i, mensaje descartado.\n", num_envio);
     }
 
     return pos;

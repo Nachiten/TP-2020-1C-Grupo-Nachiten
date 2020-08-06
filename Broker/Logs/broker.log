@@ -4252,3 +4252,221 @@
 [INFO] 22:12:12:772 Broker/(6516:6796): Envio un mensaje a uno de los suscriptores
 [INFO] 22:12:12:777 Broker/(6516:6516): Un proceso se conecto
 [INFO] 22:12:12:785 Broker/(6516:6516): Un proceso se conecto
+[INFO] 22:18:56:310 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:18:56:314 Broker/(6944:7136): Se suscribio a la cola Appeared
+[INFO] 22:18:58:311 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:18:58:314 Broker/(6944:7137): Se suscribio a la cola Localized
+[INFO] 22:19:00:312 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:19:00:319 Broker/(6944:7138): Se suscribio a la cola Caught
+[INFO] 22:19:01:315 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:19:01:323 Broker/(6944:7142): Se agrego un mensaje a la cola Get
+[INFO] 22:19:01:323 Broker/(6944:7142): Agregando mensaje a Cache...
+
+[INFO] 22:19:01:324 Broker/(6944:7142): Inicio de la partición elegida: 0.
+[INFO] 22:20:27:537 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:20:40:567 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:20:40:579 Broker/(6944:7162): Se agrego un mensaje a la cola Catch
+[INFO] 22:20:40:579 Broker/(6944:7162): Agregando mensaje a Cache...
+
+[INFO] 22:20:40:579 Broker/(6944:7162): Inicio de la partición elegida: 64.
+[INFO] 22:21:28:335 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:21:28:344 Broker/(6944:7173): Se agrego un mensaje a la cola Caught
+[INFO] 22:21:28:344 Broker/(6944:7173): Agregando mensaje a Cache...
+
+[INFO] 22:21:28:344 Broker/(6944:7173): Inicio de la partición elegida: 128.
+[INFO] 22:21:28:345 Broker/(6944:7173): Envio un mensaje a uno de los suscriptores
+[INFO] 22:21:28:345 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:22:45:407 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:22:45:418 Broker/(6944:7194): Se agrego un mensaje a la cola Caught
+[INFO] 22:22:45:418 Broker/(6944:7194): Agregando mensaje a Cache...
+
+[INFO] 22:22:45:419 Broker/(6944:7194): Inicio de la partición elegida: 192.
+[INFO] 22:22:45:420 Broker/(6944:7194): Envio un mensaje a uno de los suscriptores
+[INFO] 22:22:45:421 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:22:45:421 Broker/(6944:7194): Envio un mensaje a uno de los suscriptores
+[INFO] 22:22:46:422 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:18:403 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:18:416 Broker/(6944:7212): Se agrego un mensaje a la cola Caught
+[INFO] 22:23:18:416 Broker/(6944:7212): Agregando mensaje a Cache...
+
+[INFO] 22:23:18:417 Broker/(6944:7212): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 22:23:18:417 Broker/(6944:7212): Inicio de la partición elegida: 0.
+[INFO] 22:23:18:419 Broker/(6944:7212): Envio un mensaje a uno de los suscriptores
+[INFO] 22:23:18:420 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:18:420 Broker/(6944:7212): Envio un mensaje a uno de los suscriptores
+[INFO] 22:23:18:421 Broker/(6944:7212): Envio un mensaje a uno de los suscriptores
+[INFO] 22:23:19:422 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:20:425 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:59:807 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:59:826 Broker/(6944:7219): Se agrego un mensaje a la cola Caught
+[INFO] 22:23:59:826 Broker/(6944:7219): Agregando mensaje a Cache...
+
+[INFO] 22:23:59:826 Broker/(6944:7219): La particion 1 que iniciaba en 64 ahora está libre!
+[INFO] 22:23:59:826 Broker/(6944:7219): La particion 0 (Inicio de particion: 0) fue consolidada con la particion 1 (Inicio de particion: 64) y ahora se llaman partición 0.
+
+[INFO] 22:23:59:829 Broker/(6944:7219): La particion 1 que iniciaba en 128 ahora está libre!
+[INFO] 22:23:59:829 Broker/(6944:7219): Inicio de la partición elegida: 128.
+[INFO] 22:23:59:829 Broker/(6944:7219): Envio un mensaje a uno de los suscriptores
+[INFO] 22:23:59:831 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:23:59:833 Broker/(6944:7219): Envio un mensaje a uno de los suscriptores
+[INFO] 22:24:00:832 Broker/(6944:6944): Un proceso se conecto
+[INFO] 22:25:00:738 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:00:742 Broker/(7301:7302): Se suscribio a la cola Caught
+[INFO] 22:25:02:741 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:02:744 Broker/(7301:7305): Se suscribio a la cola Appeared
+[INFO] 22:25:04:742 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:04:749 Broker/(7301:7306): Se suscribio a la cola Localized
+[INFO] 22:25:36:552 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:36:555 Broker/(7301:7393): Se suscribio a la cola Appeared
+[INFO] 22:25:38:553 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:38:558 Broker/(7301:7394): Se suscribio a la cola Localized
+[INFO] 22:25:40:555 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:40:558 Broker/(7301:7395): Se suscribio a la cola Caught
+[INFO] 22:25:41:556 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:25:41:559 Broker/(7301:7399): Se agrego un mensaje a la cola Get
+[INFO] 22:25:41:559 Broker/(7301:7399): Agregando mensaje a Cache...
+
+[INFO] 22:25:41:559 Broker/(7301:7399): Inicio de la partición elegida: 0.
+[INFO] 22:25:47:212 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:00:235 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:00:243 Broker/(7301:7403): Se agrego un mensaje a la cola Catch
+[INFO] 22:26:00:243 Broker/(7301:7403): Agregando mensaje a Cache...
+
+[INFO] 22:26:00:244 Broker/(7301:7403): Inicio de la partición elegida: 64.
+[INFO] 22:26:10:795 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:10:811 Broker/(7301:7407): Se agrego un mensaje a la cola Caught
+[INFO] 22:26:10:811 Broker/(7301:7407): Agregando mensaje a Cache...
+
+[INFO] 22:26:10:811 Broker/(7301:7407): Inicio de la partición elegida: 128.
+[INFO] 22:26:10:814 Broker/(7301:7407): Envio un mensaje a uno de los suscriptores
+[INFO] 22:26:10:814 Broker/(7301:7407): Envio un mensaje a uno de los suscriptores
+[INFO] 22:26:10:815 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:10:818 Broker/(7301:7407): Se confirmo un mensaje de la cola Caught
+[INFO] 22:26:22:231 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:22:241 Broker/(7301:7415): Se agrego un mensaje a la cola Caught
+[INFO] 22:26:22:242 Broker/(7301:7415): Agregando mensaje a Cache...
+
+[INFO] 22:26:22:242 Broker/(7301:7415): Inicio de la partición elegida: 192.
+[INFO] 22:26:22:243 Broker/(7301:7415): Este mensaje no se envia porque fue confirmado
+[INFO] 22:26:22:246 Broker/(7301:7415): Envio un mensaje a uno de los suscriptores
+[INFO] 22:26:22:251 Broker/(7301:7301): Un proceso se conecto
+[INFO] 22:26:22:251 Broker/(7301:7415): Envio un mensaje a uno de los suscriptores
+[INFO] 22:26:42:268 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:26:42:284 Broker/(7417:7418): Se suscribio a la cola Localized
+[INFO] 22:26:55:346 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:26:55:354 Broker/(7417:7449): Se suscribio a la cola Appeared
+[INFO] 22:26:57:347 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:26:57:350 Broker/(7417:7450): Se suscribio a la cola Localized
+[INFO] 22:26:59:348 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:26:59:364 Broker/(7417:7451): Se suscribio a la cola Caught
+[INFO] 22:27:00:350 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:27:00:358 Broker/(7417:7455): Se agrego un mensaje a la cola Get
+[INFO] 22:27:00:358 Broker/(7417:7455): Agregando mensaje a Cache...
+
+[INFO] 22:27:00:359 Broker/(7417:7455): Inicio de la partición elegida: 0.
+[INFO] 22:27:09:199 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:27:22:226 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:27:22:231 Broker/(7417:7466): Se agrego un mensaje a la cola Catch
+[INFO] 22:27:22:231 Broker/(7417:7466): Agregando mensaje a Cache...
+
+[INFO] 22:27:22:231 Broker/(7417:7466): Inicio de la partición elegida: 64.
+[INFO] 22:27:55:560 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:27:55:572 Broker/(7417:7470): Se agrego un mensaje a la cola Caught
+[INFO] 22:27:55:572 Broker/(7417:7470): Agregando mensaje a Cache...
+
+[INFO] 22:27:55:573 Broker/(7417:7470): Inicio de la partición elegida: 128.
+[INFO] 22:27:55:576 Broker/(7417:7470): Envio un mensaje a uno de los suscriptores
+[INFO] 22:27:55:577 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:27:55:577 Broker/(7417:7470): Se confirmo un mensaje de la cola Caught
+[INFO] 22:28:23:558 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:23:563 Broker/(7417:7515): Se suscribio a la cola Appeared
+[INFO] 22:28:25:560 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:25:563 Broker/(7417:7516): Se suscribio a la cola Localized
+[INFO] 22:28:27:561 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:27:563 Broker/(7417:7517): Se suscribio a la cola Caught
+[INFO] 22:28:27:564 Broker/(7417:7517): Este mensaje no se envia porque fue confirmado
+[INFO] 22:28:27:566 Broker/(7417:7517): Envio un mensaje a uno de los suscriptores
+[INFO] 22:28:28:562 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:28:571 Broker/(7417:7521): Se agrego un mensaje a la cola Get
+[INFO] 22:28:28:572 Broker/(7417:7521): Agregando mensaje a Cache...
+
+[INFO] 22:28:28:577 Broker/(7417:7521): Inicio de la partición elegida: 192.
+[INFO] 22:28:28:578 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:28:579 Broker/(7417:7522): Se confirmo un mensaje de la cola Caught
+[INFO] 22:28:51:276 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:56:286 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:28:56:290 Broker/(7417:7526): Se agrego un mensaje a la cola Catch
+[INFO] 22:28:56:290 Broker/(7417:7526): Agregando mensaje a Cache...
+
+[INFO] 22:28:56:290 Broker/(7417:7526): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 22:28:56:290 Broker/(7417:7526): Inicio de la partición elegida: 0.
+[INFO] 22:30:31:99 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:30:31:112 Broker/(7417:7539): Agregando mensaje a Cache...
+
+[INFO] 22:30:31:112 Broker/(7417:7539): La particion 1 que iniciaba en 64 ahora está libre!
+[INFO] 22:30:31:112 Broker/(7417:7539): La particion 0 (Inicio de particion: 0) fue consolidada con la particion 1 (Inicio de particion: 64) y ahora se llaman partición 0.
+
+[INFO] 22:30:31:113 Broker/(7417:7539): La particion 1 que iniciaba en 128 ahora está libre!
+[INFO] 22:30:31:113 Broker/(7417:7539): Inicio de la partición elegida: 128.
+[INFO] 22:31:12:900 Broker/(7417:7417): Un proceso se conecto
+[INFO] 22:31:12:912 Broker/(7417:7543): Se agrego un mensaje a la cola Caught
+[INFO] 22:31:12:913 Broker/(7417:7543): Agregando mensaje a Cache...
+
+[INFO] 22:31:12:913 Broker/(7417:7543): La particion 2 que iniciaba en 192 ahora está libre!
+[INFO] 22:31:12:913 Broker/(7417:7543): Inicio de la partición elegida: 192.
+[INFO] 22:31:12:913 Broker/(7417:7543): Envio un mensaje a uno de los suscriptores
+[INFO] 22:31:12:914 Broker/(7417:7543): Envio un mensaje a uno de los suscriptores
+[INFO] 22:32:38:262 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:32:38:278 Broker/(7757:7791): Se suscribio a la cola Appeared
+[INFO] 22:32:40:265 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:32:40:289 Broker/(7757:7792): Se suscribio a la cola Localized
+[INFO] 22:32:42:267 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:32:42:290 Broker/(7757:7793): Se suscribio a la cola Caught
+[INFO] 22:32:43:269 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:32:43:284 Broker/(7757:7797): Se agrego un mensaje a la cola Get
+[INFO] 22:32:43:285 Broker/(7757:7797): Agregando mensaje a Cache...
+
+[INFO] 22:32:43:285 Broker/(7757:7797): Inicio de la partición elegida: 0.
+[INFO] 22:32:59:971 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:33:36:983 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:33:37:7 Broker/(7757:7809): Se agrego un mensaje a la cola Catch
+[INFO] 22:33:37:7 Broker/(7757:7809): Agregando mensaje a Cache...
+
+[INFO] 22:33:37:7 Broker/(7757:7809): Inicio de la partición elegida: 64.
+[INFO] 22:33:49:318 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:33:49:354 Broker/(7757:7818): Se agrego un mensaje a la cola Caught
+[INFO] 22:33:49:356 Broker/(7757:7818): Agregando mensaje a Cache...
+
+[INFO] 22:33:49:356 Broker/(7757:7818): Inicio de la partición elegida: 128.
+[INFO] 22:34:33:512 Broker/(7757:7818): Envio un mensaje a uno de los suscriptores
+[INFO] 22:34:36:226 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:34:44:221 Broker/(7757:7839): Se confirmo un mensaje de la cola Caught
+[INFO] 22:34:56:359 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:34:56:396 Broker/(7757:7860): Se agrego un mensaje a la cola Caught
+[INFO] 22:34:56:401 Broker/(7757:7860): Agregando mensaje a Cache...
+
+[INFO] 22:34:56:401 Broker/(7757:7860): Inicio de la partición elegida: 192.
+[INFO] 22:35:08:402 Broker/(7757:7860): Envio un mensaje a uno de los suscriptores
+[INFO] 22:35:10:156 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:35:15:257 Broker/(7757:7873): Se confirmo un mensaje de la cola Caught
+[INFO] 22:35:38:679 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:35:38:708 Broker/(7757:7884): Se agrego un mensaje a la cola Caught
+[INFO] 22:35:38:708 Broker/(7757:7884): Agregando mensaje a Cache...
+
+[INFO] 22:35:38:709 Broker/(7757:7884): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 22:35:38:709 Broker/(7757:7884): Inicio de la partición elegida: 0.
+[INFO] 22:35:52:468 Broker/(7757:7884): Envio un mensaje a uno de los suscriptores
+[INFO] 22:35:54:544 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:36:00:773 Broker/(7757:7897): Se confirmo un mensaje de la cola Caught
+[INFO] 22:36:37:529 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:36:37:555 Broker/(7757:7917): Se agrego un mensaje a la cola Caught
+[INFO] 22:36:37:555 Broker/(7757:7917): Agregando mensaje a Cache...
+
+[INFO] 22:36:37:556 Broker/(7757:7917): La particion 1 que iniciaba en 64 ahora está libre!
+[INFO] 22:36:37:556 Broker/(7757:7917): La particion 0 (Inicio de particion: 0) fue consolidada con la particion 1 (Inicio de particion: 64) y ahora se llaman partición 0.
+
+[INFO] 22:36:37:556 Broker/(7757:7917): La particion 1 que iniciaba en 128 ahora está libre!
+[INFO] 22:36:37:556 Broker/(7757:7917): Inicio de la partición elegida: 128.
+[INFO] 22:36:40:736 Broker/(7757:7917): Envio un mensaje a uno de los suscriptores
+[INFO] 22:36:40:736 Broker/(7757:7757): Un proceso se conecto
+[INFO] 22:36:40:737 Broker/(7757:7917): Se confirmo un mensaje de la cola Caught

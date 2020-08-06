@@ -566,3 +566,158 @@ ID Correlativa: -2.
 [INFO] 20:51:14:199 Team/(13374:13374): DEADLOCK | No existe deadlock en el sistema
 [INFO] 20:51:14:200 Team/(13374:13374): La cantidad de ciclos totales de CPU es: 18
 [INFO] 20:51:14:200 Team/(13374:13374): El entrenador numero [1] realizo [18] ciclos de CPU
+[INFO] 22:20:27:536 Team/(7124:7134): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:20:28:551 Team/(7124:7130): El entrenador numero [1] cambia al estado READY
+[INFO] 22:20:28:562 Team/(7124:7130): El entrenador numero [1] cambia al estado EXEC
+[INFO] 22:20:28:562 Team/(7124:7130): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 22:20:38:566 Team/(7124:7130): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 22:20:38:566 Team/(7124:7130): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [3,5].
+[INFO] 22:20:40:580 Team/(7124:7130): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:1.
+[INFO] 22:20:40:580 Team/(7124:7130): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 22:21:28:345 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 77.
+[INFO] 22:22:45:421 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 77.
+[INFO] 22:22:46:421 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 3
+ID Correlativa: 0.
+[INFO] 22:23:18:420 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 77.
+[INFO] 22:23:19:422 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 3
+ID Correlativa: 0.
+[INFO] 22:23:20:424 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 4
+ID Correlativa: 1.
+[INFO] 22:23:59:831 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 4
+ID Correlativa: 1.
+[INFO] 22:24:00:832 Team/(7124:7141): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 5
+ID Correlativa: 555.
+[INFO] 22:25:47:212 Team/(7381:7391): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:25:48:214 Team/(7381:7387): El entrenador numero [1] cambia al estado READY
+[INFO] 22:25:48:226 Team/(7381:7387): El entrenador numero [1] cambia al estado EXEC
+[INFO] 22:25:48:226 Team/(7381:7387): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 22:25:58:234 Team/(7381:7387): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 22:25:58:234 Team/(7381:7387): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [3,5].
+[INFO] 22:26:00:245 Team/(7381:7387): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:1.
+[INFO] 22:26:00:245 Team/(7381:7387): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 22:26:10:815 Team/(7381:7398): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 0.
+[INFO] 22:26:22:250 Team/(7381:7398): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 0.
+[INFO] 22:27:09:198 Team/(7437:7447): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:27:10:206 Team/(7437:7443): El entrenador numero [1] cambia al estado READY
+[INFO] 22:27:10:221 Team/(7437:7443): El entrenador numero [1] cambia al estado EXEC
+[INFO] 22:27:10:222 Team/(7437:7443): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 3,5
+[INFO] 22:27:20:225 Team/(7437:7443): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 3,5
+[INFO] 22:27:20:225 Team/(7437:7443): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [3,5].
+[INFO] 22:27:22:232 Team/(7437:7443): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:1.
+[INFO] 22:27:22:233 Team/(7437:7443): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 22:27:55:577 Team/(7437:7454): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 1.
+[INFO] 22:27:56:582 Team/(7437:7443): El entrenador numero [1] cambia al estado EXIT
+[INFO] 22:27:56:584 Team/(7437:7437): DEADLOCK | No existe deadlock en el sistema
+[INFO] 22:27:56:585 Team/(7437:7437): La cantidad de ciclos totales de CPU es: 6
+[INFO] 22:27:56:590 Team/(7437:7437): El entrenador numero [1] realizo [6] ciclos de CPU
+[INFO] 22:27:56:590 Team/(7437:7437): La cantidad de cambios de contexto totales es: 4
+[INFO] 22:28:28:572 Team/(7503:7520): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 1.
+[INFO] 22:28:51:276 Team/(7503:7513): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 2
+Pos Y: 2
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:28:52:282 Team/(7503:7509): El entrenador numero [1] cambia al estado READY
+[INFO] 22:28:52:284 Team/(7503:7509): El entrenador numero [1] cambia al estado EXEC
+[INFO] 22:28:52:284 Team/(7503:7509): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 2,2
+[INFO] 22:28:54:285 Team/(7503:7509): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 2,2
+[INFO] 22:28:54:285 Team/(7503:7509): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [2,2].
+[INFO] 22:28:56:291 Team/(7503:7509): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:4.
+[INFO] 22:28:56:291 Team/(7503:7509): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 22:32:59:971 Team/(7784:7789): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 10
+Pos Y: 10
+ID: 0
+ID Correlativa: -2.
+[INFO] 22:33:00:972 Team/(7784:7785): El entrenador numero [1] cambia al estado READY
+[INFO] 22:33:00:974 Team/(7784:7785): El entrenador numero [1] cambia al estado EXEC
+[INFO] 22:33:00:974 Team/(7784:7785): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 10,10
+[INFO] 22:33:34:983 Team/(7784:7785): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 10,10
+[INFO] 22:33:34:983 Team/(7784:7785): El entrenador [1] está intentando atrapar un Bulbasaur!! en las coordenadas [10,10].
+[INFO] 22:33:37:11 Team/(7784:7785): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:1.
+[INFO] 22:33:37:11 Team/(7784:7785): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 22:34:36:226 Team/(7784:7796): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 2
+ID Correlativa: 10.
+[INFO] 22:35:10:156 Team/(7784:7796): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 3
+ID Correlativa: 0.
+[INFO] 22:35:54:544 Team/(7784:7796): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 4
+ID Correlativa: 1.
+[INFO] 22:36:40:736 Team/(7784:7796): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 5
+ID Correlativa: 2.

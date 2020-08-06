@@ -172,7 +172,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
-				sleep(1);
+				//sleep(1);
 
 				char* pokemon = mensajeNewRecibido->nombrePokemon;
 				int posX = mensajeNewRecibido->posPokemon.x;
@@ -201,7 +201,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
-				sleep(1);
+				//sleep(1);
 
 				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
 
@@ -222,7 +222,7 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				mandar_mensaje(mensajeConfirm, CONFIRMACION, socketAck);
 				cerrar_conexion(socketAck);
 				free(mensajeConfirm);
-				sleep(1);
+				//sleep(1);
 
 				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
 
@@ -259,7 +259,7 @@ int conectarseABroker(t_log* logger, codigo_operacion nombreCola){
 	if ((socket != -1) && (socket != 0))
 	{
 		//sem_wait(semConexionBroker);
-		sleep(1);
+		//sleep(1);
 		suscribirseAUnaCola(socket, nombreCola);
 		//sem_post(semConexionBroker);
 	}

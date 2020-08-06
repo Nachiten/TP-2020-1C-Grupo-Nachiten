@@ -389,7 +389,10 @@ int main(int cantArg, char* arg[]) {
 							sleep(cambia_a_int(arg[3]));
 
 							//mandamos el mensaje pidiendo dessuscribirse a la cola
-							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socket);
+							int32_t socketDesSuscripcion = establecer_conexion(IP,PUERTO);//creo conexión con el Broker.
+							mandar_mensaje(estructuraDessuscribirse, DESSUSCRIPCION, socketDesSuscripcion);
+							close(socketDesSuscripcion);
+
 
 							//libero las estructuras que acabo de crear para suscribirme y dessuscribirme
 							free(estructuraSuscribirse);

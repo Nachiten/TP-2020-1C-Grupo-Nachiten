@@ -162,36 +162,36 @@ void liberar_estructuras(void* mensaje, codigo_operacion tipoMensaje)
 //volvieron en forma de fichas!!
 void libero_estructura_appeared(Appeared* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }
 
 void libero_estructura_New(New* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }
 
 void libero_estructura_Catch(Catch* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }
 
 void libero_estructura_Caught(Caught* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }
 
 void libero_estructura_Get(Get* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }
 
 void libero_estructura_Localized(Localized* estructura)
 {
-	free(estructura->nombrePokemon);
+	//free(estructura->nombrePokemon);
 	free(estructura);
 }

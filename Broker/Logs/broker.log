@@ -1957,3 +1957,1267 @@
 
 [INFO] 20:32:16:595 Broker/(2746:2831): Inicio de la partición elegida: 123.
 [INFO] 20:32:16:595 Broker/(2746:2831): Envio un mensaje a uno de los suscriptores
+[INFO] 20:36:14:783 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:15:787 Broker/(2970:2979): Se suscribio a la cola New
+[INFO] 20:36:18:110 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:18:118 Broker/(2970:2981): Se suscribio a la cola Localized
+[INFO] 20:36:19:788 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:20:790 Broker/(2970:2983): Se suscribio a la cola Catch
+[INFO] 20:36:24:158 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:24:191 Broker/(2970:2985): Se agrego un mensaje a la cola Get
+[INFO] 20:36:24:191 Broker/(2970:2985): Agregando mensaje a Cache...
+
+[INFO] 20:36:24:191 Broker/(2970:2985): Inicio de la partición elegida: 0.
+[INFO] 20:36:24:791 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:25:793 Broker/(2970:2986): Se suscribio a la cola Get
+[INFO] 20:36:25:793 Broker/(2970:2986): Envio un mensaje a uno de los suscriptores
+[INFO] 20:36:26:796 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:26:806 Broker/(2970:2990): Se confirmo un mensaje de la cola Get
+[INFO] 20:36:27:799 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:27:803 Broker/(2970:2991): Se agrego un mensaje a la cola Localized
+[INFO] 20:36:27:803 Broker/(2970:2991): Agregando mensaje a Cache...
+
+[INFO] 20:36:27:804 Broker/(2970:2991): Inicio de la partición elegida: 40.
+[INFO] 20:36:33:962 Broker/(2970:2991): Envio un mensaje a uno de los suscriptores
+[INFO] 20:36:33:963 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:36:33:963 Broker/(2970:2991): Se confirmo un mensaje de la cola Localized
+[INFO] 20:37:12:62 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:37:12:94 Broker/(2970:3014): Se agrego un mensaje a la cola Get
+[INFO] 20:37:12:94 Broker/(2970:3014): Agregando mensaje a Cache...
+
+[INFO] 20:37:12:94 Broker/(2970:3014): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:37:12:94 Broker/(2970:3014): Compactando...
+[INFO] 20:37:12:94 Broker/(2970:3014): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:37:12:95 Broker/(2970:3014): Inicio de la partición elegida: 40.
+[INFO] 20:37:12:95 Broker/(2970:3014): Envio un mensaje a uno de los suscriptores
+[INFO] 20:37:12:95 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:37:12:96 Broker/(2970:3014): Se confirmo un mensaje de la cola Get
+[INFO] 20:37:13:97 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:37:13:113 Broker/(2970:3016): Se agrego un mensaje a la cola Localized
+[INFO] 20:37:13:113 Broker/(2970:3016): Agregando mensaje a Cache...
+
+[INFO] 20:37:13:115 Broker/(2970:3016): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:37:13:115 Broker/(2970:3016): Compactando...
+[INFO] 20:37:13:115 Broker/(2970:3016): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:37:13:115 Broker/(2970:3016): Inicio de la partición elegida: 40.
+[INFO] 20:37:13:116 Broker/(2970:3016): Envio un mensaje a uno de los suscriptores
+[INFO] 20:37:13:117 Broker/(2970:2970): Un proceso se conecto
+[INFO] 20:37:13:117 Broker/(2970:3016): Se confirmo un mensaje de la cola Localized
+[INFO] 20:44:12:756 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:44:13:757 Broker/(3185:3191): Se suscribio a la cola New
+[INFO] 20:44:14:762 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:44:15:763 Broker/(3185:3192): Se suscribio a la cola Catch
+[INFO] 20:44:16:764 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:44:17:508 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:44:17:510 Broker/(3185:3195): Se suscribio a la cola Localized
+[INFO] 20:44:20:643 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:44:20:648 Broker/(3185:3198): Se agrego un mensaje a la cola Get
+[INFO] 20:44:20:648 Broker/(3185:3198): Agregando mensaje a Cache...
+
+[INFO] 20:44:20:649 Broker/(3185:3198): Inicio de la partición elegida: 0.
+[INFO] 20:44:37:511 Broker/(3185:3185): Un proceso se conecto
+[INFO] 20:45:44:394 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:45:397 Broker/(3255:3265): Se suscribio a la cola Get
+[INFO] 20:45:46:400 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:47:402 Broker/(3255:3271): Se suscribio a la cola New
+[INFO] 20:45:48:403 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:49:404 Broker/(3255:3272): Se suscribio a la cola Catch
+[INFO] 20:45:54:47 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:54:65 Broker/(3255:3274): Se suscribio a la cola Localized
+[INFO] 20:45:56:298 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:56:324 Broker/(3255:3277): Se agrego un mensaje a la cola Get
+[INFO] 20:45:56:324 Broker/(3255:3277): Agregando mensaje a Cache...
+
+[INFO] 20:45:56:324 Broker/(3255:3277): Inicio de la partición elegida: 0.
+[INFO] 20:45:56:325 Broker/(3255:3277): Envio un mensaje a uno de los suscriptores
+[INFO] 20:45:56:325 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:56:326 Broker/(3255:3277): Se confirmo un mensaje de la cola Get
+[INFO] 20:45:57:331 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:57:336 Broker/(3255:3281): Se agrego un mensaje a la cola Localized
+[INFO] 20:45:57:336 Broker/(3255:3281): Agregando mensaje a Cache...
+
+[INFO] 20:45:57:336 Broker/(3255:3281): Inicio de la partición elegida: 40.
+[INFO] 20:45:57:339 Broker/(3255:3281): Envio un mensaje a uno de los suscriptores
+[INFO] 20:45:57:341 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:45:57:342 Broker/(3255:3281): Se confirmo un mensaje de la cola Localized
+[INFO] 20:46:14:48 Broker/(3255:3255): Un proceso se conecto
+[INFO] 20:46:52:903 Broker/(3255:3283): Se desuscribio a la cola Localized
+[INFO] 20:49:06:327 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:07:328 Broker/(3369:3375): Se suscribio a la cola Catch
+[INFO] 20:49:08:328 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:09:330 Broker/(3369:3376): Se suscribio a la cola New
+[INFO] 20:49:10:331 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:11:332 Broker/(3369:3377): Se suscribio a la cola Get
+[INFO] 20:49:17:498 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:17:503 Broker/(3369:3380): Se agrego un mensaje a la cola Get
+[INFO] 20:49:17:503 Broker/(3369:3380): Agregando mensaje a Cache...
+
+[INFO] 20:49:17:503 Broker/(3369:3380): Inicio de la partición elegida: 0.
+[INFO] 20:49:17:504 Broker/(3369:3380): Envio un mensaje a uno de los suscriptores
+[INFO] 20:49:17:504 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:17:505 Broker/(3369:3380): Se confirmo un mensaje de la cola Get
+[INFO] 20:49:18:506 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:18:510 Broker/(3369:3382): Se agrego un mensaje a la cola Localized
+[INFO] 20:49:18:510 Broker/(3369:3382): Agregando mensaje a Cache...
+
+[INFO] 20:49:18:510 Broker/(3369:3382): Inicio de la partición elegida: 40.
+[INFO] 20:49:20:114 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:20:119 Broker/(3369:3384): Se agrego un mensaje a la cola Get
+[INFO] 20:49:20:119 Broker/(3369:3384): Agregando mensaje a Cache...
+
+[INFO] 20:49:20:119 Broker/(3369:3384): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:49:20:119 Broker/(3369:3384): Compactando...
+[INFO] 20:49:20:119 Broker/(3369:3384): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:49:20:120 Broker/(3369:3384): Inicio de la partición elegida: 40.
+[INFO] 20:49:20:120 Broker/(3369:3384): Envio un mensaje a uno de los suscriptores
+[INFO] 20:49:20:121 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:20:121 Broker/(3369:3384): Se confirmo un mensaje de la cola Get
+[INFO] 20:49:21:122 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:21:123 Broker/(3369:3386): Se agrego un mensaje a la cola Localized
+[INFO] 20:49:21:123 Broker/(3369:3386): Agregando mensaje a Cache...
+
+[INFO] 20:49:21:123 Broker/(3369:3386): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:49:21:123 Broker/(3369:3386): Compactando...
+[INFO] 20:49:21:123 Broker/(3369:3386): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:49:21:123 Broker/(3369:3386): Inicio de la partición elegida: 40.
+[INFO] 20:49:26:547 Broker/(3369:3369): Un proceso se conecto
+[INFO] 20:49:26:548 Broker/(3369:3388): Se suscribio a la cola Localized
+[INFO] 20:49:26:548 Broker/(3369:3388): Envio un mensaje a uno de los suscriptores
+[INFO] 20:49:47:966 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:48:967 Broker/(3410:3416): Se suscribio a la cola Get
+[INFO] 20:49:49:968 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:50:971 Broker/(3410:3417): Se suscribio a la cola Catch
+[INFO] 20:49:51:971 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:52:972 Broker/(3410:3418): Se suscribio a la cola New
+[INFO] 20:49:55:18 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:55:24 Broker/(3410:3420): Se agrego un mensaje a la cola Get
+[INFO] 20:49:55:24 Broker/(3410:3420): Agregando mensaje a Cache...
+
+[INFO] 20:49:55:24 Broker/(3410:3420): Inicio de la partición elegida: 0.
+[INFO] 20:49:55:24 Broker/(3410:3420): Envio un mensaje a uno de los suscriptores
+[INFO] 20:49:55:25 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:55:25 Broker/(3410:3420): Se confirmo un mensaje de la cola Get
+[INFO] 20:49:56:26 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:56:27 Broker/(3410:3422): Se agrego un mensaje a la cola Localized
+[INFO] 20:49:56:27 Broker/(3410:3422): Agregando mensaje a Cache...
+
+[INFO] 20:49:56:27 Broker/(3410:3422): Inicio de la partición elegida: 40.
+[INFO] 20:49:59:239 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:59:241 Broker/(3410:3426): Se suscribio a la cola Localized
+[INFO] 20:49:59:241 Broker/(3410:3426): Envio un mensaje a uno de los suscriptores
+[INFO] 20:49:59:243 Broker/(3410:3410): Un proceso se conecto
+[INFO] 20:49:59:249 Broker/(3410:3428): Se confirmo un mensaje de la cola Localized
+[INFO] 20:50:22:578 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:23:579 Broker/(3455:3462): Se suscribio a la cola New
+[INFO] 20:50:24:580 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:25:582 Broker/(3455:3463): Se suscribio a la cola Catch
+[INFO] 20:50:26:582 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:27:584 Broker/(3455:3464): Se suscribio a la cola Get
+[INFO] 20:50:29:587 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:29:592 Broker/(3455:3466): Se agrego un mensaje a la cola Get
+[INFO] 20:50:29:593 Broker/(3455:3466): Agregando mensaje a Cache...
+
+[INFO] 20:50:29:593 Broker/(3455:3466): Inicio de la partición elegida: 0.
+[INFO] 20:50:29:593 Broker/(3455:3466): Envio un mensaje a uno de los suscriptores
+[INFO] 20:50:29:594 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:29:595 Broker/(3455:3466): Se confirmo un mensaje de la cola Get
+[INFO] 20:50:30:594 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:30:595 Broker/(3455:3468): Se agrego un mensaje a la cola Localized
+[INFO] 20:50:30:595 Broker/(3455:3468): Agregando mensaje a Cache...
+
+[INFO] 20:50:30:595 Broker/(3455:3468): Inicio de la partición elegida: 40.
+[INFO] 20:50:33:413 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:33:419 Broker/(3455:3470): Se agrego un mensaje a la cola Get
+[INFO] 20:50:33:419 Broker/(3455:3470): Agregando mensaje a Cache...
+
+[INFO] 20:50:33:419 Broker/(3455:3470): Inicio de la partición elegida: 80.
+[INFO] 20:50:33:419 Broker/(3455:3470): Envio un mensaje a uno de los suscriptores
+[INFO] 20:50:33:420 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:33:421 Broker/(3455:3470): Se confirmo un mensaje de la cola Get
+[INFO] 20:50:34:422 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:34:423 Broker/(3455:3472): Se agrego un mensaje a la cola Localized
+[INFO] 20:50:34:423 Broker/(3455:3472): Agregando mensaje a Cache...
+
+[INFO] 20:50:34:423 Broker/(3455:3472): Inicio de la partición elegida: 120.
+[INFO] 20:50:38:756 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:38:761 Broker/(3455:3474): Se agrego un mensaje a la cola Get
+[INFO] 20:50:38:761 Broker/(3455:3474): Agregando mensaje a Cache...
+
+[INFO] 20:50:38:761 Broker/(3455:3474): Inicio de la partición elegida: 160.
+[INFO] 20:50:38:761 Broker/(3455:3474): Envio un mensaje a uno de los suscriptores
+[INFO] 20:50:38:762 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:38:762 Broker/(3455:3474): Se confirmo un mensaje de la cola Get
+[INFO] 20:50:39:763 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:39:767 Broker/(3455:3476): Se agrego un mensaje a la cola Localized
+[INFO] 20:50:39:767 Broker/(3455:3476): Agregando mensaje a Cache...
+
+[INFO] 20:50:39:767 Broker/(3455:3476): Inicio de la partición elegida: 200.
+[INFO] 20:50:41:651 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:41:657 Broker/(3455:3478): Se agrego un mensaje a la cola Get
+[INFO] 20:50:41:657 Broker/(3455:3478): Agregando mensaje a Cache...
+
+[INFO] 20:50:41:657 Broker/(3455:3478): Inicio de la partición elegida: 240.
+[INFO] 20:50:41:657 Broker/(3455:3478): Envio un mensaje a uno de los suscriptores
+[INFO] 20:50:41:658 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:41:658 Broker/(3455:3478): Se confirmo un mensaje de la cola Get
+[INFO] 20:50:42:660 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:50:42:661 Broker/(3455:3480): Se agrego un mensaje a la cola Localized
+[INFO] 20:50:42:661 Broker/(3455:3480): Agregando mensaje a Cache...
+
+[INFO] 20:50:42:661 Broker/(3455:3480): Inicio de la partición elegida: 280.
+[INFO] 20:51:19:757 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:19:759 Broker/(3455:3492): Se suscribio a la cola Localized
+[INFO] 20:51:19:759 Broker/(3455:3492): Envio un mensaje a uno de los suscriptores
+[INFO] 20:51:19:759 Broker/(3455:3492): Envio un mensaje a uno de los suscriptores
+[INFO] 20:51:19:762 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:19:762 Broker/(3455:3492): Envio un mensaje a uno de los suscriptores
+[INFO] 20:51:19:764 Broker/(3455:3492): Envio un mensaje a uno de los suscriptores
+[INFO] 20:51:19:765 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:19:767 Broker/(3455:3492): Se confirmo un mensaje de la cola Localized
+[INFO] 20:51:19:768 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:19:768 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:19:770 Broker/(3455:3494): Se confirmo un mensaje de la cola Localized
+[INFO] 20:51:39:759 Broker/(3455:3455): Un proceso se conecto
+[INFO] 20:51:39:763 Broker/(3455:3498): Se desuscribio de la cola Localized
+[INFO] 20:53:21:421 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:22:422 Broker/(3571:3580): Se suscribio a la cola Get
+[INFO] 20:53:23:423 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:24:425 Broker/(3571:3581): Se suscribio a la cola Catch
+[INFO] 20:53:25:426 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:26:427 Broker/(3571:3587): Se suscribio a la cola New
+[INFO] 20:53:32:727 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:32:762 Broker/(3571:3589): Se agrego un mensaje a la cola Get
+[INFO] 20:53:32:762 Broker/(3571:3589): Agregando mensaje a Cache...
+
+[INFO] 20:53:32:763 Broker/(3571:3589): Inicio de la partición elegida: 0.
+[INFO] 20:53:32:763 Broker/(3571:3589): Envio un mensaje a uno de los suscriptores
+[INFO] 20:53:32:763 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:32:766 Broker/(3571:3589): Se confirmo un mensaje de la cola Get
+[INFO] 20:53:33:764 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:33:776 Broker/(3571:3591): Se agrego un mensaje a la cola Localized
+[INFO] 20:53:33:776 Broker/(3571:3591): Agregando mensaje a Cache...
+
+[INFO] 20:53:33:776 Broker/(3571:3591): Inicio de la partición elegida: 40.
+[INFO] 20:53:36:315 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:36:344 Broker/(3571:3593): Se agrego un mensaje a la cola Get
+[INFO] 20:53:36:346 Broker/(3571:3593): Agregando mensaje a Cache...
+
+[INFO] 20:53:36:346 Broker/(3571:3593): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:53:36:346 Broker/(3571:3593): Inicio de la partición elegida: 0.
+[INFO] 20:53:36:346 Broker/(3571:3593): Envio un mensaje a uno de los suscriptores
+[INFO] 20:53:36:347 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:36:348 Broker/(3571:3593): Se confirmo un mensaje de la cola Get
+[INFO] 20:53:37:348 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:37:353 Broker/(3571:3595): Se agrego un mensaje a la cola Localized
+[INFO] 20:53:37:353 Broker/(3571:3595): Agregando mensaje a Cache...
+
+[INFO] 20:53:37:353 Broker/(3571:3595): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:53:37:353 Broker/(3571:3595): Inicio de la partición elegida: 40.
+[INFO] 20:53:38:911 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:38:934 Broker/(3571:3597): Se agrego un mensaje a la cola Get
+[INFO] 20:53:38:934 Broker/(3571:3597): Agregando mensaje a Cache...
+
+[INFO] 20:53:38:934 Broker/(3571:3597): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:53:38:934 Broker/(3571:3597): Inicio de la partición elegida: 0.
+[INFO] 20:53:38:934 Broker/(3571:3597): Envio un mensaje a uno de los suscriptores
+[INFO] 20:53:38:935 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:38:940 Broker/(3571:3597): Se confirmo un mensaje de la cola Get
+[INFO] 20:53:39:937 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:39:950 Broker/(3571:3599): Se agrego un mensaje a la cola Localized
+[INFO] 20:53:39:951 Broker/(3571:3599): Agregando mensaje a Cache...
+
+[INFO] 20:53:39:951 Broker/(3571:3599): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 20:53:39:951 Broker/(3571:3599): Inicio de la partición elegida: 40.
+[INFO] 20:53:58:320 Broker/(3571:3571): Un proceso se conecto
+[INFO] 20:53:58:340 Broker/(3571:3605): Se suscribio a la cola Localized
+[INFO] 20:55:30:941 Broker/(3571:3571): Un proceso se conecto
+[INFO] 21:03:44:4 Broker/(3571:3605): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:04:803 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:05:805 Broker/(3815:3827): Se suscribio a la cola New
+[INFO] 21:08:06:805 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:07:807 Broker/(3815:3828): Se suscribio a la cola Catch
+[INFO] 21:08:08:808 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:09:809 Broker/(3815:3829): Se suscribio a la cola Get
+[INFO] 21:08:34:36 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:34:65 Broker/(3815:3838): Se agrego un mensaje a la cola Get
+[INFO] 21:08:34:65 Broker/(3815:3838): Agregando mensaje a Cache...
+
+[INFO] 21:08:34:65 Broker/(3815:3838): Inicio de la partición elegida: 0.
+[INFO] 21:08:34:65 Broker/(3815:3838): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:34:66 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:34:66 Broker/(3815:3838): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:34:780 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:34:811 Broker/(3815:3841): Se agrego un mensaje a la cola Get
+[INFO] 21:08:34:811 Broker/(3815:3841): Agregando mensaje a Cache...
+
+[INFO] 21:08:34:812 Broker/(3815:3841): Inicio de la partición elegida: 40.
+[INFO] 21:08:34:814 Broker/(3815:3841): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:35:68 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:35:70 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:35:72 Broker/(3815:3842): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:35:908 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:35:930 Broker/(3815:3845): Se agrego un mensaje a la cola Get
+[INFO] 21:08:35:930 Broker/(3815:3845): Agregando mensaje a Cache...
+
+[INFO] 21:08:35:930 Broker/(3815:3845): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:08:35:930 Broker/(3815:3845): Inicio de la partición elegida: 0.
+[INFO] 21:08:35:934 Broker/(3815:3845): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:36:70 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:36:73 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:36:75 Broker/(3815:3846): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:36:676 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:36:705 Broker/(3815:3849): Se agrego un mensaje a la cola Get
+[INFO] 21:08:36:706 Broker/(3815:3849): Agregando mensaje a Cache...
+
+[INFO] 21:08:36:706 Broker/(3815:3849): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:08:36:706 Broker/(3815:3849): Inicio de la partición elegida: 40.
+[INFO] 21:08:36:707 Broker/(3815:3849): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:37:74 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:37:76 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:37:81 Broker/(3815:3850): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:38:76 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:38:85 Broker/(3815:3857): Se agrego un mensaje a la cola Localized
+[INFO] 21:08:38:85 Broker/(3815:3857): Agregando mensaje a Cache...
+
+[INFO] 21:08:38:85 Broker/(3815:3857): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:08:38:85 Broker/(3815:3857): Inicio de la partición elegida: 0.
+[INFO] 21:08:44:389 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:44:395 Broker/(3815:3864): Se suscribio a la cola Localized
+[INFO] 21:08:44:395 Broker/(3815:3864): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:44:397 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:44:409 Broker/(3815:3866): Se confirmo un mensaje de la cola Localized
+[INFO] 21:08:55:285 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:55:308 Broker/(3815:3873): Se agrego un mensaje a la cola Get
+[INFO] 21:08:55:309 Broker/(3815:3873): Agregando mensaje a Cache...
+
+[INFO] 21:08:55:309 Broker/(3815:3873): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:08:55:309 Broker/(3815:3873): Inicio de la partición elegida: 40.
+[INFO] 21:08:55:312 Broker/(3815:3873): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:55:313 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:55:314 Broker/(3815:3873): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:56:315 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:56:319 Broker/(3815:3875): Se agrego un mensaje a la cola Localized
+[INFO] 21:08:56:320 Broker/(3815:3875): Agregando mensaje a Cache...
+
+[INFO] 21:08:56:320 Broker/(3815:3875): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:08:56:320 Broker/(3815:3875): Inicio de la partición elegida: 0.
+[INFO] 21:08:56:320 Broker/(3815:3875): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:56:321 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:56:322 Broker/(3815:3875): Se confirmo un mensaje de la cola Localized
+[INFO] 21:08:56:526 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:56:560 Broker/(3815:3878): Se agrego un mensaje a la cola Get
+[INFO] 21:08:56:560 Broker/(3815:3878): Agregando mensaje a Cache...
+
+[INFO] 21:08:56:560 Broker/(3815:3878): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:08:56:560 Broker/(3815:3878): Inicio de la partición elegida: 40.
+[INFO] 21:08:56:560 Broker/(3815:3878): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:56:561 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:56:561 Broker/(3815:3878): Se confirmo un mensaje de la cola Get
+[INFO] 21:08:57:563 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:57:575 Broker/(3815:3880): Se agrego un mensaje a la cola Localized
+[INFO] 21:08:57:575 Broker/(3815:3880): Agregando mensaje a Cache...
+
+[INFO] 21:08:57:575 Broker/(3815:3880): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:08:57:575 Broker/(3815:3880): Inicio de la partición elegida: 0.
+[INFO] 21:08:57:575 Broker/(3815:3880): Envio un mensaje a uno de los suscriptores
+[INFO] 21:08:57:576 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:08:57:577 Broker/(3815:3880): Se confirmo un mensaje de la cola Localized
+[INFO] 21:09:04:391 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:09:04:399 Broker/(3815:3886): Se desuscribio de la cola Localized
+[INFO] 21:09:40:952 Broker/(3815:3815): Un proceso se conecto
+[INFO] 21:09:40:959 Broker/(3815:3890): Se suscribio a la cola Localized
+[INFO] 21:12:07:607 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:08:608 Broker/(3964:3978): Se suscribio a la cola Get
+[INFO] 21:12:09:609 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:10:611 Broker/(3964:3979): Se suscribio a la cola New
+[INFO] 21:12:11:612 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:12:613 Broker/(3964:3980): Se suscribio a la cola Catch
+[INFO] 21:12:15:411 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:15:448 Broker/(3964:3982): Se agrego un mensaje a la cola Get
+[INFO] 21:12:15:449 Broker/(3964:3982): Agregando mensaje a Cache...
+
+[INFO] 21:12:15:449 Broker/(3964:3982): Inicio de la partición elegida: 0.
+[INFO] 21:12:15:449 Broker/(3964:3982): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:15:449 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:15:451 Broker/(3964:3982): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:16:450 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:16:455 Broker/(3964:3984): Se agrego un mensaje a la cola Localized
+[INFO] 21:12:16:455 Broker/(3964:3984): Agregando mensaje a Cache...
+
+[INFO] 21:12:16:455 Broker/(3964:3984): Inicio de la partición elegida: 40.
+[INFO] 21:12:16:539 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:16:571 Broker/(3964:3986): Se agrego un mensaje a la cola Get
+[INFO] 21:12:16:571 Broker/(3964:3986): Agregando mensaje a Cache...
+
+[INFO] 21:12:16:571 Broker/(3964:3986): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:12:16:571 Broker/(3964:3986): Inicio de la partición elegida: 0.
+[INFO] 21:12:16:572 Broker/(3964:3986): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:16:572 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:16:574 Broker/(3964:3986): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:17:474 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:17:503 Broker/(3964:3989): Se agrego un mensaje a la cola Get
+[INFO] 21:12:17:503 Broker/(3964:3989): Agregando mensaje a Cache...
+
+[INFO] 21:12:17:503 Broker/(3964:3989): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:12:17:503 Broker/(3964:3989): Inicio de la partición elegida: 40.
+[INFO] 21:12:17:504 Broker/(3964:3989): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:17:574 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:17:577 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:17:579 Broker/(3964:3990): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:18:219 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:18:246 Broker/(3964:3993): Se agrego un mensaje a la cola Get
+[INFO] 21:12:18:246 Broker/(3964:3993): Agregando mensaje a Cache...
+
+[INFO] 21:12:18:246 Broker/(3964:3993): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:12:18:246 Broker/(3964:3993): Inicio de la partición elegida: 0.
+[INFO] 21:12:18:246 Broker/(3964:3993): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:18:576 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:18:577 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:18:581 Broker/(3964:3994): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:18:963 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:18:972 Broker/(3964:3997): Se agrego un mensaje a la cola Get
+[INFO] 21:12:18:989 Broker/(3964:3997): Agregando mensaje a Cache...
+
+[INFO] 21:12:18:990 Broker/(3964:3997): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:12:18:990 Broker/(3964:3997): Inicio de la partición elegida: 40.
+[INFO] 21:12:18:990 Broker/(3964:3997): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:19:578 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:19:580 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:19:584 Broker/(3964:3998): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:19:915 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:19:942 Broker/(3964:4001): Se agrego un mensaje a la cola Get
+[INFO] 21:12:19:943 Broker/(3964:4001): Agregando mensaje a Cache...
+
+[INFO] 21:12:19:943 Broker/(3964:4001): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:12:19:943 Broker/(3964:4001): Inicio de la partición elegida: 0.
+[INFO] 21:12:19:943 Broker/(3964:4001): Envio un mensaje a uno de los suscriptores
+[INFO] 21:12:20:580 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:20:582 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:20:592 Broker/(3964:4002): Se confirmo un mensaje de la cola Get
+[INFO] 21:12:21:582 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:21:588 Broker/(3964:4004): Se agrego un mensaje a la cola Localized
+[INFO] 21:12:21:588 Broker/(3964:4004): Agregando mensaje a Cache...
+
+[INFO] 21:12:21:588 Broker/(3964:4004): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:12:21:588 Broker/(3964:4004): Inicio de la partición elegida: 40.
+[INFO] 21:12:43:772 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:12:43:778 Broker/(3964:4008): Se suscribio a la cola Localized
+[INFO] 21:13:33:775 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:13:33:784 Broker/(3964:4039): Se desuscribio de la cola Localized
+[INFO] 21:13:37:213 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:13:37:219 Broker/(3964:4041): Se suscribio a la cola Localized
+[INFO] 21:13:37:219 Broker/(3964:4041): Envio un mensaje a uno de los suscriptores
+[INFO] 21:13:37:220 Broker/(3964:4041): Envio un mensaje a uno de los suscriptores
+[INFO] 21:13:37:229 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:13:37:230 Broker/(3964:4041): Se confirmo un mensaje de la cola Localized
+[INFO] 21:14:27:215 Broker/(3964:3964): Un proceso se conecto
+[INFO] 21:14:27:226 Broker/(3964:4049): Se desuscribio de la cola Localized
+[INFO] 21:14:49:140 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:50:141 Broker/(4086:4092): Se suscribio a la cola Catch
+[INFO] 21:14:51:142 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:52:143 Broker/(4086:4093): Se suscribio a la cola New
+[INFO] 21:14:53:143 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:54:145 Broker/(4086:4094): Se suscribio a la cola Get
+[INFO] 21:14:56:870 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:56:903 Broker/(4086:4096): Se agrego un mensaje a la cola Get
+[INFO] 21:14:56:905 Broker/(4086:4096): Agregando mensaje a Cache...
+
+[INFO] 21:14:56:905 Broker/(4086:4096): Inicio de la partición elegida: 0.
+[INFO] 21:14:56:906 Broker/(4086:4096): Envio un mensaje a uno de los suscriptores
+[INFO] 21:14:56:906 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:56:907 Broker/(4086:4096): Se confirmo un mensaje de la cola Get
+[INFO] 21:14:57:907 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:14:57:912 Broker/(4086:4098): Se agrego un mensaje a la cola Localized
+[INFO] 21:14:57:912 Broker/(4086:4098): Agregando mensaje a Cache...
+
+[INFO] 21:14:57:913 Broker/(4086:4098): Inicio de la partición elegida: 40.
+[INFO] 21:15:07:470 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:07:494 Broker/(4086:4102): Se agrego un mensaje a la cola Get
+[INFO] 21:15:07:494 Broker/(4086:4102): Agregando mensaje a Cache...
+
+[INFO] 21:15:07:494 Broker/(4086:4102): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:15:07:494 Broker/(4086:4102): Inicio de la partición elegida: 0.
+[INFO] 21:15:07:495 Broker/(4086:4102): Envio un mensaje a uno de los suscriptores
+[INFO] 21:15:07:495 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:07:496 Broker/(4086:4102): Se confirmo un mensaje de la cola Get
+[INFO] 21:15:08:496 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:08:501 Broker/(4086:4104): Se agrego un mensaje a la cola Localized
+[INFO] 21:15:08:501 Broker/(4086:4104): Agregando mensaje a Cache...
+
+[INFO] 21:15:08:501 Broker/(4086:4104): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:15:08:502 Broker/(4086:4104): Inicio de la partición elegida: 40.
+[INFO] 21:15:10:870 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:10:897 Broker/(4086:4106): Se agrego un mensaje a la cola Get
+[INFO] 21:15:10:897 Broker/(4086:4106): Agregando mensaje a Cache...
+
+[INFO] 21:15:10:897 Broker/(4086:4106): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:15:10:897 Broker/(4086:4106): Inicio de la partición elegida: 0.
+[INFO] 21:15:10:898 Broker/(4086:4106): Envio un mensaje a uno de los suscriptores
+[INFO] 21:15:10:898 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:10:899 Broker/(4086:4106): Se confirmo un mensaje de la cola Get
+[INFO] 21:15:11:899 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:11:904 Broker/(4086:4108): Se agrego un mensaje a la cola Localized
+[INFO] 21:15:11:904 Broker/(4086:4108): Agregando mensaje a Cache...
+
+[INFO] 21:15:11:904 Broker/(4086:4108): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:15:11:904 Broker/(4086:4108): Inicio de la partición elegida: 40.
+[INFO] 21:15:15:422 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:15:444 Broker/(4086:4110): Se agrego un mensaje a la cola Get
+[INFO] 21:15:15:444 Broker/(4086:4110): Agregando mensaje a Cache...
+
+[INFO] 21:15:15:444 Broker/(4086:4110): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:15:15:444 Broker/(4086:4110): Inicio de la partición elegida: 0.
+[INFO] 21:15:15:445 Broker/(4086:4110): Envio un mensaje a uno de los suscriptores
+[INFO] 21:15:15:445 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:15:451 Broker/(4086:4110): Se confirmo un mensaje de la cola Get
+[INFO] 21:15:16:447 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:16:451 Broker/(4086:4112): Se agrego un mensaje a la cola Localized
+[INFO] 21:15:16:454 Broker/(4086:4112): Agregando mensaje a Cache...
+
+[INFO] 21:15:16:454 Broker/(4086:4112): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:15:16:454 Broker/(4086:4112): Inicio de la partición elegida: 40.
+[INFO] 21:15:19:363 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:19:375 Broker/(4086:4114): Se agrego un mensaje a la cola Get
+[INFO] 21:15:19:375 Broker/(4086:4114): Agregando mensaje a Cache...
+
+[INFO] 21:15:19:375 Broker/(4086:4114): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:15:19:375 Broker/(4086:4114): Inicio de la partición elegida: 0.
+[INFO] 21:15:19:376 Broker/(4086:4114): Envio un mensaje a uno de los suscriptores
+[INFO] 21:15:19:376 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:19:378 Broker/(4086:4114): Se confirmo un mensaje de la cola Get
+[INFO] 21:15:20:377 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:20:383 Broker/(4086:4116): Se agrego un mensaje a la cola Localized
+[INFO] 21:15:20:383 Broker/(4086:4116): Agregando mensaje a Cache...
+
+[INFO] 21:15:20:383 Broker/(4086:4116): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:15:20:383 Broker/(4086:4116): Inicio de la partición elegida: 40.
+[INFO] 21:15:24:367 Broker/(4086:4086): Un proceso se conecto
+[INFO] 21:15:24:373 Broker/(4086:4118): Se suscribio a la cola Localized
+[INFO] 21:16:10:103 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:11:105 Broker/(4161:4170): Se suscribio a la cola Get
+[INFO] 21:16:12:105 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:13:107 Broker/(4161:4171): Se suscribio a la cola Catch
+[INFO] 21:16:14:108 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:15:109 Broker/(4161:4172): Se suscribio a la cola New
+[INFO] 21:16:17:247 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:17:274 Broker/(4161:4174): Se agrego un mensaje a la cola Get
+[INFO] 21:16:17:275 Broker/(4161:4174): Agregando mensaje a Cache...
+
+[INFO] 21:16:17:275 Broker/(4161:4174): Inicio de la partición elegida: 0.
+[INFO] 21:16:17:275 Broker/(4161:4174): Envio un mensaje a uno de los suscriptores
+[INFO] 21:16:17:276 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:17:278 Broker/(4161:4174): Se confirmo un mensaje de la cola Get
+[INFO] 21:16:18:277 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:18:282 Broker/(4161:4176): Se agrego un mensaje a la cola Localized
+[INFO] 21:16:18:282 Broker/(4161:4176): Agregando mensaje a Cache...
+
+[INFO] 21:16:18:282 Broker/(4161:4176): Inicio de la partición elegida: 40.
+[INFO] 21:16:23:7 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:23:26 Broker/(4161:4178): Se agrego un mensaje a la cola Get
+[INFO] 21:16:23:30 Broker/(4161:4178): Agregando mensaje a Cache...
+
+[INFO] 21:16:23:31 Broker/(4161:4178): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:16:23:31 Broker/(4161:4178): Inicio de la partición elegida: 0.
+[INFO] 21:16:23:34 Broker/(4161:4178): Envio un mensaje a uno de los suscriptores
+[INFO] 21:16:23:35 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:23:38 Broker/(4161:4178): Se confirmo un mensaje de la cola Get
+[INFO] 21:16:24:36 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:24:41 Broker/(4161:4180): Se agrego un mensaje a la cola Localized
+[INFO] 21:16:24:42 Broker/(4161:4180): Agregando mensaje a Cache...
+
+[INFO] 21:16:24:42 Broker/(4161:4180): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:16:24:42 Broker/(4161:4180): Inicio de la partición elegida: 40.
+[INFO] 21:16:27:695 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:27:718 Broker/(4161:4182): Se agrego un mensaje a la cola Get
+[INFO] 21:16:27:718 Broker/(4161:4182): Agregando mensaje a Cache...
+
+[INFO] 21:16:27:718 Broker/(4161:4182): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:16:27:718 Broker/(4161:4182): Inicio de la partición elegida: 0.
+[INFO] 21:16:27:723 Broker/(4161:4182): Envio un mensaje a uno de los suscriptores
+[INFO] 21:16:27:723 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:27:724 Broker/(4161:4182): Se confirmo un mensaje de la cola Get
+[INFO] 21:16:28:725 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:28:729 Broker/(4161:4184): Se agrego un mensaje a la cola Localized
+[INFO] 21:16:28:729 Broker/(4161:4184): Agregando mensaje a Cache...
+
+[INFO] 21:16:28:729 Broker/(4161:4184): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:16:28:730 Broker/(4161:4184): Inicio de la partición elegida: 40.
+[INFO] 21:16:30:496 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:30:516 Broker/(4161:4186): Se agrego un mensaje a la cola Get
+[INFO] 21:16:30:518 Broker/(4161:4186): Agregando mensaje a Cache...
+
+[INFO] 21:16:30:519 Broker/(4161:4186): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:16:30:519 Broker/(4161:4186): Inicio de la partición elegida: 0.
+[INFO] 21:16:30:519 Broker/(4161:4186): Envio un mensaje a uno de los suscriptores
+[INFO] 21:16:30:519 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:30:525 Broker/(4161:4186): Se confirmo un mensaje de la cola Get
+[INFO] 21:16:31:521 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:31:527 Broker/(4161:4188): Se agrego un mensaje a la cola Localized
+[INFO] 21:16:31:527 Broker/(4161:4188): Agregando mensaje a Cache...
+
+[INFO] 21:16:31:527 Broker/(4161:4188): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:16:31:527 Broker/(4161:4188): Inicio de la partición elegida: 40.
+[INFO] 21:16:33:271 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:33:298 Broker/(4161:4190): Se agrego un mensaje a la cola Get
+[INFO] 21:16:33:298 Broker/(4161:4190): Agregando mensaje a Cache...
+
+[INFO] 21:16:33:299 Broker/(4161:4190): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:16:33:299 Broker/(4161:4190): Inicio de la partición elegida: 0.
+[INFO] 21:16:33:299 Broker/(4161:4190): Envio un mensaje a uno de los suscriptores
+[INFO] 21:16:33:300 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:33:300 Broker/(4161:4190): Se confirmo un mensaje de la cola Get
+[INFO] 21:16:34:301 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:34:307 Broker/(4161:4192): Se agrego un mensaje a la cola Localized
+[INFO] 21:16:34:307 Broker/(4161:4192): Agregando mensaje a Cache...
+
+[INFO] 21:16:34:307 Broker/(4161:4192): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:16:34:307 Broker/(4161:4192): Inicio de la partición elegida: 40.
+[INFO] 21:16:39:327 Broker/(4161:4161): Un proceso se conecto
+[INFO] 21:16:39:333 Broker/(4161:4194): Se suscribio a la cola Localized
+[INFO] 21:18:20:60 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:21:61 Broker/(4249:4263): Se suscribio a la cola New
+[INFO] 21:18:22:61 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:23:62 Broker/(4249:4269): Se suscribio a la cola Catch
+[INFO] 21:18:24:62 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:25:64 Broker/(4249:4270): Se suscribio a la cola Get
+[INFO] 21:18:26:927 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:26:951 Broker/(4249:4272): Se agrego un mensaje a la cola Get
+[INFO] 21:18:26:951 Broker/(4249:4272): Agregando mensaje a Cache...
+
+[INFO] 21:18:26:951 Broker/(4249:4272): Inicio de la partición elegida: 0.
+[INFO] 21:18:26:952 Broker/(4249:4272): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:26:952 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:26:953 Broker/(4249:4272): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:27:953 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:27:958 Broker/(4249:4274): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:27:958 Broker/(4249:4274): Agregando mensaje a Cache...
+
+[INFO] 21:18:27:958 Broker/(4249:4274): Inicio de la partición elegida: 40.
+[INFO] 21:18:30:240 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:30:266 Broker/(4249:4276): Se agrego un mensaje a la cola Get
+[INFO] 21:18:30:268 Broker/(4249:4276): Agregando mensaje a Cache...
+
+[INFO] 21:18:30:268 Broker/(4249:4276): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:18:30:268 Broker/(4249:4276): Inicio de la partición elegida: 0.
+[INFO] 21:18:30:268 Broker/(4249:4276): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:30:269 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:30:269 Broker/(4249:4276): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:31:270 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:31:275 Broker/(4249:4278): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:31:275 Broker/(4249:4278): Agregando mensaje a Cache...
+
+[INFO] 21:18:31:275 Broker/(4249:4278): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:18:31:275 Broker/(4249:4278): Inicio de la partición elegida: 40.
+[INFO] 21:18:33:921 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:33:947 Broker/(4249:4285): Se agrego un mensaje a la cola Get
+[INFO] 21:18:33:947 Broker/(4249:4285): Agregando mensaje a Cache...
+
+[INFO] 21:18:33:947 Broker/(4249:4285): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:18:33:948 Broker/(4249:4285): Inicio de la partición elegida: 0.
+[INFO] 21:18:33:948 Broker/(4249:4285): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:33:948 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:33:950 Broker/(4249:4285): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:34:949 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:34:954 Broker/(4249:4287): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:34:954 Broker/(4249:4287): Agregando mensaje a Cache...
+
+[INFO] 21:18:34:954 Broker/(4249:4287): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:18:34:954 Broker/(4249:4287): Inicio de la partición elegida: 40.
+[INFO] 21:18:37:648 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:37:687 Broker/(4249:4289): Se agrego un mensaje a la cola Get
+[INFO] 21:18:37:687 Broker/(4249:4289): Agregando mensaje a Cache...
+
+[INFO] 21:18:37:687 Broker/(4249:4289): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:18:37:687 Broker/(4249:4289): Inicio de la partición elegida: 0.
+[INFO] 21:18:37:688 Broker/(4249:4289): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:37:688 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:37:689 Broker/(4249:4289): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:38:689 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:38:694 Broker/(4249:4291): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:38:694 Broker/(4249:4291): Agregando mensaje a Cache...
+
+[INFO] 21:18:38:694 Broker/(4249:4291): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:18:38:694 Broker/(4249:4291): Inicio de la partición elegida: 40.
+[INFO] 21:18:40:328 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:40:347 Broker/(4249:4293): Se agrego un mensaje a la cola Get
+[INFO] 21:18:40:347 Broker/(4249:4293): Agregando mensaje a Cache...
+
+[INFO] 21:18:40:347 Broker/(4249:4293): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:18:40:347 Broker/(4249:4293): Inicio de la partición elegida: 0.
+[INFO] 21:18:40:348 Broker/(4249:4293): Envio un mensaje a uno de los suscriptores
+[INFO] 21:18:40:348 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:40:350 Broker/(4249:4293): Se confirmo un mensaje de la cola Get
+[INFO] 21:18:41:350 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:41:359 Broker/(4249:4295): Se agrego un mensaje a la cola Localized
+[INFO] 21:18:41:359 Broker/(4249:4295): Agregando mensaje a Cache...
+
+[INFO] 21:18:41:359 Broker/(4249:4295): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:18:41:359 Broker/(4249:4295): Inicio de la partición elegida: 40.
+[INFO] 21:18:47:120 Broker/(4249:4249): Un proceso se conecto
+[INFO] 21:18:47:125 Broker/(4249:4297): Se suscribio a la cola Localized
+[INFO] 21:20:22:99 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:20:23:101 Broker/(4359:4370): Se suscribio a la cola Get
+[INFO] 21:20:24:101 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:20:25:102 Broker/(4359:4371): Se suscribio a la cola New
+[INFO] 21:20:26:103 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:20:27:105 Broker/(4359:4372): Se suscribio a la cola Catch
+[INFO] 21:21:49:274 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:49:303 Broker/(4359:4388): Se agrego un mensaje a la cola Get
+[INFO] 21:21:49:303 Broker/(4359:4388): Agregando mensaje a Cache...
+
+[INFO] 21:21:49:303 Broker/(4359:4388): Inicio de la partición elegida: 0.
+[INFO] 21:21:49:305 Broker/(4359:4388): Envio un mensaje a uno de los suscriptores
+[INFO] 21:21:49:305 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:49:306 Broker/(4359:4388): Se confirmo un mensaje de la cola Get
+[INFO] 21:21:50:307 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:50:312 Broker/(4359:4390): Se agrego un mensaje a la cola Localized
+[INFO] 21:21:50:312 Broker/(4359:4390): Agregando mensaje a Cache...
+
+[INFO] 21:21:50:312 Broker/(4359:4390): Inicio de la partición elegida: 40.
+[INFO] 21:21:51:739 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:51:769 Broker/(4359:4392): Se agrego un mensaje a la cola Get
+[INFO] 21:21:51:769 Broker/(4359:4392): Agregando mensaje a Cache...
+
+[INFO] 21:21:51:769 Broker/(4359:4392): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:21:51:770 Broker/(4359:4392): Inicio de la partición elegida: 0.
+[INFO] 21:21:51:770 Broker/(4359:4392): Envio un mensaje a uno de los suscriptores
+[INFO] 21:21:51:770 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:51:771 Broker/(4359:4392): Se confirmo un mensaje de la cola Get
+[INFO] 21:21:52:771 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:52:776 Broker/(4359:4394): Se agrego un mensaje a la cola Localized
+[INFO] 21:21:52:776 Broker/(4359:4394): Agregando mensaje a Cache...
+
+[INFO] 21:21:52:776 Broker/(4359:4394): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:21:52:776 Broker/(4359:4394): Inicio de la partición elegida: 40.
+[INFO] 21:21:54:162 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:54:188 Broker/(4359:4396): Se agrego un mensaje a la cola Get
+[INFO] 21:21:54:188 Broker/(4359:4396): Agregando mensaje a Cache...
+
+[INFO] 21:21:54:188 Broker/(4359:4396): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:21:54:189 Broker/(4359:4396): Inicio de la partición elegida: 0.
+[INFO] 21:21:54:190 Broker/(4359:4396): Envio un mensaje a uno de los suscriptores
+[INFO] 21:21:54:190 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:54:191 Broker/(4359:4396): Se confirmo un mensaje de la cola Get
+[INFO] 21:21:55:191 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:55:195 Broker/(4359:4398): Se agrego un mensaje a la cola Localized
+[INFO] 21:21:55:196 Broker/(4359:4398): Agregando mensaje a Cache...
+
+[INFO] 21:21:55:196 Broker/(4359:4398): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:21:55:196 Broker/(4359:4398): Inicio de la partición elegida: 40.
+[INFO] 21:21:59:658 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:59:667 Broker/(4359:4402): Se agrego un mensaje a la cola Get
+[INFO] 21:21:59:667 Broker/(4359:4402): Agregando mensaje a Cache...
+
+[INFO] 21:21:59:667 Broker/(4359:4402): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:21:59:683 Broker/(4359:4402): Inicio de la partición elegida: 0.
+[INFO] 21:21:59:683 Broker/(4359:4402): Envio un mensaje a uno de los suscriptores
+[INFO] 21:21:59:684 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:21:59:690 Broker/(4359:4402): Se confirmo un mensaje de la cola Get
+[INFO] 21:22:00:685 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:00:691 Broker/(4359:4404): Se agrego un mensaje a la cola Localized
+[INFO] 21:22:00:691 Broker/(4359:4404): Agregando mensaje a Cache...
+
+[INFO] 21:22:00:691 Broker/(4359:4404): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:22:00:692 Broker/(4359:4404): Inicio de la partición elegida: 40.
+[INFO] 21:22:02:634 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:02:659 Broker/(4359:4406): Se agrego un mensaje a la cola Get
+[INFO] 21:22:02:659 Broker/(4359:4406): Agregando mensaje a Cache...
+
+[INFO] 21:22:02:659 Broker/(4359:4406): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:22:02:661 Broker/(4359:4406): Inicio de la partición elegida: 0.
+[INFO] 21:22:02:661 Broker/(4359:4406): Envio un mensaje a uno de los suscriptores
+[INFO] 21:22:02:661 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:02:662 Broker/(4359:4406): Se confirmo un mensaje de la cola Get
+[INFO] 21:22:03:662 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:03:668 Broker/(4359:4408): Se agrego un mensaje a la cola Localized
+[INFO] 21:22:03:668 Broker/(4359:4408): Agregando mensaje a Cache...
+
+[INFO] 21:22:03:668 Broker/(4359:4408): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:22:03:668 Broker/(4359:4408): Inicio de la partición elegida: 40.
+[INFO] 21:22:04:634 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:04:662 Broker/(4359:4410): Se agrego un mensaje a la cola Get
+[INFO] 21:22:04:662 Broker/(4359:4410): Agregando mensaje a Cache...
+
+[INFO] 21:22:04:662 Broker/(4359:4410): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:22:04:665 Broker/(4359:4410): Inicio de la partición elegida: 0.
+[INFO] 21:22:04:665 Broker/(4359:4410): Envio un mensaje a uno de los suscriptores
+[INFO] 21:22:04:665 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:04:665 Broker/(4359:4410): Se confirmo un mensaje de la cola Get
+[INFO] 21:22:05:667 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:05:673 Broker/(4359:4412): Se agrego un mensaje a la cola Localized
+[INFO] 21:22:05:673 Broker/(4359:4412): Agregando mensaje a Cache...
+
+[INFO] 21:22:05:673 Broker/(4359:4412): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:22:05:673 Broker/(4359:4412): Inicio de la partición elegida: 40.
+[INFO] 21:22:09:498 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:22:09:505 Broker/(4359:4414): Se suscribio a la cola Localized
+[INFO] 21:23:03:800 Broker/(4359:4359): Un proceso se conecto
+[INFO] 21:24:37:485 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:38:487 Broker/(4523:4533): Se suscribio a la cola Catch
+[INFO] 21:24:39:487 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:40:489 Broker/(4523:4534): Se suscribio a la cola New
+[INFO] 21:24:41:491 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:42:492 Broker/(4523:4535): Se suscribio a la cola Get
+[INFO] 21:24:50:124 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:50:150 Broker/(4523:4537): Se agrego un mensaje a la cola Get
+[INFO] 21:24:50:150 Broker/(4523:4537): Agregando mensaje a Cache...
+
+[INFO] 21:24:50:150 Broker/(4523:4537): Inicio de la partición elegida: 0.
+[INFO] 21:24:50:150 Broker/(4523:4537): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:50:151 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:50:151 Broker/(4523:4537): Se confirmo un mensaje de la cola Get
+[INFO] 21:24:51:151 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:51:155 Broker/(4523:4539): Se agrego un mensaje a la cola Localized
+[INFO] 21:24:51:157 Broker/(4523:4539): Agregando mensaje a Cache...
+
+[INFO] 21:24:51:157 Broker/(4523:4539): Inicio de la partición elegida: 40.
+[INFO] 21:24:52:780 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:52:805 Broker/(4523:4541): Se agrego un mensaje a la cola Get
+[INFO] 21:24:52:805 Broker/(4523:4541): Agregando mensaje a Cache...
+
+[INFO] 21:24:52:805 Broker/(4523:4541): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:24:52:805 Broker/(4523:4541): Inicio de la partición elegida: 0.
+[INFO] 21:24:52:805 Broker/(4523:4541): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:52:806 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:52:808 Broker/(4523:4541): Se confirmo un mensaje de la cola Get
+[INFO] 21:24:53:807 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:53:812 Broker/(4523:4543): Se agrego un mensaje a la cola Localized
+[INFO] 21:24:53:812 Broker/(4523:4543): Agregando mensaje a Cache...
+
+[INFO] 21:24:53:812 Broker/(4523:4543): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:24:53:812 Broker/(4523:4543): Inicio de la partición elegida: 40.
+[INFO] 21:24:54:836 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:54:861 Broker/(4523:4545): Se agrego un mensaje a la cola Get
+[INFO] 21:24:54:861 Broker/(4523:4545): Agregando mensaje a Cache...
+
+[INFO] 21:24:54:861 Broker/(4523:4545): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:24:54:862 Broker/(4523:4545): Inicio de la partición elegida: 0.
+[INFO] 21:24:54:862 Broker/(4523:4545): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:54:867 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:54:867 Broker/(4523:4545): Se confirmo un mensaje de la cola Get
+[INFO] 21:24:55:867 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:55:874 Broker/(4523:4547): Se agrego un mensaje a la cola Localized
+[INFO] 21:24:55:874 Broker/(4523:4547): Agregando mensaje a Cache...
+
+[INFO] 21:24:55:874 Broker/(4523:4547): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:24:55:874 Broker/(4523:4547): Inicio de la partición elegida: 40.
+[INFO] 21:24:57:564 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:57:594 Broker/(4523:4549): Se agrego un mensaje a la cola Get
+[INFO] 21:24:57:594 Broker/(4523:4549): Agregando mensaje a Cache...
+
+[INFO] 21:24:57:594 Broker/(4523:4549): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:24:57:594 Broker/(4523:4549): Inicio de la partición elegida: 0.
+[INFO] 21:24:57:594 Broker/(4523:4549): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:57:595 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:57:595 Broker/(4523:4549): Se confirmo un mensaje de la cola Get
+[INFO] 21:24:58:597 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:58:602 Broker/(4523:4551): Se agrego un mensaje a la cola Localized
+[INFO] 21:24:58:602 Broker/(4523:4551): Agregando mensaje a Cache...
+
+[INFO] 21:24:58:602 Broker/(4523:4551): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:24:58:602 Broker/(4523:4551): Inicio de la partición elegida: 40.
+[INFO] 21:24:59:588 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:59:614 Broker/(4523:4555): Se agrego un mensaje a la cola Get
+[INFO] 21:24:59:614 Broker/(4523:4555): Agregando mensaje a Cache...
+
+[INFO] 21:24:59:614 Broker/(4523:4555): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:24:59:614 Broker/(4523:4555): Inicio de la partición elegida: 0.
+[INFO] 21:24:59:614 Broker/(4523:4555): Envio un mensaje a uno de los suscriptores
+[INFO] 21:24:59:615 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:24:59:615 Broker/(4523:4555): Se confirmo un mensaje de la cola Get
+[INFO] 21:25:00:615 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:25:00:620 Broker/(4523:4558): Se agrego un mensaje a la cola Localized
+[INFO] 21:25:00:621 Broker/(4523:4558): Agregando mensaje a Cache...
+
+[INFO] 21:25:00:621 Broker/(4523:4558): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:25:00:621 Broker/(4523:4558): Inicio de la partición elegida: 40.
+[INFO] 21:25:14:542 Broker/(4523:4523): Un proceso se conecto
+[INFO] 21:25:14:551 Broker/(4523:4566): Se suscribio a la cola Localized
+[INFO] 21:27:07:41 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:08:43 Broker/(4664:4678): Se suscribio a la cola Get
+[INFO] 21:27:09:44 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:10:46 Broker/(4664:4679): Se suscribio a la cola Catch
+[INFO] 21:27:11:47 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:12:49 Broker/(4664:4680): Se suscribio a la cola New
+[INFO] 21:27:14:735 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:14:762 Broker/(4664:4687): Se agrego un mensaje a la cola Get
+[INFO] 21:27:14:763 Broker/(4664:4687): Agregando mensaje a Cache...
+
+[INFO] 21:27:14:763 Broker/(4664:4687): Inicio de la partición elegida: 0.
+[INFO] 21:27:14:764 Broker/(4664:4687): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:14:764 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:14:765 Broker/(4664:4687): Se confirmo un mensaje de la cola Get
+[INFO] 21:27:15:557 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:15:587 Broker/(4664:4690): Se agrego un mensaje a la cola Get
+[INFO] 21:27:15:587 Broker/(4664:4690): Agregando mensaje a Cache...
+
+[INFO] 21:27:15:588 Broker/(4664:4690): Inicio de la partición elegida: 40.
+[INFO] 21:27:15:588 Broker/(4664:4690): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:15:765 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:15:768 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:15:770 Broker/(4664:4691): Se confirmo un mensaje de la cola Get
+[INFO] 21:27:16:716 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:16:725 Broker/(4664:4694): Se agrego un mensaje a la cola Get
+[INFO] 21:27:16:725 Broker/(4664:4694): Agregando mensaje a Cache...
+
+[INFO] 21:27:16:725 Broker/(4664:4694): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:16:726 Broker/(4664:4694): Inicio de la partición elegida: 0.
+[INFO] 21:27:16:747 Broker/(4664:4694): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:16:767 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:16:772 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:16:773 Broker/(4664:4695): Se confirmo un mensaje de la cola Get
+[INFO] 21:27:17:768 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:17:774 Broker/(4664:4697): Se agrego un mensaje a la cola Localized
+[INFO] 21:27:17:774 Broker/(4664:4697): Agregando mensaje a Cache...
+
+[INFO] 21:27:17:774 Broker/(4664:4697): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:27:17:774 Broker/(4664:4697): Inicio de la partición elegida: 40.
+[INFO] 21:27:19:780 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:19:807 Broker/(4664:4699): Se agrego un mensaje a la cola Get
+[INFO] 21:27:19:807 Broker/(4664:4699): Agregando mensaje a Cache...
+
+[INFO] 21:27:19:807 Broker/(4664:4699): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:19:807 Broker/(4664:4699): Inicio de la partición elegida: 0.
+[INFO] 21:27:19:807 Broker/(4664:4699): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:19:809 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:19:810 Broker/(4664:4699): Se confirmo un mensaje de la cola Get
+[INFO] 21:27:20:805 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:20:812 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:20:832 Broker/(4664:4702): Se agrego un mensaje a la cola Localized
+[INFO] 21:27:20:832 Broker/(4664:4702): Agregando mensaje a Cache...
+
+[INFO] 21:27:20:832 Broker/(4664:4702): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:27:20:832 Broker/(4664:4702): Inicio de la partición elegida: 40.
+[INFO] 21:27:20:988 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:20:998 Broker/(4664:4705): Se agrego un mensaje a la cola Get
+[INFO] 21:27:21:16 Broker/(4664:4705): Agregando mensaje a Cache...
+
+[INFO] 21:27:21:16 Broker/(4664:4705): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:21:16 Broker/(4664:4705): Inicio de la partición elegida: 0.
+[INFO] 21:27:21:17 Broker/(4664:4705): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:21:17 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:21:18 Broker/(4664:4705): Se confirmo un mensaje de la cola Get
+[INFO] 21:27:21:161 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:21:175 Broker/(4664:4708): Se agrego un mensaje a la cola Get
+[INFO] 21:27:21:176 Broker/(4664:4708): Agregando mensaje a Cache...
+
+[INFO] 21:27:21:176 Broker/(4664:4708): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:27:21:176 Broker/(4664:4708): Inicio de la partición elegida: 40.
+[INFO] 21:27:21:177 Broker/(4664:4708): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:21:310 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:21:332 Broker/(4664:4710): Se agrego un mensaje a la cola Get
+[INFO] 21:27:21:332 Broker/(4664:4710): Agregando mensaje a Cache...
+
+[INFO] 21:27:21:332 Broker/(4664:4710): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:21:332 Broker/(4664:4710): Inicio de la partición elegida: 0.
+[INFO] 21:27:21:333 Broker/(4664:4710): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:21:333 Broker/(4664:4710): Envio un mensaje a uno de los suscriptores
+[INFO] 21:27:21:476 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:21:502 Broker/(4664:4712): Se agrego un mensaje a la cola Get
+[INFO] 21:27:21:502 Broker/(4664:4712): Agregando mensaje a Cache...
+
+[INFO] 21:27:21:503 Broker/(4664:4712): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:27:21:506 Broker/(4664:4712): Inicio de la partición elegida: 40.
+[INFO] 21:27:31:362 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:366 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:371 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:372 Broker/(4664:4721): Se agrego un mensaje a la cola Localized
+[INFO] 21:27:31:372 Broker/(4664:4721): Agregando mensaje a Cache...
+
+[INFO] 21:27:31:372 Broker/(4664:4721): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:31:372 Broker/(4664:4721): Inicio de la partición elegida: 0.
+[INFO] 21:27:31:375 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:380 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:381 Broker/(4664:4723): Agregando mensaje a Cache...
+
+[INFO] 21:27:31:381 Broker/(4664:4723): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:27:31:381 Broker/(4664:4723): Inicio de la partición elegida: 40.
+[INFO] 21:27:31:383 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:385 Broker/(4664:4664): Un proceso se conecto
+[INFO] 21:27:31:386 Broker/(4664:4725): Se agrego un mensaje a la cola Localized
+[INFO] 21:27:31:387 Broker/(4664:4725): Agregando mensaje a Cache...
+
+[INFO] 21:27:31:387 Broker/(4664:4725): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:27:31:387 Broker/(4664:4725): Inicio de la partición elegida: 0.
+[INFO] 21:29:12:291 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:29:13:295 Broker/(4809:4820): Se suscribio a la cola New
+[INFO] 21:29:19:553 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:29:19:561 Broker/(4809:4820): Se suscribio a la cola Catch
+[INFO] 21:29:43:545 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:29:43:572 Broker/(4809:4834): Se agrego un mensaje a la cola Get
+[INFO] 21:29:43:572 Broker/(4809:4834): Agregando mensaje a Cache...
+
+[INFO] 21:29:43:572 Broker/(4809:4834): Inicio de la partición elegida: 0.
+[INFO] 21:30:17:386 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:30:17:419 Broker/(4809:4852): Se agrego un mensaje a la cola Get
+[INFO] 21:30:17:419 Broker/(4809:4852): Agregando mensaje a Cache...
+
+[INFO] 21:30:17:419 Broker/(4809:4852): Inicio de la partición elegida: 40.
+[INFO] 21:30:27:596 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:30:27:613 Broker/(4809:4861): Se agrego un mensaje a la cola Get
+[INFO] 21:30:27:613 Broker/(4809:4861): Agregando mensaje a Cache...
+
+[INFO] 21:30:27:614 Broker/(4809:4861): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:30:27:614 Broker/(4809:4861): Inicio de la partición elegida: 0.
+[INFO] 21:30:50:675 Broker/(4809:4809): Un proceso se conecto
+[INFO] 21:30:50:681 Broker/(4809:4869): Se suscribio a la cola Localized
+[INFO] 21:31:40:465 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:31:41:466 Broker/(4910:4919): Se suscribio a la cola New
+[INFO] 21:31:45:467 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:31:46:469 Broker/(4910:4925): Se suscribio a la cola Catch
+[INFO] 21:31:50:470 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:31:51:473 Broker/(4910:4926): Se suscribio a la cola Get
+[INFO] 21:32:07:286 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:07:307 Broker/(4910:4940): Se agrego un mensaje a la cola Get
+[INFO] 21:32:07:307 Broker/(4910:4940): Agregando mensaje a Cache...
+
+[INFO] 21:32:07:307 Broker/(4910:4940): Inicio de la partición elegida: 0.
+[INFO] 21:32:40:778 Broker/(4910:4940): Envio un mensaje a uno de los suscriptores
+[INFO] 21:32:40:779 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:40:780 Broker/(4910:4940): Se confirmo un mensaje de la cola Get
+[INFO] 21:32:41:781 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:41:788 Broker/(4910:4957): Se agrego un mensaje a la cola Localized
+[INFO] 21:32:41:788 Broker/(4910:4957): Agregando mensaje a Cache...
+
+[INFO] 21:32:41:789 Broker/(4910:4957): Inicio de la partición elegida: 40.
+[INFO] 21:32:47:211 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:47:224 Broker/(4910:4959): Se agrego un mensaje a la cola Get
+[INFO] 21:32:47:224 Broker/(4910:4959): Agregando mensaje a Cache...
+
+[INFO] 21:32:47:224 Broker/(4910:4959): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:32:47:225 Broker/(4910:4959): Inicio de la partición elegida: 0.
+[INFO] 21:32:49:75 Broker/(4910:4959): Envio un mensaje a uno de los suscriptores
+[INFO] 21:32:49:75 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:49:75 Broker/(4910:4959): Se confirmo un mensaje de la cola Get
+[INFO] 21:32:50:76 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:50:86 Broker/(4910:4963): Se agrego un mensaje a la cola Localized
+[INFO] 21:32:50:86 Broker/(4910:4963): Agregando mensaje a Cache...
+
+[INFO] 21:32:50:87 Broker/(4910:4963): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:32:50:87 Broker/(4910:4963): Inicio de la partición elegida: 40.
+[INFO] 21:32:54:302 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:54:329 Broker/(4910:4965): Se agrego un mensaje a la cola Get
+[INFO] 21:32:54:329 Broker/(4910:4965): Agregando mensaje a Cache...
+
+[INFO] 21:32:54:329 Broker/(4910:4965): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:32:54:329 Broker/(4910:4965): Inicio de la partición elegida: 0.
+[INFO] 21:32:55:346 Broker/(4910:4965): Envio un mensaje a uno de los suscriptores
+[INFO] 21:32:55:347 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:55:347 Broker/(4910:4965): Se confirmo un mensaje de la cola Get
+[INFO] 21:32:56:348 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:32:56:362 Broker/(4910:4969): Se agrego un mensaje a la cola Localized
+[INFO] 21:32:56:362 Broker/(4910:4969): Agregando mensaje a Cache...
+
+[INFO] 21:32:56:362 Broker/(4910:4969): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:32:56:362 Broker/(4910:4969): Inicio de la partición elegida: 40.
+[INFO] 21:33:01:399 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:33:01:405 Broker/(4910:4973): Se suscribio a la cola Localized
+[INFO] 21:33:28:295 Broker/(4910:4973): Envio un mensaje a uno de los suscriptores
+[INFO] 21:33:29:429 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:33:34:571 Broker/(4910:4999): Se confirmo un mensaje de la cola Localized
+[INFO] 21:33:51:400 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:33:51:409 Broker/(4910:5016): Se desuscribio de la cola Localized
+[INFO] 21:34:12:64 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:34:12:70 Broker/(4910:5020): Se suscribio a la cola Localized
+[INFO] 21:34:28:833 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:34:28:859 Broker/(4910:5032): Se agrego un mensaje a la cola Get
+[INFO] 21:34:28:859 Broker/(4910:5032): Agregando mensaje a Cache...
+
+[INFO] 21:34:28:859 Broker/(4910:5032): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:34:28:860 Broker/(4910:5032): Inicio de la partición elegida: 0.
+[INFO] 21:34:28:860 Broker/(4910:5032): Envio un mensaje a uno de los suscriptores
+[INFO] 21:34:28:863 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:34:28:866 Broker/(4910:5032): Se confirmo un mensaje de la cola Get
+[INFO] 21:34:29:864 Broker/(4910:4910): Un proceso se conecto
+[INFO] 21:34:29:870 Broker/(4910:5034): Se agrego un mensaje a la cola Localized
+[INFO] 21:34:29:870 Broker/(4910:5034): Agregando mensaje a Cache...
+
+[INFO] 21:34:29:874 Broker/(4910:5034): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:34:29:874 Broker/(4910:5034): Inicio de la partición elegida: 40.
+[INFO] 21:35:54:234 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:35:55:238 Broker/(5072:5081): Se suscribio a la cola Get
+[INFO] 21:35:56:238 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:35:57:239 Broker/(5072:5087): Se suscribio a la cola New
+[INFO] 21:35:58:240 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:35:59:241 Broker/(5072:5088): Se suscribio a la cola Catch
+[INFO] 21:36:01:682 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:36:01:712 Broker/(5072:5092): Se agrego un mensaje a la cola Get
+[INFO] 21:36:01:713 Broker/(5072:5092): Agregando mensaje a Cache...
+
+[INFO] 21:36:01:713 Broker/(5072:5092): Inicio de la partición elegida: 0.
+[INFO] 21:36:01:713 Broker/(5072:5092): Envio un mensaje a uno de los suscriptores
+[INFO] 21:36:01:713 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:36:01:714 Broker/(5072:5092): Se confirmo un mensaje de la cola Get
+[INFO] 21:36:02:715 Broker/(5072:5072): Un proceso se conecto
+[INFO] 21:36:02:722 Broker/(5072:5094): Se agrego un mensaje a la cola Localized
+[INFO] 21:36:02:722 Broker/(5072:5094): Agregando mensaje a Cache...
+
+[INFO] 21:36:02:723 Broker/(5072:5094): Inicio de la partición elegida: 40.
+[INFO] 21:37:43:115 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:43:136 Broker/(5127:5156): Se suscribio a la cola Catch
+[INFO] 21:37:53:210 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:53:238 Broker/(5127:5159): Se agrego un mensaje a la cola Catch
+[INFO] 21:37:53:238 Broker/(5127:5159): Agregando mensaje a Cache...
+
+[INFO] 21:37:53:239 Broker/(5127:5159): Inicio de la partición elegida: 0.
+[INFO] 21:37:53:239 Broker/(5127:5159): Envio un mensaje a uno de los suscriptores
+[INFO] 21:37:53:240 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:53:241 Broker/(5127:5159): Se confirmo un mensaje de la cola Catch
+[INFO] 21:37:56:610 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:56:635 Broker/(5127:5162): Se agrego un mensaje a la cola Catch
+[INFO] 21:37:56:635 Broker/(5127:5162): Agregando mensaje a Cache...
+
+[INFO] 21:37:56:636 Broker/(5127:5162): Inicio de la partición elegida: 40.
+[INFO] 21:37:56:636 Broker/(5127:5162): Envio un mensaje a uno de los suscriptores
+[INFO] 21:37:56:637 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:56:637 Broker/(5127:5162): Se confirmo un mensaje de la cola Catch
+[INFO] 21:37:58:897 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:58:915 Broker/(5127:5170): Se agrego un mensaje a la cola Catch
+[INFO] 21:37:58:915 Broker/(5127:5170): Agregando mensaje a Cache...
+
+[INFO] 21:37:58:915 Broker/(5127:5170): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:37:58:915 Broker/(5127:5170): Inicio de la partición elegida: 0.
+[INFO] 21:37:58:916 Broker/(5127:5170): Envio un mensaje a uno de los suscriptores
+[INFO] 21:37:58:919 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:37:58:934 Broker/(5127:5170): Se confirmo un mensaje de la cola Catch
+[INFO] 21:38:01:867 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:01:909 Broker/(5127:5175): Se agrego un mensaje a la cola Catch
+[INFO] 21:38:01:909 Broker/(5127:5175): Agregando mensaje a Cache...
+
+[INFO] 21:38:01:909 Broker/(5127:5175): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:38:01:909 Broker/(5127:5175): Inicio de la partición elegida: 40.
+[INFO] 21:38:01:910 Broker/(5127:5175): Envio un mensaje a uno de los suscriptores
+[INFO] 21:38:01:911 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:01:911 Broker/(5127:5175): Se confirmo un mensaje de la cola Catch
+[INFO] 21:38:04:792 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:04:808 Broker/(5127:5178): Se agrego un mensaje a la cola Catch
+[INFO] 21:38:04:808 Broker/(5127:5178): Agregando mensaje a Cache...
+
+[INFO] 21:38:04:808 Broker/(5127:5178): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:38:04:809 Broker/(5127:5178): Inicio de la partición elegida: 0.
+[INFO] 21:38:04:809 Broker/(5127:5178): Envio un mensaje a uno de los suscriptores
+[INFO] 21:38:04:810 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:04:810 Broker/(5127:5178): Se confirmo un mensaje de la cola Catch
+[INFO] 21:38:07:629 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:07:648 Broker/(5127:5181): Se agrego un mensaje a la cola Catch
+[INFO] 21:38:07:648 Broker/(5127:5181): Agregando mensaje a Cache...
+
+[INFO] 21:38:07:648 Broker/(5127:5181): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:38:07:648 Broker/(5127:5181): Inicio de la partición elegida: 40.
+[INFO] 21:38:07:650 Broker/(5127:5181): Envio un mensaje a uno de los suscriptores
+[INFO] 21:38:07:651 Broker/(5127:5127): Un proceso se conecto
+[INFO] 21:38:07:651 Broker/(5127:5181): Se confirmo un mensaje de la cola Catch
+[INFO] 21:39:24:552 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:24:567 Broker/(5250:5260): Se suscribio a la cola Catch
+[INFO] 21:39:28:707 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:28:730 Broker/(5250:5263): Se agrego un mensaje a la cola Catch
+[INFO] 21:39:28:730 Broker/(5250:5263): Agregando mensaje a Cache...
+
+[INFO] 21:39:28:745 Broker/(5250:5263): Inicio de la partición elegida: 0.
+[INFO] 21:39:28:746 Broker/(5250:5263): Envio un mensaje a uno de los suscriptores
+[INFO] 21:39:28:746 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:32:60 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:32:85 Broker/(5250:5266): Se agrego un mensaje a la cola Catch
+[INFO] 21:39:32:85 Broker/(5250:5266): Agregando mensaje a Cache...
+
+[INFO] 21:39:32:85 Broker/(5250:5266): Inicio de la partición elegida: 40.
+[INFO] 21:39:32:90 Broker/(5250:5266): Envio un mensaje a uno de los suscriptores
+[INFO] 21:39:32:91 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:32:91 Broker/(5250:5266): Envio un mensaje a uno de los suscriptores
+[INFO] 21:39:32:107 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:35:379 Broker/(5250:5250): Un proceso se conecto
+[INFO] 21:39:35:400 Broker/(5250:5270): Se agrego un mensaje a la cola Catch
+[INFO] 21:39:35:400 Broker/(5250:5270): Agregando mensaje a Cache...
+
+[INFO] 21:39:35:400 Broker/(5250:5270): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:39:35:400 Broker/(5250:5270): Inicio de la partición elegida: 0.
+[INFO] 21:40:34:760 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:34:763 Broker/(5309:5324): Se suscribio a la cola Catch
+[INFO] 21:40:43:619 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:43:648 Broker/(5309:5328): Se agrego un mensaje a la cola Catch
+[INFO] 21:40:43:648 Broker/(5309:5328): Agregando mensaje a Cache...
+
+[INFO] 21:40:43:648 Broker/(5309:5328): Inicio de la partición elegida: 0.
+[INFO] 21:40:43:649 Broker/(5309:5328): Envio un mensaje a uno de los suscriptores
+[INFO] 21:40:43:649 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:56:692 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:56:720 Broker/(5309:5331): Se agrego un mensaje a la cola Catch
+[INFO] 21:40:56:720 Broker/(5309:5331): Agregando mensaje a Cache...
+
+[INFO] 21:40:56:721 Broker/(5309:5331): Inicio de la partición elegida: 40.
+[INFO] 21:40:56:721 Broker/(5309:5331): Envio un mensaje a uno de los suscriptores
+[INFO] 21:40:56:722 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:56:722 Broker/(5309:5331): Envio un mensaje a uno de los suscriptores
+[INFO] 21:40:56:729 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:58:492 Broker/(5309:5309): Un proceso se conecto
+[INFO] 21:40:58:520 Broker/(5309:5335): Se agrego un mensaje a la cola Catch
+[INFO] 21:40:58:520 Broker/(5309:5335): Agregando mensaje a Cache...
+
+[INFO] 21:40:58:520 Broker/(5309:5335): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:40:58:520 Broker/(5309:5335): Inicio de la partición elegida: 0.
+[INFO] 21:50:02:765 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:02:774 Broker/(5532:5544): Se suscribio a la cola Catch
+[INFO] 21:50:07:517 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:07:549 Broker/(5532:5547): Se agrego un mensaje a la cola Catch
+[INFO] 21:50:07:549 Broker/(5532:5547): Agregando mensaje a Cache...
+
+[INFO] 21:50:07:549 Broker/(5532:5547): Inicio de la partición elegida: 0.
+[INFO] 21:50:07:550 Broker/(5532:5547): Envio un mensaje a uno de los suscriptores
+[INFO] 21:50:07:550 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:10:918 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:10:946 Broker/(5532:5550): Se agrego un mensaje a la cola Catch
+[INFO] 21:50:10:946 Broker/(5532:5550): Agregando mensaje a Cache...
+
+[INFO] 21:50:10:946 Broker/(5532:5550): Inicio de la partición elegida: 40.
+[INFO] 21:50:10:947 Broker/(5532:5550): Envio un mensaje a uno de los suscriptores
+[INFO] 21:50:10:947 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:10:948 Broker/(5532:5550): Envio un mensaje a uno de los suscriptores
+[INFO] 21:50:10:951 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:12:142 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:50:12:171 Broker/(5532:5554): Se agrego un mensaje a la cola Catch
+[INFO] 21:50:12:171 Broker/(5532:5554): Agregando mensaje a Cache...
+
+[INFO] 21:50:12:171 Broker/(5532:5554): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:50:12:172 Broker/(5532:5554): Inicio de la partición elegida: 0.
+[INFO] 21:52:28:606 Broker/(5532:5554): Envio un mensaje a uno de los suscriptores
+[INFO] 21:52:29:770 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:52:38:385 Broker/(5532:5532): Un proceso se conecto
+[INFO] 21:52:38:416 Broker/(5532:5623): Se agrego un mensaje a la cola Catch
+[INFO] 21:52:38:416 Broker/(5532:5623): Agregando mensaje a Cache...
+
+[INFO] 21:52:38:416 Broker/(5532:5623): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:52:38:416 Broker/(5532:5623): Inicio de la partición elegida: 40.
+[INFO] 21:54:55:554 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:54:55:562 Broker/(5708:5719): Se suscribio a la cola Catch
+[INFO] 21:54:58:852 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:54:58:874 Broker/(5708:5722): Se agrego un mensaje a la cola Catch
+[INFO] 21:54:58:874 Broker/(5708:5722): Agregando mensaje a Cache...
+
+[INFO] 21:54:58:875 Broker/(5708:5722): Inicio de la partición elegida: 0.
+[INFO] 21:54:58:875 Broker/(5708:5722): Envio un mensaje a uno de los suscriptores
+[INFO] 21:54:58:876 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:00:883 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:00:911 Broker/(5708:5727): Se agrego un mensaje a la cola Catch
+[INFO] 21:55:00:911 Broker/(5708:5727): Agregando mensaje a Cache...
+
+[INFO] 21:55:00:913 Broker/(5708:5727): Inicio de la partición elegida: 40.
+[INFO] 21:55:00:914 Broker/(5708:5727): Envio un mensaje a uno de los suscriptores
+[INFO] 21:55:00:914 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:00:915 Broker/(5708:5727): Envio un mensaje a uno de los suscriptores
+[INFO] 21:55:00:923 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:02:811 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:02:833 Broker/(5708:5731): Se agrego un mensaje a la cola Catch
+[INFO] 21:55:02:833 Broker/(5708:5731): Agregando mensaje a Cache...
+
+[INFO] 21:55:02:833 Broker/(5708:5731): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 21:55:02:834 Broker/(5708:5731): Inicio de la partición elegida: 0.
+[INFO] 21:55:30:617 Broker/(5708:5731): Envio un mensaje a uno de los suscriptores
+[INFO] 21:55:30:618 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:40:436 Broker/(5708:5708): Un proceso se conecto
+[INFO] 21:55:40:462 Broker/(5708:5750): Se agrego un mensaje a la cola Catch
+[INFO] 21:55:40:462 Broker/(5708:5750): Agregando mensaje a Cache...
+
+[INFO] 21:55:40:464 Broker/(5708:5750): La particion 1 que iniciaba en 40 ahora está libre!
+[INFO] 21:55:40:464 Broker/(5708:5750): Inicio de la partición elegida: 40.
+[INFO] 21:55:54:310 Broker/(5708:5750): Envio un mensaje a uno de los suscriptores
+[INFO] 21:55:55:355 Broker/(5708:5708): Un proceso se conecto

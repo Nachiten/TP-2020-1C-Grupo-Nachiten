@@ -586,32 +586,34 @@ void mandar_mensajes_broker(t_cola* cola){
 			if(sacar_mensaje_de_Cache(CACHE, hoja_de_particiones, mensaje->mensaje ,mensaje->id , cola->tipoCola, &NUMERO_VICTIMA, ALGOR_REEMPLAZO, semNumeroVictima, semCache) == 0)
 			{
 				mensaje = list_remove(cola->mensajes,i);
-				liberar_estructuras(mensaje->mensaje, cola->tipoCola); //todo explota cuando quiere liberar aca
+				liberar_estructuras(mensaje->mensaje, cola->tipoCola);
 
 				contadorSubs = (mensaje->subs->elements_count) - 1;
-				while(contadorSubs > -1){
-					sub = list_get(mensaje->subs,contadorSubs);
-					free(sub);//esto mata
+				while(contadorSubs >= 0){
+					sub = list_remove(mensaje->subs,contadorSubs);
+					free(sub);
 					contadorSubs--;
 				}
 				free(mensaje);
 			}
-			if(mensaje->subs->head != NULL){
-				for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
-					sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
-					if(sub->recibido != 1 && sub->suscripto == 1){
-						sem_wait(semLog);
-						log_info(logger, "Envio un mensaje a uno de los suscriptores");
-						sem_post(semLog);
-						//sleep(1);
-						mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->elSocket);
+			else //si no lo acabo de borrar de memoria, trato de mandarlo
+			{
+				if(mensaje->subs->head != NULL){
+					for(int j = 0; j < mensaje->subs->elements_count; j++){ //avanza hasta el final de la cola de subs
+						sub = list_get(mensaje->subs,j); // busca el j elemento de la lista subs
+						if(sub->recibido != 1 && sub->suscripto == 1){
+							sem_wait(semLog);
+							log_info(logger, "Envio un mensaje a uno de los suscriptores");
+							sem_post(semLog);
+							mandar_mensaje(mensaje->mensaje,cola->tipoCola,sub->elSocket);
+						}
+						else
+						{
+							log_info(logger,"este mensaje no lo envio porque fue confirmado");//todo no lo envio
+						}
 					}
-					else
-					{
-						log_info(logger,"este mensaje no lo envio porque fue confirmado");//todo no lo envio
-					}
+				borrar_datos(cola,mensaje);
 				}
-			borrar_datos(cola,mensaje);
 			}
 		}
 	}
@@ -954,7 +956,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeAAllocar);
-			idCatch = malloc(sizeof(idMensaje));
+			idCatch = malloc(sizeof(idMensaje));//todo probar con team
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);
@@ -1041,7 +1043,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaNew);
 				sem_post(semNew);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola New");
+				log_info(logger, "Se desuscribio de la cola New");
 				sem_post(semLog);
 				break;
 			case APPEARED:
@@ -1049,7 +1051,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaAppeared);
 				sem_post(semAppeared);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola Appeared");
+				log_info(logger, "Se desuscribio de la cola Appeared");
 				sem_post(semLog);
 				break;
 			case GET:
@@ -1057,7 +1059,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaGet);
 				sem_post(semGet);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola Get");
+				log_info(logger, "Se desuscribio de la cola Get");
 				sem_post(semLog);
 				break;
 			case LOCALIZED:
@@ -1065,7 +1067,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaLocalized);
 				sem_post(semLocalized);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola Localized");
+				log_info(logger, "Se desuscribio de la cola Localized");
 				sem_post(semLog);
 				break;
 			case CATCH:
@@ -1073,7 +1075,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaCatch);
 				sem_post(semCatch);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola Catch");
+				log_info(logger, "Se desuscribio de la cola Catch");
 				sem_post(semLog);
 				break;
 			case CAUGHT:
@@ -1081,7 +1083,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 				desuscribir(mensajeDessuscrip->pId, colaCaught);
 				sem_post(semCaught);
 				sem_wait(semLog);
-				log_info(logger, "Se desuscribio a la cola Caught");
+				log_info(logger, "Se desuscribio de la cola Caught");
 				sem_post(semLog);
 				break;
 			default:

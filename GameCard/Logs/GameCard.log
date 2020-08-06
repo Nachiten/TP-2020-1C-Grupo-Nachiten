@@ -910,3 +910,120 @@
 [WARNING] 20:31:14:202 GAMECARD/(2754:2760): GET | El pokemon tuVieja no existe
 [INFO] 20:31:25:195 GAMECARD/(2754:2760): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
 [INFO] 20:32:16:588 GAMECARD/(2754:2760): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:36:14:784 GAMECARD/(2953:2954): Conexión establecida con socket de BROKER
+[INFO] 20:36:19:788 GAMECARD/(2953:2954): Conexión establecida con socket de BROKER
+[INFO] 20:36:24:792 GAMECARD/(2953:2954): Conexión establecida con socket de BROKER
+[WARNING] 20:36:27:798 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:37:13:97 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:44:12:756 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 20:44:14:763 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:44:16:764 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 20:45:44:394 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 20:45:46:401 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 20:45:48:403 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:45:57:330 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:49:06:327 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:49:08:328 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 20:49:10:331 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 20:49:18:505 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 20:49:21:122 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:49:47:967 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 20:49:49:969 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:49:51:972 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[WARNING] 20:49:56:25 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:50:22:578 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 20:50:24:581 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:50:26:583 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[WARNING] 20:50:30:594 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:50:34:421 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 20:50:39:763 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:50:42:659 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 20:53:21:422 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 20:53:23:423 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 20:53:25:426 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[WARNING] 20:53:33:764 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[WARNING] 20:53:37:347 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 20:53:39:936 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 21:08:04:804 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:08:06:805 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:08:08:808 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 21:08:35:67 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 21:08:36:70 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 21:08:37:74 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 21:08:38:76 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[WARNING] 21:08:56:315 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 21:08:57:562 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 21:12:07:607 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 21:12:09:610 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:12:11:612 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[WARNING] 21:12:16:450 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 21:12:17:574 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 21:12:18:576 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 21:12:19:577 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[WARNING] 21:12:20:579 GAMECARD/(2953:2987): GET | El pokemon tuVieja no existe
+[INFO] 21:12:21:582 GAMECARD/(2953:2987): GET | Se encontraron coordenadas del pokemon LocalizedesUnaMierda
+[INFO] 21:14:49:140 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:14:51:142 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:14:53:144 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[WARNING] 21:14:57:907 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:15:08:496 GAMECARD/(2953:2987): GET | El pokemon B no existe
+[WARNING] 21:15:11:898 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:15:16:447 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:15:20:377 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:16:10:103 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 21:16:12:106 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:16:14:109 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[WARNING] 21:16:18:277 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:16:24:36 GAMECARD/(2953:2987): GET | El pokemon B no existe
+[WARNING] 21:16:28:724 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:16:31:521 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:16:34:301 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:18:20:60 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:18:22:61 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:18:24:63 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[WARNING] 21:18:27:953 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:18:31:270 GAMECARD/(2953:2987): GET | El pokemon B no existe
+[WARNING] 21:18:34:949 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:18:38:689 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:18:41:350 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:20:22:99 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 21:20:24:101 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:20:26:103 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[WARNING] 21:21:50:306 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:21:52:771 GAMECARD/(2953:2987): GET | El pokemon B no existe
+[WARNING] 21:21:55:191 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:22:00:685 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:22:03:662 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:22:05:666 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:24:37:485 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:24:39:488 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:24:41:491 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[WARNING] 21:24:51:151 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:24:53:807 GAMECARD/(2953:2987): GET | El pokemon B no existe
+[WARNING] 21:24:55:867 GAMECARD/(2953:2987): GET | El pokemon C no existe
+[WARNING] 21:24:58:596 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:25:00:615 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:27:07:42 GAMECARD/(2953:2987): Conexión establecida con socket de BROKER
+[INFO] 21:27:09:45 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:27:11:48 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[WARNING] 21:27:15:765 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[WARNING] 21:27:16:767 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:27:17:768 GAMECARD/(2953:2987): GET | El pokemon D no existe
+[WARNING] 21:27:20:810 GAMECARD/(2953:2987): GET | El pokemon A no existe
+[WARNING] 21:27:22:18 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[WARNING] 21:27:23:20 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[WARNING] 21:27:24:24 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[WARNING] 21:27:25:25 GAMECARD/(2953:2987): GET | El pokemon E no existe
+[INFO] 21:29:12:291 GAMECARD/(2953:2988): Conexión establecida con socket de BROKER
+[INFO] 21:29:14:295 GAMECARD/(2953:2989): Conexión establecida con socket de BROKER
+[INFO] 21:31:40:465 GAMECARD/(4876:4877): Conexión establecida con socket de BROKER
+[INFO] 21:31:45:467 GAMECARD/(4876:4877): Conexión establecida con socket de BROKER
+[INFO] 21:31:50:471 GAMECARD/(4876:4877): Conexión establecida con socket de BROKER
+[WARNING] 21:32:41:781 GAMECARD/(4876:4927): GET | El pokemon D no existe
+[WARNING] 21:32:50:76 GAMECARD/(4876:4927): GET | El pokemon E no existe
+[WARNING] 21:32:56:347 GAMECARD/(4876:4927): GET | El pokemon A no existe
+[WARNING] 21:34:29:864 GAMECARD/(4876:4927): GET | El pokemon E no existe
+[INFO] 21:35:54:234 GAMECARD/(4876:4927): Conexión establecida con socket de BROKER
+[INFO] 21:35:56:239 GAMECARD/(4876:4928): Conexión establecida con socket de BROKER
+[INFO] 21:35:58:240 GAMECARD/(4876:4929): Conexión establecida con socket de BROKER
+[WARNING] 21:36:02:714 GAMECARD/(4876:4927): GET | El pokemon E no existe

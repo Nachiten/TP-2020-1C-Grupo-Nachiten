@@ -1,0 +1,276 @@
+[INFO] 19:45:55:774 Team/(23699:23813): Intentando Conexión a Broker...
+[INFO] 19:46:25:776 Team/(23699:23813): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:46:25:776 Team/(23699:23813): Intentando Conexión a Broker...
+[INFO] 19:46:55:777 Team/(23699:23813): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:46:55:778 Team/(23699:23813): Intentando Conexión a Broker...
+[INFO] 19:47:25:778 Team/(23699:23813): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:48:50:40 Team/(23699:23869): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 5
+ID Correlativa: 5.
+[INFO] 19:49:40:108 Team/(23699:23869): LLego un mensaje Appeared, datos:
+Nombre:Squiertle
+Pos X: 3
+Pos Y: 5
+ID: 6
+ID Correlativa: 6.
+[INFO] 19:50:01:585 Team/(23699:23869): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 3
+Pos Y: 5
+ID: 7
+ID Correlativa: 20.
+[INFO] 19:50:02:595 Team/(23699:23809): El entrenador numero [2] cambia al estado READY
+[INFO] 19:50:02:601 Team/(23699:23809): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:50:02:601 Team/(23699:23809): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 3,5
+[INFO] 19:50:05:602 Team/(23699:23809): El entrenador numero [2] cambia al estado READY
+[INFO] 19:50:22:755 Team/(23699:23809): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:50:23:756 Team/(23699:23809): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 3,5
+[INFO] 19:50:23:756 Team/(23699:23809): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [3,5].
+[INFO] 19:50:24:765 Team/(23699:23809): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:8.
+[INFO] 19:50:24:766 Team/(23699:23809): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 19:52:17:624 Team/(23699:23871): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 9
+ID Correlativa: 77.
+[INFO] 19:55:00:140 Team/(24064:24077): Intentando Conexión a Broker...
+[INFO] 19:55:30:141 Team/(24064:24077): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:55:30:141 Team/(24064:24077): Intentando Conexión a Broker...
+[INFO] 19:56:00:142 Team/(24064:24077): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:56:00:143 Team/(24064:24077): Intentando Conexión a Broker...
+[INFO] 19:56:30:144 Team/(24064:24077): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 19:58:15:94 Team/(24064:24108): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 5
+ID Correlativa: 5.
+[INFO] 19:58:46:496 Team/(24064:24108): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 10
+Pos Y: 10
+ID: 6
+ID Correlativa: 101.
+[INFO] 19:58:47:499 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:58:47:513 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:58:47:513 Team/(24064:24073): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 10,10
+[INFO] 19:58:50:514 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:58:50:518 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:58:53:520 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:58:53:520 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:58:56:522 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:58:56:526 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:58:59:528 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:58:59:536 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:59:02:538 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:59:02:538 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:59:05:541 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:59:05:541 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:59:08:543 Team/(24064:24073): El entrenador numero [2] cambia al estado READY
+[INFO] 19:59:08:548 Team/(24064:24073): El entrenador numero [2] cambia al estado EXEC
+[INFO] 19:59:09:548 Team/(24064:24073): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 10,10
+[INFO] 19:59:09:548 Team/(24064:24073): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [10,10].
+[INFO] 19:59:10:562 Team/(24064:24073): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:7.
+[INFO] 19:59:10:562 Team/(24064:24073): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 19:59:30:622 Team/(24064:24110): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 8
+ID Correlativa: 77.
+[INFO] 20:00:01:679 Team/(24064:24110): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 9
+ID Correlativa: 7.
+[INFO] 20:03:33:667 Team/(24311:24324): Intentando Conexión a Broker...
+[INFO] 20:03:33:687 Team/(24311:24326): Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.
+[ERROR] 20:03:43:668 Team/(24311:24324): Intento de conexión fallido, intentando de nuevo en 10 segundo/s.
+[INFO] 20:03:43:668 Team/(24311:24324): Intentando Conexión a Broker...
+[INFO] 20:03:57:624 Team/(24349:24360): Intentando Conexión a Broker...
+[INFO] 20:04:07:624 Team/(24349:24360): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 20:04:07:625 Team/(24349:24360): Intentando Conexión a Broker...
+[INFO] 20:04:17:625 Team/(24349:24360): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 20:04:17:626 Team/(24349:24360): Intentando Conexión a Broker...
+[INFO] 20:04:27:626 Team/(24349:24360): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 20:05:01:461 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 10
+Pos Y: 10
+ID: 5
+ID Correlativa: 101.
+[INFO] 20:05:02:471 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:02:478 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:02:478 Team/(24349:24356): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 10,10
+[INFO] 20:05:05:479 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:05:491 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:08:493 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:08:503 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:11:507 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:11:515 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:14:517 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:14:518 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:17:521 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:17:521 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:20:522 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:20:523 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:23:525 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:05:23:527 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:05:24:528 Team/(24349:24356): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 10,10
+[INFO] 20:05:24:528 Team/(24349:24356): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [10,10].
+[INFO] 20:05:25:534 Team/(24349:24356): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:6.
+[INFO] 20:05:25:534 Team/(24349:24356): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 20:05:36:83 Team/(24349:24371): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 7
+ID Correlativa: 6.
+[INFO] 20:06:03:716 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Gengar
+Pos X: 1
+Pos Y: 1
+ID: 8
+ID Correlativa: 102.
+[INFO] 20:06:04:717 Team/(24349:24355): El entrenador numero [1] cambia al estado READY
+[INFO] 20:06:04:718 Team/(24349:24355): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:06:04:718 Team/(24349:24355): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 1,1
+[INFO] 20:06:06:720 Team/(24349:24355): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 1,1
+[INFO] 20:06:06:720 Team/(24349:24355): El entrenador [1] está intentando atrapar un Gengar!! en las coordenadas [1,1].
+[INFO] 20:06:07:732 Team/(24349:24355): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:9.
+[INFO] 20:06:07:732 Team/(24349:24355): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 20:06:25:682 Team/(24349:24371): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 10
+ID Correlativa: 9.
+[INFO] 20:07:31:43 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Onix
+Pos X: 1
+Pos Y: 1
+ID: 11
+ID Correlativa: 103.
+[INFO] 20:07:32:47 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:07:32:55 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:07:32:55 Team/(24349:24357): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 1,1
+[INFO] 20:07:35:57 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:07:35:63 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:07:36:64 Team/(24349:24357): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 1,1
+[INFO] 20:07:36:64 Team/(24349:24357): El entrenador [3] está intentando atrapar un Onix!! en las coordenadas [1,1].
+[INFO] 20:07:37:74 Team/(24349:24357): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:12.
+[INFO] 20:07:37:74 Team/(24349:24357): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 20:13:10:114 Team/(24349:24371): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 20:14:29:554 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Gengar
+Pos X: 5
+Pos Y: 5
+ID: 14
+ID Correlativa: 104.
+[INFO] 20:14:59:208 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 5
+Pos Y: 5
+ID: 15
+ID Correlativa: 105.
+[INFO] 20:15:00:213 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:15:00:219 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:15:00:219 Team/(24349:24357): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,5
+[INFO] 20:15:03:223 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:15:03:227 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:15:06:228 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:15:06:239 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:15:09:242 Team/(24349:24357): El entrenador numero [3] cambia al estado READY
+[INFO] 20:15:09:243 Team/(24349:24357): El entrenador numero [3] cambia al estado EXEC
+[INFO] 20:15:11:243 Team/(24349:24357): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,5
+[INFO] 20:15:11:244 Team/(24349:24357): El entrenador [3] está intentando atrapar un Pikachu!! en las coordenadas [5,5].
+[INFO] 20:15:12:257 Team/(24349:24357): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:16.
+[INFO] 20:15:12:257 Team/(24349:24357): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 20:15:27:48 Team/(24349:24371): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 17
+ID Correlativa: 16.
+[INFO] 20:16:03:366 Team/(24349:24369): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 7
+Pos Y: 12
+ID: 18
+ID Correlativa: 200.
+[INFO] 20:16:04:366 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:04:371 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:04:371 Team/(24349:24356): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 7,12
+[INFO] 20:16:07:374 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:07:374 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:10:376 Team/(24349:24356): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:10:382 Team/(24349:24356): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:11:383 Team/(24349:24356): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 7,12
+[INFO] 20:16:11:383 Team/(24349:24356): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [7,12].
+[INFO] 20:16:12:394 Team/(24349:24356): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:19.
+[INFO] 20:16:12:394 Team/(24349:24356): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 20:16:18:213 Team/(24349:24371): LLego un mensaje Caught, datos:
+Nombre:Default
+Intento de atrapar: 1
+ID: 20
+ID Correlativa: 19.
+[INFO] 20:16:19:224 Team/(24349:24349): DEADLOCK | Iniciando deteccion y recuperacion de deadlock
+[INFO] 20:16:19:224 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:19:224 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:19:227 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:19:227 Team/(24349:24349): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 7,12
+[INFO] 20:16:22:229 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:22:229 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:25:230 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:25:230 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:28:232 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:28:232 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:31:234 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:31:234 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:34:236 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:34:236 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:37:238 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:37:238 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:40:239 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:40:239 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:43:242 Team/(24349:24349): El entrenador numero [1] cambia al estado READY
+[INFO] 20:16:43:242 Team/(24349:24349): El entrenador numero [1] cambia al estado EXEC
+[INFO] 20:16:44:242 Team/(24349:24349): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 7,12
+[INFO] 20:16:49:243 Team/(24349:24349): INTERCAMBIO | Entrenador [1] entrega pokemon Gengar, entrenador [2] entrega pokemon Squirtle
+[INFO] 20:16:49:243 Team/(24349:24349): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 20:16:49:243 Team/(24349:24349): DEADLOCK | Cantidad de ciclos totales resueltos: 1
+[INFO] 20:16:49:243 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:49:243 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:49:243 Team/(24349:24349): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:49:243 Team/(24349:24349): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 5,5
+[INFO] 20:16:52:245 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:52:246 Team/(24349:24349): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:55:247 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:55:247 Team/(24349:24349): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:16:58:249 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:16:58:249 Team/(24349:24349): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:17:01:250 Team/(24349:24349): El entrenador numero [2] cambia al estado READY
+[INFO] 20:17:01:250 Team/(24349:24349): El entrenador numero [2] cambia al estado EXEC
+[INFO] 20:17:02:251 Team/(24349:24349): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 5,5
+[INFO] 20:17:07:252 Team/(24349:24349): INTERCAMBIO | Entrenador [2] entrega pokemon Squirtle, entrenador [3] entrega pokemon Pikachu
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 20:17:07:252 Team/(24349:24349): DEADLOCK | Cantidad de ciclos totales resueltos: 1
+[INFO] 20:17:07:252 Team/(24349:24349): DEADLOCK | Todo el deadlock fue resuelto correctamente
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [1] cambia al estado EXIT
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [2] cambia al estado EXIT
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [3] cambia al estado EXIT
+[INFO] 20:17:07:252 Team/(24349:24349): La cantidad de ciclos totales de CPU es: 74
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [1] realizo [25] ciclos de CPU
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [2] realizo [36] ciclos de CPU
+[INFO] 20:17:07:252 Team/(24349:24349): El entrenador numero [3] realizo [13] ciclos de CPU
+[INFO] 20:17:07:252 Team/(24349:24349): La cantidad de cambios de contexto totales es: 76

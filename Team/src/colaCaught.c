@@ -66,26 +66,73 @@ int resultado_primero_cola_caught(){
     return respuesta;
 }
 
-int posicion_primero_cola_caught(){
+int posicion_primero_cola_caught()
+{
     int pos, num_envio;
+    elemento_cola_caught* recorrerLista = NULL;
+    int32_t match = 0;
     pos = 0;
     num_envio = cola_caught.inicio->mensaje.num_envio;//todo SOLO SACA EL PRIMERO, SI ESE NO SIRVE LO SIGUE SACANDO ETERNAMENTE CADA VEZ QUE LLEGUE OTRO CAUGHT
-    //HAY QUE BORRAR EL DATO SI NO SIRVE
 
+    //cuando tiene el 1er elmento lo compara
     sem_wait(&sem_envio);
-
     while(pos < tamano_maximo && vector_envios[pos] != num_envio)
     {
     	pos++;
     }
-
     sem_post(&sem_envio);
-    if(pos == tamano_maximo){
-        pos = -1;
-        printf("Ningún entrenador figura que haya hecho el envio: %i, mensaje descartado.\n", num_envio);
+
+    if(pos == tamano_maximo)//no encontre esta ID en ningun entrenador
+    {
+    	recorrerLista = cola_caught.inicio->next;
+    	while(recorrerLista != NULL && match == 0)//me pongo a revisar el resto de la lista siempre que no lo haya encontrado
+		{
+    		pos = 0;
+    		num_envio = recorrerLista->mensaje.num_envio;
+    		if(match == 0)//si no hay Match, reviso
+    		{
+    			sem_wait(&sem_envio);
+				while(pos < tamano_maximo && vector_envios[pos] != num_envio)
+				{
+					pos++;
+				}
+				sem_post(&sem_envio);
+
+				if(pos != tamano_maximo)
+				{
+					match = 1;//encontre la Id
+				}
+    		}
+    		recorrerLista = recorrerLista->next;
+		}
+
+    	if(match == 0)
+    	{
+    		pos = -1;
+			printf("Ningún entrenador figura que haya hecho el envio: %i, mensaje descartado.\n", num_envio);
+			return pos;
+    	}
+
+    	else
+    	{
+    		return pos;
+    	}
+    	//comprobar al salir del while
     }
 
-    return pos;
+    else//encontre quien mando el CATCH
+    {
+    	return pos;
+    }
+
+
+
+//    if(pos == tamano_maximo){
+//        pos = -1;
+//        printf("Ningún entrenador figura que haya hecho el envio: %i, mensaje descartado.\n", num_envio);
+//    }
+//
+//    return pos;
 }
 
 ///////////////////-VECTOR ENVIOS-/////////////////////

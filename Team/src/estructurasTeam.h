@@ -40,7 +40,7 @@ typedef struct{
 
 typedef struct{
 	int resultado;
-        int num_envio;
+	int num_envio;
 }mensaje_caught;
 
 

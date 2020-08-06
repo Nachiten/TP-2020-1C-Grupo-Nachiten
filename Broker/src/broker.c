@@ -1095,7 +1095,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			mensajeConfirmacion = malloc(sizeAAllocar);
 			recibir_mensaje(mensajeConfirmacion, cod_op, socket_cliente);
 			printf("La ID que me llego en confirmacion: %u\n",mensajeConfirmacion->pId);
-			confirmar_mensaje(mensajeConfirmacion);// los semaforos estan aca
+			//confirmar_mensaje(mensajeConfirmacion);// los semaforos estan aca
 			break;
 		case TEST:
 			break;

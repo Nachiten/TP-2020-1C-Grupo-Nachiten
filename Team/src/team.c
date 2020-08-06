@@ -171,6 +171,27 @@ int main(int cantArgs, char* arg[])
         join_hilo(&hilo_cola_caught);
         eliminar_cola_caught();
 
+        int32_t socketDessuscripcion = establecer_conexion(IP,PUERTO);//si puedo me dessuscribo
+        if(socketDessuscripcion > 0)
+        {
+        	Dessuscripcion* estructuraDessuscripcion = malloc(sizeof(Dessuscripcion));
+			estructuraDessuscripcion->pId = PID;
+
+			estructuraDessuscripcion->numeroCola = APPEARED;
+			mandar_mensaje(estructuraDessuscripcion, DESSUSCRIPCION, socketDessuscripcion);
+			sleep(1);
+
+			estructuraDessuscripcion->numeroCola = LOCALIZED;
+			mandar_mensaje(estructuraDessuscripcion, DESSUSCRIPCION, socketDessuscripcion);
+			sleep(1);
+
+			estructuraDessuscripcion->numeroCola = CAUGHT;
+			mandar_mensaje(estructuraDessuscripcion, DESSUSCRIPCION, socketDessuscripcion);
+			sleep(1);
+
+			close(socketDessuscripcion);
+        }
+
         cerrar_conexion(socketAppeared);
         cerrar_conexion(socketLocalized);
         cerrar_conexion(socketCaught);
@@ -237,7 +258,7 @@ void enviarMensajesGet()
 	if(socketMandarGets > 0)
 	{
 		// Espera a que se termine de suscribir a todas las colas
-		//sem_wait(semSubTerminada); todo descomentar
+		//sem_wait(semSubTerminada); todo descomentar?
 		int i = 0;
 		// objetivo_actual es una lista de strings con cada pokemon que team necesita
 		while (objetivo_actual[i] != NULL)
@@ -250,7 +271,6 @@ void enviarMensajesGet()
 
 		close(socketMandarGets);
 	}
-
 	else
 	{
 		sem_wait(semLog);

@@ -16563,3 +16563,33 @@
 [INFO] 20:16:18:212 Broker/(24330:24504): Envio un mensaje a uno de los suscriptores
 [INFO] 20:16:18:213 Broker/(24330:24330): Un proceso se conecto
 [INFO] 20:16:18:213 Broker/(24330:24504): Se confirmo un mensaje de la cola Caught
+[INFO] 20:25:04:563 Broker/(24330:24330): Un proceso se conecto
+[INFO] 20:25:04:569 Broker/(24330:24604): Se agrego un mensaje a la cola Get
+[INFO] 20:25:04:569 Broker/(24330:24604): Agregando mensaje a Cache...
+
+[INFO] 20:25:04:569 Broker/(24330:24604): La particion 1 que iniciaba en 64 ahora está libre!
+[INFO] 20:25:04:569 Broker/(24330:24604): Inicio de la partición elegida: 64.
+[INFO] 20:25:05:565 Broker/(24330:24604): Se agrego un mensaje a la cola Get
+[INFO] 20:25:05:565 Broker/(24330:24604): Agregando mensaje a Cache...
+
+[INFO] 20:25:05:565 Broker/(24330:24604): Inicio de la partición elegida: 128.
+[INFO] 20:25:06:566 Broker/(24330:24604): Se agrego un mensaje a la cola Get
+[INFO] 20:25:06:566 Broker/(24330:24604): Agregando mensaje a Cache...
+
+[INFO] 20:25:06:566 Broker/(24330:24604): La particion 3 que iniciaba en 192 ahora está libre!
+[INFO] 20:25:06:566 Broker/(24330:24604): Inicio de la partición elegida: 192.
+[INFO] 20:25:07:567 Broker/(24330:24604): Se agrego un mensaje a la cola Get
+[INFO] 20:25:07:567 Broker/(24330:24604): Agregando mensaje a Cache...
+
+[INFO] 20:25:07:567 Broker/(24330:24604): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:25:07:567 Broker/(24330:24604): Inicio de la partición elegida: 0.
+[INFO] 20:25:08:568 Broker/(24330:24604): Se agrego un mensaje a la cola Get
+[INFO] 20:25:08:568 Broker/(24330:24604): Agregando mensaje a Cache...
+
+[INFO] 20:25:08:568 Broker/(24330:24604): La particion 1 que iniciaba en 64 ahora está libre!
+[INFO] 20:25:08:568 Broker/(24330:24604): La particion 0 (Inicio de particion: 0) fue consolidada con la particion 1 (Inicio de particion: 64) y ahora se llaman partición 0.
+
+[INFO] 20:25:08:569 Broker/(24330:24604): La particion 1 que iniciaba en 128 ahora está libre!
+[INFO] 20:25:08:569 Broker/(24330:24604): Inicio de la partición elegida: 128.
+[INFO] 20:25:14:565 Broker/(24330:24330): Un proceso se conecto
+[INFO] 20:25:14:573 Broker/(24330:24607): Se suscribio a la cola Appeared

@@ -1,7 +1,0 @@
-Buenas buenas... abris una terminal en la carpeta por defecto (home/utnso)
-> git clone https://github.com/mumuki/cspec.git
-> cd cspec
-> make
-> sudo make install
-
-Listo :) ya tenes instalado el cspec para hacer testing. Un saludo.

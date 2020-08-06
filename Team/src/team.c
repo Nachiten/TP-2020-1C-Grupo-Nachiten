@@ -10,7 +10,8 @@ int estado_team, objetivo_team, cantidad_objetivos, quantum;
 int main(void)
 
 {
-	uint32_t PID = getpid(); //ignorar warning, SI SE USA
+	PID = getpid(); //ignorar warning, SI SE USA
+	printf("PID del TEAM: %i.\n",PID);
 
 	//inicializamos datos para los hilos de recibir mensajes
 	datosAppearedGameboy = malloc(sizeof(datosHiloColas));
@@ -225,14 +226,14 @@ void enviarMensajesGet()
 	if(socketMandarGets > 0)
 	{
 		// Espera a que se termine de suscribir a todas las colas
-		sem_wait(semSubTerminada);
-
+		//sem_wait(semSubTerminada); todo descomentar
 		int i = 0;
 		// objetivo_actual es una lista de strings con cada pokemon que team necesita
 		while (objetivo_actual[i] != NULL)
 		{
-			//printf("Pokemon: %s\n", objetivo_actual[i]);
+			printf("Mandando mensaje GET para Pokemon: %s\n", objetivo_actual[i]);
 			enviarMensajeGet(objetivo_actual[i], socketMandarGets);
+			sleep(1);
 			i++;
 		}
 
@@ -249,8 +250,9 @@ void enviarMensajesGet()
 
 void enviarMensajeGet(char* pokemon, int32_t socketMandarGets)
 {
-	Get* structGet = malloc(sizeof(Get) + strlen(pokemon) + 1);
+	Get* structGet = malloc(sizeof(Get));
 	structGet->largoNombre = strlen(pokemon);
+	//structGet->nombrePokemon = malloc(sizeof(structGet->largoNombre + 1));
 	structGet->nombrePokemon = pokemon;
 	structGet->ID = 0;
 	structGet->corrID = -2;
@@ -470,7 +472,8 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
 	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
 
-	sem_post(semSubTerminada);
+	sleep(1);
+	//sem_post(semSubTerminada);
 
 	pthread_t hiloApp;
 	pthread_t hiloLocal;

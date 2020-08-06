@@ -1029,3 +1029,11 @@
 [WARNING] 21:36:02:714 GAMECARD/(4876:4927): GET | El pokemon E no existe
 [INFO] 00:39:53:952 GAMECARD/(10316:10317): Conexión establecida con socket de BROKER
 [WARNING] 00:40:13:463 GAMECARD/(10316:10318): CATCH | El pokemon Zergling no existe
+[INFO] 13:40:54:605 GAMECARD/(6458:6459): Conexión establecida con socket de BROKER
+[INFO] 13:40:56:632 GAMECARD/(6458:6459): Conexión establecida con socket de BROKER
+[INFO] 13:40:58:634 GAMECARD/(6458:6459): Conexión establecida con socket de BROKER
+[WARNING] 13:41:01:641 GAMECARD/(6458:6464): GET | El pokemon Bulbasaur no existe
+[INFO] 13:41:55:463 GAMECARD/(6511:6512): Conexión establecida con socket de BROKER
+[INFO] 13:41:57:465 GAMECARD/(6511:6512): Conexión establecida con socket de BROKER
+[INFO] 13:41:59:466 GAMECARD/(6511:6512): Conexión establecida con socket de BROKER
+[WARNING] 13:42:02:472 GAMECARD/(6511:6526): GET | El pokemon Bulbasaur no existe

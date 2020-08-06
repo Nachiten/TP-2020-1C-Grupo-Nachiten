@@ -1123,132 +1123,9 @@ int main(void) {
 		printearSemaforosExistentes();
 	}
 
-	// -- Desde aca el filesystem ya está inicializado --
-
-	// Testing
-	//printf("Bitarray antes: \n");
-	//printearBitArray(pathMetadata, BLOCKS);
-
-	char* pikachu = "Pikachu";
-	char* jorge = "Jorge";
-	char* fruta = "Fruta";
-	char* bulbasaur = "Bulbasaur";
-
-	//mensajeNew(pikachu, 1, 15, 30, 1);
-
-//	mensajeGet(pikachu, 1);
-//	mensajeGet(pikachu, 1);
-//	mensajeGet(pikachu, 1);
-//	mensajeGet(pikachu, 1);
-
-//	mensajeNew(fruta, 10, 5, 20, 1);
-//
-//	mensajeNew(bulbasaur, 1, 15, 1, 1);
-//
-//	mensajeCatch(bulbasaur, 1, 15, 1);
-//
-//	mensajeNew(pikachu, 1, 15, 1, 1);
-//
-//	mensajeNew(fruta, 10, 5, 20, 1);
-//
-//	mensajeCatch(pikachu, 1, 15, 1);
-//
-//	printearBitArray();
-//
-//	mensajeNew(jorge, 1, 20, 3, 1);
-//
-//	mensajeGet(pikachu, 1);
-//
-//	mensajeCatch(jorge, 1, 24, 1);
-//
-//	mensajeNew(fruta, 23, 10, 1, 1);
-//
-//	mensajeNew(jorge, 1, 30, 5, 1);
-//
-//	mensajeCatch(jorge, 1, 20, 1);
-//
-//	mensajeNew(fruta, 25, 15, 25, 1);
-//
-//	mensajeCatch(fruta, 23, 10, 1);
-//
-//	mensajeCatch(pikachu, 1, 15, 1);
-//
-//	mensajeNew(jorge, 1, 40, 7, 1);
-//
-//	mensajeNew(fruta, 35, 20, 40, 1);
-//
-//	mensajeCatch(jorge, 1, 20, 1);
-//
-//	mensajeNew(pikachu, 1, 20, 3, 1);
-//
-//	mensajeCatch(jorge, 1, 20, 1);
-//
-//	mensajeNew(fruta, 10, 50, 25, 1);
-//	mensajeNew(fruta, 10, 51, 25, 1);
-//	mensajeNew(fruta, 10, 52, 25, 1);
-//	mensajeNew(fruta, 10, 53, 25, 1);
-//	mensajeNew(fruta, 10, 54, 25, 1);
-//	mensajeNew(fruta, 10, 55, 25, 1);
-//	mensajeNew(fruta, 10, 56, 25, 1);
-//	mensajeNew(fruta, 10, 57, 25, 1);
-//	mensajeNew(fruta, 10, 58, 25, 1);
-//	mensajeNew(fruta, 10, 59, 25, 1);
-//	mensajeNew(fruta, 10, 60, 25, 1);
-//	mensajeNew(fruta, 10, 61, 25, 1);
-//	mensajeNew(fruta, 10, 62, 25, 1);
-//	mensajeNew(fruta, 10, 63, 25, 1);
-//	mensajeNew(fruta, 10, 64, 25, 1);
-//	mensajeNew(fruta, 10, 65, 25, 1);
-//	mensajeNew(fruta, 10, 66, 25, 1);
-//	mensajeNew(fruta, 10, 67, 25, 1);
-
-
-	/*Expected:
-	 * Bulbasaur: -> Vacio
-	 * Pikachu -> 1-20=3
-	 * Jorge -> 1-30=5
-	 * 			1-40=7
-	 * Fruta -> 10-5=40
-	 * 			25-15=25
-	 * 			35-20=40
-	 */
-
-
-	// Hilos de prueba
-//	pthread_t hiloTesting1;
-//	pthread_t hiloTesting2;
-//	pthread_t hiloTesting3;
-//
-//	pthread_create(&hiloTesting1, NULL, (void*)abrirArchivo1, NULL);
-//	pthread_create(&hiloTesting2, NULL, (void*)abrirArchivo2, NULL);
-//	pthread_create(&hiloTesting3, NULL, (void*)abrirArchivo3, NULL);
-//
-//	pthread_join(hiloTesting1, NULL);
-//	pthread_join(hiloTesting2, NULL);
-//	pthread_join(hiloTesting3, NULL);
-
-	// Testing semaforos
-//	crearPokemonSiNoExiste(pikachu);
-//	crearPokemonSiNoExiste(bulbasaur);
-//	crearPokemonSiNoExiste(jorge);
-//	crearPokemonSiNoExiste(fruta);
-//
-//	leerSemaforosLista();
-//
-//	waitSemaforoPokemon(bulbasaur);
-//	waitSemaforoPokemon(fruta);
-//
-//	leerSemaforosLista();
-//
-//	signalSemaforoPokemon(bulbasaur);
-//
-//	signalSemaforoPokemon(fruta);
-//
-//	leerSemaforosLista();
-
 	// ****************************************************************
 
-	 //Levanto hilo para escuchar broker
+	//Levanto hilo para escuchar broker
 	datosHiloBroker datosBroker = {IP_BROKER, PUERTO_BROKER, TIEM_REIN_CONEXION, logger};
 
 	pthread_t hiloBroker;
@@ -1260,21 +1137,9 @@ int main(void) {
 	pthread_t hiloGameBoy;
     pthread_create(&hiloGameBoy, NULL, (void*)comenzarEscuchaGameBoy, NULL);
 
-//	// CIERRO HILOS
+    // CIERRO HILOS
     pthread_join(hiloBroker, NULL);
     pthread_join(hiloGameBoy, NULL);
-
-	// ****************************************************************
-
-	/* MANDAR MENSAJE A UNA COLA
-	Appeared* estructura = malloc(sizeof(Appeared));
-
-	estructura->posPokemon.x =21;
-
-	mandar_mensaje(estructura,APPEARED,socketBroker);
-	*/
-
-	//****************************************************************
 
 	// Libero la config
 	if (config != NULL) config_destroy(config);

@@ -65,9 +65,20 @@ int inicializar_entrenadores_con_config(t_config* config, d_entrenador** entrena
 		{
 			entrenador[i].estado = ESTADO_NEW;
 			entrenador[i].estado_block = ACTIVO;
-			entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
+
+			char* posicionCompleta = posicion_entrenador[i];
+
+			char** posiciones = string_split(posicionCompleta,"|");
+
+			entrenador[i].posicion[0] = atoi(posiciones[0]);
+			entrenador[i].posicion[1] = atoi(posiciones[1]);
+
+			// Printeo para probar
+			//printf("PosicionX: %i, PosicionY: %i", entrenador[i].posicion[0], entrenador[i].posicion[1]);
+
+			//entrenador[i].posicion[0] = convertir_a_int(posicion_entrenador[i][0]);
 			// TODO | Modificar para q pueda tener numeros de mas de uno de largo
-			entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
+			//entrenador[i].posicion[1] = convertir_a_int(posicion_entrenador[i][2]);
 			entrenador[i].numeroEntrenador = i + 1; // El numero de entrenador comienza en 1
 			entrenador[i].cantCiclosCPU = 0; // Se inicializa en 0 para que no tire basura dsp
 

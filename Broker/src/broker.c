@@ -956,7 +956,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, uint32_t s
 			break;
 		case CATCH:
 			mensajeCatch = malloc(sizeAAllocar);
-			idCatch = malloc(sizeof(idMensaje));//todo probar con team
+			idCatch = malloc(sizeof(idMensaje));
 			recibir_mensaje(mensajeCatch, cod_op, socket_cliente);
 			sem_wait(semCatch);
 			sizeMensajeParaCache = calcular_bytes_utiles_de_mensaje(mensajeCatch, cod_op);

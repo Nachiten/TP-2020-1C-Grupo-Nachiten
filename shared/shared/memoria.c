@@ -124,7 +124,7 @@ void corregirNumerosYParticiones(lista_particiones* particionOriginal, uint32_t 
 void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUEN_COMPACT, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas)
 {
 	lista_particiones* particionABorrar = laLista;
-	uint32_t masViejoUsado = particionABorrar->numero_de_victima;
+	uint32_t masViejoUsado = 99999;
 	uint32_t victima = particionABorrar->numero_de_particion;
 
 	//recorremos la lista hasta el final buscando una victima
@@ -961,7 +961,6 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 			//el espacio que resta en memoria no me alcanza
 			else
 			{
-				puts("Desesperaos mortales, el fin se acerca.");
 				resultado = 0;
 			}
 		}
@@ -969,7 +968,6 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 		//la memoria esta totalmente copada
 		else
 		{
-			puts("Desesperaos mortales, el fin se acerca.");
 			resultado = 0;
 		}
 	}

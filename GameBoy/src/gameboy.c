@@ -416,6 +416,8 @@ int main(int cantArg, char* arg[]) {
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);
 
+	sleep(1);
+
 	return EXIT_SUCCESS;
 }
 

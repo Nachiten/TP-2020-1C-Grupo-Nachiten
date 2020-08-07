@@ -13,7 +13,8 @@ int main(int cantArgs, char* arg[])
 
 	if (cantArgs < 2){
 		printf("ERROR | No se insertó un path de archivo de configuracion, se usará el default de carpeta Configs (TeamPruebaIndividual)\n");
-		pathConfig = "/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/TeamPruebaIndividual.config";
+		pathConfig = "/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team1Final.config";
+		printf("LA CONFIG SE DEFAULTEO A LA PRUEBA FINAL 1");
 	} else if (cantArgs == 2) {
 		printf("INFO | El path seleccionado de config es %s\n", arg[1]);
 		pathConfig = arg[1];
@@ -283,7 +284,7 @@ void enviarMensajeGet(char* pokemon, int32_t socketMandarGets)
 {
 	Get* structGet = malloc(sizeof(Get));
 	structGet->largoNombre = strlen(pokemon);
-	//structGet->nombrePokemon = malloc(sizeof(structGet->largoNombre + 1));
+	structGet->nombrePokemon = malloc(strlen(pokemon) + 1);
 	structGet->nombrePokemon = pokemon;
 	structGet->ID = 0;
 	structGet->corrID = -2;
@@ -703,7 +704,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 				mensaje_rec->cantidad_pos = recibidoLocalized->cantPosciciones;
 				mensaje_rec->posiciones = malloc(mensaje_rec->cantidad_pos * sizeof(int));
 
-				while(iterador < ((mensaje_rec->cantidad_pos*2)-1))
+				while(iterador < ((mensaje_rec->cantidad_pos*2)))
 				{
 					mensaje_rec->posiciones[iterador] = recibidoLocalized->coords[iterador];
 					iterador++;

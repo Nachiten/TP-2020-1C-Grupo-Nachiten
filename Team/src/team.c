@@ -13,8 +13,7 @@ int main(int cantArgs, char* arg[])
 
 	if (cantArgs < 2){
 		printf("ERROR | No se insertó un path de archivo de configuracion, se usará el default de carpeta Configs (TeamPruebaIndividual)\n");
-		pathConfig = "/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/Team1Final.config";
-		printf("LA CONFIG SE DEFAULTEO A LA PRUEBA FINAL 1");
+		pathConfig = "/home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/Configs/TeamPruebaIndividual.config";
 	} else if (cantArgs == 2) {
 		printf("INFO | El path seleccionado de config es %s\n", arg[1]);
 		pathConfig = arg[1];

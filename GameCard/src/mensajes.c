@@ -1,6 +1,12 @@
 #include "mensajes.h"
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
+void mensajeNew(structNew* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int cantidad = elStruct->cantidad;
+	int posX = elStruct->posX;
+	int posY = elStruct->posY;
+	int IDMensaje = elStruct->ID;
 
 	// Checkeo de variables
 	if (pokemon == NULL){

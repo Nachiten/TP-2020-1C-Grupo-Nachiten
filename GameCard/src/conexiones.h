@@ -12,6 +12,9 @@
 
 sem_t* semConexionBroker;
 
+pthread_t hiloNewGameboy, hiloCatchGameboy, hiloGetGameboy;
+pthread_t hiloNewBroker, hiloCatchBroker, hiloGetBroker;
+
 typedef struct datosHiloBroker{
 	char* IP_BROKER;
 	char* PUERTO_BROKER;

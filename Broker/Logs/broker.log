@@ -30454,3 +30454,263 @@
 [INFO] 18:21:02:69 Broker/(23309:23331): La particion 2 que iniciaba en 8 ahora está libre!
 [INFO] 18:21:02:69 Broker/(23309:23331): La particion 3 que iniciaba en 29 ahora está libre!
 [INFO] 18:21:02:69 Broker/(23309:23331): Inicio de la partición elegida: 8.
+[INFO] 18:26:11:594 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:26:11:623 Broker/(23506:23524): Se agrego un mensaje a la cola Caught
+[INFO] 18:26:11:623 Broker/(23506:23524): Agregando mensaje a Cache...
+
+[INFO] 18:26:11:623 Broker/(23506:23524): Inicio de la partición elegida: 0.
+[INFO] 18:26:15:220 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:26:15:245 Broker/(23506:23526): Se agrego un mensaje a la cola Caught
+[INFO] 18:26:15:247 Broker/(23506:23526): Agregando mensaje a Cache...
+
+[INFO] 18:26:15:248 Broker/(23506:23526): Inicio de la partición elegida: 4.
+[INFO] 18:26:18:547 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:26:18:567 Broker/(23506:23528): Se agrego un mensaje a la cola Catch
+[INFO] 18:26:18:567 Broker/(23506:23528): Agregando mensaje a Cache...
+
+[INFO] 18:26:18:568 Broker/(23506:23528): Inicio de la partición elegida: 8.
+[INFO] 18:26:21:690 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:26:21:705 Broker/(23506:23530): Se agrego un mensaje a la cola Catch
+[INFO] 18:26:21:705 Broker/(23506:23530): Agregando mensaje a Cache...
+
+[INFO] 18:26:21:705 Broker/(23506:23530): Inicio de la partición elegida: 28.
+[INFO] 18:26:29:652 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:26:29:672 Broker/(23506:23534): Se agrego un mensaje a la cola Catch
+[INFO] 18:26:29:677 Broker/(23506:23534): Agregando mensaje a Cache...
+
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:26:29:677 Broker/(23506:23534): Compactando...
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:26:29:677 Broker/(23506:23534): Compactando...
+[INFO] 18:26:29:677 Broker/(23506:23534): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 18:26:29:678 Broker/(23506:23534): La particion 2 que iniciaba en 24 ahora está libre!
+[INFO] 18:26:29:678 Broker/(23506:23534): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:26:29:678 Broker/(23506:23534): Compactando...
+[INFO] 18:26:29:679 Broker/(23506:23534): La particion 1 que iniciaba en 20 ahora está libre!
+[INFO] 18:26:32:945 Broker/(23506:23534): Inicio de la partición elegida: 21.
+[INFO] 18:28:54:940 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:28:54:945 Broker/(23506:23590): Se suscribio a la cola Caught
+[INFO] 18:29:04:942 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:29:04:951 Broker/(23506:23593): Se desuscribio de la cola Caught
+[INFO] 18:29:31:214 Broker/(23506:23506): Un proceso se conecto
+[INFO] 18:29:31:240 Broker/(23506:23603): Se agrego un mensaje a la cola Catch
+[INFO] 18:29:31:240 Broker/(23506:23603): Agregando mensaje a Cache...
+
+[INFO] 18:29:31:240 Broker/(23506:23603): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:29:31:241 Broker/(23506:23603): Compactando...
+[INFO] 18:29:31:241 Broker/(23506:23603): La particion 1 que iniciaba en 21 ahora está libre!
+[INFO] 18:29:31:241 Broker/(23506:23603): Inicio de la partición elegida: 17.
+[INFO] 18:52:16:737 Broker/(23653:23653): Un proceso se conecto
+[INFO] 18:52:16:748 Broker/(23653:23831): Se agrego un mensaje a la cola Caught
+[INFO] 18:52:16:748 Broker/(23653:23831): Agregando mensaje a Cache...
+
+[INFO] 18:52:16:748 Broker/(23653:23831): Inicio de la partición elegida: 0.
+[INFO] 18:52:43:521 Broker/(23653:23653): Un proceso se conecto
+[INFO] 18:52:43:536 Broker/(23653:23841): Se agrego un mensaje a la cola Caught
+[INFO] 18:52:43:536 Broker/(23653:23841): Agregando mensaje a Cache...
+
+[INFO] 18:52:43:537 Broker/(23653:23841): Inicio de la partición elegida: 4.
+[INFO] 18:52:51:625 Broker/(23653:23653): Un proceso se conecto
+[INFO] 18:52:51:642 Broker/(23653:23848): Se agrego un mensaje a la cola Catch
+[INFO] 18:52:51:643 Broker/(23653:23848): Agregando mensaje a Cache...
+
+[INFO] 18:52:51:643 Broker/(23653:23848): Inicio de la partición elegida: 8.
+[INFO] 18:53:24:790 Broker/(23653:23653): Un proceso se conecto
+[INFO] 18:53:24:814 Broker/(23653:23851): Se agrego un mensaje a la cola Catch
+[INFO] 18:53:24:814 Broker/(23653:23851): Agregando mensaje a Cache...
+
+[INFO] 18:53:24:814 Broker/(23653:23851): Inicio de la partición elegida: 28.
+[INFO] 18:54:24:375 Broker/(23653:23653): Un proceso se conecto
+[INFO] 18:54:24:384 Broker/(23653:23861): Se agrego un mensaje a la cola Catch
+[INFO] 18:54:24:384 Broker/(23653:23861): Agregando mensaje a Cache...
+
+[INFO] 18:54:24:384 Broker/(23653:23861): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:54:24:384 Broker/(23653:23861): Compactando...
+[INFO] 18:54:24:384 Broker/(23653:23861): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 18:54:24:385 Broker/(23653:23861): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 18:54:24:402 Broker/(23653:23861): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 18:54:24:402 Broker/(23653:23861): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:54:24:402 Broker/(23653:23861): Compactando...
+[INFO] 18:54:24:403 Broker/(23653:23861): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 18:54:24:403 Broker/(23653:23861): La particion 2 que iniciaba en 24 ahora está libre!
+[INFO] 18:54:24:403 Broker/(23653:23861): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 18:54:24:403 Broker/(23653:23861): Compactando...
+[INFO] 18:54:24:403 Broker/(23653:23861): La particion 1 que iniciaba en 20 ahora está libre!
+[INFO] 18:54:24:404 Broker/(23653:23861): Inicio de la partición elegida: 21.
+[INFO] 19:00:43:392 Broker/(23653:23653): Un proceso se conecto
+[INFO] 19:00:43:407 Broker/(23653:23980): Se agrego un mensaje a la cola Catch
+[INFO] 19:00:43:407 Broker/(23653:23980): Agregando mensaje a Cache...
+
+[INFO] 19:00:43:407 Broker/(23653:23980): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:00:43:407 Broker/(23653:23980): Compactando...
+[INFO] 19:00:43:408 Broker/(23653:23980): La particion 1 que iniciaba en 21 ahora está libre!
+[INFO] 19:00:43:408 Broker/(23653:23980): Inicio de la partición elegida: 17.
+[INFO] 19:01:20:226 Broker/(24058:24058): Un proceso se conecto
+[INFO] 19:01:20:246 Broker/(24058:24081): Se agrego un mensaje a la cola Caught
+[INFO] 19:01:20:246 Broker/(24058:24081): Agregando mensaje a Cache...
+
+[INFO] 19:01:20:246 Broker/(24058:24081): Inicio de la partición elegida: 0.
+[INFO] 19:01:20:290 Broker/(24058:24058): Un proceso se conecto
+[INFO] 19:01:20:743 Broker/(24058:24083): Se agrego un mensaje a la cola Caught
+[INFO] 19:01:20:743 Broker/(24058:24083): Agregando mensaje a Cache...
+
+[INFO] 19:01:20:743 Broker/(24058:24083): Inicio de la partición elegida: 4.
+[INFO] 19:01:20:744 Broker/(24058:24058): Un proceso se conecto
+[INFO] 19:01:20:750 Broker/(24058:24085): Se agrego un mensaje a la cola Catch
+[INFO] 19:01:20:751 Broker/(24058:24085): Agregando mensaje a Cache...
+
+[INFO] 19:01:20:751 Broker/(24058:24085): Inicio de la partición elegida: 8.
+[INFO] 19:01:22:429 Broker/(24058:24058): Un proceso se conecto
+[INFO] 19:01:22:437 Broker/(24058:24087): Se agrego un mensaje a la cola Catch
+[INFO] 19:01:22:437 Broker/(24058:24087): Agregando mensaje a Cache...
+
+[INFO] 19:01:22:437 Broker/(24058:24087): Inicio de la partición elegida: 28.
+[INFO] 19:07:26:212 Broker/(24058:24058): Un proceso se conecto
+[INFO] 19:07:26:225 Broker/(24058:24156): Se agrego un mensaje a la cola Catch
+[INFO] 19:07:26:225 Broker/(24058:24156): Agregando mensaje a Cache...
+
+[INFO] 19:07:26:225 Broker/(24058:24156): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:07:26:225 Broker/(24058:24156): Compactando...
+[INFO] 19:07:26:225 Broker/(24058:24156): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): Compactando...
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 2 que iniciaba en 24 ahora está libre!
+[INFO] 19:07:26:226 Broker/(24058:24156): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:07:26:227 Broker/(24058:24156): Compactando...
+[INFO] 19:07:26:227 Broker/(24058:24156): La particion 1 que iniciaba en 20 ahora está libre!
+[INFO] 19:07:26:227 Broker/(24058:24156): Inicio de la partición elegida: 21.
+[INFO] 19:13:42:53 Broker/(24425:24425): Un proceso se conecto
+[INFO] 19:13:42:102 Broker/(24425:24440): Se agrego un mensaje a la cola Caught
+[INFO] 19:13:42:103 Broker/(24425:24440): Agregando mensaje a Cache...
+
+[INFO] 19:13:42:103 Broker/(24425:24440): Inicio de la partición elegida: 0.
+[INFO] 19:14:05:161 Broker/(24425:24425): Un proceso se conecto
+[INFO] 19:14:05:181 Broker/(24425:24443): Se agrego un mensaje a la cola Caught
+[INFO] 19:14:05:181 Broker/(24425:24443): Agregando mensaje a Cache...
+
+[INFO] 19:14:05:181 Broker/(24425:24443): Inicio de la partición elegida: 4.
+[INFO] 19:14:10:700 Broker/(24425:24425): Un proceso se conecto
+[INFO] 19:14:10:717 Broker/(24425:24445): Se agrego un mensaje a la cola Catch
+[INFO] 19:14:10:717 Broker/(24425:24445): Agregando mensaje a Cache...
+
+[INFO] 19:14:10:717 Broker/(24425:24445): Inicio de la partición elegida: 8.
+[INFO] 19:14:18:311 Broker/(24425:24425): Un proceso se conecto
+[INFO] 19:14:18:334 Broker/(24425:24447): Se agrego un mensaje a la cola Catch
+[INFO] 19:14:18:334 Broker/(24425:24447): Agregando mensaje a Cache...
+
+[INFO] 19:14:18:334 Broker/(24425:24447): Inicio de la partición elegida: 28.
+[INFO] 19:14:22:919 Broker/(24425:24425): Un proceso se conecto
+[INFO] 19:14:22:945 Broker/(24425:24449): Se agrego un mensaje a la cola Catch
+[INFO] 19:14:22:945 Broker/(24425:24449): Agregando mensaje a Cache...
+
+[INFO] 19:14:22:945 Broker/(24425:24449): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:14:22:945 Broker/(24425:24449): Compactando...
+[INFO] 19:14:22:945 Broker/(24425:24449): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 19:14:22:945 Broker/(24425:24449): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 19:14:22:945 Broker/(24425:24449): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): Compactando...
+[INFO] 19:14:22:946 Broker/(24425:24449): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): La particion 2 que iniciaba en 24 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): Compactando...
+[INFO] 19:14:22:946 Broker/(24425:24449): La particion 1 que iniciaba en 20 ahora está libre!
+[INFO] 19:14:22:946 Broker/(24425:24449): Inicio de la partición elegida: 21.
+[INFO] 19:16:04:447 Broker/(24501:24501): Un proceso se conecto
+[INFO] 19:16:04:468 Broker/(24501:24516): Se agrego un mensaje a la cola Caught
+[INFO] 19:16:04:468 Broker/(24501:24516): Agregando mensaje a Cache...
+
+[INFO] 19:16:04:468 Broker/(24501:24516): Inicio de la partición elegida: 0.
+[INFO] 19:16:04:507 Broker/(24501:24501): Un proceso se conecto
+[INFO] 19:16:05:56 Broker/(24501:24518): Se agrego un mensaje a la cola Caught
+[INFO] 19:16:05:56 Broker/(24501:24518): Agregando mensaje a Cache...
+
+[INFO] 19:16:05:56 Broker/(24501:24518): Inicio de la partición elegida: 4.
+[INFO] 19:16:05:57 Broker/(24501:24501): Un proceso se conecto
+[INFO] 19:16:05:60 Broker/(24501:24520): Se agrego un mensaje a la cola Catch
+[INFO] 19:16:05:61 Broker/(24501:24520): Agregando mensaje a Cache...
+
+[INFO] 19:16:05:61 Broker/(24501:24520): Inicio de la partición elegida: 8.
+[INFO] 19:16:06:176 Broker/(24501:24501): Un proceso se conecto
+[INFO] 19:16:06:190 Broker/(24501:24522): Se agrego un mensaje a la cola Catch
+[INFO] 19:16:06:190 Broker/(24501:24522): Agregando mensaje a Cache...
+
+[INFO] 19:16:06:190 Broker/(24501:24522): Inicio de la partición elegida: 28.
+[INFO] 19:16:18:331 Broker/(24501:24501): Un proceso se conecto
+[INFO] 19:16:18:355 Broker/(24501:24540): Se agrego un mensaje a la cola Catch
+[INFO] 19:16:18:355 Broker/(24501:24540): Agregando mensaje a Cache...
+
+[INFO] 19:19:56:570 Broker/(24501:24540): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 19:20:12:281 Broker/(24501:24540): Compactando...
+[INFO] 19:20:58:845 Broker/(24501:24540): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 19:21:15:390 Broker/(24501:24540): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 19:21:35:762 Broker/(24501:24540): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 20:08:27:155 Broker/(25673:25673): Un proceso se conecto
+[INFO] 20:08:27:200 Broker/(25673:25684): Se agrego un mensaje a la cola Caught
+[INFO] 20:08:27:200 Broker/(25673:25684): Agregando mensaje a Cache...
+
+[INFO] 20:08:32:254 Broker/(25673:25673): Un proceso se conecto
+[INFO] 20:08:32:254 Broker/(25673:25684): Inicio de la partición elegida: 0.
+[INFO] 20:08:32:255 Broker/(25673:25684): Se agrego un mensaje a la cola Caught
+[INFO] 20:08:32:255 Broker/(25673:25684): Agregando mensaje a Cache...
+
+[INFO] 20:08:32:255 Broker/(25673:25684): Inicio de la partición elegida: 4.
+[INFO] 20:08:32:264 Broker/(25673:25673): Un proceso se conecto
+[INFO] 20:08:32:265 Broker/(25673:25690): Se agrego un mensaje a la cola Catch
+[INFO] 20:08:32:265 Broker/(25673:25690): Agregando mensaje a Cache...
+
+[INFO] 20:08:32:265 Broker/(25673:25690): Inicio de la partición elegida: 8.
+[INFO] 20:09:01:554 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:09:01:573 Broker/(25725:25736): Se agrego un mensaje a la cola Caught
+[INFO] 20:09:01:573 Broker/(25725:25736): Agregando mensaje a Cache...
+
+[INFO] 20:09:01:573 Broker/(25725:25736): Inicio de la partición elegida: 0.
+[INFO] 20:09:01:634 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:09:02:152 Broker/(25725:25738): Se agrego un mensaje a la cola Caught
+[INFO] 20:09:02:152 Broker/(25725:25738): Agregando mensaje a Cache...
+
+[INFO] 20:09:02:152 Broker/(25725:25738): Inicio de la partición elegida: 4.
+[INFO] 20:09:02:152 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:09:02:156 Broker/(25725:25740): Se agrego un mensaje a la cola Catch
+[INFO] 20:09:02:156 Broker/(25725:25740): Agregando mensaje a Cache...
+
+[INFO] 20:09:02:156 Broker/(25725:25740): Inicio de la partición elegida: 8.
+[INFO] 20:09:04:94 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:09:04:103 Broker/(25725:25742): Se agrego un mensaje a la cola Catch
+[INFO] 20:09:04:103 Broker/(25725:25742): Agregando mensaje a Cache...
+
+[INFO] 20:09:04:120 Broker/(25725:25742): Inicio de la partición elegida: 28.
+[INFO] 20:09:12:374 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:09:12:382 Broker/(25725:25744): Se agrego un mensaje a la cola Catch
+[INFO] 20:09:12:383 Broker/(25725:25744): Agregando mensaje a Cache...
+
+[INFO] 20:09:12:383 Broker/(25725:25744): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:09:12:383 Broker/(25725:25744): Compactando...
+[INFO] 20:09:12:383 Broker/(25725:25744): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 20:09:12:383 Broker/(25725:25744): La particion 2 que iniciaba en 8 ahora está libre!
+[INFO] 20:09:12:383 Broker/(25725:25744): La particion 3 que iniciaba en 28 ahora está libre!
+[INFO] 20:09:12:383 Broker/(25725:25744): Inicio de la partición elegida: 45.
+[INFO] 20:16:07:122 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:16:07:127 Broker/(25725:25793): Se suscribio a la cola Caught
+[INFO] 20:16:17:124 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:16:17:155 Broker/(25725:25805): Se desuscribio de la cola Caught
+[INFO] 20:16:21:578 Broker/(25725:25725): Un proceso se conecto
+[INFO] 20:16:21:589 Broker/(25725:25808): Se agrego un mensaje a la cola Catch
+[INFO] 20:16:21:589 Broker/(25725:25808): Agregando mensaje a Cache...
+
+[INFO] 20:16:21:589 Broker/(25725:25808): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:16:21:589 Broker/(25725:25808): Compactando...
+[INFO] 20:16:21:589 Broker/(25725:25808): La particion 1 que iniciaba en 4 ahora está libre!
+[INFO] 20:16:21:589 Broker/(25725:25808): La particion 2 que iniciaba en 24 ahora está libre!
+[INFO] 20:16:21:589 Broker/(25725:25808): La particion 3 que iniciaba en 45 ahora está libre!
+[INFO] 20:16:21:590 Broker/(25725:25808): La particion 0 que iniciaba en 0 ahora está libre!
+[INFO] 20:16:21:590 Broker/(25725:25808): Compactando...
+[INFO] 20:16:21:590 Broker/(25725:25808): La particion 1 que iniciaba en 20 ahora está libre!
+[INFO] 20:16:21:590 Broker/(25725:25808): La particion 2 que iniciaba en 41 ahora está libre!
+[INFO] 20:16:21:590 Broker/(25725:25808): Inicio de la partición elegida: 38.

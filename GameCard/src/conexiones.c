@@ -207,11 +207,17 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				free(mensajeConfirm);
 				//sleep(1);
 
-				// TODO | Levantar como hilo
-				mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
+				structGet structGetHilo = {
+					mensajeGetRecibido->nombrePokemon,
+					mensajeGetRecibido->ID
+				};
+
+				pthread_t hiloGet;
+				// Levanto hilo para manejar el mensaje nuevo
+				pthread_create(&hiloGet , NULL, (void*)mensajeGet, &structGetHilo);
 
 				//free(mensajeGetRecibido->nombrePokemon);
-				free(mensajeGetRecibido);
+				free(mensajeNewRecibido);
 
 			break;
 				case CATCH: ;
@@ -229,8 +235,16 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 				free(mensajeConfirm);
 				//sleep(1);
 
-				// TODO | Levantar como hilo
-				mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
+				structCatch structCatchHilo = {
+					mensajeCatchRecibido->nombrePokemon,
+					mensajeCatchRecibido->posPokemon.x,
+					mensajeCatchRecibido->posPokemon.y,
+					mensajeCatchRecibido->ID
+				};
+
+				pthread_t hiloCatch;
+				// Levanto hilo para manejar el mensaje nuevo
+				pthread_create(&hiloCatch , NULL, (void*)mensajeCatch, &structCatchHilo);
 
 				//free(mensajeCatchRecibido->nombrePokemon);
 				free(mensajeCatchRecibido);
@@ -306,8 +320,14 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 		mensajeGetRecibido = malloc(tamanioDatos);
 		recibir_mensaje(mensajeGetRecibido, cod_op, socket_cliente);
 
-		//ya te llegaron los datos y llamas a tus funciones
-		mensajeGet(mensajeGetRecibido->nombrePokemon, mensajeGetRecibido->ID);
+		structGet structGetHilo = {
+			mensajeGetRecibido->nombrePokemon,
+			mensajeGetRecibido->ID
+		};
+
+		pthread_t hiloGet;
+		// Levanto hilo para manejar el mensaje nuevo
+		pthread_create(&hiloGet , NULL, (void*)mensajeGet, &structGetHilo);
 
 		free(mensajeGetRecibido->nombrePokemon);
 		free(mensajeGetRecibido);
@@ -317,8 +337,16 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 		mensajeCatchRecibido = malloc(tamanioDatos);
 		recibir_mensaje(mensajeCatchRecibido, cod_op, socket_cliente);
 
-		//ya te llegaron los datos y llamas a tus funciones
-		mensajeCatch(mensajeCatchRecibido->nombrePokemon, mensajeCatchRecibido->posPokemon.x, mensajeCatchRecibido->posPokemon.y, mensajeCatchRecibido->ID);
+		structCatch structCatchHilo = {
+			mensajeCatchRecibido->nombrePokemon,
+			mensajeCatchRecibido->posPokemon.x,
+			mensajeCatchRecibido->posPokemon.y,
+			mensajeCatchRecibido->ID
+		};
+
+		pthread_t hiloCatch;
+		// Levanto hilo para manejar el mensaje nuevo
+		pthread_create(&hiloCatch , NULL, (void*)mensajeCatch, &structCatchHilo);
 
 		free(mensajeCatchRecibido->nombrePokemon);
 		free(mensajeCatchRecibido);

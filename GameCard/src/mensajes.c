@@ -154,7 +154,12 @@ void mensajeNew(structNew* elStruct){
 	enviarMensajeAppeared(pokemon, posX, posY, IDMensaje);
 }
 
-void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
+void mensajeCatch(structCatch* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int posX = elStruct->posX;
+	int posY = elStruct->posY;
+	int IDMensaje = elStruct->ID;
 
 	int resultado = 0;
 
@@ -254,7 +259,10 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 }
 
-void mensajeGet(char* pokemon, int IDMensaje){
+void mensajeGet(structGet* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int IDMensaje = elStruct->ID;
 
 	printf("Pokemon buscado: %s\n", pokemon);
 	printf("Id Mensaje: %i\n", IDMensaje);

@@ -18,6 +18,7 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 		laLista->anter_particion = NULL;
 		laLista->sig_particion = NULL;
 		laLista->numero_de_victima = 0;
+		laLista->cola = ERROR;
 		laLista->ID_MENSAJE_GUARDADO = -1;
 	}
 	else
@@ -31,6 +32,7 @@ void inicializar_lista_particiones(lista_particiones* laLista, char* algorAdminM
 			laLista->anter_particion = NULL;
 			laLista->sig_particion = NULL;
 			laLista->numero_de_victima = 0;
+			laLista->cola = ERROR;
 			laLista->ID_MENSAJE_GUARDADO = -1;
 		}
 		else
@@ -59,16 +61,85 @@ lista_particiones* crear_particion(lista_particiones* laLista, uint32_t sizeDeLo
 		{
 			lista_particiones* particionACrear = malloc(sizeof(lista_particiones));
 
-			laLista->sig_particion = particionACrear;
+			if(laLista->sig_particion == NULL)//estoy en la ultima particion
+			{
+				if(((laLista->laParticion.limiteSuperior - laLista->laParticion.limiteInferior) == sizeDeLosDatos) && laLista->laParticion.estaLibre == 1)//encaja perfectamente
+				{
+					laLista->laParticion.estaLibre = 0;
+					laLista->numero_de_victima = 0;
+					laLista->ID_MENSAJE_GUARDADO = -1;
+					free(particionACrear);
+				}
 
-			particionACrear->numero_de_particion = (laLista->numero_de_particion +1);
-			particionACrear->anter_particion = laLista;
-			particionACrear->sig_particion = NULL;
-			particionACrear->laParticion.estaLibre = 0;
-			particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
-			particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos);
-			particionACrear->numero_de_victima = 0;
-			particionACrear->ID_MENSAJE_GUARDADO = -1;
+				else//no entran perfectamente en la ultima particion
+				{	//sobra espacio?
+					if(((laLista->laParticion.limiteSuperior - laLista->laParticion.limiteInferior) > sizeDeLosDatos) && laLista->laParticion.estaLibre == 1)//divido la ultima particion porque tiene espacio de mas
+					{
+						int guardarLimSup = laLista->laParticion.limiteSuperior;
+
+						laLista->laParticion.estaLibre = 0;
+						laLista->laParticion.limiteSuperior = (laLista->laParticion.limiteInferior + sizeDeLosDatos);
+						laLista->numero_de_victima = 0;
+						laLista->ID_MENSAJE_GUARDADO = -1;
+
+						particionACrear->sig_particion = laLista->sig_particion;
+						particionACrear->anter_particion = laLista;
+						laLista->sig_particion = particionACrear;
+
+						particionACrear->laParticion.estaLibre = 1;
+						particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
+						if(particionACrear->sig_particion != NULL)
+						{
+							particionACrear->laParticion.limiteSuperior = particionACrear->sig_particion->laParticion.limiteInferior;
+						}
+						else
+						{
+							particionACrear->laParticion.limiteSuperior = guardarLimSup;
+						}
+
+						particionACrear->numero_de_victima = 0;
+						particionACrear->ID_MENSAJE_GUARDADO = -1;
+						particionACrear->numero_de_particion = (laLista->numero_de_particion + 1);
+
+						corregirNumerosYParticiones(particionACrear, particionACrear->numero_de_particion);
+					}
+
+					else//creo una particion al final de la lista porque en la ultima particion no entraba
+					{
+						laLista->sig_particion = particionACrear;
+						particionACrear->numero_de_particion = (laLista->numero_de_particion +1);
+						particionACrear->anter_particion = laLista;
+						particionACrear->sig_particion = NULL;
+						particionACrear->laParticion.estaLibre = 0;
+						particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
+						particionACrear->laParticion.limiteSuperior = (particionACrear->laParticion.limiteInferior + sizeDeLosDatos);
+						particionACrear->numero_de_victima = 0;
+						particionACrear->ID_MENSAJE_GUARDADO = -1;
+					}
+				}
+			}
+
+			else//creo en una particion que tiene otras particiones despues todo VOLVER ACAAA
+			{
+				laLista->laParticion.estaLibre = 0;
+				laLista->laParticion.limiteSuperior = (laLista->laParticion.limiteInferior + sizeDeLosDatos);
+				laLista->numero_de_victima = 0;
+				laLista->ID_MENSAJE_GUARDADO = -1;
+
+				particionACrear->sig_particion = laLista->sig_particion;
+				particionACrear->anter_particion = laLista;
+				laLista->sig_particion = particionACrear;
+
+				particionACrear->laParticion.estaLibre = 1;
+				particionACrear->laParticion.limiteInferior = laLista->laParticion.limiteSuperior;
+				particionACrear->laParticion.limiteSuperior = particionACrear->sig_particion->laParticion.limiteInferior;
+				particionACrear->numero_de_victima = 0;
+				particionACrear->ID_MENSAJE_GUARDADO = -1;
+				particionACrear->numero_de_particion = (laLista->numero_de_particion + 1);
+
+				corregirNumerosYParticiones(particionACrear, particionACrear->numero_de_particion);
+			}
+
 			return particionACrear;
 		}
 	}
@@ -516,8 +587,11 @@ void revision_lista_particiones(void* CACHE, lista_particiones* laLista, uint32_
 		//log_info(dumpCache, "%s", mem_hexstring(CACHE, auxiliar->laParticion.limiteSuperior));
 		log_info(dumpCache, "Posiciones de memoria: de %p hasta %p.", (CACHE + auxiliar->laParticion.limiteInferior), (CACHE + auxiliar->laParticion.limiteSuperior));
 		log_info(dumpCache, "Tamaño: %u bytes.", auxiliar->laParticion.limiteSuperior - auxiliar->laParticion.limiteInferior);
-		log_info(dumpCache, "Número de víctima: %u.", auxiliar->numero_de_victima);
-		log_info(dumpCache, "Cola a la que pertenece el mensaje: %i.", auxiliar->cola);
+		if(auxiliar->laParticion.estaLibre == 0)
+		{
+			log_info(dumpCache, "Número de víctima: %u.", auxiliar->numero_de_victima);
+			log_info(dumpCache, "Cola a la que pertenece el mensaje: %i.", auxiliar->cola);
+		}
 		if(auxiliar->ID_MENSAJE_GUARDADO != -1)
 		{
 			log_info(dumpCache, "En esta partición se guardan los datos del mensaje ID: %i.", auxiliar->ID_MENSAJE_GUARDADO);
@@ -624,7 +698,10 @@ lista_particiones* seleccionar_particion_First_Fit(void* CACHE, uint32_t tamanio
 		//llegue hasta acá porque SI encontre una particion util Y NO es la última
 		else
 		{
-			particionElegida = auxiliar;
+			particionElegida = auxiliar;//todo rever
+			sem_wait(semParticiones);
+			crear_particion(particionElegida, size, "PD");
+			sem_post(semParticiones);
 		}
 	}
 	return particionElegida;
@@ -705,12 +782,19 @@ lista_particiones* seleccionar_particion_Best_Fit(void* CACHE, uint32_t tamanioM
 			if(candidata->sig_candidata->numero_de_particion == -1)//solo encontre 1 particion util => uso esa :P
 			{
 				particionElegida = candidata->puntero_a_particion_candidata;
+
+				sem_wait(semParticiones);//todo agregado
+				crear_particion(particionElegida, size, "PD");
+				sem_post(semParticiones);
 			}
 
 			//hay + de una particion potable, las comparo
 			else
 			{
 				particionElegida = comparador_de_candidatas(candidata);
+				sem_wait(semParticiones);//todo agregado
+				crear_particion(particionElegida, size, "PD");
+				sem_post(semParticiones);
 			}
 		}
 
@@ -942,6 +1026,9 @@ uint32_t tenemosEspacio(lista_particiones** auxiliar, lista_particiones** partic
 	if((punteroAAuxiliar->laParticion.limiteSuperior - punteroAAuxiliar->laParticion.limiteInferior) >= size)
 	{
 		*particionElegida = *auxiliar; //tenemos un ganador
+		sem_wait(semParticiones);
+		crear_particion(*particionElegida, size, "PD");
+		sem_post(semParticiones);		//todo aca poner particion nuevaaaaa
 		resultado = 1;
 	}
 
@@ -1239,13 +1326,13 @@ void poner_CAUGHT_en_particion(void* CACHE, lista_particiones* particionElegida,
 	uint32_t desplazamiento = particionElegida->laParticion.limiteInferior;
 	//printf("Inicio de la particion: %u\n", particionElegida->laParticion.limiteInferior);
 
-	//meto el largo del nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
-	desplazamiento += sizeof(estructura->largoNombre);
-
-	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+//	//meto el largo del nombre del pokemon en CACHE
+//	memcpy(CACHE + desplazamiento, &(estructura->largoNombre), sizeof(estructura->largoNombre));
+//	desplazamiento += sizeof(estructura->largoNombre);
+//
+//	//meto nombre del pokemon en CACHE
+//	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
+//	desplazamiento += estructura->largoNombre+1;
 
 	//meto el resultado del intento de CATCH en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->pudoAtrapar), sizeof(estructura->pudoAtrapar));
@@ -1654,23 +1741,23 @@ void sacar_CAUGHT_de_particion(void* CACHE, lista_particiones* particionDelMensa
 	//hago que empiece a leer al principio de la particion
 	uint32_t desplazamiento = particionDelMensaje->laParticion.limiteInferior;
 
-	char* referenciaTexto;
-
-	//saco el largo del nombre del pokemon de CACHE
-	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
-	desplazamiento += sizeof(estructura->largoNombre);
-	printf("largo nombre: %u\n", estructura->largoNombre);
-
-	//preparo un espacio para almacenar el nombre del pokemon
-	referenciaTexto = malloc(estructura->largoNombre+1);
-
-	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
-
-	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
-	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
-	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
+//	char* referenciaTexto;
+//
+//	//saco el largo del nombre del pokemon de CACHE
+//	memcpy(&estructura->largoNombre, CACHE + desplazamiento, sizeof(estructura->largoNombre));
+//	desplazamiento += sizeof(estructura->largoNombre);
+//	printf("largo nombre: %u\n", estructura->largoNombre);
+//
+//	//preparo un espacio para almacenar el nombre del pokemon
+//	referenciaTexto = malloc(estructura->largoNombre+1);
+//
+//	//saco el nombre del pokemon de CACHE
+//	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+//
+//	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
+//	estructura->nombrePokemon = referenciaTexto;
+//	desplazamiento += estructura->largoNombre+1;
+//	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	//saco el resultado del intento de CATCH de CACHE
 	memcpy(&estructura->pudoAtrapar, CACHE + desplazamiento, sizeof(estructura->pudoAtrapar));
@@ -1831,8 +1918,8 @@ uint32_t calcular_bytes_utiles_de_mensaje_caught(Caught* estructura)
 {
 	uint32_t totalAAsignar = 0;
 
-	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+//	totalAAsignar += sizeof(estructura->largoNombre);
+//	totalAAsignar += estructura->largoNombre + 1;
 	totalAAsignar += sizeof(estructura->pudoAtrapar);
 
 	return totalAAsignar;

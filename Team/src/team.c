@@ -129,10 +129,13 @@ int main(int cantArgs, char* arg[])
         pthread_create(&hilo_mensajes_get, NULL, (void*)enviarMensajesGet, NULL);
         pthread_detach(hilo_mensajes_get);
 
-		while(objetivo_team>0)//"mientras que todavia haya pokemones que atrapar"
+		while(objetivo_team > 0)//"mientras que todavia haya pokemones que atrapar"
         {
-            if(sem_trywait(&colaMensajes_llenos) != -1)//todo parece no terminar si es un wait?
-			//if(sem_wait(&colaMensajes_llenos) != -1)
+			// Hago un wait
+			sem_wait(&colaMensajes_llenos);
+			// Solo si no se cumplio la condicion avanzo
+            if(objetivo_team > 0)
+            // version anterior: if(sem_trywait(&colaMensajes_llenos) != -1)
             {
                 i=0;
                 datos_primero_cola_mensajes(&mensaje);
@@ -140,7 +143,12 @@ int main(int cantArgs, char* arg[])
                 flag_finalizacion = cantidad_de_veces_en_objetivo_actual(mensaje->pokemon, objetivo_actual, cantidad_objetivos);
                 pthread_mutex_unlock(&objetivo_actual_mutex);
                 while(flag_finalizacion != 0 && i<mensaje->cantidad_pos && objetivo_team>0){
+
+                	//sem_wait(&colaMensajes_llenos);
+					//if(objetivo_team > 0)//todo parece no terminar si es un wait?
+
                     if(sem_trywait(&entrenadores_disponibles) != -1)
+                    // version anterior: if(sem_trywait(&entrenadores_disponibles) != -1)
                     {
                         pos_elegido = calcular_mas_cerca_de(mensaje->posiciones[2*i], mensaje->posiciones[(2*i)+1], entrenadores, cant_entrenadores);
                         if(pos_elegido != -1)
@@ -165,6 +173,10 @@ int main(int cantArgs, char* arg[])
         }
 
         estado_team = 1;//cumplio objetivo, empiezo a solucionar deadlocks
+
+        // Aviso para que ya no se use la cola caught
+        sem_post(&colaCaught_llenos);
+
         join_hilos(pool_hilos, cant_entrenadores);
         join_hilo(&hilo_recibir_mensajes);
         eliminar_cola_mensajes();
@@ -220,6 +232,10 @@ int main(int cantArgs, char* arg[])
         }
 
         estado_team = 2;//cumplio deadlocks
+
+        // Aviso para que se cierre la funcion
+        sem_post(&colaReady_llenos);
+
         join_hilo(&hilo_cola_ready);
         se_cumplio_objetivo(entrenadores, cant_entrenadores);
 
@@ -427,6 +443,10 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
                 }
                 else{bloquear(entrenador, ACTIVO);}
                 objetivo_team-=1;
+                if (objetivo_team <= 0){
+                	// Si ya termine con los objetivos activo el semaforo para avanzar
+                	sem_post(&colaMensajes_llenos);
+                }
                 printf("Eliminado %s. La cantidad de objetivos es: %i\n", mensaje.nombrePokemon, objetivo_team);
             }
         }
@@ -774,8 +794,15 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 ///////////////////-READY-/////////////////////
 void administrar_cola_ready(void* parametros){
     int posicion;
+
+//  sem_wait(&colaMensajes_llenos);
+//	// Solo si no se cumplio la condicion avanzo
+//	if(objetivo_team > 0)
+
     while(estado_team < 2){
-        if(sem_trywait(&colaReady_llenos) != -1){
+    	sem_wait(&colaReady_llenos);
+        if(estado_team < 2){
+        // version anterior: if(sem_trywait(&colaReady_llenos) != -1){
             sem_wait(&enExec);
             pthread_mutex_lock(&colaReady_mutex);
             posicion = pos_primero_de_ready();
@@ -819,7 +846,9 @@ void administrar_cola_caught(void* parametros){
     int posicion;
     while(estado_team == 0)
     {
-        if(sem_trywait(&colaCaught_llenos) != -1)
+    	sem_wait(&colaCaught_llenos);
+        if(estado_team == 0)
+        // Version anterior: if(sem_trywait(&colaCaught_llenos) != -1)
         {
             posicion = posicion_primero_cola_caught();//todo arreglar
             if(posicion != -1)

@@ -353,7 +353,7 @@ int main(int cantArg, char* arg[]) {
 					// Convierto la palabra del numero de cola a un numero
 					int numeroEntreo = convertirAIntDeNombre(arg[2]);
 
-					printf("Numero convertido: %i", numeroEntreo);
+					printf("Numero de cola convertido: %i\n", numeroEntreo);
 
 					if(numeroEntreo > 0 && numeroEntreo <= 6)
 					{
@@ -407,7 +407,7 @@ int main(int cantArg, char* arg[]) {
 					}
 					else
 					{
-						puts("Las colas de mensajes son de 1 a 6. Por favor ingrese un número de cola válido.");
+						puts("El nombre de la cola no es valido");
 						socket = establecer_conexion("127.0.0.1","99999");
 					}
 				}

@@ -33,6 +33,7 @@ typedef struct {
 	uint32_t pID;
 } HiloGameboy;
 
-void hilo_recibir_mensajes(HiloGameboy* estructura);
+void hilo_recibir_mensajes(HiloGameboy*);
+int convertirAIntDeNombre(char*);
 
 #endif /* SRC_GAMEBOY_H_ */

@@ -14,10 +14,31 @@
 // Catch -> Caught
 // Get -> Localized
 
+typedef struct structNew{
+	char* nombrePokemon;
+	int posX;
+	int posY;
+	int cantidad;
+	int ID;
+}structNew;
+
+typedef struct structGet{
+	char* nombrePokemon;
+	int ID;
+}structGet;
+
+typedef struct structCatch{
+	char* nombrePokemon;
+	int posX;
+	int posY;
+	int ID;
+}structCatch;
+
+
 // Procesar mensajes
-void mensajeNew(char*, int, int, int, int);
-void mensajeCatch(char*, int, int, int);
-void mensajeGet(char*, int);
+void mensajeNew(structNew*);
+void mensajeCatch(structCatch*);
+void mensajeGet(structGet*);
 
 // Enviar rtas mensajes
 void enviarMensajeAppeared(char*, int, int, int);

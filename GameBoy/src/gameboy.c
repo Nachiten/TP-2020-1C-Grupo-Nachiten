@@ -349,7 +349,13 @@ int main(int cantArg, char* arg[]) {
 				}
 				else
 				{
-					if((cambia_a_int(arg[2]) > 0) && (cambia_a_int(arg[2]) <= 6))
+
+					// Convierto la palabra del numero de cola a un numero
+					int numeroEntreo = convertirAIntDeNombre(arg[2]);
+
+					printf("Numero convertido: %i", numeroEntreo);
+
+					if(numeroEntreo > 0 && numeroEntreo <= 6)
 					{
 						IP = config_get_string_value(config,"IP_BROKER"); //cargo la IP del Broker
 						PUERTO = config_get_string_value(config,"PUERTO_BROKER"); //cargo el puerto del Broker
@@ -362,9 +368,9 @@ int main(int cantArg, char* arg[]) {
 							Suscripcion* estructuraSuscribirse = malloc(sizeof(Suscripcion));
 							Dessuscripcion* estructuraDessuscribirse = malloc(sizeof(Dessuscripcion));
 
-							estructuraSuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+							estructuraSuscribirse->numeroCola = numeroEntreo; //cambiamos el string a int
 							estructuraSuscribirse->pId = getpid(); //ponemos la ID del proceso
-							estructuraDessuscribirse->numeroCola = cambia_a_int(arg[2]); //cambiamos el string a int
+							estructuraDessuscribirse->numeroCola = numeroEntreo; //cambiamos el string a int
 							estructuraDessuscribirse->pId = getpid(); //ponemos la ID del proceso
 
 							//Preparamos una estructura para recibir los mensajes de la suscripcion en un hilo
@@ -372,14 +378,14 @@ int main(int cantArg, char* arg[]) {
 							HiloGameboy estructura;
 							estructura.conexion = socket;
 							estructura.log = logger;
-							estructura.cola = cambia_a_int(arg[2]);
+							estructura.cola = numeroEntreo;
 							estructura.pID = getpid();
 
 							//mandamos el mensaje pidiendo suscribirse a la cola
 							mandar_mensaje(estructuraSuscribirse, SUSCRIPCION, socket);
 
 							//logueamos la suscripcion a la cola de mensajes
-							log_info(logger, "Suscripto a la cola de mensajes: %i", cambia_a_int(arg[2]));
+							log_info(logger, "Suscripto a la cola de mensajes: %i", numeroEntreo);
 
 							//hilo para recibir mensajes
 							pthread_create(&hilo,NULL,(void*)hilo_recibir_mensajes,&estructura);
@@ -415,6 +421,8 @@ int main(int cantArg, char* arg[]) {
 
 	//enviarle los recursos a liberar
 	matarPrograma(logger, config, socket);
+
+	sleep(1);
 
 	return EXIT_SUCCESS;
 }
@@ -550,4 +558,36 @@ void hilo_recibir_mensajes(HiloGameboy* estructura)
 
 		}
 	}
+}
+
+int convertirAIntDeNombre(char* nombre){
+	int retorno = -1;
+
+	// NEW_POKEMON = 1
+	// APPEARED_POKEMON = 2
+	// GET_POKEMON = 3
+	// LOCALIZED_POKEMON = 4
+	// CATCH_POKEMON = 5
+	// CAUGHT_POKEMON = 6
+
+	if (strcmp("NEW_POKEMON", nombre) == 0){
+		retorno = 1;
+	}
+	if (strcmp("APPEARED_POKEMON", nombre) == 0){
+		retorno = 2;
+	}
+	if (strcmp("GET_POKEMON", nombre) == 0){
+		retorno = 3;
+	}
+	if (strcmp("LOCALIZED_POKEMON", nombre) == 0){
+		retorno = 4;
+	}
+	if (strcmp("CATCH_POKEMON", nombre) == 0){
+		retorno = 5;
+	}
+	if (strcmp("CAUGHT_POKEMON", nombre) == 0){
+		retorno = 6;
+	}
+
+	return retorno;
 }

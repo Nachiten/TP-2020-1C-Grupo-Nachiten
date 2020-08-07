@@ -1,6 +1,12 @@
 #include "mensajes.h"
 
-void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
+void mensajeNew(structNew* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int cantidad = elStruct->cantidad;
+	int posX = elStruct->posX;
+	int posY = elStruct->posY;
+	int IDMensaje = elStruct->ID;
 
 	// Checkeo de variables
 	if (pokemon == NULL){
@@ -148,7 +154,12 @@ void mensajeNew(char* pokemon, int posX, int posY, int cantidad, int IDMensaje){
 	enviarMensajeAppeared(pokemon, posX, posY, IDMensaje);
 }
 
-void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
+void mensajeCatch(structCatch* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int posX = elStruct->posX;
+	int posY = elStruct->posY;
+	int IDMensaje = elStruct->ID;
 
 	int resultado = 0;
 
@@ -248,7 +259,10 @@ void mensajeCatch(char* pokemon, int posX, int posY, int IDMensaje){
 
 }
 
-void mensajeGet(char* pokemon, int IDMensaje){
+void mensajeGet(structGet* elStruct){
+
+	char* pokemon = elStruct->nombrePokemon;
+	int IDMensaje = elStruct->ID;
 
 	printf("Pokemon buscado: %s\n", pokemon);
 	printf("Id Mensaje: %i\n", IDMensaje);

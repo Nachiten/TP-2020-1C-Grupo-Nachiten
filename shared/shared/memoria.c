@@ -217,7 +217,7 @@ void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUE
 	}
 
 	//mandamos la victima al matadero
-	borrarReferenciaAParticion(laLista, particionABorrar, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA, logger, semLog, semParticiones, semParticionesEliminadas);
+	borrarReferenciaAParticion(laLista, particionABorrar, PARTICIONES_ELIMINADAS, ADMIN_MEMORIA, logger, semLog, semParticiones, semParticionesEliminadas, 0);
 
 	//si frecuencia de compactacion es -1, 0 o 1 se compacta siempre
 	//sino, solo cuando la cantidad de particiones eliminadas sea igual a la frecuencia que piden
@@ -234,16 +234,19 @@ void seleccionDeVictima(void* CACHE, lista_particiones* laLista, uint32_t FRECUE
 	}
 }
 
-void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas)
+void borrarReferenciaAParticion(lista_particiones* laLista, lista_particiones* particionABorrar, uint32_t* PARTICIONES_ELIMINADAS, char* ADMIN_MEMORIA, t_log* logger, sem_t* semLog, sem_t* semParticiones, sem_t* semParticionesEliminadas, uint32_t flagCompactacion)
 {
 	particionABorrar->laParticion.estaLibre = 1;
 	sem_wait(semLog);
 	log_info(logger, "La particion %u que iniciaba en %u ahora está libre!", particionABorrar->numero_de_particion, particionABorrar->laParticion.limiteInferior);
 	sem_post(semLog);
 	puts("\n");
-	sem_wait(semParticionesEliminadas);
-	*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
-	sem_post(semParticionesEliminadas);
+	if(flagCompactacion == 0)
+	{
+		sem_wait(semParticionesEliminadas);
+		*PARTICIONES_ELIMINADAS = *PARTICIONES_ELIMINADAS +1;
+		sem_post(semParticionesEliminadas);
+	}
 	sem_wait(semParticiones);
 	consolidarParticion(laLista, particionABorrar, ADMIN_MEMORIA, logger, semLog);
 	sem_post(semParticiones);
@@ -484,7 +487,7 @@ void compactacion(void* CACHE, lista_particiones* laLista, t_log* logger, sem_t*
 					 particionOcupada->ID_MENSAJE_GUARDADO = -1;
 
 					 auxilio = particionOcupada->anter_particion;
-					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno, "PD", logger, semLog, semParticiones, semParticionesEliminadas);
+					 borrarReferenciaAParticion(laLista, particionOcupada, &variableDeAdorno, "PD", logger, semLog, semParticiones, semParticionesEliminadas, 1);
 					 particionOcupada = auxilio;
 					 particionOcupada->sig_particion->laParticion.limiteInferior = particionOcupada->laParticion.limiteSuperior;
 					 particionMovida = 1;
@@ -498,6 +501,33 @@ void compactacion(void* CACHE, lista_particiones* laLista, t_log* logger, sem_t*
 			particionMovida = 0;
 		}
 		particionLibre = particionLibre->sig_particion;
+	}
+
+	//y ahora me deshago de todas las particiones libres que hayan quedado al final de la lista
+	particionLibre = laLista;	//me paro de nuevo al principio
+	auxilio = laLista;
+	while(particionLibre != NULL)//recorro la lista
+	{
+		//si la particion no esta libre, no me interesa
+		if(particionLibre->laParticion.estaLibre == 1)
+		{
+			if(particionLibre->numero_de_particion == 0)//caso borde
+			{
+				particionLibre->laParticion.limiteInferior = 0;
+				particionLibre->laParticion.limiteSuperior = 1;
+			}
+			else//caso normal, me deshago de la particion
+			{
+				particionLibre->anter_particion->sig_particion = NULL;
+				auxilio = particionLibre->sig_particion;
+				free(particionLibre);
+				particionLibre = auxilio;
+			}
+		}
+		if(particionLibre != NULL)
+		{
+			particionLibre = particionLibre->sig_particion;
+		}
 	}
 }
 

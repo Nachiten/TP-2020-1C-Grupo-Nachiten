@@ -439,7 +439,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 	// El "[" + "]" + \0
 	tamanioTotalBytes += 3;
 
-	printf("El size total es: %i\n", tamanioTotalBytes);
+	//printf("El size total es: %i\n", tamanioTotalBytes);
 
 	char* stringCompleto = malloc(tamanioTotalBytes);
 
@@ -463,7 +463,7 @@ char* crearStringArrayBloques(t_list* listaBloques){
 
 	strcat(stringCompleto, "]");
 
-	printf("String completo: %s", stringCompleto);
+	//printf("String completo: %s", stringCompleto);
 
 	return stringCompleto;
 

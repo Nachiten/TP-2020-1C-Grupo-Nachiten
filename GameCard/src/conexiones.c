@@ -183,9 +183,8 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 					mensajeNewRecibido->ID
 				};
 
-				pthread_t hiloNew;
 				// Levanto hilo para manejar el mensaje nuevo
-				pthread_create(&hiloNew , NULL, (void*)mensajeNew, &structNewHilo);
+				pthread_create(&hiloNewBroker , NULL, (void*)mensajeNew, &structNewHilo);
 
 				//free(mensajeNewRecibido->nombrePokemon);
 				free(mensajeNewRecibido);
@@ -212,9 +211,8 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 					mensajeGetRecibido->ID
 				};
 
-				pthread_t hiloGet;
 				// Levanto hilo para manejar el mensaje nuevo
-				pthread_create(&hiloGet , NULL, (void*)mensajeGet, &structGetHilo);
+				pthread_create(&hiloGetBroker , NULL, (void*)mensajeGet, &structGetHilo);
 
 				//free(mensajeGetRecibido->nombrePokemon);
 				free(mensajeNewRecibido);
@@ -242,9 +240,8 @@ void esperarMensajes(datosHiloColas* datosHiloColas){
 					mensajeCatchRecibido->ID
 				};
 
-				pthread_t hiloCatch;
 				// Levanto hilo para manejar el mensaje nuevo
-				pthread_create(&hiloCatch , NULL, (void*)mensajeCatch, &structCatchHilo);
+				pthread_create(&hiloCatchBroker , NULL, (void*)mensajeCatch, &structCatchHilo);
 
 				//free(mensajeCatchRecibido->nombrePokemon);
 				free(mensajeCatchRecibido);
@@ -309,8 +306,7 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 			mensajeNewRecibido->ID
 		};
 
-		pthread_t hiloNew;
-		pthread_create(&hiloNew , NULL, (void*)mensajeNew, &structNewHilo);
+		pthread_create(&hiloNewGameboy , NULL, (void*)mensajeNew, &structNewHilo);
 
 		//free(mensajeNewRecibido->nombrePokemon);
 		free(mensajeNewRecibido);
@@ -325,11 +321,10 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 			mensajeGetRecibido->ID
 		};
 
-		pthread_t hiloGet;
 		// Levanto hilo para manejar el mensaje nuevo
-		pthread_create(&hiloGet , NULL, (void*)mensajeGet, &structGetHilo);
+		pthread_create(&hiloGetGameboy , NULL, (void*)mensajeGet, &structGetHilo);
 
-		free(mensajeGetRecibido->nombrePokemon);
+		//free(mensajeGetRecibido->nombrePokemon);
 		free(mensajeGetRecibido);
 		break;
 
@@ -344,11 +339,10 @@ void process_request(codigo_operacion cod_op, int32_t socket_cliente, int32_t ta
 			mensajeCatchRecibido->ID
 		};
 
-		pthread_t hiloCatch;
 		// Levanto hilo para manejar el mensaje nuevo
-		pthread_create(&hiloCatch , NULL, (void*)mensajeCatch, &structCatchHilo);
+		pthread_create(&hiloCatchGameboy , NULL, (void*)mensajeCatch, &structCatchHilo);
 
-		free(mensajeCatchRecibido->nombrePokemon);
+		//free(mensajeCatchRecibido->nombrePokemon);
 		free(mensajeCatchRecibido);
 		break;
 

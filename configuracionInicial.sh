@@ -21,6 +21,9 @@ echo [Buildeando shared...]
 sleep 1
 make clean
 make all
+echo [Copiando compilado de las shared en /usr/lib...]
+sleep 1
+sudo cp libshared.so /usr/lib
 echo [Volviendo a carpeta root del repo...]
 sleep 1
 cd ~/workspace/tp-2020-1c-Grupo-Nachiten

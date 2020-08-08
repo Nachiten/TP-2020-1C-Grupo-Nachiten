@@ -142,12 +142,11 @@ int main(int cantArgs, char* arg[])
                 pthread_mutex_lock(&objetivo_actual_mutex);
                 flag_finalizacion = cantidad_de_veces_en_objetivo_actual(mensaje->pokemon, objetivo_actual, cantidad_objetivos);
                 pthread_mutex_unlock(&objetivo_actual_mutex);
-                while(flag_finalizacion != 0 && i<mensaje->cantidad_pos && objetivo_team>0){
+                while(flag_finalizacion != 0 && i < mensaje->cantidad_pos && objetivo_team>0){
 
-                	//sem_wait(&colaMensajes_llenos);
-					//if(objetivo_team > 0)//todo parece no terminar si es un wait?
+                	sem_wait(&entrenadores_disponibles);
 
-                    if(sem_trywait(&entrenadores_disponibles) != -1)
+                    if(flag_finalizacion != 0 && i<mensaje->cantidad_pos && objetivo_team>0)
                     // version anterior: if(sem_trywait(&entrenadores_disponibles) != -1)
                     {
                         pos_elegido = calcular_mas_cerca_de(mensaje->posiciones[2*i], mensaje->posiciones[(2*i)+1], entrenadores, cant_entrenadores);
@@ -163,7 +162,13 @@ int main(int cantArgs, char* arg[])
                         }
                         else{printf("Error pos elegido es -1 aunque hay entrenadores disponibles\n");}
                         i++;
+                        if (i >= mensaje->cantidad_pos){
+                        	sem_post(&entrenadores_disponibles);
+                        }
                         flag_finalizacion-=1;
+                        if (flag_finalizacion == 0){
+							sem_post(&entrenadores_disponibles);
+						}
                     }
                 }
                 pthread_mutex_lock(&colaMensajes_mutex);
@@ -449,6 +454,7 @@ void* ciclo_vida_entrenador(parametros_entrenador* parametros){
                 if (objetivo_team <= 0){
                 	// Si ya termine con los objetivos activo el semaforo para avanzar
                 	sem_post(&colaMensajes_llenos);
+                	sem_post(&entrenadores_disponibles);
                 }
                 printf("Eliminado %s. La cantidad de objetivos es: %i\n", mensaje.nombrePokemon, objetivo_team);
             }

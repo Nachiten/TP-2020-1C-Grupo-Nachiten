@@ -555,6 +555,7 @@ void agregar_mensajes_viejos(uint32_t pId, t_cola* cola){
 
 // busca los mensajes de la lista de descartes que no se hayan mandado al suscriptor y los agrega a la cola
 void buscar_mensajes_descarte(uint32_t pId, t_cola* cola, t_cola* descarte){
+	printf("entre a descartes");
 	if(descarte->mensajes->head != NULL){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
 			t_mensaje* mensaje;
@@ -601,7 +602,7 @@ void mandar_mensajes_broker(t_cola* cola){
 
 
 
-					free(sub);
+					//free(sub);
 					contadorSubs--;
 				}
 				free(mensaje);

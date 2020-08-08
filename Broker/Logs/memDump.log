@@ -708,3 +708,1113 @@
 [INFO] 13:52:55:668 CACHE/(19866:19866): Espacio total libre: 18.
 [INFO] 13:52:55:669 CACHE/(19866:19866): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
 
+[INFO] 21:09:37:783 CACHE/(27061:27061): Realizando control del estado de memoria y particiones...
+[INFO] 21:09:37:819 CACHE/(27061:27061): Dump solicitado: Fri Aug  7 21:09:37 2020
+
+[INFO] 21:09:37:819 CACHE/(27061:27061): ----------------------------------------------------------
+[INFO] 21:09:37:819 CACHE/(27061:27061): Nº de particion: 0.
+[INFO] 21:09:37:819 CACHE/(27061:27061): La particion está en uso.
+[INFO] 21:09:37:820 CACHE/(27061:27061): Límite inferior de la partición: 0.
+[INFO] 21:09:37:820 CACHE/(27061:27061): Límite superior de la partición: 4.
+[INFO] 21:09:37:820 CACHE/(27061:27061): Posiciones de memoria: de 0x9ab1b00 hasta 0x9ab1b04.
+[INFO] 21:09:37:821 CACHE/(27061:27061): Tamaño: 4 bytes.
+[INFO] 21:09:37:821 CACHE/(27061:27061): Número de víctima: 1.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:09:37:822 CACHE/(27061:27061): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 21:09:37:822 CACHE/(27061:27061): ----------------------------------------------------------
+[INFO] 21:09:37:822 CACHE/(27061:27061): Nº de particion: 1.
+[INFO] 21:09:37:822 CACHE/(27061:27061): La particion está en uso.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite inferior de la partición: 4.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite superior de la partición: 24.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Posiciones de memoria: de 0x9ab1b04 hasta 0x9ab1b18.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Tamaño: 20 bytes.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Número de víctima: 2.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:09:37:822 CACHE/(27061:27061): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 21:09:37:822 CACHE/(27061:27061): ----------------------------------------------------------
+[INFO] 21:09:37:822 CACHE/(27061:27061): Nº de particion: 2.
+[INFO] 21:09:37:822 CACHE/(27061:27061): La particion está en uso.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite inferior de la partición: 24.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite superior de la partición: 45.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Posiciones de memoria: de 0x9ab1b18 hasta 0x9ab1b2d.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Tamaño: 21 bytes.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Número de víctima: 3.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:09:37:822 CACHE/(27061:27061): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 21:09:37:822 CACHE/(27061:27061): ----------------------------------------------------------
+[INFO] 21:09:37:822 CACHE/(27061:27061): Nº de particion: 3.
+[INFO] 21:09:37:822 CACHE/(27061:27061): La particion está en uso.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite inferior de la partición: 45.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Límite superior de la partición: 62.
+[INFO] 21:09:37:822 CACHE/(27061:27061): Posiciones de memoria: de 0x9ab1b2d hasta 0x9ab1b3e.
+[INFO] 21:09:37:823 CACHE/(27061:27061): Tamaño: 17 bytes.
+[INFO] 21:09:37:823 CACHE/(27061:27061): Número de víctima: 5.
+[INFO] 21:09:37:823 CACHE/(27061:27061): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:09:37:823 CACHE/(27061:27061): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 21:09:37:823 CACHE/(27061:27061): ----------------------------------------------------------
+[INFO] 21:09:37:823 CACHE/(27061:27061): Espacio desperdiciado en particiones libres: 0.
+[INFO] 21:09:37:823 CACHE/(27061:27061): Espacio libre en CACHE (No particionado): 2.
+[INFO] 21:09:37:823 CACHE/(27061:27061): Espacio total libre: 2.
+[INFO] 21:09:37:823 CACHE/(27061:27061): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 21:37:28:568 CACHE/(27687:27687): Realizando control del estado de memoria y particiones...
+[INFO] 21:37:28:568 CACHE/(27687:27687): Dump solicitado: Fri Aug  7 21:37:28 2020
+
+[INFO] 21:37:28:568 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:37:28:568 CACHE/(27687:27687): Nº de particion: 0.
+[INFO] 21:37:28:568 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:37:28:568 CACHE/(27687:27687): Límite inferior de la partición: 0.
+[INFO] 21:37:28:568 CACHE/(27687:27687): Límite superior de la partición: 4.
+[INFO] 21:37:28:568 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b00 hasta 0x8387b04.
+[INFO] 21:37:28:569 CACHE/(27687:27687): Tamaño: 4 bytes.
+[INFO] 21:37:28:569 CACHE/(27687:27687): Número de víctima: 1.
+[INFO] 21:37:28:569 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:37:28:569 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 21:37:28:570 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:37:28:570 CACHE/(27687:27687): Nº de particion: 1.
+[INFO] 21:37:28:570 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Límite inferior de la partición: 4.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Límite superior de la partición: 24.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b04 hasta 0x8387b18.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Tamaño: 20 bytes.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Número de víctima: 2.
+[INFO] 21:37:28:570 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:37:28:570 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 21:37:28:571 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:37:28:571 CACHE/(27687:27687): Nº de particion: 2.
+[INFO] 21:37:28:571 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Límite inferior de la partición: 24.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Límite superior de la partición: 45.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b18 hasta 0x8387b2d.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Tamaño: 21 bytes.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Número de víctima: 3.
+[INFO] 21:37:28:571 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:37:28:571 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 21:37:28:571 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:37:28:571 CACHE/(27687:27687): Nº de particion: 3.
+[INFO] 21:37:28:571 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Límite inferior de la partición: 45.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Límite superior de la partición: 62.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b2d hasta 0x8387b3e.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Tamaño: 17 bytes.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Número de víctima: 5.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:37:28:572 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 21:37:28:572 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:37:28:572 CACHE/(27687:27687): Espacio desperdiciado en particiones libres: 0.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Espacio libre en CACHE (No particionado): 2.
+[INFO] 21:37:28:572 CACHE/(27687:27687): Espacio total libre: 2.
+[INFO] 21:37:28:572 CACHE/(27687:27687): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 21:38:29:969 CACHE/(27687:27687): Realizando control del estado de memoria y particiones...
+[INFO] 21:38:29:969 CACHE/(27687:27687): Dump solicitado: Fri Aug  7 21:38:29 2020
+
+[INFO] 21:38:29:969 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:38:29:969 CACHE/(27687:27687): Nº de particion: 0.
+[INFO] 21:38:29:969 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Límite inferior de la partición: 0.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Límite superior de la partición: 4.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b00 hasta 0x8387b04.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Tamaño: 4 bytes.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Número de víctima: 6.
+[INFO] 21:38:29:969 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:38:29:969 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 21:38:29:969 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:38:29:969 CACHE/(27687:27687): Nº de particion: 1.
+[INFO] 21:38:29:970 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Límite inferior de la partición: 4.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Límite superior de la partición: 24.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b04 hasta 0x8387b18.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Tamaño: 20 bytes.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Número de víctima: 2.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 6.
+[INFO] 21:38:29:970 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 21:38:29:970 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:38:29:970 CACHE/(27687:27687): Nº de particion: 2.
+[INFO] 21:38:29:970 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:38:29:970 CACHE/(27687:27687): Límite inferior de la partición: 24.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Límite superior de la partición: 45.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b18 hasta 0x8387b2d.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Tamaño: 21 bytes.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Número de víctima: 3.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:38:29:971 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 21:38:29:971 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:38:29:971 CACHE/(27687:27687): Nº de particion: 3.
+[INFO] 21:38:29:971 CACHE/(27687:27687): La particion está en uso.
+[INFO] 21:38:29:971 CACHE/(27687:27687): Límite inferior de la partición: 45.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Límite superior de la partición: 62.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Posiciones de memoria: de 0x8387b2d hasta 0x8387b3e.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Tamaño: 17 bytes.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Número de víctima: 5.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Cola a la que pertenece el mensaje: 5.
+[INFO] 21:38:29:972 CACHE/(27687:27687): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 21:38:29:972 CACHE/(27687:27687): ----------------------------------------------------------
+[INFO] 21:38:29:972 CACHE/(27687:27687): Espacio desperdiciado en particiones libres: 0.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Espacio libre en CACHE (No particionado): 2.
+[INFO] 21:38:29:972 CACHE/(27687:27687): Espacio total libre: 2.
+[INFO] 21:38:29:972 CACHE/(27687:27687): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 23:17:52:721 CACHE/(29043:29043): Realizando control del estado de memoria y particiones...
+[INFO] 23:17:52:721 CACHE/(29043:29043): Dump solicitado: Fri Aug  7 23:17:52 2020
+
+[INFO] 23:17:52:722 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:17:52:722 CACHE/(29043:29043): Nº de particion: 0.
+[INFO] 23:17:52:722 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Límite inferior de la partición: 0.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Límite superior de la partición: 4.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b00 hasta 0x8050b04.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Número de víctima: 1.
+[INFO] 23:17:52:722 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:17:52:722 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 23:17:52:722 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:17:52:722 CACHE/(29043:29043): Nº de particion: 1.
+[INFO] 23:17:52:722 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Límite inferior de la partición: 4.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Límite superior de la partición: 8.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b04 hasta 0x8050b08.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Número de víctima: 2.
+[INFO] 23:17:52:723 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:17:52:724 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 23:17:52:724 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:17:52:724 CACHE/(29043:29043): Nº de particion: 2.
+[INFO] 23:17:52:724 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:17:52:724 CACHE/(29043:29043): Límite inferior de la partición: 8.
+[INFO] 23:17:52:725 CACHE/(29043:29043): Límite superior de la partición: 32.
+[INFO] 23:17:52:725 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b08 hasta 0x8050b20.
+[INFO] 23:17:52:725 CACHE/(29043:29043): Tamaño: 24 bytes.
+[INFO] 23:17:52:725 CACHE/(29043:29043): Número de víctima: 3.
+[INFO] 23:17:52:726 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 1.
+[INFO] 23:17:52:726 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 23:17:52:726 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:17:52:726 CACHE/(29043:29043): Nº de particion: 3.
+[INFO] 23:17:52:726 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:17:52:726 CACHE/(29043:29043): Límite inferior de la partición: 32.
+[INFO] 23:17:52:726 CACHE/(29043:29043): Límite superior de la partición: 49.
+[INFO] 23:17:52:726 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b20 hasta 0x8050b31.
+[INFO] 23:17:52:726 CACHE/(29043:29043): Tamaño: 17 bytes.
+[INFO] 23:17:52:727 CACHE/(29043:29043): Número de víctima: 4.
+[INFO] 23:17:52:727 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 5.
+[INFO] 23:17:52:727 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 23:17:52:730 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:17:52:730 CACHE/(29043:29043): Espacio desperdiciado en particiones libres: 0.
+[INFO] 23:17:52:730 CACHE/(29043:29043): Espacio libre en CACHE (No particionado): 15.
+[INFO] 23:17:52:730 CACHE/(29043:29043): Espacio total libre: 15.
+[INFO] 23:17:52:730 CACHE/(29043:29043): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 23:19:40:618 CACHE/(29043:29043): Realizando control del estado de memoria y particiones...
+[INFO] 23:19:40:618 CACHE/(29043:29043): Dump solicitado: Fri Aug  7 23:19:40 2020
+
+[INFO] 23:19:40:618 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:19:40:618 CACHE/(29043:29043): Nº de particion: 0.
+[INFO] 23:19:40:618 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Límite inferior de la partición: 0.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Límite superior de la partición: 4.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b00 hasta 0x8050b04.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Número de víctima: 5.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:19:40:618 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 23:19:40:618 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:19:40:618 CACHE/(29043:29043): Nº de particion: 1.
+[INFO] 23:19:40:618 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Límite inferior de la partición: 4.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Límite superior de la partición: 8.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b04 hasta 0x8050b08.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:19:40:618 CACHE/(29043:29043): Número de víctima: 6.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:19:40:619 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 23:19:40:619 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:19:40:619 CACHE/(29043:29043): Nº de particion: 2.
+[INFO] 23:19:40:619 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Límite inferior de la partición: 8.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Límite superior de la partición: 32.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b08 hasta 0x8050b20.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Tamaño: 24 bytes.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Número de víctima: 3.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 1.
+[INFO] 23:19:40:619 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 23:19:40:619 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:19:40:619 CACHE/(29043:29043): Nº de particion: 3.
+[INFO] 23:19:40:619 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Límite inferior de la partición: 32.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Límite superior de la partición: 49.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b20 hasta 0x8050b31.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Tamaño: 17 bytes.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Número de víctima: 4.
+[INFO] 23:19:40:619 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 5.
+[INFO] 23:19:40:619 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 23:19:40:620 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:19:40:620 CACHE/(29043:29043): Espacio desperdiciado en particiones libres: 0.
+[INFO] 23:19:40:620 CACHE/(29043:29043): Espacio libre en CACHE (No particionado): 15.
+[INFO] 23:19:40:620 CACHE/(29043:29043): Espacio total libre: 15.
+[INFO] 23:19:40:620 CACHE/(29043:29043): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 23:21:19:643 CACHE/(29043:29043): Realizando control del estado de memoria y particiones...
+[INFO] 23:21:19:643 CACHE/(29043:29043): Dump solicitado: Fri Aug  7 23:21:19 2020
+
+[INFO] 23:21:19:643 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:21:19:643 CACHE/(29043:29043): Nº de particion: 0.
+[INFO] 23:21:19:643 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:21:19:643 CACHE/(29043:29043): Límite inferior de la partición: 0.
+[INFO] 23:21:19:643 CACHE/(29043:29043): Límite superior de la partición: 4.
+[INFO] 23:21:19:643 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b00 hasta 0x8050b04.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Número de víctima: 5.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:21:19:644 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 23:21:19:644 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:21:19:644 CACHE/(29043:29043): Nº de particion: 1.
+[INFO] 23:21:19:644 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Límite inferior de la partición: 4.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Límite superior de la partición: 8.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b04 hasta 0x8050b08.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Tamaño: 4 bytes.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Número de víctima: 6.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 6.
+[INFO] 23:21:19:644 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 23:21:19:644 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:21:19:644 CACHE/(29043:29043): Nº de particion: 2.
+[INFO] 23:21:19:644 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Límite inferior de la partición: 8.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Límite superior de la partición: 25.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b08 hasta 0x8050b19.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Tamaño: 17 bytes.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Número de víctima: 3.
+[INFO] 23:21:19:644 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 1.
+[INFO] 23:21:19:644 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 23:21:19:644 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:21:19:644 CACHE/(29043:29043): Nº de particion: 3.
+[INFO] 23:21:19:644 CACHE/(29043:29043): La particion está en uso.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Límite inferior de la partición: 25.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Límite superior de la partición: 46.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Posiciones de memoria: de 0x8050b19 hasta 0x8050b2e.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Tamaño: 21 bytes.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Número de víctima: 7.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Cola a la que pertenece el mensaje: 5.
+[INFO] 23:21:19:645 CACHE/(29043:29043): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 23:21:19:645 CACHE/(29043:29043): ----------------------------------------------------------
+[INFO] 23:21:19:645 CACHE/(29043:29043): Espacio desperdiciado en particiones libres: 0.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Espacio libre en CACHE (No particionado): 18.
+[INFO] 23:21:19:645 CACHE/(29043:29043): Espacio total libre: 18.
+[INFO] 23:21:19:645 CACHE/(29043:29043): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 23:53:58:58 CACHE/(29758:29758): Realizando control del estado de memoria y particiones...
+[INFO] 23:53:58:58 CACHE/(29758:29758): Dump solicitado: Fri Aug  7 23:53:58 2020
+
+[INFO] 23:53:58:58 CACHE/(29758:29758): ----------------------------------------------------------
+[INFO] 23:53:58:58 CACHE/(29758:29758): Nº de particion: 0.
+[INFO] 23:53:58:58 CACHE/(29758:29758): La particion está en uso.
+[INFO] 23:53:58:58 CACHE/(29758:29758): Límite inferior de la partición: 0.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Límite superior de la partición: 23.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Posiciones de memoria: de 0x8c69b00 hasta 0x8c69b17.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Tamaño: 23 bytes.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Número de víctima: 1.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Cola a la que pertenece el mensaje: 1.
+[INFO] 23:53:58:59 CACHE/(29758:29758): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 23:53:58:59 CACHE/(29758:29758): ----------------------------------------------------------
+[INFO] 23:53:58:59 CACHE/(29758:29758): Espacio desperdiciado en particiones libres: 0.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Espacio libre en CACHE (No particionado): 41.
+[INFO] 23:53:58:59 CACHE/(29758:29758): Espacio total libre: 41.
+[INFO] 23:53:58:59 CACHE/(29758:29758): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 23:58:25:605 CACHE/(30076:30076): Realizando control del estado de memoria y particiones...
+[INFO] 23:58:25:605 CACHE/(30076:30076): Dump solicitado: Fri Aug  7 23:58:25 2020
+
+[INFO] 23:58:25:605 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 23:58:25:605 CACHE/(30076:30076): Nº de particion: 0.
+[INFO] 23:58:25:605 CACHE/(30076:30076): La particion está en uso.
+[INFO] 23:58:25:605 CACHE/(30076:30076): Límite inferior de la partición: 0.
+[INFO] 23:58:25:606 CACHE/(30076:30076): Límite superior de la partición: 23.
+[INFO] 23:58:25:607 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb00 hasta 0x8eabb17.
+[INFO] 23:58:25:608 CACHE/(30076:30076): Tamaño: 23 bytes.
+[INFO] 23:58:25:608 CACHE/(30076:30076): Número de víctima: 2.
+[INFO] 23:58:25:608 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 1.
+[INFO] 23:58:25:608 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 23:58:25:608 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 23:58:25:609 CACHE/(30076:30076): Nº de particion: 1.
+[INFO] 23:58:25:609 CACHE/(30076:30076): La particion está en uso.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Límite inferior de la partición: 23.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Límite superior de la partición: 42.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb17 hasta 0x8eabb2a.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Tamaño: 19 bytes.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Número de víctima: 3.
+[INFO] 23:58:25:609 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 2.
+[INFO] 23:58:25:609 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 23:58:25:610 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 23:58:25:610 CACHE/(30076:30076): Espacio desperdiciado en particiones libres: 0.
+[INFO] 23:58:25:610 CACHE/(30076:30076): Espacio libre en CACHE (No particionado): 22.
+[INFO] 23:58:25:610 CACHE/(30076:30076): Espacio total libre: 22.
+[INFO] 23:58:25:610 CACHE/(30076:30076): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:01:21:253 CACHE/(30076:30076): Realizando control del estado de memoria y particiones...
+[INFO] 00:01:21:253 CACHE/(30076:30076): Dump solicitado: Sat Aug  8 00:01:21 2020
+
+[INFO] 00:01:21:253 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:01:21:253 CACHE/(30076:30076): Nº de particion: 0.
+[INFO] 00:01:21:253 CACHE/(30076:30076): La particion está en uso.
+[INFO] 00:01:21:253 CACHE/(30076:30076): Límite inferior de la partición: 0.
+[INFO] 00:01:21:253 CACHE/(30076:30076): Límite superior de la partición: 11.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb00 hasta 0x8eabb0b.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Tamaño: 11 bytes.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Número de víctima: 2.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 1.
+[INFO] 00:01:21:254 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:01:21:254 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:01:21:254 CACHE/(30076:30076): Nº de particion: 1.
+[INFO] 00:01:21:254 CACHE/(30076:30076): La particion está en uso.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Límite inferior de la partición: 11.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Límite superior de la partición: 50.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb0b hasta 0x8eabb32.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Tamaño: 39 bytes.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Número de víctima: 9.
+[INFO] 00:01:21:254 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 4.
+[INFO] 00:01:21:255 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 5.
+[INFO] 00:01:21:255 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:01:21:255 CACHE/(30076:30076): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:01:21:255 CACHE/(30076:30076): Espacio libre en CACHE (No particionado): 14.
+[INFO] 00:01:21:255 CACHE/(30076:30076): Espacio total libre: 14.
+[INFO] 00:01:21:255 CACHE/(30076:30076): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:02:17:909 CACHE/(30076:30076): Realizando control del estado de memoria y particiones...
+[INFO] 00:02:17:909 CACHE/(30076:30076): Dump solicitado: Sat Aug  8 00:02:17 2020
+
+[INFO] 00:02:17:909 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:02:17:909 CACHE/(30076:30076): Nº de particion: 0.
+[INFO] 00:02:17:910 CACHE/(30076:30076): La particion está en uso.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Límite inferior de la partición: 0.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Límite superior de la partición: 11.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb00 hasta 0x8eabb0b.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Tamaño: 11 bytes.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Número de víctima: 11.
+[INFO] 00:02:17:910 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 1.
+[INFO] 00:02:17:910 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:02:17:910 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:02:17:911 CACHE/(30076:30076): Nº de particion: 1.
+[INFO] 00:02:17:911 CACHE/(30076:30076): La particion está en uso.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Límite inferior de la partición: 11.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Límite superior de la partición: 22.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb0b hasta 0x8eabb16.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Tamaño: 11 bytes.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Número de víctima: 9.
+[INFO] 00:02:17:911 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 4.
+[INFO] 00:02:17:911 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 6.
+[INFO] 00:02:17:911 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:02:17:912 CACHE/(30076:30076): Nº de particion: 2.
+[INFO] 00:02:17:912 CACHE/(30076:30076): La particion está en uso.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Límite inferior de la partición: 22.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Límite superior de la partición: 61.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Posiciones de memoria: de 0x8eabb16 hasta 0x8eabb3d.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Tamaño: 39 bytes.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Número de víctima: 13.
+[INFO] 00:02:17:912 CACHE/(30076:30076): Cola a la que pertenece el mensaje: 4.
+[INFO] 00:02:17:912 CACHE/(30076:30076): En esta partición se guardan los datos del mensaje ID: 7.
+[INFO] 00:02:17:913 CACHE/(30076:30076): ----------------------------------------------------------
+[INFO] 00:02:17:913 CACHE/(30076:30076): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:02:17:913 CACHE/(30076:30076): Espacio libre en CACHE (No particionado): 3.
+[INFO] 00:02:17:913 CACHE/(30076:30076): Espacio total libre: 3.
+[INFO] 00:02:17:913 CACHE/(30076:30076): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:03:26:822 CACHE/(30211:30211): Realizando control del estado de memoria y particiones...
+[INFO] 00:03:26:822 CACHE/(30211:30211): Dump solicitado: Sat Aug  8 00:03:26 2020
+
+[INFO] 00:03:26:822 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:03:26:822 CACHE/(30211:30211): Nº de particion: 0.
+[INFO] 00:03:26:822 CACHE/(30211:30211): La particion está en uso.
+[INFO] 00:03:26:822 CACHE/(30211:30211): Límite inferior de la partición: 0.
+[INFO] 00:03:26:822 CACHE/(30211:30211): Límite superior de la partición: 11.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Posiciones de memoria: de 0x8637b00 hasta 0x8637b0b.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Tamaño: 11 bytes.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Número de víctima: 1.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Cola a la que pertenece el mensaje: 3.
+[INFO] 00:03:26:823 CACHE/(30211:30211): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:03:26:823 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:03:26:823 CACHE/(30211:30211): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Espacio libre en CACHE (No particionado): 53.
+[INFO] 00:03:26:823 CACHE/(30211:30211): Espacio total libre: 53.
+[INFO] 00:03:26:823 CACHE/(30211:30211): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:05:28:512 CACHE/(30211:30211): Realizando control del estado de memoria y particiones...
+[INFO] 00:05:28:512 CACHE/(30211:30211): Dump solicitado: Sat Aug  8 00:05:28 2020
+
+[INFO] 00:05:28:512 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:05:28:512 CACHE/(30211:30211): Nº de particion: 0.
+[INFO] 00:05:28:512 CACHE/(30211:30211): La particion está en uso.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Límite inferior de la partición: 0.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Límite superior de la partición: 11.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Posiciones de memoria: de 0x8637b00 hasta 0x8637b0b.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Tamaño: 11 bytes.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Número de víctima: 1.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Cola a la que pertenece el mensaje: 3.
+[INFO] 00:05:28:512 CACHE/(30211:30211): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:05:28:512 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:05:28:512 CACHE/(30211:30211): Nº de particion: 1.
+[INFO] 00:05:28:512 CACHE/(30211:30211): La particion está en uso.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Límite inferior de la partición: 11.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Límite superior de la partición: 34.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Posiciones de memoria: de 0x8637b0b hasta 0x8637b22.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Tamaño: 23 bytes.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Número de víctima: 2.
+[INFO] 00:05:28:512 CACHE/(30211:30211): Cola a la que pertenece el mensaje: 1.
+[INFO] 00:05:28:512 CACHE/(30211:30211): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:05:28:512 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:05:28:512 CACHE/(30211:30211): Nº de particion: 2.
+[INFO] 00:05:28:513 CACHE/(30211:30211): La particion está en uso.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Límite inferior de la partición: 34.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Límite superior de la partición: 55.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Posiciones de memoria: de 0x8637b22 hasta 0x8637b37.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Tamaño: 21 bytes.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Número de víctima: 3.
+[INFO] 00:05:28:513 CACHE/(30211:30211): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:05:28:514 CACHE/(30211:30211): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:05:28:514 CACHE/(30211:30211): ----------------------------------------------------------
+[INFO] 00:05:28:514 CACHE/(30211:30211): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:05:28:514 CACHE/(30211:30211): Espacio libre en CACHE (No particionado): 9.
+[INFO] 00:05:28:514 CACHE/(30211:30211): Espacio total libre: 9.
+[INFO] 00:05:28:514 CACHE/(30211:30211): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:08:46:406 CACHE/(9815:9815): Realizando control del estado de memoria y particiones...
+[INFO] 00:08:46:406 CACHE/(9815:9815): Dump solicitado: Sat Aug  8 00:08:46 2020
+
+[INFO] 00:08:46:406 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:08:46:406 CACHE/(9815:9815): Nº de particion: 0.
+[INFO] 00:08:46:406 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:08:46:406 CACHE/(9815:9815): Límite inferior de la partición: 0.
+[INFO] 00:08:46:406 CACHE/(9815:9815): Límite superior de la partición: 21.
+[INFO] 00:08:46:406 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:08:46:407 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b00 hasta 0x9cd1b15.
+[INFO] 00:08:46:407 CACHE/(9815:9815): Tamaño: 21 bytes.
+[INFO] 00:08:46:407 CACHE/(9815:9815): Número de víctima: 1.
+[INFO] 00:08:46:407 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:08:46:407 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:08:46:407 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:08:46:407 CACHE/(9815:9815): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:08:46:407 CACHE/(9815:9815): Espacio libre en CACHE (No particionado): 43.
+[INFO] 00:08:46:407 CACHE/(9815:9815): Espacio total libre: 43.
+[INFO] 00:08:46:407 CACHE/(9815:9815): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:11:21:584 CACHE/(9815:9815): Realizando control del estado de memoria y particiones...
+[INFO] 00:11:21:584 CACHE/(9815:9815): Dump solicitado: Sat Aug  8 00:11:21 2020
+
+[INFO] 00:11:21:584 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:11:21:584 CACHE/(9815:9815): Nº de particion: 0.
+[INFO] 00:11:21:584 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:11:21:584 CACHE/(9815:9815): Límite inferior de la partición: 0.
+[INFO] 00:11:21:584 CACHE/(9815:9815): Límite superior de la partición: 21.
+[INFO] 00:11:21:585 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:11:21:585 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b00 hasta 0x9cd1b15.
+[INFO] 00:11:21:585 CACHE/(9815:9815): Tamaño: 21 bytes.
+[INFO] 00:11:21:585 CACHE/(9815:9815): Número de víctima: 1.
+[INFO] 00:11:21:585 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:11:21:585 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:11:21:585 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:11:21:585 CACHE/(9815:9815): Nº de particion: 1.
+[INFO] 00:11:21:585 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:11:21:585 CACHE/(9815:9815): Límite inferior de la partición: 21.
+[INFO] 00:11:21:585 CACHE/(9815:9815): Límite superior de la partición: 40.
+[INFO] 00:11:21:585 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:11:21:586 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b15 hasta 0x9cd1b28.
+[INFO] 00:11:21:586 CACHE/(9815:9815): Tamaño: 19 bytes.
+[INFO] 00:11:21:586 CACHE/(9815:9815): Número de víctima: 2.
+[INFO] 00:11:21:586 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:11:21:586 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:11:21:586 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:11:21:586 CACHE/(9815:9815): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:11:21:587 CACHE/(9815:9815): Espacio libre en CACHE (No particionado): 24.
+[INFO] 00:11:21:587 CACHE/(9815:9815): Espacio total libre: 24.
+[INFO] 00:11:21:587 CACHE/(9815:9815): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:12:19:674 CACHE/(9815:9815): Realizando control del estado de memoria y particiones...
+[INFO] 00:12:19:674 CACHE/(9815:9815): Dump solicitado: Sat Aug  8 00:12:19 2020
+
+[INFO] 00:12:19:674 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:12:19:674 CACHE/(9815:9815): Nº de particion: 0.
+[INFO] 00:12:19:674 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:12:19:674 CACHE/(9815:9815): Límite inferior de la partición: 0.
+[INFO] 00:12:19:674 CACHE/(9815:9815): Límite superior de la partición: 21.
+[INFO] 00:12:19:675 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:12:19:675 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b00 hasta 0x9cd1b15.
+[INFO] 00:12:19:675 CACHE/(9815:9815): Tamaño: 21 bytes.
+[INFO] 00:12:19:675 CACHE/(9815:9815): Número de víctima: 1.
+[INFO] 00:12:19:675 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:12:19:675 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:12:19:675 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:12:19:675 CACHE/(9815:9815): Nº de particion: 1.
+[INFO] 00:12:19:675 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:12:19:675 CACHE/(9815:9815): Límite inferior de la partición: 21.
+[INFO] 00:12:19:675 CACHE/(9815:9815): Límite superior de la partición: 40.
+[INFO] 00:12:19:675 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:12:19:676 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b15 hasta 0x9cd1b28.
+[INFO] 00:12:19:676 CACHE/(9815:9815): Tamaño: 19 bytes.
+[INFO] 00:12:19:676 CACHE/(9815:9815): Número de víctima: 2.
+[INFO] 00:12:19:676 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:12:19:676 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:12:19:676 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:12:19:676 CACHE/(9815:9815): Nº de particion: 2.
+[INFO] 00:12:19:676 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:12:19:676 CACHE/(9815:9815): Límite inferior de la partición: 40.
+[INFO] 00:12:19:676 CACHE/(9815:9815): Límite superior de la partición: 59.
+[INFO] 00:12:19:677 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  07 00 00 00 50 69 6b 61  |............Pika|
+0x00000030: 63 68 75 03 00 00 00 05  00 00 00 00 00 00 00 00  |chu.............|
+[INFO] 00:12:19:677 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b28 hasta 0x9cd1b3b.
+[INFO] 00:12:19:677 CACHE/(9815:9815): Tamaño: 19 bytes.
+[INFO] 00:12:19:677 CACHE/(9815:9815): Número de víctima: 3.
+[INFO] 00:12:19:677 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:12:19:677 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:12:19:677 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:12:19:677 CACHE/(9815:9815): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:12:19:678 CACHE/(9815:9815): Espacio libre en CACHE (No particionado): 5.
+[INFO] 00:12:19:678 CACHE/(9815:9815): Espacio total libre: 5.
+[INFO] 00:12:19:678 CACHE/(9815:9815): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:13:30:379 CACHE/(9815:9815): Realizando control del estado de memoria y particiones...
+[INFO] 00:13:30:379 CACHE/(9815:9815): Dump solicitado: Sat Aug  8 00:13:30 2020
+
+[INFO] 00:13:30:379 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:13:30:379 CACHE/(9815:9815): Nº de particion: 0.
+[INFO] 00:13:30:379 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:13:30:379 CACHE/(9815:9815): Límite inferior de la partición: 0.
+[INFO] 00:13:30:379 CACHE/(9815:9815): Límite superior de la partición: 21.
+[INFO] 00:13:30:380 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:13:30:380 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b00 hasta 0x9cd1b15.
+[INFO] 00:13:30:380 CACHE/(9815:9815): Tamaño: 21 bytes.
+[INFO] 00:13:30:380 CACHE/(9815:9815): Número de víctima: 1.
+[INFO] 00:13:30:380 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:13:30:380 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:13:30:380 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:13:30:381 CACHE/(9815:9815): Nº de particion: 1.
+[INFO] 00:13:30:381 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:13:30:381 CACHE/(9815:9815): Límite inferior de la partición: 21.
+[INFO] 00:13:30:381 CACHE/(9815:9815): Límite superior de la partición: 40.
+[INFO] 00:13:30:381 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  00 00 00 00 00 00 00 00  |................|
+[INFO] 00:13:30:381 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b15 hasta 0x9cd1b28.
+[INFO] 00:13:30:381 CACHE/(9815:9815): Tamaño: 19 bytes.
+[INFO] 00:13:30:381 CACHE/(9815:9815): Número de víctima: 2.
+[INFO] 00:13:30:381 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 2.
+[INFO] 00:13:30:382 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:13:30:382 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:13:30:382 CACHE/(9815:9815): Nº de particion: 2.
+[INFO] 00:13:30:382 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:13:30:382 CACHE/(9815:9815): Límite inferior de la partición: 40.
+[INFO] 00:13:30:382 CACHE/(9815:9815): Límite superior de la partición: 59.
+[INFO] 00:13:30:382 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  07 00 00 00 50 69 6b 61  |............Pika|
+0x00000030: 63 68 75 03 00 00 00 05  00 00 00 00 00 00 00 00  |chu.............|
+[INFO] 00:13:30:383 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b28 hasta 0x9cd1b3b.
+[INFO] 00:13:30:383 CACHE/(9815:9815): Tamaño: 19 bytes.
+[INFO] 00:13:30:383 CACHE/(9815:9815): Número de víctima: 3.
+[INFO] 00:13:30:383 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:13:30:383 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:13:30:383 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:13:30:383 CACHE/(9815:9815): Nº de particion: 3.
+[INFO] 00:13:30:383 CACHE/(9815:9815): La particion está en uso.
+[INFO] 00:13:30:383 CACHE/(9815:9815): Límite inferior de la partición: 59.
+[INFO] 00:13:30:383 CACHE/(9815:9815): Límite superior de la partición: 63.
+[INFO] 00:13:30:384 CACHE/(9815:9815): 
+0x00000000: 09 00 00 00 42 75 6c 62  61 73 61 75 72 03 00 00  |....Bulbasaur...|
+0x00000010: 00 05 00 00 00 07 00 00  00 50 69 6b 61 63 68 75  |.........Pikachu|
+0x00000020: 03 00 00 00 05 00 00 00  07 00 00 00 50 69 6b 61  |............Pika|
+0x00000030: 63 68 75 03 00 00 00 05  00 00 00 01 00 00 00 00  |chu.............|
+[INFO] 00:13:30:384 CACHE/(9815:9815): Posiciones de memoria: de 0x9cd1b3b hasta 0x9cd1b3f.
+[INFO] 00:13:30:384 CACHE/(9815:9815): Tamaño: 4 bytes.
+[INFO] 00:13:30:384 CACHE/(9815:9815): Número de víctima: 4.
+[INFO] 00:13:30:384 CACHE/(9815:9815): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:13:30:384 CACHE/(9815:9815): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:13:30:384 CACHE/(9815:9815): ----------------------------------------------------------
+[INFO] 00:13:30:384 CACHE/(9815:9815): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:13:30:385 CACHE/(9815:9815): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:13:30:385 CACHE/(9815:9815): Espacio total libre: 1.
+[INFO] 00:13:30:385 CACHE/(9815:9815): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:16:03:352 CACHE/(9963:9963): Realizando control del estado de memoria y particiones...
+[INFO] 00:16:03:352 CACHE/(9963:9963): Dump solicitado: Sat Aug  8 00:16:03 2020
+
+[INFO] 00:16:03:352 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:16:03:352 CACHE/(9963:9963): Nº de particion: 0.
+[INFO] 00:16:03:352 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Límite inferior de la partición: 0.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Límite superior de la partición: 4.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb00 hasta 0x83aeb04.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Número de víctima: 1.
+[INFO] 00:16:03:352 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:16:03:352 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:16:03:352 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:16:03:353 CACHE/(9963:9963): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:16:03:353 CACHE/(9963:9963): Espacio libre en CACHE (No particionado): 60.
+[INFO] 00:16:03:353 CACHE/(9963:9963): Espacio total libre: 60.
+[INFO] 00:16:03:354 CACHE/(9963:9963): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:18:10:158 CACHE/(9963:9963): Realizando control del estado de memoria y particiones...
+[INFO] 00:18:10:158 CACHE/(9963:9963): Dump solicitado: Sat Aug  8 00:18:10 2020
+
+[INFO] 00:18:10:158 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:10:158 CACHE/(9963:9963): Nº de particion: 0.
+[INFO] 00:18:10:158 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Límite inferior de la partición: 0.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Límite superior de la partición: 4.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb00 hasta 0x83aeb04.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Número de víctima: 1.
+[INFO] 00:18:10:158 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:18:10:159 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:18:10:159 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:10:159 CACHE/(9963:9963): Nº de particion: 1.
+[INFO] 00:18:10:159 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Límite inferior de la partición: 4.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Límite superior de la partición: 8.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb04 hasta 0x83aeb08.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Número de víctima: 2.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:18:10:159 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:18:10:159 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:10:159 CACHE/(9963:9963): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Espacio libre en CACHE (No particionado): 56.
+[INFO] 00:18:10:159 CACHE/(9963:9963): Espacio total libre: 56.
+[INFO] 00:18:10:159 CACHE/(9963:9963): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:18:47:654 CACHE/(9963:9963): Realizando control del estado de memoria y particiones...
+[INFO] 00:18:47:654 CACHE/(9963:9963): Dump solicitado: Sat Aug  8 00:18:47 2020
+
+[INFO] 00:18:47:654 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:47:654 CACHE/(9963:9963): Nº de particion: 0.
+[INFO] 00:18:47:655 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Límite inferior de la partición: 0.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Límite superior de la partición: 4.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb00 hasta 0x83aeb04.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Número de víctima: 1.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:18:47:655 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:18:47:655 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:47:655 CACHE/(9963:9963): Nº de particion: 1.
+[INFO] 00:18:47:655 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Límite inferior de la partición: 4.
+[INFO] 00:18:47:655 CACHE/(9963:9963): Límite superior de la partición: 8.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb04 hasta 0x83aeb08.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Número de víctima: 2.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:18:47:656 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:18:47:656 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:47:656 CACHE/(9963:9963): Nº de particion: 2.
+[INFO] 00:18:47:656 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Límite inferior de la partición: 8.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Límite superior de la partición: 27.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb08 hasta 0x83aeb1b.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Tamaño: 19 bytes.
+[INFO] 00:18:47:656 CACHE/(9963:9963): Número de víctima: 3.
+[INFO] 00:18:47:657 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:18:47:657 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:18:47:657 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:18:47:657 CACHE/(9963:9963): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:18:47:657 CACHE/(9963:9963): Espacio libre en CACHE (No particionado): 37.
+[INFO] 00:18:47:657 CACHE/(9963:9963): Espacio total libre: 37.
+[INFO] 00:18:47:657 CACHE/(9963:9963): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:19:13:518 CACHE/(9963:9963): Realizando control del estado de memoria y particiones...
+[INFO] 00:19:13:518 CACHE/(9963:9963): Dump solicitado: Sat Aug  8 00:19:13 2020
+
+[INFO] 00:19:13:518 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:19:13:518 CACHE/(9963:9963): Nº de particion: 0.
+[INFO] 00:19:13:518 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:19:13:518 CACHE/(9963:9963): Límite inferior de la partición: 0.
+[INFO] 00:19:13:518 CACHE/(9963:9963): Límite superior de la partición: 4.
+[INFO] 00:19:13:518 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb00 hasta 0x83aeb04.
+[INFO] 00:19:13:518 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:19:13:518 CACHE/(9963:9963): Número de víctima: 1.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:19:13:519 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:19:13:519 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:19:13:519 CACHE/(9963:9963): Nº de particion: 1.
+[INFO] 00:19:13:519 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Límite inferior de la partición: 4.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Límite superior de la partición: 8.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb04 hasta 0x83aeb08.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Tamaño: 4 bytes.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Número de víctima: 2.
+[INFO] 00:19:13:519 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:19:13:520 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:19:13:520 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:19:13:520 CACHE/(9963:9963): Nº de particion: 2.
+[INFO] 00:19:13:520 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:19:13:520 CACHE/(9963:9963): Límite inferior de la partición: 8.
+[INFO] 00:19:13:520 CACHE/(9963:9963): Límite superior de la partición: 27.
+[INFO] 00:19:13:520 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb08 hasta 0x83aeb1b.
+[INFO] 00:19:13:520 CACHE/(9963:9963): Tamaño: 19 bytes.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Número de víctima: 3.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:19:13:521 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:19:13:521 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:19:13:521 CACHE/(9963:9963): Nº de particion: 3.
+[INFO] 00:19:13:521 CACHE/(9963:9963): La particion está en uso.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Límite inferior de la partición: 27.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Límite superior de la partición: 47.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Posiciones de memoria: de 0x83aeb1b hasta 0x83aeb2f.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Tamaño: 20 bytes.
+[INFO] 00:19:13:521 CACHE/(9963:9963): Número de víctima: 4.
+[INFO] 00:19:13:522 CACHE/(9963:9963): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:19:13:522 CACHE/(9963:9963): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:19:13:522 CACHE/(9963:9963): ----------------------------------------------------------
+[INFO] 00:19:13:522 CACHE/(9963:9963): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:19:13:522 CACHE/(9963:9963): Espacio libre en CACHE (No particionado): 17.
+[INFO] 00:19:13:522 CACHE/(9963:9963): Espacio total libre: 17.
+[INFO] 00:19:13:522 CACHE/(9963:9963): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:20:45:71 CACHE/(10038:10038): Realizando control del estado de memoria y particiones...
+[INFO] 00:20:45:71 CACHE/(10038:10038): Dump solicitado: Sat Aug  8 00:20:45 2020
+
+[INFO] 00:20:45:72 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:20:45:72 CACHE/(10038:10038): Nº de particion: 0.
+[INFO] 00:20:45:72 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:20:45:72 CACHE/(10038:10038): Límite inferior de la partición: 0.
+[INFO] 00:20:45:72 CACHE/(10038:10038): Límite superior de la partición: 4.
+[INFO] 00:20:45:72 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b00 hasta 0x9224b04.
+[INFO] 00:20:45:72 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:20:45:72 CACHE/(10038:10038): Número de víctima: 1.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:20:45:73 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:20:45:73 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:20:45:73 CACHE/(10038:10038): Nº de particion: 1.
+[INFO] 00:20:45:73 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Límite inferior de la partición: 4.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Límite superior de la partición: 8.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b04 hasta 0x9224b08.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Número de víctima: 2.
+[INFO] 00:20:45:73 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:20:45:74 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:20:45:74 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:20:45:74 CACHE/(10038:10038): Nº de particion: 2.
+[INFO] 00:20:45:74 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Límite inferior de la partición: 8.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Límite superior de la partición: 27.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b08 hasta 0x9224b1b.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Tamaño: 19 bytes.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Número de víctima: 3.
+[INFO] 00:20:45:74 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:20:45:74 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:20:45:74 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:20:45:75 CACHE/(10038:10038): Nº de particion: 3.
+[INFO] 00:20:45:75 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Límite inferior de la partición: 27.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Límite superior de la partición: 47.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b1b hasta 0x9224b2f.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Tamaño: 20 bytes.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Número de víctima: 4.
+[INFO] 00:20:45:75 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:20:45:75 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:20:45:75 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:20:45:75 CACHE/(10038:10038): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:20:45:76 CACHE/(10038:10038): Espacio libre en CACHE (No particionado): 17.
+[INFO] 00:20:45:76 CACHE/(10038:10038): Espacio total libre: 17.
+[INFO] 00:20:45:76 CACHE/(10038:10038): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:21:17:552 CACHE/(10038:10038): Realizando control del estado de memoria y particiones...
+[INFO] 00:21:17:552 CACHE/(10038:10038): Dump solicitado: Sat Aug  8 00:21:17 2020
+
+[INFO] 00:21:17:552 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:552 CACHE/(10038:10038): Nº de particion: 0.
+[INFO] 00:21:17:552 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:17:552 CACHE/(10038:10038): Límite inferior de la partición: 0.
+[INFO] 00:21:17:552 CACHE/(10038:10038): Límite superior de la partición: 4.
+[INFO] 00:21:17:552 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b00 hasta 0x9224b04.
+[INFO] 00:21:17:552 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Número de víctima: 1.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:21:17:553 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:21:17:553 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:553 CACHE/(10038:10038): Nº de particion: 1.
+[INFO] 00:21:17:553 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Límite inferior de la partición: 4.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Límite superior de la partición: 8.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b04 hasta 0x9224b08.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Número de víctima: 2.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:21:17:553 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:21:17:553 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:553 CACHE/(10038:10038): Nº de particion: 2.
+[INFO] 00:21:17:553 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Límite inferior de la partición: 8.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Límite superior de la partición: 27.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b08 hasta 0x9224b1b.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Tamaño: 19 bytes.
+[INFO] 00:21:17:553 CACHE/(10038:10038): Número de víctima: 3.
+[INFO] 00:21:17:554 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:17:554 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:21:17:554 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:554 CACHE/(10038:10038): Nº de particion: 3.
+[INFO] 00:21:17:554 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:17:554 CACHE/(10038:10038): Límite inferior de la partición: 27.
+[INFO] 00:21:17:554 CACHE/(10038:10038): Límite superior de la partición: 47.
+[INFO] 00:21:17:554 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b1b hasta 0x9224b2f.
+[INFO] 00:21:17:555 CACHE/(10038:10038): Tamaño: 20 bytes.
+[INFO] 00:21:17:555 CACHE/(10038:10038): Número de víctima: 4.
+[INFO] 00:21:17:555 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:17:555 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:21:17:555 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:555 CACHE/(10038:10038): Nº de particion: 4.
+[INFO] 00:21:17:555 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:17:555 CACHE/(10038:10038): Límite inferior de la partición: 47.
+[INFO] 00:21:17:555 CACHE/(10038:10038): Límite superior de la partición: 63.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b2f hasta 0x9224b3f.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Tamaño: 16 bytes.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Número de víctima: 5.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:17:556 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:21:17:556 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:17:556 CACHE/(10038:10038): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:21:17:556 CACHE/(10038:10038): Espacio total libre: 1.
+[INFO] 00:21:17:556 CACHE/(10038:10038): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:21:55:201 CACHE/(10038:10038): Realizando control del estado de memoria y particiones...
+[INFO] 00:21:55:201 CACHE/(10038:10038): Dump solicitado: Sat Aug  8 00:21:55 2020
+
+[INFO] 00:21:55:201 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:201 CACHE/(10038:10038): Nº de particion: 0.
+[INFO] 00:21:55:201 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:55:201 CACHE/(10038:10038): Límite inferior de la partición: 0.
+[INFO] 00:21:55:202 CACHE/(10038:10038): Límite superior de la partición: 4.
+[INFO] 00:21:55:202 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b00 hasta 0x9224b04.
+[INFO] 00:21:55:202 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:21:55:202 CACHE/(10038:10038): Número de víctima: 1.
+[INFO] 00:21:55:202 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:21:55:202 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:21:55:202 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:202 CACHE/(10038:10038): Nº de particion: 1.
+[INFO] 00:21:55:202 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Límite inferior de la partición: 4.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Límite superior de la partición: 8.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b04 hasta 0x9224b08.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Tamaño: 4 bytes.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Número de víctima: 2.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:21:55:203 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:21:55:203 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:203 CACHE/(10038:10038): Nº de particion: 2.
+[INFO] 00:21:55:203 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Límite inferior de la partición: 8.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Límite superior de la partición: 27.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b08 hasta 0x9224b1b.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Tamaño: 19 bytes.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Número de víctima: 3.
+[INFO] 00:21:55:203 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:55:203 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:21:55:204 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:204 CACHE/(10038:10038): Nº de particion: 3.
+[INFO] 00:21:55:204 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Límite inferior de la partición: 27.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Límite superior de la partición: 47.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b1b hasta 0x9224b2f.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Tamaño: 20 bytes.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Número de víctima: 4.
+[INFO] 00:21:55:204 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:55:204 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:21:55:204 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:204 CACHE/(10038:10038): Nº de particion: 4.
+[INFO] 00:21:55:205 CACHE/(10038:10038): La particion está en uso.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Límite inferior de la partición: 47.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Límite superior de la partición: 63.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Posiciones de memoria: de 0x9224b2f hasta 0x9224b3f.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Tamaño: 16 bytes.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Número de víctima: 5.
+[INFO] 00:21:55:205 CACHE/(10038:10038): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:21:55:205 CACHE/(10038:10038): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:21:55:205 CACHE/(10038:10038): ----------------------------------------------------------
+[INFO] 00:21:55:205 CACHE/(10038:10038): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:21:55:206 CACHE/(10038:10038): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:21:55:206 CACHE/(10038:10038): Espacio total libre: 1.
+[INFO] 00:21:55:206 CACHE/(10038:10038): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:24:44:389 CACHE/(10154:10154): Realizando control del estado de memoria y particiones...
+[INFO] 00:24:44:389 CACHE/(10154:10154): Dump solicitado: Sat Aug  8 00:24:44 2020
+
+[INFO] 00:24:44:389 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:389 CACHE/(10154:10154): Nº de particion: 0.
+[INFO] 00:24:44:389 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Límite inferior de la partición: 0.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Límite superior de la partición: 4.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b00 hasta 0x9592b04.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Tamaño: 4 bytes.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Número de víctima: 1.
+[INFO] 00:24:44:389 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:24:44:389 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:24:44:389 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:389 CACHE/(10154:10154): Nº de particion: 1.
+[INFO] 00:24:44:390 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Límite inferior de la partición: 4.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Límite superior de la partición: 8.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b04 hasta 0x9592b08.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Tamaño: 4 bytes.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Número de víctima: 2.
+[INFO] 00:24:44:390 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:24:44:390 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:24:44:390 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:390 CACHE/(10154:10154): Nº de particion: 2.
+[INFO] 00:24:44:390 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Límite inferior de la partición: 8.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Límite superior de la partición: 27.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b08 hasta 0x9592b1b.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Tamaño: 19 bytes.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Número de víctima: 3.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:24:44:391 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:24:44:391 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:391 CACHE/(10154:10154): Nº de particion: 3.
+[INFO] 00:24:44:391 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:24:44:391 CACHE/(10154:10154): Límite inferior de la partición: 27.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Límite superior de la partición: 47.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b1b hasta 0x9592b2f.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Tamaño: 20 bytes.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Número de víctima: 4.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:24:44:392 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:24:44:392 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:392 CACHE/(10154:10154): Nº de particion: 4.
+[INFO] 00:24:44:392 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Límite inferior de la partición: 47.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Límite superior de la partición: 63.
+[INFO] 00:24:44:392 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b2f hasta 0x9592b3f.
+[INFO] 00:24:44:393 CACHE/(10154:10154): Tamaño: 16 bytes.
+[INFO] 00:24:44:393 CACHE/(10154:10154): Número de víctima: 5.
+[INFO] 00:24:44:393 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:24:44:393 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:24:44:393 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:24:44:393 CACHE/(10154:10154): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:24:44:393 CACHE/(10154:10154): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:24:44:393 CACHE/(10154:10154): Espacio total libre: 1.
+[INFO] 00:24:44:393 CACHE/(10154:10154): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:26:18:687 CACHE/(10154:10154): Realizando control del estado de memoria y particiones...
+[INFO] 00:26:18:688 CACHE/(10154:10154): Dump solicitado: Sat Aug  8 00:26:18 2020
+
+[INFO] 00:26:18:688 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:688 CACHE/(10154:10154): Nº de particion: 0.
+[INFO] 00:26:18:688 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Límite inferior de la partición: 0.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Límite superior de la partición: 4.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b00 hasta 0x9592b04.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Tamaño: 4 bytes.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Número de víctima: 6.
+[INFO] 00:26:18:688 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:26:18:688 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:26:18:688 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:689 CACHE/(10154:10154): Nº de particion: 1.
+[INFO] 00:26:18:689 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Límite inferior de la partición: 4.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Límite superior de la partición: 8.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b04 hasta 0x9592b08.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Tamaño: 4 bytes.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Número de víctima: 7.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:26:18:689 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:26:18:689 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:689 CACHE/(10154:10154): Nº de particion: 2.
+[INFO] 00:26:18:689 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Límite inferior de la partición: 8.
+[INFO] 00:26:18:689 CACHE/(10154:10154): Límite superior de la partición: 27.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b08 hasta 0x9592b1b.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Tamaño: 19 bytes.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Número de víctima: 3.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:26:18:690 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:26:18:690 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:690 CACHE/(10154:10154): Nº de particion: 3.
+[INFO] 00:26:18:690 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Límite inferior de la partición: 27.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Límite superior de la partición: 47.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b1b hasta 0x9592b2f.
+[INFO] 00:26:18:690 CACHE/(10154:10154): Tamaño: 20 bytes.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Número de víctima: 4.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:26:18:691 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:26:18:691 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:691 CACHE/(10154:10154): Nº de particion: 4.
+[INFO] 00:26:18:691 CACHE/(10154:10154): La particion está en uso.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Límite inferior de la partición: 47.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Límite superior de la partición: 63.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Posiciones de memoria: de 0x9592b2f hasta 0x9592b3f.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Tamaño: 16 bytes.
+[INFO] 00:26:18:691 CACHE/(10154:10154): Número de víctima: 5.
+[INFO] 00:26:18:692 CACHE/(10154:10154): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:26:18:692 CACHE/(10154:10154): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:26:18:692 CACHE/(10154:10154): ----------------------------------------------------------
+[INFO] 00:26:18:692 CACHE/(10154:10154): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:26:18:692 CACHE/(10154:10154): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:26:18:692 CACHE/(10154:10154): Espacio total libre: 1.
+[INFO] 00:26:18:693 CACHE/(10154:10154): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+
+[INFO] 00:31:26:819 CACHE/(10256:10256): Realizando control del estado de memoria y particiones...
+[INFO] 00:31:26:819 CACHE/(10256:10256): Dump solicitado: Sat Aug  8 00:31:26 2020
+
+[INFO] 00:31:26:819 CACHE/(10256:10256): ----------------------------------------------------------
+[INFO] 00:31:26:819 CACHE/(10256:10256): Nº de particion: 0.
+[INFO] 00:31:26:819 CACHE/(10256:10256): La particion está en uso.
+[INFO] 00:31:26:819 CACHE/(10256:10256): Límite inferior de la partición: 0.
+[INFO] 00:31:26:819 CACHE/(10256:10256): Límite superior de la partición: 22.
+[INFO] 00:31:26:819 CACHE/(10256:10256): Posiciones de memoria: de 0x9ef3b00 hasta 0x9ef3b16.
+[INFO] 00:31:26:820 CACHE/(10256:10256): Tamaño: 22 bytes.
+[INFO] 00:31:26:820 CACHE/(10256:10256): Número de víctima: 6.
+[INFO] 00:31:26:820 CACHE/(10256:10256): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:31:26:820 CACHE/(10256:10256): En esta partición se guardan los datos del mensaje ID: 5.
+[INFO] 00:31:26:820 CACHE/(10256:10256): ----------------------------------------------------------
+[INFO] 00:31:26:820 CACHE/(10256:10256): Nº de particion: 1.
+[INFO] 00:31:26:821 CACHE/(10256:10256): La partición está libre.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Límite inferior de la partición: 22.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Límite superior de la partición: 27.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Posiciones de memoria: de 0x9ef3b16 hasta 0x9ef3b1b.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Tamaño: 5 bytes.
+[INFO] 00:31:26:821 CACHE/(10256:10256): ----------------------------------------------------------
+[INFO] 00:31:26:821 CACHE/(10256:10256): Nº de particion: 2.
+[INFO] 00:31:26:821 CACHE/(10256:10256): La particion está en uso.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Límite inferior de la partición: 27.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Límite superior de la partición: 47.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Posiciones de memoria: de 0x9ef3b1b hasta 0x9ef3b2f.
+[INFO] 00:31:26:821 CACHE/(10256:10256): Tamaño: 20 bytes.
+[INFO] 00:31:26:822 CACHE/(10256:10256): Número de víctima: 4.
+[INFO] 00:31:26:823 CACHE/(10256:10256): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:31:26:823 CACHE/(10256:10256): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:31:26:823 CACHE/(10256:10256): ----------------------------------------------------------
+[INFO] 00:31:26:823 CACHE/(10256:10256): Nº de particion: 3.
+[INFO] 00:31:26:823 CACHE/(10256:10256): La particion está en uso.
+[INFO] 00:31:26:823 CACHE/(10256:10256): Límite inferior de la partición: 47.
+[INFO] 00:31:26:823 CACHE/(10256:10256): Límite superior de la partición: 63.
+[INFO] 00:31:26:823 CACHE/(10256:10256): Posiciones de memoria: de 0x9ef3b2f hasta 0x9ef3b3f.
+[INFO] 00:31:26:823 CACHE/(10256:10256): Tamaño: 16 bytes.
+[INFO] 00:31:26:824 CACHE/(10256:10256): Número de víctima: 5.
+[INFO] 00:31:26:824 CACHE/(10256:10256): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:31:26:824 CACHE/(10256:10256): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:31:26:824 CACHE/(10256:10256): ----------------------------------------------------------
+[INFO] 00:31:26:824 CACHE/(10256:10256): Espacio desperdiciado en particiones libres: 5.
+[INFO] 00:31:26:824 CACHE/(10256:10256): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:31:26:824 CACHE/(10256:10256): Espacio total libre: 6.
+[INFO] 00:31:26:824 CACHE/(10256:10256): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+

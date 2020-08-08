@@ -1153,8 +1153,8 @@ void poner_NEW_en_particion(void* CACHE, lista_particiones* particionElegida, Ne
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -1196,8 +1196,8 @@ void poner_APPEARED_en_particion(void* CACHE, lista_particiones* particionElegid
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -1235,8 +1235,8 @@ void poner_GET_en_particion(void* CACHE, lista_particiones* particionElegida, Ge
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	printf("Fin de la particion: %u\n", particionElegida->laParticion.limiteSuperior);
 	particionElegida->laParticion.estaLibre = 0;
@@ -1267,8 +1267,8 @@ void poner_LOCALIZED_en_particion(void* CACHE, lista_particiones* particionElegi
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto la cantidad de lugares donde se encuentra el pokemon, en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->cantPosciciones), sizeof(estructura->cantPosciciones));
@@ -1322,8 +1322,8 @@ void poner_CATCH_en_particion(void* CACHE, lista_particiones* particionElegida, 
 	desplazamiento += sizeof(estructura->largoNombre);
 
 	//meto nombre del pokemon en CACHE
-	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre+1);
-	desplazamiento += estructura->largoNombre+1;
+	memcpy(CACHE + desplazamiento, estructura->nombrePokemon, estructura->largoNombre);
+	desplazamiento += estructura->largoNombre;
 
 	//meto coordenada X del pokemon en CACHE
 	memcpy(CACHE + desplazamiento, &(estructura->posPokemon.x), sizeof(estructura->posPokemon.x));
@@ -1552,11 +1552,12 @@ void sacar_NEW_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 	referenciaTexto = malloc(estructura->largoNombre+1);
 
 	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre);
+	referenciaTexto[estructura->largoNombre] = '\0';
 
 	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
 	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
+	desplazamiento += estructura->largoNombre;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	//saco coordenada X del pokemon de CACHE
@@ -1600,11 +1601,12 @@ void sacar_APPEARED_de_particion(void* CACHE, lista_particiones* particionDelMen
 	referenciaTexto = malloc(estructura->largoNombre+1);
 
 	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre);
+	referenciaTexto[estructura->largoNombre] = '\0';
 
 	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
 	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
+	desplazamiento += estructura->largoNombre;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	//saco coordenada X del pokemon de CACHE
@@ -1643,11 +1645,12 @@ void sacar_GET_de_particion(void* CACHE, lista_particiones* particionDelMensaje,
 	referenciaTexto = malloc(estructura->largoNombre+1);
 
 	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre);
+	referenciaTexto[estructura->largoNombre] = '\0';
 
 	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
 	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
+	desplazamiento += estructura->largoNombre;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	if(strcmp(ALGOR_REEMPLAZO,"LRU") == 0)
@@ -1677,11 +1680,12 @@ void sacar_LOCALIZED_de_particion(void* CACHE, lista_particiones* particionDelMe
 	referenciaTexto = malloc(estructura->largoNombre+1);
 
 	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre);
+	referenciaTexto[estructura->largoNombre] = '\0';
 
 	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
 	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
+	desplazamiento += estructura->largoNombre;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	//saco la cantidad de lugares donde se encuentra el pokemon, de CACHE
@@ -1739,11 +1743,12 @@ void sacar_CATCH_de_particion(void* CACHE, lista_particiones* particionDelMensaj
 	referenciaTexto = malloc(estructura->largoNombre+1);
 
 	//saco el nombre del pokemon de CACHE
-	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre+1);
+	memcpy(referenciaTexto, CACHE + desplazamiento, estructura->largoNombre);
+	referenciaTexto[estructura->largoNombre] = '\0';
 
 	//hago que la estructura se guarde ese nombre (no se puede hacer memcpy directamente a la estructura)
 	estructura->nombrePokemon = referenciaTexto;
-	desplazamiento += estructura->largoNombre+1;
+	desplazamiento += estructura->largoNombre;
 	printf("nombre pokemon: %s\n", estructura->nombrePokemon);
 
 	//saco coordenada X del pokemon de CACHE
@@ -1883,7 +1888,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_new(New* estructura)
 	uint32_t totalAAsignar = 0;
 
 	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += estructura->largoNombre;
 	totalAAsignar += sizeof(estructura->posPokemon.x);
 	totalAAsignar += sizeof(estructura->posPokemon.y);
 	totalAAsignar += sizeof(estructura->cantPokemon);
@@ -1896,7 +1901,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_appeared(Appeared* estructura)
 	uint32_t totalAAsignar = 0;
 
 	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += estructura->largoNombre;
 	totalAAsignar += sizeof(estructura->posPokemon.x);
 	totalAAsignar += sizeof(estructura->posPokemon.y);
 
@@ -1908,7 +1913,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_get(Get* estructura)
 	uint32_t totalAAsignar = 0;
 
 	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += estructura->largoNombre;
 
 	return totalAAsignar;
 }
@@ -1918,7 +1923,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_localized(Localized* estructura)
 	uint32_t totalAAsignar = 0;
 
 	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += estructura->largoNombre;
 	totalAAsignar += sizeof(estructura->cantPosciciones);
 	if(estructura->cantPosciciones == 0)
 	{
@@ -1937,7 +1942,7 @@ uint32_t calcular_bytes_utiles_de_mensaje_catch(Catch* estructura)
 	uint32_t totalAAsignar = 0;
 
 	totalAAsignar += sizeof(estructura->largoNombre);
-	totalAAsignar += estructura->largoNombre + 1;
+	totalAAsignar += estructura->largoNombre;
 	totalAAsignar += sizeof(estructura->posPokemon.x);
 	totalAAsignar += sizeof(estructura->posPokemon.y);
 

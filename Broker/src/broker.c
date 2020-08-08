@@ -595,6 +595,7 @@ void mandar_mensajes_broker(t_cola* cola){
 					contadorSubs--;
 				}
 				free(mensaje);
+				i--;
 			}
 			else //si no lo acabo de borrar de memoria, trato de mandarlo
 			{

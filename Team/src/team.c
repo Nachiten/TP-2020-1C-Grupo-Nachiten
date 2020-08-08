@@ -660,7 +660,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
     		sem_wait(semLog);
     		log_info(logger, "LLego un mensaje Appeared, datos:\nNombre:%s\nPos X: %u\nPos Y: %u\nID: %i\nID Correlativa: %i.", recibidoAppeared->nombrePokemon, recibidoAppeared->posPokemon.x, recibidoAppeared->posPokemon.y, recibidoAppeared->ID, recibidoAppeared->corrID);
     		sem_post(semLog);
-
+    		sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoAppeared->ID;
@@ -716,7 +716,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			sem_wait(semLog);
 			log_info(logger, "LLego un mensaje Localized, datos:\nNombre:%s\nCantidad Posiciones: %u\nID: %i\nID Correlativa: %i.", recibidoLocalized->nombrePokemon, recibidoLocalized->cantPosciciones, recibidoLocalized->ID, recibidoLocalized->corrID);
 			sem_post(semLog);
-
+			sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoLocalized->ID;
@@ -772,7 +772,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			sem_wait(semLog);
 			log_info(logger, "LLego un mensaje Caught, datos:\nNombre:%s\nIntento de atrapar: %i\nID: %i\nID Correlativa: %i.", recibidoCaught->nombrePokemon, recibidoCaught->pudoAtrapar, recibidoCaught->ID, recibidoCaught->corrID);
 			sem_post(semLog);
-
+			sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoCaught->ID;

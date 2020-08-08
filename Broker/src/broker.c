@@ -555,7 +555,6 @@ void agregar_mensajes_viejos(uint32_t pId, t_cola* cola){
 
 // busca los mensajes de la lista de descartes que no se hayan mandado al suscriptor y los agrega a la cola
 void buscar_mensajes_descarte(uint32_t pId, t_cola* cola, t_cola* descarte){
-	printf("entre a descartes\n");
 	if(descarte->mensajes->head != NULL){
 		for(int i = 0; i < descarte->mensajes->elements_count; i++){
 			t_mensaje* mensaje;
@@ -1133,7 +1132,7 @@ void serve_client(int32_t* socket)
 
 		if(recibidos >= 1)
 		{
-			sem_wait(semRecibirMensajes);//todo prueba
+			//sem_wait(semRecibirMensajes);//todo prueba
 
 			recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
 			bytesRecibidos(recibidosSize);
@@ -1141,7 +1140,7 @@ void serve_client(int32_t* socket)
 
 			process_request(cod_op, *socket, sizeAAllocar);
 
-			sem_post(semRecibirMensajes);//todo Prueba
+			//sem_post(semRecibirMensajes);//todo Prueba
 		}
 
 

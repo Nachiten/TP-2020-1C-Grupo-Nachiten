@@ -26,7 +26,7 @@ endif
 all: Team
 
 dependents:
-	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug && $(MAKE) clean all
+	-cd /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug && $(MAKE) all
 
 # Tool invocations
 Team: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2020-1c-Grupo-Nachiten/shared/Debug/libshared.so

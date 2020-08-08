@@ -1,0 +1,1520 @@
+[INFO] 10:09:48:704 Team/(16091:16099): Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.
+[INFO] 10:09:48:705 Team/(16091:16097): Intentando Conexión a Broker...
+[INFO] 10:10:11:665 Team/(16200:16206): Intentando Conexión a Broker...
+[INFO] 10:10:41:666 Team/(16200:16206): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:10:41:667 Team/(16200:16206): Intentando Conexión a Broker...
+[INFO] 10:13:51:577 Team/(16580:16586): Intentando Conexión a Broker...
+[INFO] 10:15:44:107 Team/(16756:16762): Intentando Conexión a Broker...
+[INFO] 10:19:00:379 Team/(16830:16836): Intentando Conexión a Broker...
+[INFO] 10:19:30:380 Team/(16830:16836): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:19:30:380 Team/(16830:16836): Intentando Conexión a Broker...
+[INFO] 10:29:02:276 Team/(17211:17217): Intentando Conexión a Broker...
+[INFO] 10:29:32:279 Team/(17211:17217): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:29:32:280 Team/(17211:17217): Intentando Conexión a Broker...
+[INFO] 10:31:53:899 Team/(17436:17442): Intentando Conexión a Broker...
+[INFO] 10:31:58:900 Team/(17436:17442): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:31:58:900 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:03:901 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:03:901 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:08:902 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:08:902 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:13:903 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:13:904 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:18:905 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:18:905 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:23:908 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:23:908 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:28:909 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:28:909 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:33:912 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:33:913 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:38:914 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:38:914 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:43:915 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:43:915 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:48:916 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:48:916 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:53:917 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:53:917 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:32:58:919 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:32:58:919 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:03:919 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:03:920 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:08:920 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:08:921 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:13:922 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:13:922 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:18:924 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:18:924 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:23:926 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:23:926 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:28:927 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:28:927 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:33:928 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:33:929 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:38:931 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:38:931 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:43:933 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:43:933 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:48:933 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:48:934 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:53:934 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:53:935 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:33:58:935 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:33:58:936 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:34:03:936 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:34:03:937 Team/(17436:17442): Intentando Conexión a Broker...
+[ERROR] 10:34:08:937 Team/(17436:17442): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:34:08:938 Team/(17436:17442): Intentando Conexión a Broker...
+[INFO] 10:52:02:890 Team/(18759:18765): Intentando Conexión a Broker...
+[INFO] 10:52:07:891 Team/(18759:18765): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:52:07:891 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:12:892 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:12:893 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:17:893 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:17:893 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:22:894 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:22:895 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:27:895 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:27:896 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:32:897 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:32:897 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:37:898 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:37:899 Team/(18759:18765): Intentando Conexión a Broker...
+[ERROR] 10:52:42:899 Team/(18759:18765): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:52:42:900 Team/(18759:18765): Intentando Conexión a Broker...
+[INFO] 10:56:32:143 Team/(19003:19009): Intentando Conexión a Broker...
+[INFO] 10:56:37:144 Team/(19003:19009): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:56:37:145 Team/(19003:19009): Intentando Conexión a Broker...
+[INFO] 10:56:42:145 Team/(19003:19009): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:56:42:146 Team/(19003:19009): Intentando Conexión a Broker...
+[INFO] 10:57:21:106 Team/(19075:19081): Intentando Conexión a Broker...
+[INFO] 10:57:26:108 Team/(19075:19081): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 10:57:26:109 Team/(19075:19081): Intentando Conexión a Broker...
+[ERROR] 10:57:31:109 Team/(19075:19081): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:57:31:110 Team/(19075:19081): Intentando Conexión a Broker...
+[ERROR] 10:57:36:110 Team/(19075:19081): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 10:57:36:110 Team/(19075:19081): Intentando Conexión a Broker...
+[INFO] 11:03:12:936 Team/(19322:19328): Intentando Conexión a Broker...
+[INFO] 11:03:17:937 Team/(19322:19328): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:03:17:940 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:22:941 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:22:941 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:27:942 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:27:942 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:32:943 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:32:943 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:37:943 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:37:943 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:42:944 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:42:944 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:47:945 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:47:945 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:52:945 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:52:946 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:03:57:952 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:03:57:952 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:02:953 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:02:953 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:07:954 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:07:955 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:12:955 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:12:956 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:17:957 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:17:957 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:22:962 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:22:962 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:27:963 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:27:963 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:32:964 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:32:964 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:37:968 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:37:968 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:42:969 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:42:969 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:47:970 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:47:971 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:52:971 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:52:972 Team/(19322:19328): Intentando Conexión a Broker...
+[ERROR] 11:04:57:972 Team/(19322:19328): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:04:57:973 Team/(19322:19328): Intentando Conexión a Broker...
+[INFO] 11:09:35:777 Team/(19522:19528): Intentando Conexión a Broker...
+[INFO] 11:09:40:777 Team/(19522:19528): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:09:40:779 Team/(19522:19528): Intentando Conexión a Broker...
+[INFO] 11:09:45:781 Team/(19522:19528): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:09:45:782 Team/(19522:19528): Intentando Conexión a Broker...
+[INFO] 11:09:50:783 Team/(19522:19528): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:10:06:857 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:11:859 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:11:859 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:16:860 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:16:861 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:21:862 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:21:862 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:26:866 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:26:867 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:31:867 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:31:868 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:36:875 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:36:876 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:41:876 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:41:876 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:46:877 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:46:877 Team/(19522:19546): Intentando Conexión a Broker...
+[ERROR] 11:10:51:878 Team/(19522:19546): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:10:51:878 Team/(19522:19546): Intentando Conexión a Broker...
+[INFO] 11:10:56:879 Team/(19522:19546): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:10:56:884 Team/(19522:19544): Intentando Conexión a Broker...
+[INFO] 11:11:01:885 Team/(19522:19544): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:11:01:886 Team/(19522:19545): Intentando Conexión a Broker...
+[INFO] 11:11:06:892 Team/(19522:19545): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:11:23:239 Team/(19522:19544): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 5
+ID Correlativa: 5.
+[INFO] 11:11:25:815 Team/(19522:19544): LLego un mensaje Appeared, datos:
+Nombre:Bulbasaur
+Pos X: 3
+Pos Y: 5
+ID: 7
+ID Correlativa: 5.
+[INFO] 11:12:21:900 Team/(19522:19545): Intentando Conexión a Broker...
+[ERROR] 11:12:26:901 Team/(19522:19545): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:12:26:901 Team/(19522:19545): Intentando Conexión a Broker...
+[ERROR] 11:12:31:902 Team/(19522:19545): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:12:31:902 Team/(19522:19545): Intentando Conexión a Broker...
+[ERROR] 11:12:36:903 Team/(19522:19545): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:12:36:903 Team/(19522:19545): Intentando Conexión a Broker...
+[ERROR] 11:12:41:904 Team/(19522:19545): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:12:41:905 Team/(19522:19545): Intentando Conexión a Broker...
+[INFO] 11:12:46:905 Team/(19522:19545): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:12:46:905 Team/(19522:19544): Intentando Conexión a Broker...
+[INFO] 11:12:51:906 Team/(19522:19544): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:12:51:907 Team/(19522:19546): Intentando Conexión a Broker...
+[INFO] 11:12:56:910 Team/(19522:19546): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:16:47:351 Team/(19870:19876): Intentando Conexión a Broker...
+[INFO] 11:16:52:352 Team/(19870:19876): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:16:52:353 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:16:57:353 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:16:57:354 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:02:354 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:02:355 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:07:355 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:07:355 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:12:356 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:12:356 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:17:356 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:17:357 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:22:357 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:22:358 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:27:358 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:27:359 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:32:360 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:32:361 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:37:361 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:37:361 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:42:362 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:42:362 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:47:363 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:47:363 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:52:365 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:52:365 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:17:57:366 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:17:57:366 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:02:366 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:02:366 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:07:367 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:07:367 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:12:368 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:12:369 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:17:369 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:17:370 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:22:371 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:22:371 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:27:372 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:27:373 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:32:373 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:32:374 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:37:375 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:37:376 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:42:376 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:42:377 Team/(19870:19876): Intentando Conexión a Broker...
+[ERROR] 11:18:47:377 Team/(19870:19876): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:18:47:378 Team/(19870:19876): Intentando Conexión a Broker...
+[INFO] 11:18:52:378 Team/(19870:19876): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:18:52:379 Team/(19870:19876): Intentando Conexión a Broker...
+[INFO] 11:18:57:380 Team/(19870:19876): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:18:58:386 Team/(19870:19974): Intentando Conexión a Broker...
+[INFO] 11:19:03:388 Team/(19870:19974): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:20:48:142 Team/(20072:20078): Intentando Conexión a Broker...
+[INFO] 11:20:53:143 Team/(20072:20078): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:20:53:144 Team/(20072:20078): Intentando Conexión a Broker...
+[INFO] 11:20:58:145 Team/(20072:20078): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:20:58:146 Team/(20072:20078): Intentando Conexión a Broker...
+[INFO] 11:21:03:146 Team/(20072:20078): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:22:56:467 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:01:467 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:01:468 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:06:468 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:06:469 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:11:470 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:11:472 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:16:473 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:16:474 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:21:474 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:21:475 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:26:475 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:26:476 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:31:477 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:31:477 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:36:492 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:36:492 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:41:492 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:41:493 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:46:494 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:46:494 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:51:495 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:51:495 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:23:56:496 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:23:56:497 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:24:01:498 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:24:01:498 Team/(20072:20112): Intentando Conexión a Broker...
+[ERROR] 11:24:06:499 Team/(20072:20112): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:24:06:500 Team/(20072:20112): Intentando Conexión a Broker...
+[INFO] 11:24:11:500 Team/(20072:20112): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:24:11:501 Team/(20072:20110): Intentando Conexión a Broker...
+[INFO] 11:24:16:503 Team/(20072:20110): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:24:16:505 Team/(20072:20111): Intentando Conexión a Broker...
+[INFO] 11:25:28:829 Team/(20306:20312): Intentando Conexión a Broker...
+[INFO] 11:25:33:830 Team/(20306:20312): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:25:33:831 Team/(20306:20312): Intentando Conexión a Broker...
+[INFO] 11:25:38:831 Team/(20306:20312): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:25:38:832 Team/(20306:20312): Intentando Conexión a Broker...
+[INFO] 11:25:43:833 Team/(20306:20312): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 11:32:53:577 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:32:58:578 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:32:58:578 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:03:579 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:03:579 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:08:580 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:08:581 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:13:582 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:13:583 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:18:584 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:18:584 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:23:584 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:23:584 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:28:585 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:28:585 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:33:585 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:33:586 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:38:587 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:38:587 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:43:588 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:43:588 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:48:589 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:48:590 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:53:590 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:53:590 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:33:58:591 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:33:58:591 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:03:592 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:03:592 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:08:592 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:08:593 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:13:593 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:13:593 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:18:606 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:18:606 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:23:607 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:23:607 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:28:608 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:28:608 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:33:609 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:33:609 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:38:610 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:38:611 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:43:611 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:43:612 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:48:612 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:48:613 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:53:614 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:53:615 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:34:58:615 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:34:58:616 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:03:617 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:03:618 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:08:619 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:08:619 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:13:620 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:13:620 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:18:621 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:18:621 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:23:622 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:23:623 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:28:624 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:28:624 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:33:625 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:33:626 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:38:626 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:38:626 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:43:626 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:43:627 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:48:628 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:48:628 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:53:628 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:53:629 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:35:58:629 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:35:58:630 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:03:630 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:03:631 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:08:631 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:08:631 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:13:632 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:13:633 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:18:633 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:18:634 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:23:634 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:23:634 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:28:635 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:28:636 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:33:637 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:33:637 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:38:637 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:38:638 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:43:639 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:43:639 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:48:640 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:48:640 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:53:641 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:53:641 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:36:58:642 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:36:58:642 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:03:643 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:03:644 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:08:644 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:08:644 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:13:645 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:13:645 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:18:646 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:18:647 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:23:647 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:23:647 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:28:648 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:28:648 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:33:648 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:33:649 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:38:649 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:38:649 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:43:650 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:43:650 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:48:651 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:48:651 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:53:651 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:53:652 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:37:58:652 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:37:58:653 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:38:03:654 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:38:03:655 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:38:08:655 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:38:08:655 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:38:13:656 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:38:13:656 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:38:18:659 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:38:18:660 Team/(20306:20321): Intentando Conexión a Broker...
+[ERROR] 11:38:23:660 Team/(20306:20321): Intento de conexión fallido, intentando de nuevo en 5 segundo/s.
+[INFO] 11:38:23:661 Team/(20306:20321): Intentando Conexión a Broker...
+[INFO] 12:36:40:962 Team/(32572:32578): Intentando Conexión a Broker...
+[INFO] 12:36:41:964 Team/(32572:32578): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:36:41:964 Team/(32572:32578): Intentando Conexión a Broker...
+[INFO] 12:36:42:965 Team/(32572:32578): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:36:42:965 Team/(32572:32578): Intentando Conexión a Broker...
+[INFO] 12:36:43:966 Team/(32572:32578): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:36:44:968 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:36:49:897 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 19
+ID Correlativa: 18.
+[INFO] 12:36:50:903 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 21
+ID Correlativa: 20.
+[INFO] 12:36:51:905 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 23
+ID Correlativa: 22.
+[INFO] 12:36:52:915 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 25
+ID Correlativa: 24.
+[INFO] 12:36:53:915 Team/(32572:32606): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 12:39:40:993 Team/(341:347): Intentando Conexión a Broker...
+[INFO] 12:39:41:994 Team/(341:347): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:39:41:994 Team/(341:347): Intentando Conexión a Broker...
+[INFO] 12:39:42:995 Team/(341:347): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:39:42:996 Team/(341:347): Intentando Conexión a Broker...
+[INFO] 12:39:43:997 Team/(341:347): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:39:44:999 Team/(341:374): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:39:44:1 Team/(341:373): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:39:45:1 Team/(341:374): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:39:45:2 Team/(341:343): El entrenador numero [2] cambia al estado READY
+[INFO] 12:39:45:2 Team/(341:343): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:39:45:2 Team/(341:343): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:39:46:2 Team/(341:373): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:39:46:3 Team/(341:342): El entrenador numero [1] cambia al estado READY
+[INFO] 12:39:47:3 Team/(341:374): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:39:47:3 Team/(341:344): El entrenador numero [3] cambia al estado READY
+[INFO] 12:39:47:6 Team/(341:373): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:39:48:7 Team/(341:374): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:39:48:8 Team/(341:373): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:39:49:8 Team/(341:374): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:41:21:217 Team/(536:542): Intentando Conexión a Broker...
+[INFO] 12:41:22:218 Team/(536:542): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:41:22:218 Team/(536:542): Intentando Conexión a Broker...
+[INFO] 12:41:23:220 Team/(536:542): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:41:23:220 Team/(536:542): Intentando Conexión a Broker...
+[INFO] 12:41:24:220 Team/(536:542): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:41:25:223 Team/(536:569): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:41:25:225 Team/(536:568): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:41:26:225 Team/(536:569): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:41:26:225 Team/(536:538): El entrenador numero [2] cambia al estado READY
+[INFO] 12:41:26:226 Team/(536:538): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:41:26:226 Team/(536:538): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:41:26:226 Team/(536:568): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:41:26:226 Team/(536:537): El entrenador numero [1] cambia al estado READY
+[INFO] 12:41:27:226 Team/(536:569): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:41:27:227 Team/(536:568): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:41:27:227 Team/(536:539): El entrenador numero [3] cambia al estado READY
+[INFO] 12:41:28:231 Team/(536:568): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:41:28:232 Team/(536:569): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:41:29:234 Team/(536:569): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:41:52:233 Team/(536:538): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 12:41:52:234 Team/(536:538): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:43:15:263 Team/(536:538): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:0.
+[INFO] 12:43:15:263 Team/(536:538): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:43:15:263 Team/(536:537): El entrenador numero [1] cambia al estado EXEC
+[INFO] 12:43:15:263 Team/(536:537): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 12:43:15:263 Team/(536:568): Intentando Conexión a Broker...
+[INFO] 12:44:13:472 Team/(743:749): Intentando Conexión a Broker...
+[INFO] 12:44:14:473 Team/(743:749): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:44:14:473 Team/(743:749): Intentando Conexión a Broker...
+[INFO] 12:44:15:474 Team/(743:749): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:44:15:474 Team/(743:749): Intentando Conexión a Broker...
+[INFO] 12:44:16:475 Team/(743:749): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:44:17:478 Team/(743:777): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:44:17:480 Team/(743:776): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:44:18:480 Team/(743:777): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:44:18:480 Team/(743:745): El entrenador numero [2] cambia al estado READY
+[INFO] 12:44:18:481 Team/(743:745): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:44:18:481 Team/(743:745): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:44:18:481 Team/(743:744): El entrenador numero [1] cambia al estado READY
+[INFO] 12:44:18:481 Team/(743:776): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:44:19:481 Team/(743:777): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:44:19:482 Team/(743:776): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:44:19:482 Team/(743:746): El entrenador numero [3] cambia al estado READY
+[INFO] 12:44:20:487 Team/(743:776): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:44:20:488 Team/(743:777): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:44:21:489 Team/(743:777): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:44:44:488 Team/(743:745): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 12:44:44:488 Team/(743:745): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:44:46:495 Team/(743:745): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 12:44:46:495 Team/(743:745): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:44:46:495 Team/(743:744): El entrenador numero [1] cambia al estado EXEC
+[INFO] 12:44:46:495 Team/(743:744): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 12:44:46:503 Team/(743:778): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 19
+ID Correlativa: 18.
+[INFO] 12:44:47:505 Team/(743:745): El entrenador numero [2] cambia al estado READY
+[INFO] 12:47:42:31 Team/(1007:1013): Intentando Conexión a Broker...
+[INFO] 12:47:43:32 Team/(1007:1013): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:47:43:33 Team/(1007:1013): Intentando Conexión a Broker...
+[INFO] 12:47:44:33 Team/(1007:1013): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:47:44:34 Team/(1007:1013): Intentando Conexión a Broker...
+[INFO] 12:47:45:35 Team/(1007:1013): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:47:46:37 Team/(1007:1040): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:47:46:38 Team/(1007:1039): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:47:48:40 Team/(1007:1040): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:47:48:40 Team/(1007:1039): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:47:48:40 Team/(1007:1009): El entrenador numero [2] cambia al estado READY
+[INFO] 12:47:48:40 Team/(1007:1009): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:47:48:40 Team/(1007:1009): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:47:50:41 Team/(1007:1039): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:47:50:42 Team/(1007:1040): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:47:52:43 Team/(1007:1039): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:47:52:43 Team/(1007:1040): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:47:54:44 Team/(1007:1040): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:48:14:48 Team/(1007:1009): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 12:48:14:48 Team/(1007:1009): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:48:16:50 Team/(1007:1009): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 12:48:16:50 Team/(1007:1009): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:50:47:224 Team/(1252:1260): Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.
+[INFO] 12:50:47:224 Team/(1252:1258): Intentando Conexión a Broker...
+[ERROR] 12:50:48:225 Team/(1252:1258): Intento de conexión fallido, intentando de nuevo en 30 segundo/s.
+[INFO] 12:50:48:225 Team/(1252:1258): Intentando Conexión a Broker...
+[INFO] 12:51:32:417 Team/(1380:1388): Intentando Conexión a Broker...
+[INFO] 12:51:33:419 Team/(1380:1388): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:51:33:419 Team/(1380:1388): Intentando Conexión a Broker...
+[INFO] 12:51:34:420 Team/(1380:1388): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:51:34:420 Team/(1380:1388): Intentando Conexión a Broker...
+[INFO] 12:51:35:422 Team/(1380:1388): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:51:36:424 Team/(1380:1419): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:51:36:425 Team/(1380:1418): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:51:38:427 Team/(1380:1419): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:51:38:427 Team/(1380:1418): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:51:38:427 Team/(1380:1382): El entrenador numero [2] cambia al estado READY
+[INFO] 12:51:38:427 Team/(1380:1382): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:51:38:427 Team/(1380:1382): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:51:40:428 Team/(1380:1418): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:51:40:429 Team/(1380:1419): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:51:42:430 Team/(1380:1419): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:51:42:430 Team/(1380:1418): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:51:44:433 Team/(1380:1419): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:52:04:433 Team/(1380:1382): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 12:52:04:433 Team/(1380:1382): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:52:06:434 Team/(1380:1382): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 12:52:06:434 Team/(1380:1382): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:53:42:635 Team/(1617:1624): Intentando Conexión a Broker...
+[INFO] 12:53:43:635 Team/(1617:1624): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:53:43:636 Team/(1617:1624): Intentando Conexión a Broker...
+[INFO] 12:53:44:637 Team/(1617:1624): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:53:44:638 Team/(1617:1624): Intentando Conexión a Broker...
+[INFO] 12:53:45:639 Team/(1617:1624): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 12:53:46:641 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 12:53:46:642 Team/(1617:1651): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 12:53:48:643 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 12:53:48:643 Team/(1617:1619): El entrenador numero [2] cambia al estado READY
+[INFO] 12:53:48:643 Team/(1617:1619): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:53:48:643 Team/(1617:1619): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 12:53:48:643 Team/(1617:1651): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 12:53:48:643 Team/(1617:1618): El entrenador numero [1] cambia al estado READY
+[INFO] 12:53:50:645 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 12:53:50:645 Team/(1617:1651): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 12:53:50:645 Team/(1617:1621): El entrenador numero [3] cambia al estado READY
+[INFO] 12:53:52:647 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 12:53:52:648 Team/(1617:1651): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 12:53:54:649 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 12:54:14:646 Team/(1617:1619): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 12:54:14:646 Team/(1617:1619): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:54:16:651 Team/(1617:1619): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 12:54:16:651 Team/(1617:1619): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:54:16:651 Team/(1617:1618): El entrenador numero [1] cambia al estado EXEC
+[INFO] 12:54:16:651 Team/(1617:1618): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 12:54:16:674 Team/(1617:1653): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 19
+ID Correlativa: 18.
+[INFO] 12:54:18:675 Team/(1617:1619): El entrenador numero [2] cambia al estado READY
+[INFO] 12:54:44:655 Team/(1617:1618): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 9,9
+[INFO] 12:54:44:655 Team/(1617:1618): El entrenador [1] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 12:54:46:659 Team/(1617:1618): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:20.
+[INFO] 12:54:46:659 Team/(1617:1618): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 12:54:46:659 Team/(1617:1621): El entrenador numero [3] cambia al estado EXEC
+[INFO] 12:54:46:659 Team/(1617:1621): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,2
+[INFO] 12:54:46:669 Team/(1617:1653): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 21
+ID Correlativa: 20.
+[INFO] 12:54:52:660 Team/(1617:1621): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,2
+[INFO] 12:54:52:660 Team/(1617:1621): El entrenador [3] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 12:54:54:662 Team/(1617:1621): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:22.
+[INFO] 12:54:54:662 Team/(1617:1621): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 12:54:54:662 Team/(1617:1619): El entrenador numero [2] cambia al estado EXEC
+[INFO] 12:54:54:663 Team/(1617:1619): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 5,2
+[INFO] 12:54:54:667 Team/(1617:1653): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 23
+ID Correlativa: 22.
+[INFO] 12:55:16:669 Team/(1617:1619): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 5,2
+[INFO] 12:55:16:669 Team/(1617:1619): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 12:55:18:671 Team/(1617:1619): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:24.
+[INFO] 12:55:18:671 Team/(1617:1619): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 12:55:18:675 Team/(1617:1653): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 25
+ID Correlativa: 24.
+[INFO] 12:55:40:570 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 12:55:42:575 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 30
+ID Correlativa: 29.
+[INFO] 12:55:44:577 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 30
+ID Correlativa: 29.
+[INFO] 12:55:46:578 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 32
+ID Correlativa: 31.
+[INFO] 12:55:47:915 Team/(1617:1653): Intentando Conexión a Broker...
+[INFO] 12:55:48:583 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 32
+ID Correlativa: 31.
+[INFO] 12:55:50:584 Team/(1617:1652): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 34
+ID Correlativa: 33.
+[INFO] 13:01:21:467 Team/(2009:2015): Intentando Conexión a Broker...
+[INFO] 13:01:22:468 Team/(2009:2015): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:01:22:469 Team/(2009:2015): Intentando Conexión a Broker...
+[INFO] 13:01:23:469 Team/(2009:2015): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:01:23:470 Team/(2009:2015): Intentando Conexión a Broker...
+[INFO] 13:01:24:471 Team/(2009:2015): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:01:25:473 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 13:01:25:475 Team/(2009:2041): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 13:01:27:475 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 13:01:27:476 Team/(2009:2011): El entrenador numero [2] cambia al estado READY
+[INFO] 13:01:27:476 Team/(2009:2011): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:01:27:476 Team/(2009:2011): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 13:01:27:478 Team/(2009:2041): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 13:01:27:478 Team/(2009:2010): El entrenador numero [1] cambia al estado READY
+[INFO] 13:01:29:477 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 13:01:29:477 Team/(2009:2012): El entrenador numero [3] cambia al estado READY
+[INFO] 13:01:29:486 Team/(2009:2041): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 13:01:31:479 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 13:01:31:490 Team/(2009:2041): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 13:01:33:481 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 13:01:53:483 Team/(2009:2011): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 13:01:53:484 Team/(2009:2011): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:01:55:498 Team/(2009:2011): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 13:01:55:498 Team/(2009:2011): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:01:55:498 Team/(2009:2010): El entrenador numero [1] cambia al estado EXEC
+[INFO] 13:01:55:498 Team/(2009:2010): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 13:01:55:527 Team/(2009:2043): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 19
+ID Correlativa: 18.
+[INFO] 13:01:57:529 Team/(2009:2011): El entrenador numero [2] cambia al estado READY
+[INFO] 13:02:23:508 Team/(2009:2010): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 9,9
+[INFO] 13:02:23:508 Team/(2009:2010): El entrenador [1] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:02:25:526 Team/(2009:2010): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:20.
+[INFO] 13:02:25:526 Team/(2009:2010): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 13:02:25:526 Team/(2009:2012): El entrenador numero [3] cambia al estado EXEC
+[INFO] 13:02:25:526 Team/(2009:2012): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,2
+[INFO] 13:02:25:553 Team/(2009:2043): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 21
+ID Correlativa: 20.
+[INFO] 13:02:31:527 Team/(2009:2012): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,2
+[INFO] 13:02:31:527 Team/(2009:2012): El entrenador [3] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:02:33:534 Team/(2009:2012): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:22.
+[INFO] 13:02:33:534 Team/(2009:2012): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 13:02:33:534 Team/(2009:2011): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:02:33:534 Team/(2009:2011): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 5,2
+[INFO] 13:02:33:549 Team/(2009:2043): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 23
+ID Correlativa: 22.
+[INFO] 13:02:55:539 Team/(2009:2011): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 5,2
+[INFO] 13:02:55:539 Team/(2009:2011): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:02:57:546 Team/(2009:2011): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:24.
+[INFO] 13:02:57:546 Team/(2009:2011): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:02:57:563 Team/(2009:2043): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 25
+ID Correlativa: 24.
+[INFO] 13:03:52:753 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:03:54:754 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:03:56:756 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:03:58:757 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:04:00:759 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:04:02:761 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:04:04:762 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:04:06:763 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:04:08:765 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:04:10:766 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:04:12:767 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:04:14:769 Team/(2009:2042): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 35
+ID Correlativa: 34.
+[INFO] 13:04:29:52 Team/(2009:2043): LLego un mensaje Caught, datos:
+Nombre:Jolteon
+Intento de atrapar: 1
+ID: 37
+ID Correlativa: 36.
+[INFO] 13:05:29:652 Team/(2009:2043): Intentando Conexión a Broker...
+[INFO] 13:09:39:869 Team/(2733:2739): Intentando Conexión a Broker...
+[INFO] 13:09:40:870 Team/(2733:2739): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:09:40:870 Team/(2733:2739): Intentando Conexión a Broker...
+[INFO] 13:09:41:871 Team/(2733:2739): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:09:41:872 Team/(2733:2739): Intentando Conexión a Broker...
+[INFO] 13:09:42:873 Team/(2733:2739): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:09:43:876 Team/(2733:2766): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 13:09:43:877 Team/(2733:2765): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 13:09:45:879 Team/(2733:2766): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 13:09:45:880 Team/(2733:2765): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 13:09:45:880 Team/(2733:2735): El entrenador numero [2] cambia al estado READY
+[INFO] 13:09:45:880 Team/(2733:2735): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:09:45:880 Team/(2733:2735): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 13:09:47:881 Team/(2733:2766): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 13:09:47:881 Team/(2733:2765): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 13:09:49:883 Team/(2733:2765): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 13:09:49:883 Team/(2733:2766): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 13:09:51:884 Team/(2733:2766): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 13:09:58:886 Team/(2733:2735): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 13:09:58:886 Team/(2733:2735): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:09:59:892 Team/(2733:2735): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 13:09:59:892 Team/(2733:2735): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:11:39:897 Team/(3024:3030): Intentando Conexión a Broker...
+[INFO] 13:11:40:898 Team/(3024:3030): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:11:40:898 Team/(3024:3030): Intentando Conexión a Broker...
+[INFO] 13:11:41:899 Team/(3024:3030): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:11:41:899 Team/(3024:3030): Intentando Conexión a Broker...
+[INFO] 13:11:42:900 Team/(3024:3030): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:11:43:903 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 13:11:43:904 Team/(3024:3060): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 13:11:45:905 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 13:11:45:905 Team/(3024:3026): El entrenador numero [2] cambia al estado READY
+[INFO] 13:11:45:905 Team/(3024:3026): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:11:45:905 Team/(3024:3026): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 13:11:45:905 Team/(3024:3060): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 13:11:45:906 Team/(3024:3025): El entrenador numero [1] cambia al estado READY
+[INFO] 13:11:47:907 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 13:11:47:907 Team/(3024:3060): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 13:11:47:907 Team/(3024:3027): El entrenador numero [3] cambia al estado READY
+[INFO] 13:11:49:908 Team/(3024:3060): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 13:11:49:909 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 13:11:51:911 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 13:11:58:912 Team/(3024:3026): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 13:11:58:912 Team/(3024:3026): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:11:59:925 Team/(3024:3026): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 13:11:59:925 Team/(3024:3026): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:11:59:925 Team/(3024:3025): El entrenador numero [1] cambia al estado EXEC
+[INFO] 13:11:59:925 Team/(3024:3025): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 13:11:59:953 Team/(3024:3062): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 19
+ID Correlativa: 18.
+[INFO] 13:12:01:954 Team/(3024:3026): El entrenador numero [2] cambia al estado READY
+[INFO] 13:12:13:931 Team/(3024:3025): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 9,9
+[INFO] 13:12:13:931 Team/(3024:3025): El entrenador [1] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:12:14:950 Team/(3024:3025): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:20.
+[INFO] 13:12:14:950 Team/(3024:3025): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 13:12:14:950 Team/(3024:3027): El entrenador numero [3] cambia al estado EXEC
+[INFO] 13:12:14:950 Team/(3024:3027): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,2
+[INFO] 13:12:14:972 Team/(3024:3062): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 21
+ID Correlativa: 20.
+[INFO] 13:12:17:951 Team/(3024:3027): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,2
+[INFO] 13:12:17:951 Team/(3024:3027): El entrenador [3] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:12:18:958 Team/(3024:3027): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:22.
+[INFO] 13:12:18:959 Team/(3024:3027): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 13:12:18:959 Team/(3024:3026): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:12:18:959 Team/(3024:3026): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 5,2
+[INFO] 13:12:18:975 Team/(3024:3062): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 23
+ID Correlativa: 22.
+[INFO] 13:12:29:963 Team/(3024:3026): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 5,2
+[INFO] 13:12:29:964 Team/(3024:3026): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:12:30:972 Team/(3024:3026): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:24.
+[INFO] 13:12:30:972 Team/(3024:3026): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:12:30:986 Team/(3024:3062): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 25
+ID Correlativa: 24.
+[INFO] 13:13:13:32 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:13:15:33 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:13:17:34 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:13:19:36 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:13:21:37 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:13:23:38 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:13:25:40 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:13:27:41 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:13:29:43 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:13:31:45 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:13:33:46 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:13:35:47 Team/(3024:3061): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 35
+ID Correlativa: 34.
+[INFO] 13:15:08:269 Team/(3024:3062): Intentando Conexión a Broker...
+[INFO] 13:20:40:942 Team/(3490:3496): Intentando Conexión a Broker...
+[INFO] 13:20:41:943 Team/(3490:3496): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:20:41:943 Team/(3490:3496): Intentando Conexión a Broker...
+[INFO] 13:20:42:944 Team/(3490:3496): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:20:42:945 Team/(3490:3496): Intentando Conexión a Broker...
+[INFO] 13:20:43:946 Team/(3490:3496): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 13:20:44:948 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Pikachu
+Cantidad Posiciones: 1
+ID: 9
+ID Correlativa: 8.
+[INFO] 13:20:44:949 Team/(3490:3543): LLego un mensaje Appeared, datos:
+Nombre:Pikachu
+Pos X: 9
+Pos Y: 9
+ID: 1
+ID Correlativa: 0.
+[INFO] 13:20:46:950 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 11
+ID Correlativa: 10.
+[INFO] 13:20:46:950 Team/(3490:3492): El entrenador numero [2] cambia al estado READY
+[INFO] 13:20:46:950 Team/(3490:3492): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:20:46:950 Team/(3490:3492): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 9,9
+[INFO] 13:20:46:951 Team/(3490:3543): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 2
+ID: 3
+ID Correlativa: 2.
+[INFO] 13:20:46:952 Team/(3490:3491): El entrenador numero [1] cambia al estado READY
+[INFO] 13:20:48:951 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Squirtle
+Cantidad Posiciones: 1
+ID: 13
+ID Correlativa: 12.
+[INFO] 13:20:48:951 Team/(3490:3493): El entrenador numero [3] cambia al estado READY
+[INFO] 13:20:48:957 Team/(3490:3543): LLego un mensaje Appeared, datos:
+Nombre:Jolteon
+Pos X: 2
+Pos Y: 2
+ID: 5
+ID Correlativa: 4.
+[INFO] 13:20:50:953 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Gengar
+Cantidad Posiciones: 0
+ID: 15
+ID Correlativa: 14.
+[INFO] 13:20:50:958 Team/(3490:3543): LLego un mensaje Appeared, datos:
+Nombre:Flareon
+Pos X: 4
+Pos Y: 6
+ID: 7
+ID Correlativa: 6.
+[INFO] 13:20:52:955 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 17
+ID Correlativa: 16.
+[INFO] 13:20:59:956 Team/(3490:3492): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 9,9
+[INFO] 13:20:59:956 Team/(3490:3492): El entrenador [2] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:21:00:966 Team/(3490:3492): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:18.
+[INFO] 13:21:00:966 Team/(3490:3492): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:21:00:968 Team/(3490:3491): El entrenador numero [1] cambia al estado EXEC
+[INFO] 13:21:00:968 Team/(3490:3491): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 9,9
+[INFO] 13:21:00:986 Team/(3490:3545): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 19
+ID Correlativa: 18.
+[INFO] 13:21:02:988 Team/(3490:3492): El entrenador numero [2] cambia al estado READY
+[INFO] 13:21:14:978 Team/(3490:3491): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 9,9
+[INFO] 13:21:14:979 Team/(3490:3491): El entrenador [1] está intentando atrapar un Pikachu!! en las coordenadas [9,9].
+[INFO] 13:21:15:992 Team/(3490:3491): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:20.
+[INFO] 13:21:15:992 Team/(3490:3491): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 13:21:15:992 Team/(3490:3493): El entrenador numero [3] cambia al estado EXEC
+[INFO] 13:21:15:992 Team/(3490:3493): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,2
+[INFO] 13:21:16:10 Team/(3490:3545): LLego un mensaje Caught, datos:
+Nombre:Pikachu
+Intento de atrapar: 1
+ID: 21
+ID Correlativa: 20.
+[INFO] 13:21:18:993 Team/(3490:3493): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,2
+[INFO] 13:21:18:993 Team/(3490:3493): El entrenador [3] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:21:19:999 Team/(3490:3493): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:22.
+[INFO] 13:21:19:999 Team/(3490:3493): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 13:21:19:999 Team/(3490:3492): El entrenador numero [2] cambia al estado EXEC
+[INFO] 13:21:19:999 Team/(3490:3492): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 5,2
+[INFO] 13:21:20:13 Team/(3490:3545): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 23
+ID Correlativa: 22.
+[INFO] 13:21:31:5 Team/(3490:3492): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 5,2
+[INFO] 13:21:31:6 Team/(3490:3492): El entrenador [2] está intentando atrapar un Squirtle!! en las coordenadas [5,2].
+[INFO] 13:21:32:11 Team/(3490:3492): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:24.
+[INFO] 13:21:32:11 Team/(3490:3492): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 13:21:32:29 Team/(3490:3545): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 25
+ID Correlativa: 24.
+[INFO] 13:22:07:32 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:22:09:33 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 0
+ID: 27
+ID Correlativa: 26.
+[INFO] 13:22:11:34 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:22:13:36 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:22:15:37 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:22:17:38 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:22:19:39 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:22:21:40 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:22:23:41 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 29
+ID Correlativa: 28.
+[INFO] 13:22:25:42 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:22:27:43 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:22:29:45 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 35
+ID Correlativa: 34.
+[INFO] 13:27:26:887 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Flareon
+Cantidad Posiciones: 1
+ID: 31
+ID Correlativa: 30.
+[INFO] 13:27:28:888 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Umbreon
+Cantidad Posiciones: 0
+ID: 33
+ID Correlativa: 32.
+[INFO] 13:27:30:889 Team/(3490:3544): LLego un mensaje Localized, datos:
+Nombre:Espeon
+Cantidad Posiciones: 0
+ID: 35
+ID Correlativa: 34.
+[INFO] 13:31:03:449 Team/(3490:3543): Intentando Conexión a Broker...

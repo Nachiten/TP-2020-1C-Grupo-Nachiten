@@ -524,9 +524,9 @@ void recepcion_mensajes(void* argumento_de_adorno)
 
 	sem_wait(semGETTerminados);
 
-	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
-	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
-	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
+	socketAppeared = intento_reconexion(APPEARED, PID, 1);//intento conectarme a Broker
+	socketLocalized = intento_reconexion(LOCALIZED, PID, 1);//intento conectarme a Broker
+	socketCaught = intento_reconexion(CAUGHT, PID, 1);//intento conectarme a Broker
 
 	sleep(1);
 
@@ -566,7 +566,7 @@ void escuchoMensajesBroker(datosHiloColas* parametros)
 		{
 			printf("Se cayo la conexion con Broker.\n");
 			sem_wait(semConexionBroker);
-			parametros->socket = intento_reconexion(parametros->cola, PID);
+			parametros->socket = intento_reconexion(parametros->cola, PID, 0);
 			sem_post(semConexionBroker);
 			if(parametros->socket > 1)
 			{
@@ -582,7 +582,7 @@ void escuchoMensajesBroker(datosHiloColas* parametros)
 		{
 			printf("Se cayo la conexion con Broker.\n");
 			sem_wait(semConexionBroker);
-			parametros->socket = intento_reconexion(parametros->cola, PID);
+			parametros->socket = intento_reconexion(parametros->cola, PID, 0);
 			sem_post(semConexionBroker);
 			if(parametros->socket > 1)
 			{
@@ -597,7 +597,7 @@ void escuchoMensajesBroker(datosHiloColas* parametros)
 	}
 }
 
-int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
+int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID, uint32_t flagPrimerIntento)
 {
 	int32_t elSocket = -1;
 	Suscripcion* estructuraSuscripcion = malloc(sizeof(Suscripcion));
@@ -609,7 +609,15 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID)
 		log_info(logger, "Intentando Conexión a Broker...");
 		sem_post(semLog);
 
-		sleep(tiempo_reconexion);
+		if(flagPrimerIntento == 0)//la conexion a Broker se cayo, por lo que se espera lo que dice la config
+		{
+			sleep(tiempo_reconexion);
+		}
+		else//es el primer intento de conexion a Broker, no necesita esperar lo que dice la config
+		{
+			sleep(1);//sleep 1 para darle un respiro a Broker
+		}
+
 		elSocket = establecer_conexion(IP, PUERTO);//intento conectarme a Broker
 		if(elSocket >= 1)//me suscribo a la cola
 		{
@@ -652,7 +660,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
     		sem_wait(semLog);
     		log_info(logger, "LLego un mensaje Appeared, datos:\nNombre:%s\nPos X: %u\nPos Y: %u\nID: %i\nID Correlativa: %i.", recibidoAppeared->nombrePokemon, recibidoAppeared->posPokemon.x, recibidoAppeared->posPokemon.y, recibidoAppeared->ID, recibidoAppeared->corrID);
     		sem_post(semLog);
-
+    		sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoAppeared->ID;
@@ -708,7 +716,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			sem_wait(semLog);
 			log_info(logger, "LLego un mensaje Localized, datos:\nNombre:%s\nCantidad Posiciones: %u\nID: %i\nID Correlativa: %i.", recibidoLocalized->nombrePokemon, recibidoLocalized->cantPosciciones, recibidoLocalized->ID, recibidoLocalized->corrID);
 			sem_post(semLog);
-
+			sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoLocalized->ID;
@@ -764,7 +772,7 @@ void procesar_mensaje(codigo_operacion cod_op, int32_t sizeAAllocar, int32_t soc
 			sem_wait(semLog);
 			log_info(logger, "LLego un mensaje Caught, datos:\nNombre:%s\nIntento de atrapar: %i\nID: %i\nID Correlativa: %i.", recibidoCaught->nombrePokemon, recibidoCaught->pudoAtrapar, recibidoCaught->ID, recibidoCaught->corrID);
 			sem_post(semLog);
-
+			sleep(1);
 			//mandamos confirmacion para no volver a recibir este mensaje
 			mensajeConfirm = malloc(sizeof(confirmacionMensaje));
 			mensajeConfirm->id_mensaje = recibidoCaught->ID;

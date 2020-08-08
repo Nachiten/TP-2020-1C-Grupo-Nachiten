@@ -114,7 +114,8 @@ void cambiar_estado_a(d_entrenador* entrenador, int nuevo_estado){
     log_info(logger, "El entrenador numero [%i] cambia al estado %s", entrenador->numeroEntrenador, stringAPrintear);
 
     sumarUnCambioContexto();
-
+    printf("ya sume\n");
+    sleep(1);
 	entrenador->estado = nuevo_estado;
 }
 

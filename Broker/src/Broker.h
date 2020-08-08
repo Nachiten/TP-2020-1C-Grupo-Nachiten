@@ -41,6 +41,8 @@ sem_t* semParticiones;
 sem_t* semNumeroVictima;
 sem_t* semParticionesEliminadas;
 
+sem_t* semRecibirMensajes;//todo prueba
+
 t_cola* colaDescartesNew;
 t_cola* colaDescartesAppeared;
 t_cola* colaDescartesGet;

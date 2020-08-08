@@ -197,6 +197,12 @@ void inicializar_semaforos(){
 	semNumeroVictima = malloc(sizeof(sem_t));
 	semParticionesEliminadas = malloc(sizeof(sem_t));
 
+	semRecibirMensajes = malloc(sizeof(sem_t)); //todo prueba
+	sem_init(semRecibirMensajes, 0, 1);
+
+
+
+
 	sem_init(semNew, 0, 1);
 	sem_init(semAppeared, 0, 1);
 	sem_init(semGet, 0, 1);
@@ -591,6 +597,10 @@ void mandar_mensajes_broker(t_cola* cola){
 				contadorSubs = (mensaje->subs->elements_count) - 1;
 				while(contadorSubs >= 0){
 					sub = list_remove(mensaje->subs,contadorSubs);
+					//todo problema aca
+
+
+
 					free(sub);
 					contadorSubs--;
 				}
@@ -1122,23 +1132,23 @@ void serve_client(int32_t* socket)
 
 		if(recibidos >= 1)
 		{
+			sem_wait(semRecibirMensajes);//todo prueba
+
 			recibidosSize = recv(*socket, &sizeAAllocar, sizeof(sizeAAllocar), MSG_WAITALL); //saca el tamaño de lo que sigue en el buffer
 			bytesRecibidos(recibidosSize);
 			printf("Tamaño de lo que sigue en el buffer: %u.\n", sizeAAllocar);
 
 			process_request(cod_op, *socket, sizeAAllocar);
+
+			sem_post(semRecibirMensajes);//todo Prueba
 		}
 
-		//if(recibidos < 1  || recibidosSize < 1)
+
 		else
 		{
 			pthread_exit(NULL);
-//			cod_op = -1;
-//			sizeAAllocar = 0;
-
 		}
 
-		//process_request(cod_op, *socket, sizeAAllocar);
 		recibidosSize = 0;
 		recibidos = 0;
 	}

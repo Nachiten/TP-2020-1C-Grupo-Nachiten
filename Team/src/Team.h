@@ -46,9 +46,12 @@ sem_t colaCaught_llenos;
 
 sem_t* semConexionBroker;
 sem_t* semLog;
-sem_t* semSubTerminada;
 sem_t* semCiclosCPU;
 sem_t* semCambiosContexto;
+
+sem_t* semGETTerminados;
+
+
 
 void inicializar_semaforos(int);
 void destruir_semaforos(int);

@@ -115,8 +115,8 @@ int main(int cantArgs, char* arg[])
         pthread_create(&hilo_cola_ready, NULL, (void*)administrar_cola_ready, NULL);
         pthread_detach(hilo_cola_ready);
 
-        semSubTerminada= malloc(sizeof(sem_t));
-        sem_init(semSubTerminada, 0, 0);
+        semGETTerminados= malloc(sizeof(sem_t));
+        sem_init(semGETTerminados, 0, 0);
 
         //activar_hilo_recepcion(&hilo_recibir_mensajes); ya no sirve
         //activamos los hilos para que TEAM pueda recibir mensajes de Broker
@@ -269,30 +269,33 @@ int main(int cantArgs, char* arg[])
 void enviarMensajesGet()
 {
 	puts("Estableciendo Conexion para mandar mensajes GET...");
-	int32_t socketMandarGets = establecer_conexion(IP,PUERTO);
 
-	if(socketMandarGets > 0)
+	// Espera a que se termine de suscribir a todas las colas
+	int i = 0;
+	// objetivo_actual es una lista de strings con cada pokemon que team necesita
+	while (objetivo_actual[i] != NULL)
 	{
-		// Espera a que se termine de suscribir a todas las colas
-		//sem_wait(semSubTerminada); todo descomentar?
-		int i = 0;
-		// objetivo_actual es una lista de strings con cada pokemon que team necesita
-		while (objetivo_actual[i] != NULL)
+		int32_t socketMandarGets = establecer_conexion(IP,PUERTO);
+
+		if(socketMandarGets > 0)
 		{
 			printf("Mandando mensaje GET para Pokemon: %s\n", objetivo_actual[i]);
 			enviarMensajeGet(objetivo_actual[i], socketMandarGets);
 			sleep(1);
 			i++;
+			close(socketMandarGets);
+		}
+		else
+		{
+			sem_wait(semLog);
+			log_info(logger, "Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.");
+			sem_post(semLog);
+			break;
 		}
 
-		close(socketMandarGets);
 	}
-	else
-	{
-		sem_wait(semLog);
-		log_info(logger, "Conexión a Broker fallida, Se inicia operación por default: Asumir que no existen los Pokemones objetivo.");
-		sem_post(semLog);
-	}
+
+	sem_post(semGETTerminados);
 }
 
 void enviarMensajeGet(char* pokemon, int32_t socketMandarGets)
@@ -519,12 +522,14 @@ void recepcion_mensajes(void* argumento_de_adorno)
 	semConexionBroker= malloc(sizeof(sem_t));
 	sem_init(semConexionBroker, 0, 1);
 
+	sem_wait(semGETTerminados);
+
 	socketAppeared = intento_reconexion(APPEARED, PID);//intento conectarme a Broker
 	socketLocalized = intento_reconexion(LOCALIZED, PID);//intento conectarme a Broker
 	socketCaught = intento_reconexion(CAUGHT, PID);//intento conectarme a Broker
 
 	sleep(1);
-	//sem_post(semSubTerminada);
+
 
 	pthread_t hiloApp;
 	pthread_t hiloLocal;

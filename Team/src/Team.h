@@ -81,7 +81,7 @@ void escuchoMensajesGameboy(datosHiloColas* parametros);
 void recepcion_mensajes(void* argumento_de_adorno);
 void recepcion_Gameboy(void* argumento_de_adorno);
 void esperar_conexiones_Gameboy(int32_t miSocket);
-int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
+int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID, uint32_t flagPrimerIntento); //con este se conecta, suscribe Y LLAMAR DE NUEVO SI SE CAE
 void procesar_mensaje(codigo_operacion codigo, int32_t sizeAAllocar, int32_t socket);
 void enviarMensajesGet();
 void enviarMensajeGet(char*, int32_t socketMandarGets);

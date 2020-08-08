@@ -1818,3 +1818,62 @@
 [INFO] 00:31:26:824 CACHE/(10256:10256): Espacio total libre: 6.
 [INFO] 00:31:26:824 CACHE/(10256:10256): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
 
+[INFO] 00:35:22:471 CACHE/(10444:10444): Realizando control del estado de memoria y particiones...
+[INFO] 00:35:22:471 CACHE/(10444:10444): Dump solicitado: Sat Aug  8 00:35:22 2020
+
+[INFO] 00:35:22:471 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:471 CACHE/(10444:10444): Nº de particion: 0.
+[INFO] 00:35:22:471 CACHE/(10444:10444): La particion está en uso.
+[INFO] 00:35:22:471 CACHE/(10444:10444): Límite inferior de la partición: 0.
+[INFO] 00:35:22:472 CACHE/(10444:10444): Límite superior de la partición: 4.
+[INFO] 00:35:22:472 CACHE/(10444:10444): Posiciones de memoria: de 0x91d0b00 hasta 0x91d0b04.
+[INFO] 00:35:22:472 CACHE/(10444:10444): Tamaño: 4 bytes.
+[INFO] 00:35:22:472 CACHE/(10444:10444): Número de víctima: 1.
+[INFO] 00:35:22:472 CACHE/(10444:10444): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:35:22:472 CACHE/(10444:10444): En esta partición se guardan los datos del mensaje ID: 0.
+[INFO] 00:35:22:472 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:472 CACHE/(10444:10444): Nº de particion: 1.
+[INFO] 00:35:22:473 CACHE/(10444:10444): La particion está en uso.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Límite inferior de la partición: 4.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Límite superior de la partición: 8.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Posiciones de memoria: de 0x91d0b04 hasta 0x91d0b08.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Tamaño: 4 bytes.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Número de víctima: 2.
+[INFO] 00:35:22:473 CACHE/(10444:10444): Cola a la que pertenece el mensaje: 6.
+[INFO] 00:35:22:473 CACHE/(10444:10444): En esta partición se guardan los datos del mensaje ID: 1.
+[INFO] 00:35:22:473 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:473 CACHE/(10444:10444): Nº de particion: 2.
+[INFO] 00:35:22:473 CACHE/(10444:10444): La particion está en uso.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Límite inferior de la partición: 8.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Límite superior de la partición: 27.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Posiciones de memoria: de 0x91d0b08 hasta 0x91d0b1b.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Tamaño: 19 bytes.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Número de víctima: 3.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:35:22:474 CACHE/(10444:10444): En esta partición se guardan los datos del mensaje ID: 2.
+[INFO] 00:35:22:474 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:474 CACHE/(10444:10444): Nº de particion: 3.
+[INFO] 00:35:22:474 CACHE/(10444:10444): La particion está en uso.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Límite inferior de la partición: 27.
+[INFO] 00:35:22:474 CACHE/(10444:10444): Límite superior de la partición: 47.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Posiciones de memoria: de 0x91d0b1b hasta 0x91d0b2f.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Tamaño: 20 bytes.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Número de víctima: 4.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:35:22:475 CACHE/(10444:10444): En esta partición se guardan los datos del mensaje ID: 3.
+[INFO] 00:35:22:475 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:475 CACHE/(10444:10444): Nº de particion: 4.
+[INFO] 00:35:22:475 CACHE/(10444:10444): La particion está en uso.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Límite inferior de la partición: 47.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Límite superior de la partición: 63.
+[INFO] 00:35:22:475 CACHE/(10444:10444): Posiciones de memoria: de 0x91d0b2f hasta 0x91d0b3f.
+[INFO] 00:35:22:476 CACHE/(10444:10444): Tamaño: 16 bytes.
+[INFO] 00:35:22:476 CACHE/(10444:10444): Número de víctima: 5.
+[INFO] 00:35:22:476 CACHE/(10444:10444): Cola a la que pertenece el mensaje: 5.
+[INFO] 00:35:22:476 CACHE/(10444:10444): En esta partición se guardan los datos del mensaje ID: 4.
+[INFO] 00:35:22:476 CACHE/(10444:10444): ----------------------------------------------------------
+[INFO] 00:35:22:476 CACHE/(10444:10444): Espacio desperdiciado en particiones libres: 0.
+[INFO] 00:35:22:477 CACHE/(10444:10444): Espacio libre en CACHE (No particionado): 1.
+[INFO] 00:35:22:477 CACHE/(10444:10444): Espacio total libre: 1.
+[INFO] 00:35:22:477 CACHE/(10444:10444): ---No se tuvo en cuenta la fragmentación interna durante el checkeo---
+

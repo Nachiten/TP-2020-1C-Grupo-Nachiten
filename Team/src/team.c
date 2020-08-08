@@ -633,6 +633,7 @@ int32_t intento_reconexion(codigo_operacion codigo, uint32_t PID, uint32_t flagP
 			log_error(logger,"Intento de conexión fallido, intentando de nuevo en %u segundo/s.", tiempo_reconexion);
 			sem_post(semLog);
 		}
+		flagPrimerIntento = 0;
 	}
 	free(estructuraSuscripcion);
 	return elSocket;

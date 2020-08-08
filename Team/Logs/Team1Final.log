@@ -1518,3 +1518,100 @@ Cantidad Posiciones: 0
 ID: 35
 ID Correlativa: 34.
 [INFO] 13:31:03:449 Team/(3490:3543): Intentando Conexión a Broker...
+[INFO] 14:20:17:160 Team/(8524:8530): Intentando Conexión a Broker...
+[INFO] 14:20:18:161 Team/(8524:8530): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 14:20:18:161 Team/(8524:8530): Intentando Conexión a Broker...
+[INFO] 14:20:19:165 Team/(8524:8530): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 14:20:19:165 Team/(8524:8530): Intentando Conexión a Broker...
+[INFO] 14:20:20:168 Team/(8524:8530): Conexión con Broker establecida, apostemos cuánto dura...
+[INFO] 14:20:21:169 Team/(8524:8557): LLego un mensaje Localized, datos:
+Nombre:Onix
+Cantidad Posiciones: 0
+ID: 16
+ID Correlativa: 15.
+[INFO] 14:20:32:444 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Onix
+Pos X: 2
+Pos Y: 8
+ID: 18
+ID Correlativa: 17.
+[INFO] 14:20:34:494 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Gengar
+Pos X: 6
+Pos Y: 6
+ID: 20
+ID Correlativa: 19.
+[INFO] 14:20:34:495 Team/(8524:8526): El entrenador numero [2] cambia al estado READY
+[INFO] 14:20:35:495 Team/(8524:8526): El entrenador numero [2] cambia al estado EXEC
+[INFO] 14:20:36:496 Team/(8524:8526): MOVIMIENTO | Entrenador numero [2] comienza a moverse a la posicion 2,8
+[INFO] 14:20:36:496 Team/(8524:8525): El entrenador numero [1] cambia al estado READY
+[INFO] 14:20:36:496 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Squirtle
+Pos X: 5
+Pos Y: 5
+ID: 22
+ID Correlativa: 21.
+[INFO] 14:20:38:498 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Umbreon
+Pos X: 10
+Pos Y: 6
+ID: 24
+ID Correlativa: 23.
+[INFO] 14:20:38:498 Team/(8524:8527): El entrenador numero [3] cambia al estado READY
+[INFO] 14:20:40:499 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Espeon
+Pos X: 7
+Pos Y: 1
+ID: 26
+ID Correlativa: 25.
+[INFO] 14:20:41:500 Team/(8524:8526): MOVIMIENTO | Entrenador numero [2] terminó de moverse a la posicion 2,8
+[INFO] 14:20:41:500 Team/(8524:8526): El entrenador [2] está intentando atrapar un Onix!! en las coordenadas [2,8].
+[INFO] 14:20:42:501 Team/(8524:8556): LLego un mensaje Appeared, datos:
+Nombre:Vaporeon
+Pos X: 4
+Pos Y: 10
+ID: 28
+ID Correlativa: 27.
+[INFO] 14:20:42:502 Team/(8524:8526): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:29.
+[INFO] 14:20:42:502 Team/(8524:8526): El entrenador numero [2] cambia al estado BLOCKED
+[INFO] 14:20:42:514 Team/(8524:8558): LLego un mensaje Caught, datos:
+Nombre:Onix
+Intento de atrapar: 1
+ID: 30
+ID Correlativa: 29.
+[INFO] 14:20:43:502 Team/(8524:8525): El entrenador numero [1] cambia al estado EXEC
+[INFO] 14:20:44:506 Team/(8524:8525): MOVIMIENTO | Entrenador numero [1] comienza a moverse a la posicion 6,6
+[INFO] 14:20:52:511 Team/(8524:8525): MOVIMIENTO | Entrenador numero [1] terminó de moverse a la posicion 6,6
+[INFO] 14:20:52:511 Team/(8524:8525): El entrenador [1] está intentando atrapar un Gengar!! en las coordenadas [6,6].
+[INFO] 14:20:53:517 Team/(8524:8525): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:31.
+[INFO] 14:20:53:517 Team/(8524:8525): El entrenador numero [1] cambia al estado BLOCKED
+[INFO] 14:20:53:519 Team/(8524:8558): LLego un mensaje Caught, datos:
+Nombre:Gengar
+Intento de atrapar: 1
+ID: 32
+ID Correlativa: 31.
+[INFO] 14:20:54:518 Team/(8524:8527): El entrenador numero [3] cambia al estado EXEC
+[INFO] 14:20:55:518 Team/(8524:8527): MOVIMIENTO | Entrenador numero [3] comienza a moverse a la posicion 5,5
+[INFO] 14:21:01:540 Team/(8524:8527): MOVIMIENTO | Entrenador numero [3] terminó de moverse a la posicion 5,5
+[INFO] 14:21:01:540 Team/(8524:8527): El entrenador [3] está intentando atrapar un Squirtle!! en las coordenadas [5,5].
+[INFO] 14:21:02:553 Team/(8524:8527): LLego un mensaje IDMENSAJE, datos:
+ID del mensaje guardado en Broker:33.
+[INFO] 14:21:02:553 Team/(8524:8527): El entrenador numero [3] cambia al estado BLOCKED
+[INFO] 14:21:02:554 Team/(8524:8558): LLego un mensaje Caught, datos:
+Nombre:Squirtle
+Intento de atrapar: 1
+ID: 34
+ID Correlativa: 33.
+[INFO] 14:21:29:739 Team/(8524:8557): LLego un mensaje Localized, datos:
+Nombre:Vaporeon
+Cantidad Posiciones: 1
+ID: 36
+ID Correlativa: 35.
+[INFO] 14:21:31:740 Team/(8524:8557): LLego un mensaje Localized, datos:
+Nombre:Jolteon
+Cantidad Posiciones: 1
+ID: 38
+ID Correlativa: 37.
+[INFO] 14:21:31:950 Team/(8524:8558): Intentando Conexión a Broker...
